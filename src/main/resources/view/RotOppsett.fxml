@@ -22,7 +22,7 @@
                         <MenuItem mnemonicParsing="false" text="Fritidsboligforsikring" />
                         <MenuItem mnemonicParsing="false" text="Reiseforsikring" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                        <MenuItem mnemonicParsing="false" text="Avslutt" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Fil">

@@ -18,6 +18,11 @@ public class RotOppsettController {
     // Referanse til hovedapplikasjonen
     private HovedApplikasjon hovedApplikasjon;
 
+    @FXML
+    private void gåTilKundeoversikt() {
+        visKundeOversikt();
+    }
+
     /**
      * Kalles fra hovedapplikasjonen for å gi en referanse til seg
      * selv.
@@ -26,11 +31,6 @@ public class RotOppsettController {
      */
     public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
         this.hovedApplikasjon = hovedApplikasjon;
-    }
-
-    @FXML
-    private void gåTilKundeoversikt() {
-        visKundeOversikt();
     }
 
     /**

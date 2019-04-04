@@ -22,6 +22,7 @@ public class HovedApplikasjon extends Application {
         this.hovedStage = hovedStage;
         this.hovedStage.setTitle("Forsikring AS");
 
+        // Rotoppsettet kjører så lenge applikasjonen kjører.
         initierRotOppsett();
 
     }
@@ -31,7 +32,7 @@ public class HovedApplikasjon extends Application {
      */
     public void initierRotOppsett() {
         try {
-            // Last inn rotoppsettet fra fxml-fil.
+            // Last inn fxml-fil.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HovedApplikasjon.class.getResource("/view/RotOppsett.fxml"));
             rotOppsett = (BorderPane) loader.load();
@@ -41,7 +42,7 @@ public class HovedApplikasjon extends Application {
             hovedStage.setScene(scene);
             hovedStage.show();
 
-            // Overfør controllere
+            // Overfør hovedapplikasjonen til rot-controlleren.
             RotOppsettController rotOppsettController = loader.getController();
             rotOppsettController.setHovedApplikasjon(this);
         } catch (IOException e) {
@@ -51,11 +52,15 @@ public class HovedApplikasjon extends Application {
 
     /**
      * Returnerer hovedstagen.
-     * @return
+     * @return Stage
      */
     public Stage getHovedStage() {
         return hovedStage;
     }
 
+    /**
+     * Returnerer rotoppsettet.
+     * @return BorderPane
+     */
     public BorderPane getRotOppsett() { return rotOppsett; }
 }
