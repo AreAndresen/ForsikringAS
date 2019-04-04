@@ -1,6 +1,9 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
+import ae.model.Kunde;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -8,13 +11,15 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 /**
- * Controller for rotoppsettet. Rotoppsettet inneholder menylinjen
+ * Controller for RotOppsett. Rotoppsettet inneholder menylinjen
  * og plass hvor andre views skal plasserers.
  */
 public class RotOppsettController {
 
     // Referanse til hovedapplikasjonen
     private HovedApplikasjon hovedApplikasjon;
+
+    public RotOppsettController() { }
 
     @FXML
     private void gåTilKundeoversikt() {
@@ -43,9 +48,11 @@ public class RotOppsettController {
 
             // Plasser kundeoversikten i senter av rotoppsettet.
             hovedApplikasjon.getRotOppsett().setCenter(kundeOversikt);
+
+            KundeController kundeController = loader.getController();
+            kundeController.setHovedApplikasjon(hovedApplikasjon);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

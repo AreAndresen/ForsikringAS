@@ -3,7 +3,10 @@ package ae;
 import java.io.IOException;
 
 import ae.controller.RotOppsettController;
+import ae.model.Kunde;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +19,15 @@ public class HovedApplikasjon extends Application {
 
     private Stage hovedStage;
     private BorderPane rotOppsett;
+    private ObservableList<Kunde> kundeData = FXCollections.observableArrayList();
+
+    /**
+     * Konstruktør for hovedapplikasjon med dummy-data for å teste.
+     */
+    public HovedApplikasjon() {
+        kundeData.add(new Kunde("Eidsvold", "Hans-Erling", "Oslo"));
+        kundeData.add(new Kunde("Andresen", "Are", "Drøbak"));
+    }
 
     @Override
     public void start(Stage hovedStage) {
@@ -63,4 +75,12 @@ public class HovedApplikasjon extends Application {
      * @return BorderPane
      */
     public BorderPane getRotOppsett() { return rotOppsett; }
+
+    /**
+     * Returnerer kunde data som en ObservableList.
+     * @return
+     */
+    public ObservableList<Kunde> getKundeData() {
+        return kundeData;
+    }
 }
