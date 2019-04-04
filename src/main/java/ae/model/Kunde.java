@@ -1,6 +1,7 @@
 package ae.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
@@ -33,7 +34,7 @@ public class Kunde {
     public Kunde(String etternavn, String fornavn, String adresseFaktura) {
 
         // Instansiere unikt forsikringsnr og dato for kundens opprettelse.
-        this.forsikringsNr = new SimpleIntegerProperty();
+        this.forsikringsNr = new SimpleIntegerProperty(); // TODO: unikt nummer
         this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 
         // Ta imot parametere.
@@ -42,9 +43,9 @@ public class Kunde {
         this.adresseFaktura = new SimpleStringProperty(adresseFaktura);
 
         // Instansiere listene så de er opprettet.
-        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>();
-        this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>();
-        this.erstatningerUbetalte = new SimpleObjectProperty<List<Skademelding>>();
+        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>(new ArrayList<>());
+        this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>(new ArrayList<>());
+        this.erstatningerUbetalte = new SimpleObjectProperty<List<Skademelding>>(new ArrayList<>());
     }
 
     /**

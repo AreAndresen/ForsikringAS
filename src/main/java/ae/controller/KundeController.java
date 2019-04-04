@@ -60,6 +60,47 @@ public class KundeController {
         fornavnKolonne.setCellValueFactory(celleData -> celleData.getValue().fornavnProperty());
         adresseFakturaKolonne.setCellValueFactory(celleData -> celleData.getValue().adresseFakturaProperty());
         datoKundeOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoKundeOpprettetProperty());
+
+        // Sender inn null for å tømme feltene.
+        visKundensDetaljer(null);
+
+        // ChangeListener som ser etter endringer.
+        kundeTabell.getSelectionModel().selectedItemProperty().addListener(
+                (observable, gammelData, nyData) -> visKundensDetaljer(nyData));
+    }
+
+    /**
+     * Fyller ut info-feltene om hver kunde.
+     * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
+     * antall av de ulike typene. Knappene skal trykkes for å vise de.
+     *
+     * @param kunde kunden som er valgt, hvis ikke valgt så null
+     */
+    public void visKundensDetaljer(Kunde kunde) {
+        if (kunde != null) {
+
+            forsikringsNrLabel.setText(Integer.toString(kunde.getForsikringsNr()));
+            etternavnLabel.setText(kunde.getEtternavn());
+            fornavnLabel.setText(kunde.getFornavn());
+            adresseFakturaLabel.setText(kunde.getAdresseFaktura());
+            datoKundeOpprettetLabel.setText(kunde.getDatoKundeOpprettet().toString());
+            forsikringerLabel.setText(Integer.toString(kunde.getForsikringer().size()));
+            skademeldingerLabel.setText(Integer.toString(kunde.getSkademeldinger().size()));
+            erstatningerUbetalteLabel.setText(Integer.toString(kunde.getErstatningerUbetalte().size()));
+
+        } else {
+
+            // Ingen kunde valgt, fjerner all tekst.
+            forsikringsNrLabel.setText("");
+            etternavnLabel.setText("");
+            fornavnLabel.setText("");
+            adresseFakturaLabel.setText("");
+            datoKundeOpprettetLabel.setText("");
+            forsikringerLabel.setText("");
+            skademeldingerLabel.setText("");
+            erstatningerUbetalteLabel.setText("");
+
+        }
     }
 
     /**

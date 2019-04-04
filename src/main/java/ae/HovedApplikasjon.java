@@ -23,6 +23,7 @@ public class HovedApplikasjon extends Application {
 
     /**
      * Konstruktør for hovedapplikasjon med dummy-data for å teste.
+     * TODO: Det må lages en metode for å opprette unikt Forsikringsnr
      */
     public HovedApplikasjon() {
         kundeData.add(new Kunde("Eidsvold", "Hans-Erling", "Oslo"));
@@ -57,6 +58,7 @@ public class HovedApplikasjon extends Application {
             // Overfør hovedapplikasjonen til rot-controlleren.
             RotOppsettController rotOppsettController = loader.getController();
             rotOppsettController.setHovedApplikasjon(this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

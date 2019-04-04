@@ -51,6 +51,7 @@ public class RotOppsettController {
 
             KundeController kundeController = loader.getController();
             kundeController.setHovedApplikasjon(hovedApplikasjon);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
