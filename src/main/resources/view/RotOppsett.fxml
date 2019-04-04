@@ -7,13 +7,13 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ae.controller.RotOppsettController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="Meny">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Kunder" />
+                        <MenuItem mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Kunder" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Skademelding" />
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -21,24 +21,26 @@
                         <MenuItem mnemonicParsing="false" text="Hus- og innboforsikring" />
                         <MenuItem mnemonicParsing="false" text="Fritidsboligforsikring" />
                         <MenuItem mnemonicParsing="false" text="Reiseforsikring" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Fil">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Lagre til fil" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Hent fra til" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Hjelp">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Om" />
+                        <MenuItem mnemonicParsing="false" text="Om Forsikring AS" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
     </top>
-   <center>
-      <Label text="Velg handlinger under Meny i oppgavelinjen" BorderPane.alignment="CENTER" />
-   </center>
+    <center>
+        <Label text="Velg handlinger under Meny i menylinjen" BorderPane.alignment="CENTER" />
+    </center>
 </BorderPane>

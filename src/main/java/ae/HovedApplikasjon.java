@@ -1,6 +1,8 @@
 package ae;
 
 import java.io.IOException;
+
+import ae.controller.RotOppsettController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,7 +23,6 @@ public class HovedApplikasjon extends Application {
         this.hovedStage.setTitle("Forsikring AS");
 
         initierRotOppsett();
-        visKundeOversikt();
 
     }
 
@@ -39,23 +40,10 @@ public class HovedApplikasjon extends Application {
             Scene scene = new Scene(rotOppsett);
             hovedStage.setScene(scene);
             hovedStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * Viser kundeoversikten inne i rotoppsettet.
-     */
-    public void visKundeOversikt() {
-        try {
-            // Last inn kundeoversikten fra fxml-fil.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeView.fxml"));
-            AnchorPane kundeOversikt = (AnchorPane) loader.load();
-
-            // Plasser kundeoversikten i senter av rotoppsettet.
-            rotOppsett.setCenter(kundeOversikt);
+            // Overfør controllere
+            RotOppsettController rotOppsettController = loader.getController();
+            rotOppsettController.setHovedApplikasjon(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,4 +56,6 @@ public class HovedApplikasjon extends Application {
     public Stage getHovedStage() {
         return hovedStage;
     }
+
+    public BorderPane getRotOppsett() { return rotOppsett; }
 }
