@@ -10,8 +10,6 @@ import java.io.IOException;
 /**
  * Controller for rotoppsettet. Rotoppsettet inneholder menylinjen
  * og plass hvor andre views skal plasserers.
- *
- * @author Hans-Erling Eidsvold
  */
 public class RotOppsettController {
 
