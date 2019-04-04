@@ -1,9 +1,14 @@
 package ae;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import ae.controller.RotOppsettController;
+import ae.model.Forsikring;
 import ae.model.Kunde;
+import ae.model.Skademelding;
+import ae.util.IdUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,8 +31,16 @@ public class HovedApplikasjon extends Application {
      * TODO: Det må lages en metode for å opprette unikt Forsikringsnr
      */
     public HovedApplikasjon() {
-        kundeData.add(new Kunde("Eidsvold", "Hans-Erling", "Oslo"));
-        kundeData.add(new Kunde("Andresen", "Are", "Drøbak"));
+        kundeData.add(new Kunde(0, LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
+                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
+        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
+                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
+        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
+                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
+        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
+                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
+        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
+                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
     }
 
     @Override

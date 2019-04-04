@@ -53,27 +53,27 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label text="Forsikringsnummer" />
-                                <Label text="Etternavn" GridPane.rowIndex="1" />
-                                <Label text="Fornavn" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="149.0" text="Forsikringer" GridPane.rowIndex="5" />
-                                <Label fx:id="forsikringsNrLabel" text="Label" GridPane.columnIndex="1" />
-                                <Label fx:id="etternavnLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label fx:id="fornavnLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Label fx:id="forsikringerLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <Label fx:id="skademeldingerLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                <Label fx:id="erstatningerUbetalteLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="149.0" text="Skademeldinger" GridPane.rowIndex="6" />
-                        <Button mnemonicParsing="false" text="Ubetalte erstatninger" GridPane.rowIndex="7" />
-                        <Label text="Adresse faktura" GridPane.rowIndex="3" />
-                        <Label fx:id="adresseFakturaLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="Dato ny kunde" GridPane.rowIndex="4" />
-                        <Label fx:id="datoKundeOpprettetLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Label text="Forsikringsnummer" wrapText="true" />
+                                <Label text="Etternavn" wrapText="true" GridPane.rowIndex="1" />
+                                <Label text="Fornavn" wrapText="true" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="149.0" text="Forsikringer" wrapText="true" GridPane.rowIndex="5" />
+                                <Label fx:id="forsikringsNrLabel" text="Label" wrapText="true" GridPane.columnIndex="1" />
+                                <Label fx:id="etternavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label fx:id="fornavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label fx:id="forsikringerLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <Label fx:id="skademeldingerLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                <Label fx:id="erstatningerUbetalteLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="149.0" text="Skademeldinger" wrapText="true" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" text="Ubetalte erstatninger" wrapText="true" GridPane.rowIndex="7" />
+                        <Label text="Adresse faktura" wrapText="true" GridPane.rowIndex="3" />
+                        <Label fx:id="adresseFakturaLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Dato ny kunde" wrapText="true" GridPane.rowIndex="4" />
+                        <Label fx:id="datoKundeOpprettetLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                             </children>
                         </GridPane>
                         <ButtonBar layoutX="54.0" layoutY="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <buttons>
-                                <Button mnemonicParsing="false" text="Ny" />
+                                <Button mnemonicParsing="false" onAction="#gåTilNyKundePopup" text="Ny" />
                                 <Button mnemonicParsing="false" text="Rediger" />
                                 <Button mnemonicParsing="false" text="Slett" />
                             </buttons>

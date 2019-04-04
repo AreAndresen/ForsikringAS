@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ae.util.IdUtil;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -29,15 +30,21 @@ public class Kunde {
     private final ObjectProperty<List<Skademelding>> erstatningerUbetalte;
 
     /**
+     * Konstruktør for midlertidig kunde i Ny kunde.
+     */
+    public Kunde() {
+        this(0, null, null, null, null);
+    }
+
+    /**
      * Konstruktør for Ny kunde.
      */
-    public Kunde(String etternavn, String fornavn, String adresseFaktura) {
-
-        // Instansiere unikt forsikringsnr og dato for kundens opprettelse.
-        this.forsikringsNr = new SimpleIntegerProperty(); // TODO: unikt nummer
-        this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+    public Kunde(int forsikringsNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
+                 String adresseFaktura) {
 
         // Ta imot parametere.
+        this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
+        this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(datoKundeOpprettet);
         this.etternavn = new SimpleStringProperty(etternavn);
         this.fornavn = new SimpleStringProperty(fornavn);
         this.adresseFaktura = new SimpleStringProperty(adresseFaktura);
@@ -66,14 +73,12 @@ public class Kunde {
 
     /**
      * Getter og settere pluss get-metoder for Property-feltene.
-     *
-     * Felter som forsikringsNr og datoKundeOpprettet skal ikke endres,
-     * derfor har de ikke settere.
      */
     // forsikringsNr
     public int getForsikringsNr() {
         return forsikringsNr.get();
     }
+    public void setForsikringsNr(int forsikringsNr) { this.forsikringsNr.set(forsikringsNr);}
     public IntegerProperty forsikringsNrProperty() {
         return forsikringsNr;
     }
@@ -82,6 +87,7 @@ public class Kunde {
     public LocalDate getDatoKundeOpprettet() {
         return datoKundeOpprettet.get();
     }
+    public void setDatoKundeOpprettet(LocalDate datoKundeOpprettet) { this.datoKundeOpprettet.set(datoKundeOpprettet); }
     public ObjectProperty<LocalDate> datoKundeOpprettetProperty() {
         return datoKundeOpprettet;
     }

@@ -1,12 +1,18 @@
 package ae.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ae.HovedApplikasjon;
 import ae.model.Kunde;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -69,6 +75,10 @@ public class KundeController {
                 (observable, gammelData, nyData) -> visKundensDetaljer(nyData));
     }
 
+    @FXML
+    public void gåTilNyKundePopup() {
+    }
+
     /**
      * Fyller ut info-feltene om hver kunde.
      * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
@@ -104,8 +114,8 @@ public class KundeController {
     }
 
     /**
-     * Kalles fra hovedapplikasjonen for å gi en referanse til seg
-     * selv.
+     * Kalles fra RotOppsettController for å gi en referanse til
+     * hovedapplikasjonen.
      *
      * @param hovedApplikasjon
      */
