@@ -2,6 +2,7 @@ package ae.controller;
 
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
+import ae.model.exceptions.UgyldigAdresseFakturaException;
 import ae.model.exceptions.UgyldigEtternavnException;
 import ae.model.exceptions.UgyldigFornavnException;
 import javafx.fxml.FXML;
@@ -81,8 +82,8 @@ public class KundeRedigerPopupController {
         //Bytter set her ut med metoder (se under)
         msg += redigerFornavn();
         msg += redigerEtternavn();
+        msg += redigerAdresseFaktura();
 
-        kundeÅRedigere.setAdresseFaktura(adresseFakturaField.getText());
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
 
@@ -115,6 +116,18 @@ public class KundeRedigerPopupController {
             kundeÅRedigere.setEtternavn(etternavnField.getText());
         }
         catch (UgyldigEtternavnException e) {
+            msg +=e.getMessage()+"\n";
+        }
+        return msg;
+    }
+
+    //oppdaterer adresseFaktura
+    private String redigerAdresseFaktura() {
+        String msg = "";
+        try {
+            kundeÅRedigere.setAdresseFaktura(adresseFakturaField.getText());
+        }
+        catch (UgyldigAdresseFakturaException e) {
             msg +=e.getMessage()+"\n";
         }
         return msg;

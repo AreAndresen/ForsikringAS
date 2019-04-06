@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ae.model.exceptions.UgyldigAdresseFakturaException;
 import ae.model.exceptions.UgyldigEtternavnException;
 import ae.model.exceptions.UgyldigFornavnException;
 import ae.util.IdUtil;
@@ -128,7 +129,11 @@ public class Kunde {
     public String getAdresseFaktura() {
         return adresseFaktura.get();
     }
+    //Set med exception
     public void setAdresseFaktura(String adresseFaktura) {
+        if(adresseFaktura == null || adresseFaktura.length() == 0){
+            throw new UgyldigAdresseFakturaException();
+        }
         this.adresseFaktura.set(adresseFaktura);
     }
     public StringProperty adresseFakturaProperty() {
