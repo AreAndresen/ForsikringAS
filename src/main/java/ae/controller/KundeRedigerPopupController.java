@@ -86,7 +86,8 @@ public class KundeRedigerPopupController {
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
 
-        if(msg.length() != 0){ //kontrollerer etter aktivert feilmeldinger
+        //kontrollerer etter aktiverte feilmeldinger
+        if(msg.length() != 0){
             UgyldigInputHandler.generateAlert(msg); //alert
         }
         else{
