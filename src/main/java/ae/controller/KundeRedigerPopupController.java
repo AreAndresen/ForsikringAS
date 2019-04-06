@@ -19,6 +19,7 @@ public class KundeRedigerPopupController {
     private Stage popupStage;
     private Kunde kundeÅRedigere;
     private boolean bekreft = false;
+    private boolean inputOK = false;
 
     @FXML
     private void initialize() { }
@@ -65,11 +66,15 @@ public class KundeRedigerPopupController {
         // TODO: input-validering med exceptions venter
         oppdaterKunde();
         bekreft = true;
-        //popupStage.close();
+
+        if(inputOK){ //implementert en boolean for å lukke om input er riktig/feil
+            popupStage.close();
+        }
     }
 
     public void oppdaterKunde() {
         String msg = "";
+
         kundeÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
         kundeÅRedigere.setEtternavn(etternavnField.getText());
 
@@ -82,6 +87,9 @@ public class KundeRedigerPopupController {
 
         if(msg.length() != 0){
             UgyldigInputHandler.generateAlert(msg);
+        }
+        else{
+            inputOK = true; //riktig input
         }
     }
 
