@@ -1,6 +1,8 @@
 package ae.controller;
 
+import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
+import ae.model.exceptions.UgyldigFornavnException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -63,16 +65,37 @@ public class KundeRedigerPopupController {
         // TODO: input-validering med exceptions venter
         oppdaterKunde();
         bekreft = true;
-        popupStage.close();
+        //popupStage.close();
     }
 
     public void oppdaterKunde() {
+        String msg = "";
         kundeÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
         kundeÅRedigere.setEtternavn(etternavnField.getText());
-        kundeÅRedigere.setFornavn(fornavnField.getText());
+
+        //Bytter set her ut med metoder (se under)
+        msg += redigerFornavn();
+
         kundeÅRedigere.setAdresseFaktura(adresseFakturaField.getText());
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
+
+        if(msg.length() != 0){
+            UgyldigInputHandler.generateAlert(msg);
+        }
+    }
+
+    //TODO: METODER FOR ENDRING AV KUNDE
+    //oppdaterer navn
+    private String redigerFornavn() {
+        String msg = "";
+        try {
+            kundeÅRedigere.setFornavn(fornavnField.getText());
+        }
+        catch (UgyldigFornavnException e) {
+            msg +=e.getMessage()+"\n";
+        }
+        return msg;
     }
 
     @FXML

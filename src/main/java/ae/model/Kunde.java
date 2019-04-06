@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ae.model.exceptions.UgyldigFornavnException;
 import ae.util.IdUtil;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -107,7 +108,11 @@ public class Kunde {
     public String getFornavn() {
         return fornavn.get();
     }
+    //Set med exception
     public void setFornavn(String fornavn) {
+        if(fornavn == null || fornavn.length() == 0){
+            throw new UgyldigFornavnException();
+        }
         this.fornavn.set(fornavn);
     }
     public StringProperty fornavnProperty() {
