@@ -2,6 +2,7 @@ package ae.controller;
 
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
+import ae.model.exceptions.UgyldigEtternavnException;
 import ae.model.exceptions.UgyldigFornavnException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -76,17 +77,17 @@ public class KundeRedigerPopupController {
         String msg = "";
 
         kundeÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
-        kundeÅRedigere.setEtternavn(etternavnField.getText());
 
         //Bytter set her ut med metoder (se under)
         msg += redigerFornavn();
+        msg += redigerEtternavn();
 
         kundeÅRedigere.setAdresseFaktura(adresseFakturaField.getText());
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
 
-        if(msg.length() != 0){
-            UgyldigInputHandler.generateAlert(msg);
+        if(msg.length() != 0){ //kontrollerer etter aktivert feilmeldinger
+            UgyldigInputHandler.generateAlert(msg); //alert
         }
         else{
             inputOK = true; //riktig input
@@ -94,13 +95,25 @@ public class KundeRedigerPopupController {
     }
 
     //TODO: METODER FOR ENDRING AV KUNDE
-    //oppdaterer navn
+    //oppdaterer fornavn
     private String redigerFornavn() {
         String msg = "";
         try {
             kundeÅRedigere.setFornavn(fornavnField.getText());
         }
         catch (UgyldigFornavnException e) {
+            msg +=e.getMessage()+"\n";
+        }
+        return msg;
+    }
+
+    //oppdaterer etternavn
+    private String redigerEtternavn() {
+        String msg = "";
+        try {
+            kundeÅRedigere.setEtternavn(etternavnField.getText());
+        }
+        catch (UgyldigEtternavnException e) {
             msg +=e.getMessage()+"\n";
         }
         return msg;

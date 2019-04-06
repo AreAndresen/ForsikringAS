@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ae.model.exceptions.UgyldigEtternavnException;
 import ae.model.exceptions.UgyldigFornavnException;
 import ae.util.IdUtil;
 import javafx.beans.property.IntegerProperty;
@@ -97,7 +98,11 @@ public class Kunde {
     public String getEtternavn() {
         return etternavn.get();
     }
+    //Set med exception
     public void setEtternavn(String etternavn) {
+        if(etternavn == null || etternavn.length() == 0){
+            throw new UgyldigEtternavnException();
+        }
         this.etternavn.set(etternavn);
     }
     public StringProperty etternavnProperty() {
