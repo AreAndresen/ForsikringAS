@@ -1,11 +1,10 @@
 package ae.controller;
 
+import ae.util.IdUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import ae.model.Kunde;
 import javafx.scene.layout.AnchorPane;
@@ -14,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Controller for KundeView. KundeView inneholder visning av kunder, legge til
@@ -37,21 +37,8 @@ public class KundeController {
 
     // Labels.
     @FXML
-    private Label forsikringsNrLabel;
-    @FXML
-    private Label etternavnLabel;
-    @FXML
-    private Label fornavnLabel;
-    @FXML
-    private Label adresseFakturaLabel;
-    @FXML
-    private Label datoKundeOpprettetLabel;
-    @FXML
-    private Label forsikringerLabel;
-    @FXML
-    private Label skademeldingerLabel;
-    @FXML
-    private Label erstatningerUbetalteLabel;
+    private Label forsikringsNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
+            datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
 
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
@@ -77,6 +64,51 @@ public class KundeController {
 
     @FXML
     public void gåTilNyKundePopup() {
+        Kunde nyKunde = new Kunde(IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData()));
+        boolean bekreftTrykket = hovedApplikasjon.visNyKundePopup(nyKunde);
+
+        if (bekreftTrykket) {
+            hovedApplikasjon.getKundeData().add(nyKunde);
+        }
+    }
+
+    @FXML
+    public void gåTilRedigerKundePopup() {
+        Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtKunde != null) {
+            boolean bekreftTrykket = hovedApplikasjon.visRedigerKundePopup(valgtKunde);
+
+            if (bekreftTrykket) {
+                visKundensDetaljer(valgtKunde);
+            }
+        }
+
+        // TODO: else: alert boks
+    }
+
+    /**
+     * Sletter valgt kunde fra listen, med bekreftelse
+     */
+    @FXML
+    public void slettValgtKunde() {
+        int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
+
+        Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
+        String kundeInfo = valgtKunde.getForsikringsNr() +", "+ valgtKunde.getFornavn() +" "+ valgtKunde.getEtternavn();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(hovedApplikasjon.getHovedStage());
+        alert.setTitle("Bekreftelse");
+        alert.setHeaderText("Bekreft sletting av kunde");
+        alert.setContentText("Er du sikker på at du ønsker å slette kunde " + kundeInfo +"?");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            kundeTabell.getItems().remove(valgtKundeIndex);
+        }
     }
 
     /**

@@ -4,18 +4,22 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import ae.controller.KundeRedigerPopupController;
 import ae.controller.RotOppsettController;
 import ae.model.Forsikring;
 import ae.model.Kunde;
 import ae.model.Skademelding;
 import ae.util.IdUtil;
+import com.sun.javafx.iio.ios.IosDescriptor;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HovedApplikasjon extends Application {
@@ -28,7 +32,6 @@ public class HovedApplikasjon extends Application {
 
     /**
      * Konstruktør for hovedapplikasjon med dummy-data for å teste.
-     * TODO: Det må lages en metode for å opprette unikt Forsikringsnr
      */
     public HovedApplikasjon() {
         kundeData.add(new Kunde(0, LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
@@ -97,5 +100,67 @@ public class HovedApplikasjon extends Application {
      */
     public ObservableList<Kunde> getKundeData() {
         return kundeData;
+    }
+
+    /**
+     * Åpne Ny kunde og Endre kunde popupen.
+     *
+     * @param kunde kunden som skal redigeres
+     * @return true dersom bruker trykker Bekreft
+     */
+    public boolean visNyKundePopup(Kunde kunde) {
+        try {
+            FXMLLoader loader = hentKundeRedigerPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Registrer ny kunde");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedStage);
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
+            kundeRedigerPopupController.setPopupStage(popupStage);
+            kundeRedigerPopupController.setKundeÅRedigere(kunde);
+
+            popupStage.showAndWait();
+
+            return kundeRedigerPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean visRedigerKundePopup(Kunde kunde) {
+        try {
+            FXMLLoader loader = hentKundeRedigerPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Rediger eksisterende kunde");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedStage);
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
+            kundeRedigerPopupController.setPopupStage(popupStage);
+            kundeRedigerPopupController.setKundeÅRedigere(kunde);
+
+            popupStage.showAndWait();
+
+            return kundeRedigerPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public FXMLLoader hentKundeRedigerPopup() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeRedigerPopupView.fxml"));
+        return loader;
     }
 }

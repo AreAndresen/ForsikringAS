@@ -74,8 +74,8 @@
                         <ButtonBar layoutX="54.0" layoutY="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <buttons>
                                 <Button mnemonicParsing="false" onAction="#gåTilNyKundePopup" text="Ny" />
-                                <Button mnemonicParsing="false" text="Rediger" />
-                                <Button mnemonicParsing="false" text="Slett" />
+                                <Button mnemonicParsing="false" onAction="#gåTilRedigerKundePopup" text="Rediger" />
+                                <Button mnemonicParsing="false" onAction="#slettValgtKunde" text="Slett" />
                             </buttons>
                         </ButtonBar>
                     </children>

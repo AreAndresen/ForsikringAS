@@ -32,8 +32,8 @@ public class Kunde {
     /**
      * Konstruktør for midlertidig kunde i Ny kunde.
      */
-    public Kunde() {
-        this(0, null, null, null, null);
+    public Kunde(int forsikringsNr) {
+        this(forsikringsNr, LocalDate.now(), null, null, null);
     }
 
     /**

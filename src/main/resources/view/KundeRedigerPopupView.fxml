@@ -39,8 +39,8 @@
         </GridPane>
         <ButtonBar layoutX="176.0" layoutY="233.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
             <buttons>
-                <Button mnemonicParsing="false" text="Bekreft" />
-                <Button mnemonicParsing="false" text="Avbryt" />
+                <Button mnemonicParsing="false" onAction="#bekreftTrykkes" text="Bekreft" />
+                <Button mnemonicParsing="false" onAction="#avbrytTrykkes" text="Avbryt" />
             </buttons>
         </ButtonBar>
     </children>
