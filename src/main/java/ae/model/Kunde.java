@@ -1,5 +1,8 @@
 package ae.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,21 +22,21 @@ import javafx.beans.property.StringProperty;
 /**
  * Domenemodell for kunder
  */
-public class Kunde implements Serializable, Observable {
+public class Kunde implements Serializable {
     private static final long serialVersionUID = 1;
-    private ObservableHjelper observersHandler = new ObservableHjelper();
 
     /**
      * Nødvendige datafelt for å kommunisere med TableView.
+     * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
      */
-    private final IntegerProperty forsikringsNr;
-    private final ObjectProperty<LocalDate> datoKundeOpprettet;
-    private final StringProperty etternavn;
-    private final StringProperty fornavn;
-    private final StringProperty adresseFaktura;
-    private final ObjectProperty<List<Forsikring>> forsikringer;
-    private final ObjectProperty<List<Skademelding>> skademeldinger;
-    private final ObjectProperty<List<Skademelding>> erstatningerUbetalte;
+    private transient IntegerProperty forsikringsNr;
+    private transient ObjectProperty<LocalDate> datoKundeOpprettet;
+    private transient StringProperty etternavn;
+    private transient StringProperty fornavn;
+    private transient StringProperty adresseFaktura;
+    private transient ObjectProperty<List<Forsikring>> forsikringer;
+    private transient ObjectProperty<List<Skademelding>> skademeldinger;
+    private transient ObjectProperty<List<Skademelding>> erstatningerUbetalte;
 
     /**
      * Konstruktør for midlertidig kunde i Ny kunde.
@@ -86,7 +89,6 @@ public class Kunde implements Serializable, Observable {
     }
     public void setForsikringsNr(int forsikringsNr) {
         this.forsikringsNr.set(forsikringsNr);
-        observersHandler.update();
     }
     public IntegerProperty forsikringsNrProperty() {
         return forsikringsNr;
@@ -98,7 +100,6 @@ public class Kunde implements Serializable, Observable {
     }
     public void setDatoKundeOpprettet(LocalDate datoKundeOpprettet) {
         this.datoKundeOpprettet.set(datoKundeOpprettet);
-        observersHandler.update();
     }
     public ObjectProperty<LocalDate> datoKundeOpprettetProperty() {
         return datoKundeOpprettet;
@@ -114,7 +115,6 @@ public class Kunde implements Serializable, Observable {
             throw new UgyldigEtternavnException();
         }
         this.etternavn.set(etternavn);
-        observersHandler.update();
     }
     public StringProperty etternavnProperty() {
         return etternavn;
@@ -130,7 +130,6 @@ public class Kunde implements Serializable, Observable {
             throw new UgyldigFornavnException();
         }
         this.fornavn.set(fornavn);
-        observersHandler.update();
     }
     public StringProperty fornavnProperty() {
         return fornavn;
@@ -146,7 +145,6 @@ public class Kunde implements Serializable, Observable {
             throw new UgyldigAdresseFakturaException();
         }
         this.adresseFaktura.set(adresseFaktura);
-        observersHandler.update();
     }
     public StringProperty adresseFakturaProperty() {
         return adresseFaktura;
@@ -158,7 +156,6 @@ public class Kunde implements Serializable, Observable {
     }
     public void setForsikringer(List<Forsikring> forsikringer) {
         this.forsikringer.set(forsikringer);
-        observersHandler.update();
     }
     public ObjectProperty<List<Forsikring>> forsikringerProperty() {
         return forsikringer;
@@ -170,7 +167,6 @@ public class Kunde implements Serializable, Observable {
     }
     public void setSkademeldinger(List<Skademelding> skademeldinger) {
         this.skademeldinger.set(skademeldinger);
-        observersHandler.update();
     }
     public ObjectProperty<List<Skademelding>> skademeldingerProperty() {
         return skademeldinger;
@@ -182,15 +178,40 @@ public class Kunde implements Serializable, Observable {
     }
     public void setErstatningerUbetalte(List<Skademelding> skademeldinger) {
         this.skademeldinger.set(skademeldinger);
-        observersHandler.update();
     }
     public ObjectProperty<List<Skademelding>> erstatningerUbetalteProperty() {
         return erstatningerUbetalte;
     }
 
-    @Override
-    public void observe(Observer o){
-        observersHandler.add(o);
+    /**
+     * Tilpasset writeObject-serialisering av Kunde-objektet da ObservableList og
+     * Property-felter ikke er serialiserbart.
+     */
+    private void writeObject(ObjectOutputStream os) throws IOException {
+        os.defaultWriteObject();
+        os.writeObject(getForsikringsNr());
+        os.writeObject(getDatoKundeOpprettet());
+        os.writeObject(getEtternavn());
+        os.writeObject(getFornavn());
+        os.writeObject(getAdresseFaktura());
+        os.writeObject(getForsikringer());
+        os.writeObject(getSkademeldinger());
+        os.writeObject(getErstatningerUbetalte());
+    }
+
+    /**
+     * Tilpasset readObject-deserialisering av Kunde-objektet.
+     */
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+        is.defaultReadObject();
+        this.forsikringsNr = new SimpleIntegerProperty((int)is.readObject());
+        this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
+        this.etternavn = new SimpleStringProperty((String)is.readObject());
+        this.fornavn = new SimpleStringProperty((String)is.readObject());
+        this.adresseFaktura = new SimpleStringProperty((String)is.readObject());
+        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>((List<Forsikring>)is.readObject());
+        this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>((List<Skademelding>)is.readObject());
+        this.erstatningerUbetalte = new SimpleObjectProperty<List<Skademelding>>((List<Skademelding>)is.readObject());
     }
 
     @Override

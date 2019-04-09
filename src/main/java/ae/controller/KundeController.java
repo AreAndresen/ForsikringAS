@@ -10,6 +10,7 @@ import ae.HovedApplikasjon;
 import ae.model.Kunde;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -73,7 +74,11 @@ public class KundeController {
             try {
                 fb.lagreKunde(new KundeCsvStrategy(), hovedApplikasjon.getKundeData(), "test.csv");
                 fb.lagreKunde(new KundeJobjStrategy(), hovedApplikasjon.getKundeData(), "test.jobj");
+
+                System.out.println(fb.hentKunde(new KundeJobjStrategy(), "test.jobj"));
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

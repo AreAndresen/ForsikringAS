@@ -1,11 +1,11 @@
 package ae.model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class KundeJobjStrategy implements KundeFilStrategy {
     @Override
@@ -16,11 +16,28 @@ public class KundeJobjStrategy implements KundeFilStrategy {
             FileOutputStream fos = new FileOutputStream(path);
             out = new ObjectOutputStream(fos);
 
-            out.writeObject(kundeTabell);
+            out.writeObject(new ArrayList<Kunde>(kundeTabell));
         } finally {
             if (out != null) {
                 out.close();
             }
         }
+    }
+
+    public ObservableList<Kunde> lesKundeFraFil(String path) throws IOException, ClassNotFoundException {
+        ObjectInputStream is = null;
+        ObservableList<Kunde> kunder = FXCollections.observableArrayList();
+        try {
+
+            FileInputStream fis = new FileInputStream(path);
+            is = new ObjectInputStream(fis);
+
+            kunder.setAll((List<Kunde>)is.readObject());
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+        return kunder;
     }
 }

@@ -1,11 +1,14 @@
 package ae.model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KundeCsvStrategy implements KundeFilStrategy {
     @Override
@@ -21,5 +24,11 @@ public class KundeCsvStrategy implements KundeFilStrategy {
                 skriver.close();
             }
         }
+    }
+
+    @Override
+    public ObservableList<Kunde> lesKundeFraFil(String path) throws IOException, ClassNotFoundException {
+
+        return null;
     }
 }
