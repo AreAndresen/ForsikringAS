@@ -31,20 +31,9 @@ public class HovedApplikasjon extends Application {
     private ObservableList<Kunde> kundeData = FXCollections.observableArrayList();
 
     /**
-     * Konstruktør for hovedapplikasjon med dummy-data for å teste.
+     * Konstruktør for hovedapplikasjon. Sett inn dummy-data for testing
      */
-    public HovedApplikasjon() {
-        kundeData.add(new Kunde(0, LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
-                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
-        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
-                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
-        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
-                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
-        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
-                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
-        kundeData.add(new Kunde(IdUtil.genererLøpenummer(kundeData), LocalDate.now(), "Hansen", "Jonas", "Oslo", new ArrayList<Forsikring>(),
-                new ArrayList<Skademelding>(), new ArrayList<Skademelding>()));
-    }
+    public HovedApplikasjon() { }
 
     @Override
     public void start(Stage hovedStage) {

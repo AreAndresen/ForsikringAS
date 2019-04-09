@@ -1,5 +1,6 @@
 package ae.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,9 @@ import javafx.beans.property.StringProperty;
 /**
  * Domenemodell for kunder
  */
-public class Kunde {
+public class Kunde implements Serializable, Observable {
+    private static final long serialVersionUID = 1;
+    private ObservableHjelper observersHandler = new ObservableHjelper();
 
     /**
      * Nødvendige datafelt for å kommunisere med TableView.
@@ -81,7 +84,10 @@ public class Kunde {
     public int getForsikringsNr() {
         return forsikringsNr.get();
     }
-    public void setForsikringsNr(int forsikringsNr) { this.forsikringsNr.set(forsikringsNr);}
+    public void setForsikringsNr(int forsikringsNr) {
+        this.forsikringsNr.set(forsikringsNr);
+        observersHandler.update();
+    }
     public IntegerProperty forsikringsNrProperty() {
         return forsikringsNr;
     }
@@ -90,7 +96,10 @@ public class Kunde {
     public LocalDate getDatoKundeOpprettet() {
         return datoKundeOpprettet.get();
     }
-    public void setDatoKundeOpprettet(LocalDate datoKundeOpprettet) { this.datoKundeOpprettet.set(datoKundeOpprettet); }
+    public void setDatoKundeOpprettet(LocalDate datoKundeOpprettet) {
+        this.datoKundeOpprettet.set(datoKundeOpprettet);
+        observersHandler.update();
+    }
     public ObjectProperty<LocalDate> datoKundeOpprettetProperty() {
         return datoKundeOpprettet;
     }
@@ -105,6 +114,7 @@ public class Kunde {
             throw new UgyldigEtternavnException();
         }
         this.etternavn.set(etternavn);
+        observersHandler.update();
     }
     public StringProperty etternavnProperty() {
         return etternavn;
@@ -120,6 +130,7 @@ public class Kunde {
             throw new UgyldigFornavnException();
         }
         this.fornavn.set(fornavn);
+        observersHandler.update();
     }
     public StringProperty fornavnProperty() {
         return fornavn;
@@ -135,6 +146,7 @@ public class Kunde {
             throw new UgyldigAdresseFakturaException();
         }
         this.adresseFaktura.set(adresseFaktura);
+        observersHandler.update();
     }
     public StringProperty adresseFakturaProperty() {
         return adresseFaktura;
@@ -146,6 +158,7 @@ public class Kunde {
     }
     public void setForsikringer(List<Forsikring> forsikringer) {
         this.forsikringer.set(forsikringer);
+        observersHandler.update();
     }
     public ObjectProperty<List<Forsikring>> forsikringerProperty() {
         return forsikringer;
@@ -157,6 +170,7 @@ public class Kunde {
     }
     public void setSkademeldinger(List<Skademelding> skademeldinger) {
         this.skademeldinger.set(skademeldinger);
+        observersHandler.update();
     }
     public ObjectProperty<List<Skademelding>> skademeldingerProperty() {
         return skademeldinger;
@@ -168,8 +182,20 @@ public class Kunde {
     }
     public void setErstatningerUbetalte(List<Skademelding> skademeldinger) {
         this.skademeldinger.set(skademeldinger);
+        observersHandler.update();
     }
     public ObjectProperty<List<Skademelding>> erstatningerUbetalteProperty() {
         return erstatningerUbetalte;
+    }
+
+    @Override
+    public void observe(Observer o){
+        observersHandler.add(o);
+    }
+
+    @Override
+    public String toString() {
+        return getForsikringsNr() +","+ getDatoKundeOpprettet() +","+ getEtternavn() +","+ getFornavn() +","+
+                getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger() +","+ getErstatningerUbetalte();
     }
 }

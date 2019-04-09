@@ -1,15 +1,13 @@
 package ae.controller;
 
+import ae.model.KundeCsvStrategy;
+import ae.model.Filbehandling;
+import ae.model.KundeJobjStrategy;
 import ae.util.IdUtil;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import ae.model.Kunde;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -40,6 +38,8 @@ public class KundeController {
     private Label forsikringsNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
             datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
 
+    private Filbehandling fb = new Filbehandling();
+
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
 
@@ -69,6 +69,13 @@ public class KundeController {
 
         if (bekreftTrykket) {
             hovedApplikasjon.getKundeData().add(nyKunde);
+            // @DETTE ER EN TEST !!
+            try {
+                fb.lagreKunde(new KundeCsvStrategy(), hovedApplikasjon.getKundeData(), "test.csv");
+                fb.lagreKunde(new KundeJobjStrategy(), hovedApplikasjon.getKundeData(), "test.jobj");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
