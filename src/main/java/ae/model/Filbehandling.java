@@ -9,11 +9,11 @@ import java.util.List;
 
 public class Filbehandling {
 
-    public void lagreKunde(KundeFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path) throws IOException {
+    public static void lagreKunde(KundeFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path) throws IOException {
         lagringsmetode.skrivKundeTilFil(kundeTabell, path);
     }
 
-    public ObservableList<Kunde> hentKunde(KundeFilStrategy hentemetode, String path) throws IOException, ClassNotFoundException {
+    public static ObservableList<Kunde> hentKunde(KundeFilStrategy hentemetode, String path) throws IOException, ClassNotFoundException {
         return hentemetode.lesKundeFraFil(path);
     }
 }

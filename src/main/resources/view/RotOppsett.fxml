@@ -27,9 +27,9 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Fil">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Lagre til fil" />
+                        <MenuItem fx:id="lagreFilMenuItem" disable="true" mnemonicParsing="false" onAction="#lagreFilTrykket" text="Lagre til fil" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Hent fra til" />
+                        <MenuItem fx:id="hentFilMenuItem" mnemonicParsing="false" text="Hent fra til" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Hjelp">

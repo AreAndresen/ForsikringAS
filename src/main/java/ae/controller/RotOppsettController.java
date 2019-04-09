@@ -1,14 +1,20 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
+import ae.model.Filbehandling;
 import ae.model.Kunde;
+import ae.model.KundeJobjStrategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * Controller for RotOppsett. Rotoppsettet inneholder menylinjen
@@ -18,6 +24,9 @@ public class RotOppsettController {
 
     // Referanse til hovedapplikasjonen
     private HovedApplikasjon hovedApplikasjon;
+
+    @FXML
+    private MenuItem lagreFilMenuItem, hentFilMenuItem;
 
     public RotOppsettController() { }
 
@@ -48,12 +57,50 @@ public class RotOppsettController {
 
             // Plasser kundeoversikten i senter av rotoppsettet.
             hovedApplikasjon.getRotOppsett().setCenter(kundeOversikt);
+            lagreFilMenuItem.setDisable(false);
+            hentFilMenuItem.setDisable(false);
 
             KundeController kundeController = loader.getController();
             kundeController.setHovedApplikasjon(hovedApplikasjon);
 
+
+
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void lagreFilTrykket() {
+        File filPath = visLagreFilVelger();
+
+        if (filPath.getPath().endsWith(".jobj")) {
+            try {
+                Filbehandling.lagreKunde(new KundeJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * FileChooser lagre fil
+     */
+    private File visLagreFilVelger() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Hent en fil");
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV-fil (.csv)", "*.csv"),
+                new FileChooser.ExtensionFilter("JOBJ-fil (.jobj)", "*.jobj")
+        );
+
+        File fil = fileChooser.showSaveDialog(hovedApplikasjon.getHovedStage());
+
+        if (fil != null) {
+            return fil;
+        } else {
+            return null;
         }
     }
 }

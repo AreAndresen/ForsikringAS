@@ -70,17 +70,6 @@ public class KundeController {
 
         if (bekreftTrykket) {
             hovedApplikasjon.getKundeData().add(nyKunde);
-            // @DETTE ER EN TEST !!
-            try {
-                fb.lagreKunde(new KundeCsvStrategy(), hovedApplikasjon.getKundeData(), "test.csv");
-                fb.lagreKunde(new KundeJobjStrategy(), hovedApplikasjon.getKundeData(), "test.jobj");
-
-                System.out.println(fb.hentKunde(new KundeJobjStrategy(), "test.jobj"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
         }
     }
 
