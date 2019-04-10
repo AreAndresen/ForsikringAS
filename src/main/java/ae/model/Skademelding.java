@@ -141,40 +141,38 @@ public class Skademelding implements Serializable {
 
     /**
      * Tilpasset writeObject-serialisering av Skademelding-objektet da ObservableList og
-     * Property-felter ikke er serialiserbart.
+     * Property-felter ikke er serialiserbart.*/
 
     private void writeObject(ObjectOutputStream os) throws IOException {
         os.defaultWriteObject();
-        os.writeObject(getForsikringsNr());
-        os.writeObject(getDatoKundeOpprettet());
-        os.writeObject(getEtternavn());
-        os.writeObject(getFornavn());
-        os.writeObject(getAdresseFaktura());
-        os.writeObject(getForsikringer());
-        os.writeObject(getSkademeldinger());
-        os.writeObject(getErstatningerUbetalte());
+        os.writeObject(getSkadeNr());
+        os.writeObject(getDatoSkade());
+        os.writeObject(getSkadeType());
+        os.writeObject(getSkadeBeskrivelse());
+        os.writeObject(getBelopTaksering());
+        os.writeObject(getErstatningsbelopUtbetalt());
+        os.writeObject(getKontaktinfoVitner());
     }
 
     /**
-     * Tilpasset readObject-deserialisering av Kunde-objektet.
+     * Tilpasset readObject-deserialisering av Kunde-objektet.*/
 
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
-        this.forsikringsNr = new SimpleIntegerProperty((int)is.readObject());
-        this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
-        this.etternavn = new SimpleStringProperty((String)is.readObject());
-        this.fornavn = new SimpleStringProperty((String)is.readObject());
-        this.adresseFaktura = new SimpleStringProperty((String)is.readObject());
-        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>((List<Forsikring>)is.readObject());
-        this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>((List<Skademelding>)is.readObject());
-        this.erstatningerUbetalte = new SimpleObjectProperty<List<Skademelding>>((List<Skademelding>)is.readObject());
+        this.skadeNr = new SimpleIntegerProperty((int)is.readObject());
+        this.datoSkade = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
+        this.skadeType = new SimpleStringProperty((String)is.readObject());
+        this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
+        this.belopTaksering = new SimpleDoubleProperty((Double)is.readObject());
+        this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((Double)is.readObject());
+        this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>((HashMap<Integer, String>)is.readObject());
     }
 
     @Override
     public String toString() {
-        return getForsikringsNr() +","+ getDatoKundeOpprettet() +","+ getEtternavn() +","+ getFornavn() +","+
-                getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger() +","+ getErstatningerUbetalte();
-    }*/
+        return getSkadeNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
+                getBelopTaksering() +","+ getErstatningsbelopUtbetalt() +","+ getKontaktinfoVitner();
+    }
 }
 
 
