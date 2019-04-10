@@ -4,6 +4,7 @@ import ae.HovedApplikasjon;
 import ae.controller.KundeController;
 import ae.controller.KundeRedigerPopupController;
 import ae.controller.RotOppsettController;
+import ae.controller.SkademeldingController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -67,11 +68,11 @@ public class Viewbehandling {
         try {
             // Last inn kundeoversikten fra fxml-fil.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
-            AnchorPane skademeldingOversikt = (AnchorPane) loader.load();
+            loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeView.fxml"));
+            AnchorPane kundeOversikt = (AnchorPane) loader.load();
 
-            // Plasser skademeldingoversikten i senter av rotoppsettet.
-            hovedApplikasjon.getRotOppsett().setCenter(skademeldingOversikt);
+            // Plasser kundeoversikten i senter av rotoppsettet.
+            hovedApplikasjon.getRotOppsett().setCenter(kundeOversikt);
 
             KundeController kundeController = loader.getController();
             kundeController.setHovedApplikasjon(hovedApplikasjon);

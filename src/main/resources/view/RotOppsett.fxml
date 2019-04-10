@@ -15,7 +15,7 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Kunder" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Skademelding" />
+                        <MenuItem mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" text="Skademelding" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Båtforsikring" />
                         <MenuItem mnemonicParsing="false" text="Hus- og innboforsikring" />

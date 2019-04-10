@@ -135,7 +135,7 @@ public class Skademelding implements Serializable {
     public void setKontaktinfoVitner(HashMap<Integer, String> kontaktinfoVitner) {
         this.kontaktinfoVitner.set(kontaktinfoVitner);
     }
-    public ObjectProperty<HashMap<Integer, String>> kontaktinfoVitner() {
+    public ObjectProperty<HashMap<Integer, String>> kontaktinfoVitnerProperty() {
         return kontaktinfoVitner;
     }
 
@@ -155,7 +155,7 @@ public class Skademelding implements Serializable {
     }
 
     /**
-     * Tilpasset readObject-deserialisering av Kunde-objektet.*/
+     * Tilpasset readObject-deserialisering av skademelding-objektet.*/
 
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();

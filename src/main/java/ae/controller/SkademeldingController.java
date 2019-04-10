@@ -22,9 +22,9 @@ import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
 
-public class SkademeldingController {}
-/*
-    // Tabellen.
+public class SkademeldingController {
+
+    /*// Tabellen.
     @FXML
     private TableView<Skademelding> skademeldingTabell;
     @FXML
@@ -61,14 +61,53 @@ public class SkademeldingController {}
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
         skadebeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
-        belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty());
-        datoKundeOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoKundeOpprettetProperty());
+        //belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty());
+        //utbetaltBelopKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty());
+        //kontaktinfoKolonne.setCellValueFactory(celleData -> celleData.getValue().kontaktinfoVitnerProperty());
 
         // Sender inn null for å tømme feltene.
         visKundensDetaljer(null);
 
         // ChangeListener som ser etter endringer.
-        kundeTabell.getSelectionModel().selectedItemProperty().addListener(
+        skademeldingTabell.getSelectionModel().selectedItemProperty().addListener(
                 (observable, gammelData, nyData) -> visKundensDetaljer(nyData));
     }
-}*/
+
+
+    public void visKundensDetaljer(Skademelding skademelding) {
+        if (skademelding != null) {
+
+            /*forsikringsNrLabel.setText(Integer.toString(kunde.getForsikringsNr()));
+            etternavnLabel.setText(kunde.getEtternavn());
+            fornavnLabel.setText(kunde.getFornavn());
+            adresseFakturaLabel.setText(kunde.getAdresseFaktura());
+            datoKundeOpprettetLabel.setText(kunde.getDatoKundeOpprettet().toString());
+            forsikringerLabel.setText(Integer.toString(kunde.getForsikringer().size()));
+            skademeldingerLabel.setText(Integer.toString(kunde.getSkademeldinger().size()));
+            erstatningerUbetalteLabel.setText(Integer.toString(kunde.getErstatningerUbetalte().size()));
+
+        } else {
+            // Ingen kunde valgt, fjerner all tekst.
+            forsikringsNrLabel.setText("");
+            etternavnLabel.setText("");
+            fornavnLabel.setText("");
+            adresseFakturaLabel.setText("");
+            datoKundeOpprettetLabel.setText("");
+            forsikringerLabel.setText("");
+            skademeldingerLabel.setText("");
+            erstatningerUbetalteLabel.setText("");
+
+        }
+    }
+
+    /**
+     * Kalles fra RotOppsettController for å gi en referanse til
+     * hovedapplikasjonen.
+     *//*
+    public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
+        this.hovedApplikasjon = hovedApplikasjon;
+
+        // Legger til data fra ObservableList til tabellen
+        //skademeldingTabell.setItems(hovedApplikasjon.getKundeData());
+    }*/
+}

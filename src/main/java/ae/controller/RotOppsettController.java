@@ -41,6 +41,13 @@ public class RotOppsettController {
     }
 
     @FXML
+    private void gåTilSkademeldingoversikt() {
+        Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
+        lagreFilMenuItem.setDisable(false);
+        hentFilMenuItem.setDisable(false);
+    }
+
+    @FXML
     public void lagreFilTrykket() {
         File filPath = Filbehandling.lagreFilVelger(hovedApplikasjon.getHovedStage());
 
