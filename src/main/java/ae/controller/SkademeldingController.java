@@ -21,9 +21,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
-/*
-public class SkademeldingController {
 
+public class SkademeldingController {}
+/*
     // Tabellen.
     @FXML
     private TableView<Skademelding> skademeldingTabell;
