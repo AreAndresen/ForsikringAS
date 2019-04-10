@@ -29,7 +29,7 @@
                     <items>
                         <MenuItem fx:id="lagreFilMenuItem" disable="true" mnemonicParsing="false" onAction="#lagreFilTrykket" text="Lagre til fil" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="hentFilMenuItem" mnemonicParsing="false" text="Hent fra til" />
+                        <MenuItem fx:id="hentFilMenuItem" mnemonicParsing="false" onAction="#hentFilTrykket" text="Hent fra til" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Hjelp">

@@ -3,6 +3,7 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.model.Filbehandling;
 import ae.model.Kunde;
+import ae.model.KundeCsvStrategy;
 import ae.model.KundeJobjStrategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -81,12 +82,56 @@ public class RotOppsettController {
                 e.printStackTrace();
             }
         }
+
+        if (filPath.getPath().endsWith(".csv")) {
+            try {
+                Filbehandling.lagreKunde(new KundeCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    public void hentFilTrykket() {
+        File filPath = visHentFilVelger();
+
+        if (filPath.getPath().endsWith(".jobj")) {
+            try {
+                hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new KundeJobjStrategy(), filPath.getPath()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
      * FileChooser lagre fil
      */
     private File visLagreFilVelger() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Lagre til fil");
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV-fil (.csv)", "*.csv"),
+                new FileChooser.ExtensionFilter("JOBJ-fil (.jobj)", "*.jobj")
+        );
+
+        File fil = fileChooser.showSaveDialog(hovedApplikasjon.getHovedStage());
+
+        if (fil != null) {
+            return fil;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * FileChooser hente fil
+     */
+    private File visHentFilVelger() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Hent en fil");
 
@@ -95,7 +140,7 @@ public class RotOppsettController {
                 new FileChooser.ExtensionFilter("JOBJ-fil (.jobj)", "*.jobj")
         );
 
-        File fil = fileChooser.showSaveDialog(hovedApplikasjon.getHovedStage());
+        File fil = fileChooser.showOpenDialog(hovedApplikasjon.getHovedStage());
 
         if (fil != null) {
             return fil;
