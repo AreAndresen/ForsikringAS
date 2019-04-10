@@ -20,13 +20,11 @@
                <children>
                   <TableView fx:id="skademeldingTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="skadeNrKolonne" prefWidth="63.99999386072159" text="SkadeNr" />
-                        <TableColumn fx:id="skadetypeKolonne" prefWidth="141.60000610351562" text="Skadetype" />
-                        <TableColumn fx:id="skadebeskrivelseKolonne" prefWidth="135.20004272460938" text="Skadebeskrivelse" />
-                        <TableColumn fx:id="belopTakseringKolonne" prefWidth="140.79998779296875" text="Beløp taksering" />
-                        <TableColumn fx:id="utbetaltBelopKolonne" prefWidth="105.60003662109375" text="Utbetalt beløp" />
-                        <TableColumn fx:id="kontaktInfoKolonne" prefWidth="75.0" text="Vitner" />
-                        <TableColumn fx:id="datoSkademeldingOpprettetKolonne" prefWidth="68.0" text="Dato" />
+                        <TableColumn fx:id="skadeNrKolonne" prefWidth="89.0" text="SkadeNr" />
+                        <TableColumn fx:id="skadeTypeKolonne" prefWidth="119.0" text="Skadetype" />
+                        <TableColumn fx:id="skadeBeskrivelseKolonne" prefWidth="72.0" text="Skadebeskrivelse" />
+                        <TableColumn fx:id="adresseFakturaKolonne" prefWidth="136.0" text="Adresse" />
+                        <TableColumn fx:id="datoKundeOpprettetKolonne" prefWidth="75.0" text="Dato" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -75,9 +73,9 @@
                   </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
-                        <Button mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" text="Ny" />
-                        <Button mnemonicParsing="false" onAction="#gåTilRedigerSkademeldingPopup" text="Rediger" />
-                        <Button mnemonicParsing="false" onAction="#slettValgtSkademelding" text="Slett" />
+                        <Button mnemonicParsing="false" onAction="#gåTilNyKundePopup" text="Ny" />
+                        <Button mnemonicParsing="false" onAction="#gåTilRedigerKundePopup" text="Rediger" />
+                        <Button mnemonicParsing="false" onAction="#slettValgtKunde" text="Slett" />
                      </buttons>
                   </ButtonBar>
                </children>

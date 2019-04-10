@@ -33,6 +33,7 @@ public class RotOppsettController {
         this.hovedApplikasjon = hovedApplikasjon;
     }
 
+    //Går til kundeoversikt ved trykk i meny
     @FXML
     private void gåTilKundeoversikt() {
         Viewbehandling.visKundeOversikt(hovedApplikasjon);
@@ -40,6 +41,7 @@ public class RotOppsettController {
         hentFilMenuItem.setDisable(false);
     }
 
+    //Går til skademeldingversikt ved trykk i meny
     @FXML
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);

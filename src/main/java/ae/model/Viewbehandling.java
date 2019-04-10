@@ -62,20 +62,20 @@ public class Viewbehandling {
     }
 
     /**
-     * Åpner skademeldingoversikten når bruker trykker på Kunder i menylinjen
+     * Åpner skademeldingoversikten når bruker trykker på skademelding i menylinjen
      */
     public static void visSkademeldingOversikt(HovedApplikasjon hovedApplikasjon) {
         try {
             // Last inn kundeoversikten fra fxml-fil.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeView.fxml"));
-            AnchorPane kundeOversikt = (AnchorPane) loader.load();
+            loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
+            AnchorPane skademeldingOversikt = (AnchorPane) loader.load();
 
             // Plasser kundeoversikten i senter av rotoppsettet.
-            hovedApplikasjon.getRotOppsett().setCenter(kundeOversikt);
+            hovedApplikasjon.getRotOppsett().setCenter(skademeldingOversikt);
 
-            KundeController kundeController = loader.getController();
-            kundeController.setHovedApplikasjon(hovedApplikasjon);
+            SkademeldingController skademeldingController = loader.getController();
+            skademeldingController.setHovedApplikasjon(hovedApplikasjon);
 
         } catch (IOException e) {
             e.printStackTrace();
