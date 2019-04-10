@@ -9,6 +9,7 @@ import ae.controller.RotOppsettController;
 import ae.model.Forsikring;
 import ae.model.Kunde;
 import ae.model.Skademelding;
+import ae.model.Viewbehandling;
 import ae.util.IdUtil;
 import com.sun.javafx.iio.ios.IosDescriptor;
 import javafx.application.Application;
@@ -35,121 +36,33 @@ public class HovedApplikasjon extends Application {
      */
     public HovedApplikasjon() { }
 
-    @Override
-    public void start(Stage hovedStage) {
-        this.hovedStage = hovedStage;
-        this.hovedStage.setTitle("Forsikring AS");
-
-        // Rotoppsettet kjører så lenge applikasjonen kjører.
-        initierRotOppsett();
-
-    }
-
-    /**
-     * Initierer rotoppsettet som skal kjøres ved oppstart.
-     */
-    public void initierRotOppsett() {
-        try {
-            // Last inn fxml-fil.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/RotOppsett.fxml"));
-            rotOppsett = (BorderPane) loader.load();
-
-            // Vis scenen som inneholder rotoppsettet.
-            Scene scene = new Scene(rotOppsett);
-            hovedStage.setScene(scene);
-            hovedStage.show();
-
-            // Overfør hovedapplikasjonen til rot-controlleren.
-            RotOppsettController rotOppsettController = loader.getController();
-            rotOppsettController.setHovedApplikasjon(this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Returnerer hovedstagen.
-     * @return Stage
      */
     public Stage getHovedStage() {
         return hovedStage;
     }
 
     /**
-     * Returnerer rotoppsettet.
-     * @return BorderPane
+     * Get og set for rotOppsett
      */
     public BorderPane getRotOppsett() { return rotOppsett; }
+    public void setRotOppsett(BorderPane rotOppsett) { this.rotOppsett = rotOppsett; }
 
     /**
      * Returnerer kunde data som en ObservableList.
-     * @return
      */
     public ObservableList<Kunde> getKundeData() {
         return kundeData;
     }
 
-    /**
-     * Åpne Ny kunde og Endre kunde popupen.
-     *
-     * @param kunde kunden som skal redigeres
-     * @return true dersom bruker trykker Bekreft
-     */
-    public boolean visNyKundePopup(Kunde kunde) {
-        try {
-            FXMLLoader loader = hentKundeRedigerPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+    @Override
+    public void start(Stage hovedStage) {
+        this.hovedStage = hovedStage;
+        this.hovedStage.setTitle("Forsikring AS");
 
-            Stage popupStage = new Stage();
-            popupStage.setTitle("Registrer ny kunde");
-            popupStage.initModality(Modality.WINDOW_MODAL);
-            popupStage.initOwner(hovedStage);
-            Scene scene = new Scene(side);
-            popupStage.setScene(scene);
+        // Rotoppsettet kjører så lenge applikasjonen kjører.
+        Viewbehandling.initierRotOppsett(this);
 
-            KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
-            kundeRedigerPopupController.setPopupStage(popupStage);
-            kundeRedigerPopupController.setKundeÅRedigere(kunde);
-
-            popupStage.showAndWait();
-
-            return kundeRedigerPopupController.erBekreftTrykket();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean visRedigerKundePopup(Kunde kunde) {
-        try {
-            FXMLLoader loader = hentKundeRedigerPopup();
-            AnchorPane side = (AnchorPane) loader.load();
-
-            Stage popupStage = new Stage();
-            popupStage.setTitle("Rediger eksisterende kunde");
-            popupStage.initModality(Modality.WINDOW_MODAL);
-            popupStage.initOwner(hovedStage);
-            Scene scene = new Scene(side);
-            popupStage.setScene(scene);
-
-            KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
-            kundeRedigerPopupController.setPopupStage(popupStage);
-            kundeRedigerPopupController.setKundeÅRedigere(kunde);
-
-            popupStage.showAndWait();
-
-            return kundeRedigerPopupController.erBekreftTrykket();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public FXMLLoader hentKundeRedigerPopup() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeRedigerPopupView.fxml"));
-        return loader;
     }
 }

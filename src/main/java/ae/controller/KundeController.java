@@ -1,16 +1,13 @@
 package ae.controller;
 
-import ae.model.KundeCsvStrategy;
 import ae.model.Filbehandling;
-import ae.model.KundeJobjStrategy;
+import ae.model.Viewbehandling;
 import ae.util.IdUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import ae.model.Kunde;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -48,7 +45,7 @@ public class KundeController {
 
     @FXML
     private void initialize() {
-        // Initier kunde-tabellen med alle kolonnene
+        // Initier kunde-tabellen med kobling til alle kolonnene
         forsikringsNrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
         etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
         fornavnKolonne.setCellValueFactory(celleData -> celleData.getValue().fornavnProperty());
@@ -66,7 +63,7 @@ public class KundeController {
     @FXML
     public void gåTilNyKundePopup() {
         Kunde nyKunde = new Kunde(IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData()));
-        boolean bekreftTrykket = hovedApplikasjon.visNyKundePopup(nyKunde);
+        boolean bekreftTrykket = Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
 
         if (bekreftTrykket) {
             hovedApplikasjon.getKundeData().add(nyKunde);
@@ -78,7 +75,7 @@ public class KundeController {
         Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
 
         if (valgtKunde != null) {
-            boolean bekreftTrykket = hovedApplikasjon.visRedigerKundePopup(valgtKunde);
+            boolean bekreftTrykket = Viewbehandling.visRedigerKundePopup(hovedApplikasjon, valgtKunde);
 
             if (bekreftTrykket) {
                 visKundensDetaljer(valgtKunde);
@@ -100,7 +97,7 @@ public class KundeController {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(hovedApplikasjon.getHovedStage());
-        alert.setTitle("Bekreftelse");
+        alert.setTitle("Slett kunde");
         alert.setHeaderText("Bekreft sletting av kunde");
         alert.setContentText("Er du sikker på at du ønsker å slette kunde " + kundeInfo +"?");
         ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
@@ -116,8 +113,6 @@ public class KundeController {
      * Fyller ut info-feltene om hver kunde.
      * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
      * antall av de ulike typene. Knappene skal trykkes for å vise de.
-     *
-     * @param kunde kunden som er valgt, hvis ikke valgt så null
      */
     public void visKundensDetaljer(Kunde kunde) {
         if (kunde != null) {
@@ -149,8 +144,6 @@ public class KundeController {
     /**
      * Kalles fra RotOppsettController for å gi en referanse til
      * hovedapplikasjonen.
-     *
-     * @param hovedApplikasjon
      */
     public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
         this.hovedApplikasjon = hovedApplikasjon;
