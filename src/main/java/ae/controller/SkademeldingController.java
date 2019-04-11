@@ -44,9 +44,9 @@ public class SkademeldingController {
     @FXML
     private TableColumn<Kunde, String> skadeBeskrivelseKolonne;
     @FXML
-    private TableColumn<Kunde, String> adresseFakturaKolonne;
+    private TableColumn<Kunde, String> belopTakseringKolonne;
     @FXML
-    private TableColumn<Kunde, LocalDate> datoKundeOpprettetKolonne;
+    private TableColumn<Kunde, LocalDate> datoSkadeKolonne;
 
     // Labels.
     @FXML
@@ -66,8 +66,8 @@ public class SkademeldingController {
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
         skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().fornavnProperty());
-        adresseFakturaKolonne.setCellValueFactory(celleData -> celleData.getValue().adresseFakturaProperty());
-        datoKundeOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoKundeOpprettetProperty());
+        belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().adresseFakturaProperty());
+        datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoKundeOpprettetProperty());
 
         // Sender inn null for å tømme feltene.
         visKundensDetaljer(null);

@@ -23,8 +23,8 @@
                         <TableColumn fx:id="skadeNrKolonne" prefWidth="89.0" text="SkadeNr" />
                         <TableColumn fx:id="skadeTypeKolonne" prefWidth="119.0" text="Skadetype" />
                         <TableColumn fx:id="skadeBeskrivelseKolonne" prefWidth="72.0" text="Skadebeskrivelse" />
-                        <TableColumn fx:id="adresseFakturaKolonne" prefWidth="136.0" text="Adresse" />
-                        <TableColumn fx:id="datoKundeOpprettetKolonne" prefWidth="75.0" text="Dato" />
+                        <TableColumn fx:id="belopTakseringKolonne" prefWidth="136.0" text="Takseringsbeløp" />
+                        <TableColumn fx:id="datoSkadeKolonne" prefWidth="75.0" text="Dato skade" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
