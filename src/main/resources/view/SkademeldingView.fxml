@@ -24,6 +24,7 @@
                         <TableColumn fx:id="skadeTypeKolonne" prefWidth="119.0" text="Skadetype" />
                         <TableColumn fx:id="skadeBeskrivelseKolonne" prefWidth="72.0" text="Skadebeskrivelse" />
                         <TableColumn fx:id="belopTakseringKolonne" prefWidth="136.0" text="Takseringsbeløp" />
+                        <TableColumn fx:id="erstatningUtbetaltKolonne" prefWidth="75.0" text="Erstatning utbetalt" />
                         <TableColumn fx:id="datoSkadeKolonne" prefWidth="75.0" text="Dato skade" />
                      </columns>
                      <columnResizePolicy>
@@ -73,9 +74,9 @@
                   </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
-                        <Button mnemonicParsing="false" onAction="#gåTilNyKundePopup" text="Ny" />
-                        <Button mnemonicParsing="false" onAction="#gåTilRedigerKundePopup" text="Rediger" />
-                        <Button mnemonicParsing="false" onAction="#slettValgtKunde" text="Slett" />
+                        <Button mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" text="Ny" />
+                        <Button mnemonicParsing="false" onAction="#gåTilRedigerSkademeldingPopup" text="Rediger" />
+                        <Button mnemonicParsing="false" onAction="#slettValgtSkademelding" text="Slett" />
                      </buttons>
                   </ButtonBar>
                </children>

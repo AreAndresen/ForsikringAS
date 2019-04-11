@@ -5,48 +5,32 @@ import ae.util.IdUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
-import ae.model.Kunde;
-
 import java.time.LocalDate;
 import java.util.Optional;
-
-import ae.model.Filbehandling;
-import ae.model.Viewbehandling;
-import ae.util.IdUtil;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import ae.HovedApplikasjon;
-import ae.model.Kunde;
-
-import java.time.LocalDate;
-import java.util.Optional;
-
-import ae.HovedApplikasjon;
-import ae.model.Filbehandling;
-import ae.model.Kunde;
 import ae.model.Skademelding;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.time.LocalDate;
+
 
 public class SkademeldingController {
 
     // Tabellen.
     @FXML
-    private TableView<Kunde> skademeldingTabell;
+    private TableView<Skademelding> skademeldingTabell;
     @FXML
-    private TableColumn<Kunde, Number> skadeNrKolonne;
+    private TableColumn<Skademelding, Number> skadeNrKolonne;
     @FXML
-    private TableColumn<Kunde, String> skadeTypeKolonne;
+    private TableColumn<Skademelding, String> skadeTypeKolonne;
     @FXML
-    private TableColumn<Kunde, String> skadeBeskrivelseKolonne;
+    private TableColumn<Skademelding, String> skadeBeskrivelseKolonne;
     @FXML
-    private TableColumn<Kunde, String> belopTakseringKolonne;
+    private TableColumn<Skademelding, Double> belopTakseringKolonne;
     @FXML
-    private TableColumn<Kunde, LocalDate> datoSkadeKolonne;
+    private TableColumn<Skademelding, Double> erstatningUtbetaltKolonne;
+    @FXML
+    private TableColumn<Skademelding, LocalDate> datoSkadeKolonne;
 
     // Labels.
     @FXML
@@ -62,40 +46,41 @@ public class SkademeldingController {
 
     @FXML
     private void initialize() {
-        // Initier kunde-tabellen med kobling til alle kolonnene
-        skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
-        skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
-        skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().fornavnProperty());
-        belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().adresseFakturaProperty());
-        datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoKundeOpprettetProperty());
+        // Initier skademelding-tabellen med kobling til alle kolonnene
+        skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
+        skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
+        skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
+        belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
+        erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
+        datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
 
         // Sender inn null for å tømme feltene.
-        visKundensDetaljer(null);
+        visSkademeldingDetaljer(null);
 
         // ChangeListener som ser etter endringer.
         skademeldingTabell.getSelectionModel().selectedItemProperty().addListener(
-                (observable, gammelData, nyData) -> visKundensDetaljer(nyData));
+                (observable, gammelData, nyData) -> visSkademeldingDetaljer(nyData));
     }
 
     @FXML
-    public void gåTilNyKundePopup() {
-        Kunde nyKunde = new Kunde(IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData()));
-        boolean bekreftTrykket = Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
+    public void gåTilNySkademeldingPopup() {
+        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
+        boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
         if (bekreftTrykket) {
-            hovedApplikasjon.getKundeData().add(nyKunde);
+            hovedApplikasjon.getSkademeldingData().add(nySkademelding);
         }
     }
 
     @FXML
-    public void gåTilRedigerKundePopup() {
-        Kunde valgtKunde = skademeldingTabell.getSelectionModel().getSelectedItem();
+    public void gåTilRedigerSkademeldingPopup() {
+        Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
-        if (valgtKunde != null) {
-            boolean bekreftTrykket = Viewbehandling.visRedigerKundePopup(hovedApplikasjon, valgtKunde);
+        if (valgtSkademelding != null) {
+            boolean bekreftTrykket = Viewbehandling.visRedigerSkademeldingPopup(hovedApplikasjon, valgtSkademelding);
 
             if (bekreftTrykket) {
-                visKundensDetaljer(valgtKunde);
+                visSkademeldingDetaljer(valgtSkademelding);
             }
         }
 
@@ -106,23 +91,24 @@ public class SkademeldingController {
      * Sletter valgt kunde fra listen, med bekreftelse
      */
     @FXML
-    public void slettValgtKunde() {
-        int valgtKundeIndex = skademeldingTabell.getSelectionModel().getSelectedIndex();
+    public void slettValgtSkademelding() {
+        int valgtSkademeldingIndex = skademeldingTabell.getSelectionModel().getSelectedIndex();
 
-        Kunde valgtKunde = skademeldingTabell.getItems().get(valgtKundeIndex);
-        String kundeInfo = valgtKunde.getForsikringsNr() +", "+ valgtKunde.getFornavn() +" "+ valgtKunde.getEtternavn();
+        Skademelding valgtSkademelding = skademeldingTabell.getItems().get(valgtSkademeldingIndex);
+        String skademeldingInfo = valgtSkademelding.getSkadeNr() +", "+ valgtSkademelding.getSkadeType() +" " +
+                ""+ valgtSkademelding.getSkadeBeskrivelse();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(hovedApplikasjon.getHovedStage());
-        alert.setTitle("Slett kunde");
-        alert.setHeaderText("Bekreft sletting av kunde");
-        alert.setContentText("Er du sikker på at du ønsker å slette kunde " + kundeInfo +"?");
+        alert.setTitle("Slett Skademelding");
+        alert.setHeaderText("Bekreft sletting av skademelding");
+        alert.setContentText("Er du sikker på at du ønsker å slette skademelding " + skademeldingInfo +"?");
         ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
         ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            skademeldingTabell.getItems().remove(valgtKundeIndex);
+            skademeldingTabell.getItems().remove(valgtSkademeldingIndex);
         }
     }
 
@@ -131,17 +117,17 @@ public class SkademeldingController {
      * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
      * antall av de ulike typene. Knappene skal trykkes for å vise de.
      */
-    public void visKundensDetaljer(Kunde kunde) {
-        if (kunde != null) {
+    public void visSkademeldingDetaljer(Skademelding skademelding) {
+        if (skademelding != null) {
 
-            forsikringsNrLabel.setText(Integer.toString(kunde.getForsikringsNr()));
+            /*forsikringsNrLabel.setText(Integer.toString(kunde.getForsikringsNr()));
             etternavnLabel.setText(kunde.getEtternavn());
             fornavnLabel.setText(kunde.getFornavn());
             adresseFakturaLabel.setText(kunde.getAdresseFaktura());
             datoKundeOpprettetLabel.setText(kunde.getDatoKundeOpprettet().toString());
             forsikringerLabel.setText(Integer.toString(kunde.getForsikringer().size()));
             skademeldingerLabel.setText(Integer.toString(kunde.getSkademeldinger().size()));
-            erstatningerUbetalteLabel.setText(Integer.toString(kunde.getErstatningerUbetalte().size()));
+            erstatningerUbetalteLabel.setText(Integer.toString(kunde.getErstatningerUbetalte().size()));*/
 
         } else {
 
@@ -166,7 +152,7 @@ public class SkademeldingController {
         this.hovedApplikasjon = hovedApplikasjon;
 
         // Legger til data fra ObservableList til tabellen
-        skademeldingTabell.setItems(hovedApplikasjon.getKundeData());
+        skademeldingTabell.setItems(hovedApplikasjon.getSkademeldingData());
     }
 }
 
