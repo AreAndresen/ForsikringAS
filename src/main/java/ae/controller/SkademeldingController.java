@@ -132,14 +132,14 @@ public class SkademeldingController {
         } else {
 
             // Ingen kunde valgt, fjerner all tekst.
-            forsikringsNrLabel.setText("");
+            /*forsikringsNrLabel.setText("");
             etternavnLabel.setText("");
             fornavnLabel.setText("");
             adresseFakturaLabel.setText("");
             datoKundeOpprettetLabel.setText("");
             forsikringerLabel.setText("");
             skademeldingerLabel.setText("");
-            erstatningerUbetalteLabel.setText("");
+            erstatningerUbetalteLabel.setText("");*/
 
         }
     }
