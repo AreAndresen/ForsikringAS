@@ -7,6 +7,7 @@ import ae.model.exceptions.UgyldigAdresseFakturaException;
 import ae.model.exceptions.UgyldigEtternavnException;
 import ae.model.exceptions.UgyldigFornavnException;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,6 +16,8 @@ public class SkademeldingRedigerPopupController {
     @FXML
     private TextField skadeNrField, skadeTypeField, skadebeskrivelseField,
             belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
+    @FXML
+    private TextArea vitneInfoField;
 
     private Stage popupStage;
     private Skademelding skademeldingÅRedigere;
@@ -46,6 +49,7 @@ public class SkademeldingRedigerPopupController {
         belopTakseringField.setText(Double.toString(skademeldingÅRedigere.getBelopTaksering()));
         erstatningsbelopUtbetaltField.setText(Double.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
         datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
+        vitneInfoField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
 
         skadeNrField.setDisable(true);
         datoSkademeldingOpprettetField.setDisable(true);
@@ -83,6 +87,7 @@ public class SkademeldingRedigerPopupController {
         msg += redigerSkadebeskrivelse();
         msg += redigerTakseringsbeløp();
         msg += redigerErstatningsbelopUtbetalt();
+        msg += redigerKontaktinfoVitner();
 
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
@@ -128,6 +133,14 @@ public class SkademeldingRedigerPopupController {
         String msg = "";
 
             skademeldingÅRedigere.setErstatningsbelopUtbetalt(Double.parseDouble(erstatningsbelopUtbetaltField.getText()));
+
+        return msg;
+    }
+
+    //oppdaterer skadebeskrivelse
+    private String redigerKontaktinfoVitner() {
+        String msg = "";
+        skademeldingÅRedigere.setKontaktinfoVitner(vitneInfoField.getText());
 
         return msg;
     }

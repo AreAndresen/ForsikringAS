@@ -26,13 +26,14 @@ public class Skademelding implements Serializable {
     private transient StringProperty skadeBeskrivelse;
     private transient DoubleProperty belopTaksering;
     private transient DoubleProperty erstatningsbelopUtbetalt;
-    private transient ObjectProperty<HashMap<Integer, String>> kontaktinfoVitner;
+    private transient StringProperty kontaktinfoVitner;
+    //private transient ObjectProperty<HashMap<Integer, String>> kontaktinfoVitner;
 
     /**
      * Konstruktør for midlertidig skademelding i Ny skademelding.
      */
     public Skademelding(int skadeNr) { this(skadeNr, LocalDate.now(), null, null,
-            null, null, null); }
+            0.0, 0.0, null); }
 
     /**
      * Konstruktør for Ny skademelding.
@@ -48,7 +49,7 @@ public class Skademelding implements Serializable {
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
         // Instansiere listene så de er opprettet.
-        this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>(new HashMap<>());
+        //this.kontaktinfoVitner = new SimpleStringProperty(kontaktinfoVitner);
     }
 
     /**
@@ -56,14 +57,14 @@ public class Skademelding implements Serializable {
      */
     public Skademelding(int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                         Double belopTaksering, Double erstatningsbelopUtbetalt,
-                        HashMap<Integer, String> kontaktinfoVitner) {
+                        String kontaktinfoVitner) {
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
-        this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>(kontaktinfoVitner);
+        this.kontaktinfoVitner = new SimpleStringProperty(kontaktinfoVitner);
     }
 
     /**
@@ -127,7 +128,7 @@ public class Skademelding implements Serializable {
         return erstatningsbelopUtbetalt;
     }
 
-    // kontaktinfoVitner
+    /* kontaktinfoVitner
     public HashMap<Integer, String> getKontaktinfoVitner() {
         return kontaktinfoVitner.get();
     }
@@ -135,6 +136,16 @@ public class Skademelding implements Serializable {
         this.kontaktinfoVitner.set(kontaktinfoVitner);
     }
     public ObjectProperty<HashMap<Integer, String>> kontaktinfoVitnerProperty() {
+        return kontaktinfoVitner;
+    }*/
+
+    public String getKontaktinfoVitner() {
+        return kontaktinfoVitner.get();
+    }
+    public void setKontaktinfoVitner(String kontaktinfoVitner) {
+        this.kontaktinfoVitner.set(kontaktinfoVitner);
+    }
+    public StringProperty kontaktinfoVitnerProperty() {
         return kontaktinfoVitner;
     }
 
@@ -164,13 +175,14 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
         this.belopTaksering = new SimpleDoubleProperty((double)is.readObject());
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
-        this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>((HashMap<Integer, String>)is.readObject());
+        //this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>((HashMap<Integer, String>)is.readObject());
+        this.kontaktinfoVitner = new SimpleStringProperty((String)is.readObject());
     }
 
     @Override
     public String toString() {
         return getSkadeNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
-                getBelopTaksering() +","+ getErstatningsbelopUtbetalt() +","+ getKontaktinfoVitner();
+                getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getKontaktinfoVitner();
     }
 }
 

@@ -23,18 +23,20 @@ public class SkademeldingController {
     private TableColumn<Skademelding, Number> skadeNrKolonne;
     @FXML
     private TableColumn<Skademelding, String> skadeTypeKolonne;
-    @FXML
-    private TableColumn<Skademelding, String> skadeBeskrivelseKolonne;
+    //@FXML
+    //private TableColumn<Skademelding, String> skadeBeskrivelseKolonne;
     @FXML
     private TableColumn<Skademelding, Double> belopTakseringKolonne;
-    //@FXML
-    //private TableColumn<Skademelding, Double> erstatningUtbetaltKolonne;
+    @FXML
+    private TableColumn<Skademelding, Double> erstatningUtbetaltKolonne;
     @FXML
     private TableColumn<Skademelding, LocalDate> datoSkadeKolonne;
 
     // Labels.
     @FXML
-    private Label skadeNrLabel, beskrivelseAvSkadeLabel, skadeTypeLabel, utbetaltErstatningLabel;
+    private Label skadeNrLabel, beskrivelseAvSkadeLabel, vitneInfoLabel;
+    //@FXML
+    //private TextArea vitnerLabel;
 
     private Filbehandling fb = new Filbehandling();
 
@@ -48,9 +50,9 @@ public class SkademeldingController {
         // Initier skademelding-tabellen med kobling til alle kolonnene
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
-        skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
+        //skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
         belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
-        //erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
+        erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
         datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
 
         // Sender inn null for å tømme feltene.
@@ -121,8 +123,9 @@ public class SkademeldingController {
 
             skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
-            skadeTypeLabel.setText(skademelding.getSkadeType());
-            utbetaltErstatningLabel.setText(Double.toString(skademelding.getErstatningsbelopUtbetalt()));
+            vitneInfoLabel.setText(skademelding.getKontaktinfoVitner());
+            //skadeTypeLabel.setText(skademelding.getSkadeType());
+            //utbetaltErstatningLabel.setText(Double.toString(skademelding.getErstatningsbelopUtbetalt()));
 
 
         } else {
@@ -130,8 +133,9 @@ public class SkademeldingController {
             // Ingen skademelding valgt, fjerner all tekst.
             skadeNrLabel.setText("");
             beskrivelseAvSkadeLabel.setText("");
-            skadeTypeLabel.setText("");
-            utbetaltErstatningLabel.setText("");
+            vitneInfoLabel.setText("");
+            //skadeTypeLabel.setText("");
+            //utbetaltErstatningLabel.setText("");
         }
     }
 

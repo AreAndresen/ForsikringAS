@@ -11,6 +11,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
  * Controller for RotOppsett. Rotoppsettet inneholder menylinjen
