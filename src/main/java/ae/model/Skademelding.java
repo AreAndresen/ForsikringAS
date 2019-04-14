@@ -48,7 +48,7 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
-        // Instansiere listene så de er opprettet.
+        //Instansiere listene så de er opprettet.
         //this.kontaktinfoVitner = new SimpleStringProperty(kontaktinfoVitner);
     }
 

@@ -35,8 +35,6 @@ public class SkademeldingController {
     // Labels.
     @FXML
     private Label skadeNrLabel, beskrivelseAvSkadeLabel, vitneInfoLabel;
-    //@FXML
-    //private TextArea vitnerLabel;
 
     private Filbehandling fb = new Filbehandling();
 
