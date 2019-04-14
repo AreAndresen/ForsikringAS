@@ -2,6 +2,7 @@ package ae.controller;
 
 import ae.HovedApplikasjon;
 import ae.model.*;
+import ae.util.IdUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
@@ -40,11 +41,33 @@ public class RotOppsettController {
         lagreFilMenuItem.setDisable(false);
     }
 
+    //Ny skademelding popup
+    @FXML
+    public void gåTilNyKundePopup() {
+        Kunde nyKunde = new Kunde(IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData()));
+        boolean bekreftTrykket = Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
+
+        if (bekreftTrykket) {
+            hovedApplikasjon.getKundeData().add(nyKunde);
+        }
+    }
+
     //Går til skademeldingversikt ved trykk i meny
     @FXML
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
         lagreFilMenuItem.setDisable(false);
+    }
+
+    //Ny skademelding popup
+    @FXML
+    public void gåTilNySkademeldingPopup() {
+        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
+        boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
+
+        if (bekreftTrykket) {
+            hovedApplikasjon.getSkademeldingData().add(nySkademelding);
+        }
     }
 
     @FXML

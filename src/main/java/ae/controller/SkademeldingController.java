@@ -27,15 +27,14 @@ public class SkademeldingController {
     private TableColumn<Skademelding, String> skadeBeskrivelseKolonne;
     @FXML
     private TableColumn<Skademelding, Double> belopTakseringKolonne;
-    @FXML
-    private TableColumn<Skademelding, Double> erstatningUtbetaltKolonne;
+    //@FXML
+    //private TableColumn<Skademelding, Double> erstatningUtbetaltKolonne;
     @FXML
     private TableColumn<Skademelding, LocalDate> datoSkadeKolonne;
 
     // Labels.
     @FXML
-    private Label forsikringsNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
-            datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
+    private Label skadeNrLabel, beskrivelseAvSkadeLabel, skadeTypeLabel, utbetaltErstatningLabel;
 
     private Filbehandling fb = new Filbehandling();
 
@@ -51,7 +50,7 @@ public class SkademeldingController {
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
         skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
         belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
-        erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
+        //erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
         datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
 
         // Sender inn null for å tømme feltene.
@@ -120,27 +119,19 @@ public class SkademeldingController {
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
 
-            /*forsikringsNrLabel.setText(Integer.toString(kunde.getForsikringsNr()));
-            etternavnLabel.setText(kunde.getEtternavn());
-            fornavnLabel.setText(kunde.getFornavn());
-            adresseFakturaLabel.setText(kunde.getAdresseFaktura());
-            datoKundeOpprettetLabel.setText(kunde.getDatoKundeOpprettet().toString());
-            forsikringerLabel.setText(Integer.toString(kunde.getForsikringer().size()));
-            skademeldingerLabel.setText(Integer.toString(kunde.getSkademeldinger().size()));
-            erstatningerUbetalteLabel.setText(Integer.toString(kunde.getErstatningerUbetalte().size()));*/
+            skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
+            beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
+            skadeTypeLabel.setText(skademelding.getSkadeType());
+            utbetaltErstatningLabel.setText(Double.toString(skademelding.getErstatningsbelopUtbetalt()));
+
 
         } else {
 
-            // Ingen kunde valgt, fjerner all tekst.
-            /*forsikringsNrLabel.setText("");
-            etternavnLabel.setText("");
-            fornavnLabel.setText("");
-            adresseFakturaLabel.setText("");
-            datoKundeOpprettetLabel.setText("");
-            forsikringerLabel.setText("");
-            skademeldingerLabel.setText("");
-            erstatningerUbetalteLabel.setText("");*/
-
+            // Ingen skademelding valgt, fjerner all tekst.
+            skadeNrLabel.setText("");
+            beskrivelseAvSkadeLabel.setText("");
+            skadeTypeLabel.setText("");
+            utbetaltErstatningLabel.setText("");
         }
     }
 

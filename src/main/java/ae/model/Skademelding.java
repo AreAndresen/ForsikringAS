@@ -32,7 +32,7 @@ public class Skademelding implements Serializable {
      * Konstruktør for midlertidig skademelding i Ny skademelding.
      */
     public Skademelding(int skadeNr) { this(skadeNr, LocalDate.now(), null, null,
-            null, null); }
+            null, null, null); }
 
     /**
      * Konstruktør for Ny skademelding.

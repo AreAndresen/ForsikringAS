@@ -210,4 +210,6 @@ public class Viewbehandling {
         loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingRedigerPopupView.fxml"));
         return loader;
     }
+
+
 }

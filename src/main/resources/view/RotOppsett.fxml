@@ -16,14 +16,14 @@
                   <Menu mnemonicParsing="false" text="Kunder">
                     <items>
                               <MenuItem mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Oversikt" />
-                      <MenuItem mnemonicParsing="false" text="Ny kunde" />
+                      <MenuItem mnemonicParsing="false" onAction="#gåTilNyKundePopup" text="Ny kunde" />
                     </items>
                   </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu mnemonicParsing="false" text="Skademelding">
                     <items>
                               <MenuItem mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" text="Oversikt" />
-                        <MenuItem mnemonicParsing="false" text="Ny skademelding" />
+                        <MenuItem mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" text="Ny skademelding" />
                     </items>
                   </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
