@@ -21,7 +21,7 @@ public class RotOppsettController {
     private HovedApplikasjon hovedApplikasjon;
 
     @FXML
-    private MenuItem lagreFilMenuItem, hentFilMenuItem;
+    private MenuItem lagreFilMenuItem;
 
     public RotOppsettController() { }
 
@@ -38,7 +38,6 @@ public class RotOppsettController {
     private void gåTilKundeoversikt() {
         Viewbehandling.visKundeOversikt(hovedApplikasjon);
         lagreFilMenuItem.setDisable(false);
-        hentFilMenuItem.setDisable(false);
     }
 
     //Går til skademeldingversikt ved trykk i meny
@@ -46,7 +45,6 @@ public class RotOppsettController {
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
         lagreFilMenuItem.setDisable(false);
-        hentFilMenuItem.setDisable(false);
     }
 
     @FXML

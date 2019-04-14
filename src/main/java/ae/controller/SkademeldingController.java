@@ -70,13 +70,15 @@ public class SkademeldingController {
         datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoKundeOpprettetProperty());
 
         // Sender inn null for å tømme feltene.
-        visKundensDetaljer(null);
+        // TODO: Vis skademeldingsdetaljer
+        //visKundensDetaljer(null);
 
         // ChangeListener som ser etter endringer.
         skademeldingTabell.getSelectionModel().selectedItemProperty().addListener(
                 (observable, gammelData, nyData) -> visKundensDetaljer(nyData));
     }
 
+    //TODO: flytte denne til rotoppsettet
     @FXML
     public void gåTilNyKundePopup() {
         Kunde nyKunde = new Kunde(IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData()));
@@ -146,6 +148,7 @@ public class SkademeldingController {
         } else {
 
             // Ingen kunde valgt, fjerner all tekst.
+            // TODO: må tilpasses nye labels
             forsikringsNrLabel.setText("");
             etternavnLabel.setText("");
             fornavnLabel.setText("");

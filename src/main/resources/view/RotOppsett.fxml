@@ -13,14 +13,33 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Meny">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Kunder" />
+                  <Menu mnemonicParsing="false" text="Kunder">
+                    <items>
+                              <MenuItem mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Oversikt" />
+                      <MenuItem mnemonicParsing="false" text="Ny kunde" />
+                    </items>
+                  </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" text="Skademelding" />
+                  <Menu mnemonicParsing="false" text="Skademelding">
+                    <items>
+                              <MenuItem mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" text="Oversikt" />
+                        <MenuItem mnemonicParsing="false" text="Ny skademelding" />
+                    </items>
+                  </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Båtforsikring" />
-                        <MenuItem mnemonicParsing="false" text="Hus- og innboforsikring" />
-                        <MenuItem mnemonicParsing="false" text="Fritidsboligforsikring" />
-                        <MenuItem mnemonicParsing="false" text="Reiseforsikring" />
+                  <Menu mnemonicParsing="false" text="Forsikring">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Oversikt" />
+                        <Menu mnemonicParsing="false" text="Ny...">
+                          <items>
+                                    <MenuItem mnemonicParsing="false" text="Båtforsikring" />
+                                    <MenuItem mnemonicParsing="false" text="Hus- og innboforsikring" />
+                                    <MenuItem mnemonicParsing="false" text="Fritidsboligforsikring" />
+                                    <MenuItem mnemonicParsing="false" text="Reiseforsikring" />
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Avslutt" />
                     </items>
