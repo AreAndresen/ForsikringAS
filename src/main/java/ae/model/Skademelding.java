@@ -47,7 +47,6 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
-
         // Instansiere listene så de er opprettet.
         this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>(new HashMap<>());
     }
@@ -163,8 +162,8 @@ public class Skademelding implements Serializable {
         this.datoSkade = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
         this.skadeType = new SimpleStringProperty((String)is.readObject());
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
-        this.belopTaksering = new SimpleDoubleProperty((Double)is.readObject());
-        this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((Double)is.readObject());
+        this.belopTaksering = new SimpleDoubleProperty((double)is.readObject());
+        this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
         this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>((HashMap<Integer, String>)is.readObject());
     }
 

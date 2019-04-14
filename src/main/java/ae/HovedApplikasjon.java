@@ -30,6 +30,8 @@ public class HovedApplikasjon extends Application {
     private Stage hovedStage;
     private BorderPane rotOppsett;
     private ObservableList<Kunde> kundeData = FXCollections.observableArrayList();
+    //Skademelding
+    private ObservableList<Skademelding> skademeldingData = FXCollections.observableArrayList();
 
     /**
      * Konstruktør for hovedapplikasjon. Sett inn dummy-data for testing
@@ -49,11 +51,14 @@ public class HovedApplikasjon extends Application {
     public BorderPane getRotOppsett() { return rotOppsett; }
     public void setRotOppsett(BorderPane rotOppsett) { this.rotOppsett = rotOppsett; }
 
-    /**
-     * Returnerer kunde data som en ObservableList.
-     */
+    /** Returnerer kunde data som en ObservableList.*/
     public ObservableList<Kunde> getKundeData() {
         return kundeData;
+    }
+
+    /**Returnerer skademelding data som en ObservableList.*/
+    public ObservableList<Skademelding> getSkademeldingData() {
+        return skademeldingData;
     }
 
     @Override

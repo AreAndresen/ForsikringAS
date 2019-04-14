@@ -1,10 +1,7 @@
 package ae.model;
 
 import ae.HovedApplikasjon;
-import ae.controller.KundeController;
-import ae.controller.KundeRedigerPopupController;
-import ae.controller.RotOppsettController;
-import ae.controller.SkademeldingController;
+import ae.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -40,6 +37,8 @@ public class Viewbehandling {
         }
     }
 
+
+    //--------------------KUNDE POPUPS! --------------------
     /**
      * Åpner kundeoversikten når bruker trykker på Kunder i menylinjen
      */
@@ -55,27 +54,6 @@ public class Viewbehandling {
 
             KundeController kundeController = loader.getController();
             kundeController.setHovedApplikasjon(hovedApplikasjon);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Åpner skademeldingoversikten når bruker trykker på skademelding i menylinjen
-     */
-    public static void visSkademeldingOversikt(HovedApplikasjon hovedApplikasjon) {
-        try {
-            // Last inn kundeoversikten fra fxml-fil.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
-            AnchorPane skademeldingOversikt = (AnchorPane) loader.load();
-
-            // Plasser kundeoversikten i senter av rotoppsettet.
-            hovedApplikasjon.getRotOppsett().setCenter(skademeldingOversikt);
-
-            SkademeldingController skademeldingController = loader.getController();
-            skademeldingController.setHovedApplikasjon(hovedApplikasjon);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,12 +116,98 @@ public class Viewbehandling {
         }
     }
 
+    //--------------------SKADEMELDING POPUPS! --------------------
+    /**
+     * Åpner skademeldingoversikten når bruker trykker på skademelding i menylinjen
+     */
+    public static void visSkademeldingOversikt(HovedApplikasjon hovedApplikasjon) {
+        try {
+            // Last inn kundeoversikten fra fxml-fil.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
+            AnchorPane skademeldingOversikt = (AnchorPane) loader.load();
+
+            // Plasser kundeoversikten i senter av rotoppsettet.
+            hovedApplikasjon.getRotOppsett().setCenter(skademeldingOversikt);
+
+            SkademeldingController skademeldingController = loader.getController();
+            skademeldingController.setHovedApplikasjon(hovedApplikasjon);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Åpne Ny skademelding popup-vinduet.
+     */
+    public static boolean visNySkademeldingPopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
+        try {
+            FXMLLoader loader = hentSkademeldingRedigerPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Registrer ny skademelding");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            SkademeldingRedigerPopupController skademeldingRedigerPopupController = loader.getController();
+            skademeldingRedigerPopupController.setPopupStage(popupStage);
+            skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
+
+            popupStage.showAndWait();
+
+            return skademeldingRedigerPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Rediger eksisterende skademelding popup-vinduet.
+     */
+    public static boolean visRedigerSkademeldingPopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
+        try {
+            FXMLLoader loader = hentSkademeldingRedigerPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Rediger eksisterende skademelding");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            SkademeldingRedigerPopupController skademeldingRedigerPopupController = loader.getController();
+            skademeldingRedigerPopupController.setPopupStage(popupStage);
+            skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
+
+            popupStage.showAndWait();
+
+            return skademeldingRedigerPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     /**
      * Brukes i Ny og Rediger popup for å hente det samme vinduet.
      */
+    //KUNDE ---
     private static FXMLLoader hentKundeRedigerPopup() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeRedigerPopupView.fxml"));
+        return loader;
+    }
+    //SKADEMELDING --
+    private static FXMLLoader hentSkademeldingRedigerPopup() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingRedigerPopupView.fxml"));
         return loader;
     }
 }
