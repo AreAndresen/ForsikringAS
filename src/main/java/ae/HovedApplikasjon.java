@@ -56,6 +56,7 @@ public class HovedApplikasjon extends Application {
         return kundeData;
     }
 
+
     /**Returnerer skademelding data som en ObservableList.*/
     public ObservableList<Skademelding> getSkademeldingData() {
         return skademeldingData;

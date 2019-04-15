@@ -35,6 +35,7 @@ public class RotOppsettController {
         this.hovedApplikasjon = hovedApplikasjon;
     }
 
+    //-------KUNDE-------
     //Går til kundeoversikt ved trykk i meny
     @FXML
     private void gåTilKundeoversikt() {
@@ -53,6 +54,8 @@ public class RotOppsettController {
         }
     }
 
+
+    //-------SKADEMELDING-------
     //Går til skademeldingversikt ved trykk i meny
     @FXML
     private void gåTilSkademeldingoversikt() {
@@ -68,9 +71,18 @@ public class RotOppsettController {
 
         if (bekreftTrykket) {
             hovedApplikasjon.getSkademeldingData().add(nySkademelding);
+
+            //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
+            //legger til skademelding til kundearray
+            //nt index = SkadePopup.getKundeNrField();
+            //int reel = (int)index - 1;
+            Kunde kunde = hovedApplikasjon.getKundeData().get(0); //Integer.parseInt(kundeNrKolonne.getText()) -1
+            kunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData()); //legger til en skademelding til kunde
         }
     }
 
+
+    ////-------KUNDE------- - FILER
     @FXML
     public void lagreFilTrykket() {
         File filPath = Filbehandling.lagreFilVelger(hovedApplikasjon.getHovedStage());

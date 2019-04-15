@@ -1,5 +1,6 @@
 package ae.controller;
 
+import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
 import ae.model.Skademelding;
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
 public class SkademeldingRedigerPopupController {
 
     @FXML
-    private TextField skadeNrField, skadeTypeField, skadebeskrivelseField,
+    private TextField kundeNrField, skadeNrField, skadeTypeField, skadebeskrivelseField,
             belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
     @FXML
     private TextArea vitneInfoField;
@@ -23,6 +24,8 @@ public class SkademeldingRedigerPopupController {
     private Skademelding skademeldingÅRedigere;
     private boolean bekreft = false;
     private boolean inputOK = false;
+    // Referanse til Rot-kontrolleren.
+    private HovedApplikasjon hovedApplikasjon;
 
     @FXML
     private void initialize() { }
@@ -143,6 +146,10 @@ public class SkademeldingRedigerPopupController {
         skademeldingÅRedigere.setKontaktinfoVitner(vitneInfoField.getText());
 
         return msg;
+    }
+
+    public int getKundeNrField(){
+        return Integer.parseInt(kundeNrField.getText());
     }
 
     @FXML

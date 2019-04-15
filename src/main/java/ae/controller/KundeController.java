@@ -63,7 +63,8 @@ public class KundeController {
     // TODO: flytte denne til rotoppsettet
     @FXML
     public void gåTilNyKundePopup() {
-        Kunde nyKunde = new Kunde(IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData()));
+        int index = IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData());
+        Kunde nyKunde = new Kunde(index);
         boolean bekreftTrykket = Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
 
         if (bekreftTrykket) {
@@ -138,7 +139,6 @@ public class KundeController {
             forsikringerLabel.setText("");
             skademeldingerLabel.setText("");
             erstatningerUbetalteLabel.setText("");
-
         }
     }
 

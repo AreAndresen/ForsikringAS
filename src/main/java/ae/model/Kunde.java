@@ -161,16 +161,50 @@ public class Kunde implements Serializable {
         return forsikringer;
     }
 
+
     // skademeldinger
     public List<Skademelding> getSkademeldinger() {
         return skademeldinger.get();
     }
+
     public void setSkademeldinger(List<Skademelding> skademeldinger) {
         this.skademeldinger.set(skademeldinger);
     }
     public ObjectProperty<List<Skademelding>> skademeldingerProperty() {
         return skademeldinger;
     }
+
+    /*public void registrerSkademelding(Skademelding skademelding){
+        //if(!finnes(personnr)){
+            //Pasient nyPasient = new Pasient(navn, personnr);
+            this.skademeldinger.set(List<Skademelding> skademelding);
+        //}
+    }*/
+
+    /*public void slettSkademelding(int skadeNr){
+        Skademelding skademelding = null;
+        for(Skademelding enSkademelding : skademeldinger){
+            if(enPasient.getPersonnr().equals(personnr)){
+                pasient = enPasient;
+                break;
+            }
+        }
+        if(pasient != null){
+            pasienter.remove(pasient);
+        }
+    }
+
+    public boolean finnes(String personnr){
+        boolean funnet = false;
+        for(Pasient enPasient : pasienter){
+            if(enPasient.getPasientnr().equals(personnr)){
+                funnet = true;
+            }
+        }
+        return funnet;
+    }*/
+
+
 
     // erstatningerUbetalte
     public List<Skademelding> getErstatningerUbetalte() {
