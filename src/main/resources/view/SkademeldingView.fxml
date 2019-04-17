@@ -20,7 +20,7 @@
                <children>
                   <TableView fx:id="skademeldingTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="kundeNrKolonne" prefWidth="75.0" text="Kundenr" />
+                        <TableColumn fx:id="forsikringsNrKolonne" prefWidth="75.0" text="Forsikringsnr" />
                         <TableColumn fx:id="skadeNrKolonne" prefWidth="109.0" text="Skadenr" />
                         <TableColumn fx:id="skadeTypeKolonne" prefWidth="112.0" text="Skadetype" />
                         <TableColumn fx:id="erstatningUtbetaltKolonne" prefWidth="174.0" text="Utbetalt erstatning" />
@@ -44,24 +44,26 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.46669158935546" minWidth="10.0" prefWidth="175.20001983642578" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="71.80001373291016" minHeight="10.0" prefHeight="22.73332901000977" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="95.26667098999023" minHeight="10.0" prefHeight="95.26667098999023" valignment="TOP" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="141.8000213623047" minHeight="10.0" prefHeight="132.20000000000002" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="71.80001373291016" minHeight="10.0" prefHeight="34.99996795654297" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="71.80001373291016" minHeight="10.0" prefHeight="29.60001220703124" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="95.26667098999023" minHeight="10.0" prefHeight="66.39998779296874" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="141.8000213623047" minHeight="10.0" prefHeight="125.59998779296876" valignment="TOP" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="TOP_LEFT" text="Beskrivelse av skade:" wrapText="true" GridPane.rowIndex="1" />
-                        <Label text="Vitneinformasjon:" wrapText="true" GridPane.rowIndex="2" />
-                        <Label fx:id="beskrivelseAvSkadeLabel" alignment="TOP_LEFT" prefHeight="96.0" prefWidth="169.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Skadenr:" />
-                        <Label fx:id="skadeNrLabel" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="vitneInfoLabel" alignment="TOP_LEFT" prefHeight="134.0" prefWidth="158.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2147483647" />
+                        <Label alignment="TOP_LEFT" text="Beskrivelse av skade:" wrapText="true" GridPane.rowIndex="2" />
+                        <Label text="Vitneinformasjon:" wrapText="true" GridPane.rowIndex="3" />
+                        <Label fx:id="beskrivelseAvSkadeLabel" alignment="TOP_LEFT" prefHeight="96.0" prefWidth="169.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Skadenr:" GridPane.rowIndex="1" />
+                        <Label fx:id="skadeNrLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="vitneInfoLabel" alignment="TOP_LEFT" prefHeight="134.0" prefWidth="158.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2147483647" />
+                        <Button mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Kunde" />
+                        <Label fx:id="forsikringsNrLabel" text="Label" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="26.0" prefWidth="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
                         <Button mnemonicParsing="false" onAction="#gåTilRedigerSkademeldingPopup" text="Rediger" />
                         <Button mnemonicParsing="false" onAction="#slettValgtSkademelding" text="Slett" />
-                        <Button mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" text="Ny" />
                      </buttons>
                   </ButtonBar>
                </children>

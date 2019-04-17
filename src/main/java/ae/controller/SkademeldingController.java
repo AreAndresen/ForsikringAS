@@ -20,8 +20,8 @@ public class SkademeldingController {
     // Tabellen.
     @FXML
     private TableView<Skademelding> skademeldingTabell;
-    @FXML
-    private TableColumn<Skademelding, Number> kundeNrKolonne; //kunde ID
+    //@FXML
+    //private TableColumn<Skademelding, Number> forsikringsNrKolonne; //kunde ID
     @FXML
     private TableColumn<Skademelding, Number> skadeNrKolonne;
     @FXML
@@ -37,7 +37,7 @@ public class SkademeldingController {
 
     // Labels.
     @FXML
-    private Label skadeNrLabel, beskrivelseAvSkadeLabel, vitneInfoLabel;
+    private Label skadeNrLabel, beskrivelseAvSkadeLabel, vitneInfoLabel, kundeNrLabel;
 
     private Filbehandling fb = new Filbehandling();
 
@@ -52,7 +52,7 @@ public class SkademeldingController {
     @FXML
     private void initialize() {
         // Initier skademelding-tabellen med kobling til alle kolonnene
-        kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
+        //forsikringsNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
         //skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
@@ -68,7 +68,7 @@ public class SkademeldingController {
                 (observable, gammelData, nyData) -> visSkademeldingDetaljer(nyData));
     }
 
-    @FXML
+    /*@FXML
     public void gåTilNySkademeldingPopup() {
         Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
         boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
@@ -83,8 +83,18 @@ public class SkademeldingController {
             Kunde kunde = hovedApplikasjon.getKundeData().get(0); //Integer.parseInt(kundeNrKolonne.getText()) -1
             kunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData()); //legger til en skademelding til kunde
 
+            /*
+            /TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
+            // legger til skademelding til riktig kundearray
+            ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData();
+            for(Kunde enKunde : kunder) {
+                if (enKunde.getForsikringsNr() == (valgtKunde.getForsikringsNr())) {
+                    enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
+                }
+            }
+
         }
-    }
+    }*/
 
     @FXML
     public void gåTilRedigerSkademeldingPopup() {
@@ -126,6 +136,16 @@ public class SkademeldingController {
         }
     }
 
+    //TODO VURDERES OM DENNE TYPEN NAVIGERING SKAL VÆRE MED VIDERE
+    //-------KUNDE-------
+    //Går til kundeoversikt ved trykk i meny
+    @FXML
+    private void gåTilKundeoversikt() {
+        Viewbehandling.visKundeOversikt(hovedApplikasjon);
+        //lagreFilMenuItem.setDisable(false);
+    }
+
+
     /**
      * Fyller ut info-feltene om hver kunde.
      * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
@@ -134,6 +154,7 @@ public class SkademeldingController {
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
 
+            //forsikringsNrLabel.setText(Integer.toString(kunde.));
             skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
             vitneInfoLabel.setText(skademelding.getKontaktinfoVitner());
@@ -160,6 +181,6 @@ public class SkademeldingController {
         this.hovedApplikasjon = hovedApplikasjon;
 
         // Legger til data fra ObservableList til tabellen
-        skademeldingTabell.setItems(hovedApplikasjon.getSkademeldingData());
+        //skademeldingTabell.setItems(hovedApplikasjon.getSkademeldingData());
     }
 }

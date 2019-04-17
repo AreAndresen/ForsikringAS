@@ -1,8 +1,10 @@
 package ae.controller;
 
 import ae.model.Filbehandling;
+import ae.model.Skademelding;
 import ae.model.Viewbehandling;
 import ae.util.IdUtil;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
@@ -72,6 +74,34 @@ public class KundeController {
         }
     }
 
+    //TODO MÅ FIKSES - NY METODE FOR DIREKTE SKADEMEDLING ---------
+    @FXML
+    public void gåTilNySkademeldingPopupKunde() {
+        Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtKunde != null) {
+            Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
+            boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
+
+            if (bekreftTrykket) {
+                hovedApplikasjon.getSkademeldingData().add(nySkademelding); //legger til ny skademelding i skademelding array
+
+
+                //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
+                // legger til skademelding til riktig kundearray
+                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData();
+                for(Kunde enKunde : kunder) {
+                    if (enKunde.getForsikringsNr() == (valgtKunde.getForsikringsNr())) {
+                        enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
+
+
+                    }
+                }
+            }
+        }
+    }
+
+
     @FXML
     public void gåTilRedigerKundePopup() {
         Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
@@ -87,6 +117,7 @@ public class KundeController {
         // TODO: else: alert boks
     }
 
+
     /**
      * Sletter valgt kunde fra listen, med bekreftelse
      */
@@ -94,22 +125,39 @@ public class KundeController {
     public void slettValgtKunde() {
         int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
 
-        Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
-        String kundeInfo = valgtKunde.getForsikringsNr() +", "+ valgtKunde.getFornavn() +" "+ valgtKunde.getEtternavn();
+        try{
+            if(valgtKundeIndex != 0){
+                Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
+                String kundeInfo = valgtKunde.getForsikringsNr() +", "+ valgtKunde.getFornavn() +" "+ valgtKunde.getEtternavn();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initOwner(hovedApplikasjon.getHovedStage());
-        alert.setTitle("Slett kunde");
-        alert.setHeaderText("Bekreft sletting av kunde");
-        alert.setContentText("Er du sikker på at du ønsker å slette kunde " + kundeInfo +"?");
-        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
-        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.initOwner(hovedApplikasjon.getHovedStage());
+                alert.setTitle("Slett kunde");
+                alert.setHeaderText("Bekreft sletting av kunde");
+                alert.setContentText("Er du sikker på at du ønsker å slette kunde " + kundeInfo +"?");
+                ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
+                ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            kundeTabell.getItems().remove(valgtKundeIndex);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    kundeTabell.getItems().remove(valgtKundeIndex);
+                }
+            }
+        }
+        catch(IndexOutOfBoundsException e){
+            e.printStackTrace();
         }
     }
+
+    //TODO VURDERES OM DENNE TYPEN NAVIGERING SKAL VÆRE MED VIDERE
+    //-------SKADEMELDING-------
+    //Går til skademeldingversikt ved trykk i meny
+    @FXML
+    private void gåTilSkademeldingoversikt() {
+        Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
+        //lagreFilMenuItem.setDisable(false);
+    }
+
 
     /**
      * Fyller ut info-feltene om hver kunde.

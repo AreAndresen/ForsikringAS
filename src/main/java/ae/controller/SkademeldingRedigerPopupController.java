@@ -4,9 +4,6 @@ import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
 import ae.model.Skademelding;
-import ae.model.exceptions.UgyldigAdresseFakturaException;
-import ae.model.exceptions.UgyldigEtternavnException;
-import ae.model.exceptions.UgyldigFornavnException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -15,13 +12,14 @@ import javafx.stage.Stage;
 public class SkademeldingRedigerPopupController {
 
     @FXML
-    private TextField kundeNrField, skadeNrField, skadeTypeField, skadebeskrivelseField,
+    private TextField forsikringsNrField, skadeNrField, skadeTypeField, skadebeskrivelseField,
             belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
     @FXML
     private TextArea vitneInfoField;
 
     private Stage popupStage;
     private Skademelding skademeldingÅRedigere;
+    private Kunde kundeSkademelding;
     private boolean bekreft = false;
     private boolean inputOK = false;
     // Referanse til Rot-kontrolleren.
@@ -35,7 +33,7 @@ public class SkademeldingRedigerPopupController {
     }
 
     /**
-     * Plasserer kunden som skal redigeres i popup-vinduet.
+     * Plasserer skademeldingen som skal redigeres i popup-vinduet.
      */
     public void setSkademeldingÅRedigere(Skademelding skademelding) {
         this.skademeldingÅRedigere = skademelding;
@@ -46,6 +44,7 @@ public class SkademeldingRedigerPopupController {
      * Metode for å legge inn kundens data i TextFields.
      */
     public void oppdaterFelter() {
+        forsikringsNrField.setText(forsikringsNrField.getText());
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
         skadeTypeField.setText(skademeldingÅRedigere.getSkadeType());
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
@@ -54,6 +53,7 @@ public class SkademeldingRedigerPopupController {
         datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
         vitneInfoField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
 
+        forsikringsNrField.setDisable(true);
         skadeNrField.setDisable(true);
         datoSkademeldingOpprettetField.setDisable(true);
     }
@@ -148,8 +148,8 @@ public class SkademeldingRedigerPopupController {
         return msg;
     }
 
-    public int getKundeNrField(){
-        return Integer.parseInt(kundeNrField.getText());
+    public int getForsikringsNrField(){
+        return Integer.parseInt(forsikringsNrField.getText());
     }
 
     @FXML

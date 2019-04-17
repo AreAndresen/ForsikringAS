@@ -1,4 +1,4 @@
-package ae.model.exceptions;
+package ae.model.exceptions.KundeExc;
 
 public class UgyldigAdresseFakturaException extends IllegalArgumentException {
     public UgyldigAdresseFakturaException() {

@@ -41,8 +41,8 @@
             <TextField fx:id="erstatningsbelopUtbetaltField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="datoSkademeldingOpprettetField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Dato ny skademelding" GridPane.rowIndex="6" />
-            <Label text="Kundenr" />
-            <TextField fx:id="kundeNrField" GridPane.columnIndex="1" />
+            <Label text="Forsikringsnr" />
+            <TextField fx:id="forsikringsNrField" GridPane.columnIndex="1" />
             <TextField prefHeight="26.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Label text="Vitner" GridPane.rowIndex="7" />
             <TextArea fx:id="vitneInfoField" prefHeight="77.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />

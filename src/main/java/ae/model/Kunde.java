@@ -8,10 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import ae.model.exceptions.UgyldigAdresseFakturaException;
-import ae.model.exceptions.UgyldigEtternavnException;
-import ae.model.exceptions.UgyldigFornavnException;
-import ae.util.IdUtil;
+import ae.model.exceptions.KundeExc.UgyldigAdresseFakturaException;
+import ae.model.exceptions.KundeExc.UgyldigEtternavnException;
+import ae.model.exceptions.KundeExc.UgyldigFornavnException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -37,6 +36,7 @@ public class Kunde implements Serializable {
     private transient ObjectProperty<List<Forsikring>> forsikringer;
     private transient ObjectProperty<List<Skademelding>> skademeldinger;
     private transient ObjectProperty<List<Skademelding>> erstatningerUbetalte;
+
 
     /**
      * Konstruktør for midlertidig kunde i Ny kunde.
@@ -170,39 +170,10 @@ public class Kunde implements Serializable {
     public void setSkademeldinger(List<Skademelding> skademeldinger) {
         this.skademeldinger.set(skademeldinger);
     }
+
     public ObjectProperty<List<Skademelding>> skademeldingerProperty() {
         return skademeldinger;
     }
-
-    /*public void registrerSkademelding(Skademelding skademelding){
-        //if(!finnes(personnr)){
-            //Pasient nyPasient = new Pasient(navn, personnr);
-            this.skademeldinger.set(List<Skademelding> skademelding);
-        //}
-    }*/
-
-    /*public void slettSkademelding(int skadeNr){
-        Skademelding skademelding = null;
-        for(Skademelding enSkademelding : skademeldinger){
-            if(enPasient.getPersonnr().equals(personnr)){
-                pasient = enPasient;
-                break;
-            }
-        }
-        if(pasient != null){
-            pasienter.remove(pasient);
-        }
-    }
-
-    public boolean finnes(String personnr){
-        boolean funnet = false;
-        for(Pasient enPasient : pasienter){
-            if(enPasient.getPasientnr().equals(personnr)){
-                funnet = true;
-            }
-        }
-        return funnet;
-    }*/
 
 
 

@@ -2,9 +2,9 @@ package ae.controller;
 
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
-import ae.model.exceptions.UgyldigAdresseFakturaException;
-import ae.model.exceptions.UgyldigEtternavnException;
-import ae.model.exceptions.UgyldigFornavnException;
+import ae.model.exceptions.KundeExc.UgyldigAdresseFakturaException;
+import ae.model.exceptions.KundeExc.UgyldigEtternavnException;
+import ae.model.exceptions.KundeExc.UgyldigFornavnException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
