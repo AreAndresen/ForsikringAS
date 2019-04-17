@@ -1,16 +1,15 @@
 package ae.controller;
 
-import ae.model.Filbehandling;
-import ae.model.Skademelding;
-import ae.model.Viewbehandling;
+import ae.model.*;
 import ae.util.IdUtil;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
-import ae.model.Kunde;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -89,11 +88,21 @@ public class KundeController {
 
                 //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
                 // legger til skademelding til riktig kundearray
+
+                List<Skademelding> skademeldingerArray = new ArrayList<>();
+
                 ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData();
                 for(Kunde enKunde : kunder) {
                     if (enKunde.getForsikringsNr() == (valgtKunde.getForsikringsNr())) {
                         enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
 
+                        //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
+                        /*for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
+                                if(melding.getForsikringsNr() == enKunde.getForsikringsNr()){
+                                    skademeldinger.add(melding);
+                                }
+                        }
+                        enKunde.setSkademeldinger(skademeldingerArray);*/
 
                     }
                 }
