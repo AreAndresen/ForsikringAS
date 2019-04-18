@@ -89,9 +89,10 @@ public class KundeController {
                 //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
                 // legger til skademelding til riktig kundearray
 
-                List<Skademelding> skademeldingerArray = new ArrayList<>();
+                List<Skademelding> skademeldingerArray = new ArrayList<>(); //array som skal fylles hver gang
 
-                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData();
+                //henter
+                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
                 for(Kunde enKunde : kunder) {
                     if (enKunde.getForsikringsNr() == (valgtKunde.getForsikringsNr())) {
                         enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
@@ -109,7 +110,6 @@ public class KundeController {
             }
         }
     }
-
 
     @FXML
     public void gåTilRedigerKundePopup() {

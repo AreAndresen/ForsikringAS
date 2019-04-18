@@ -22,6 +22,7 @@ public class SkademeldingRedigerPopupController {
     private Kunde kundeSkademelding;
     private boolean bekreft = false;
     private boolean inputOK = false;
+
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
 

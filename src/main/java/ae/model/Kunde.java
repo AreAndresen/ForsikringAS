@@ -171,6 +171,10 @@ public class Kunde implements Serializable {
         this.skademeldinger.set(skademeldinger);
     }
 
+    /*public void addSkademelding(Skademelding skademelding) {
+        this.skademeldinger.add(skademelding);
+    }*/
+
     public ObjectProperty<List<Skademelding>> skademeldingerProperty() {
         return skademeldinger;
     }

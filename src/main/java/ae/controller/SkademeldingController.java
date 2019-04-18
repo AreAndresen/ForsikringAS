@@ -181,6 +181,6 @@ public class SkademeldingController {
         this.hovedApplikasjon = hovedApplikasjon;
 
         // Legger til data fra ObservableList til tabellen
-        //skademeldingTabell.setItems(hovedApplikasjon.getSkademeldingData());
+        skademeldingTabell.setItems(hovedApplikasjon.getSkademeldingData());
     }
 }

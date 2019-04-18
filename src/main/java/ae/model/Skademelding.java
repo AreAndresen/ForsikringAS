@@ -21,6 +21,7 @@ public class Skademelding implements Serializable {
      * * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
      */
     private transient IntegerProperty skadeNr;
+    //private transient IntegerProperty forsikringsNr; //kunde ID
     private transient ObjectProperty<LocalDate> datoSkade;
     private transient StringProperty skadeType;
     private transient StringProperty skadeBeskrivelse;
@@ -41,7 +42,7 @@ public class Skademelding implements Serializable {
      public Skademelding(int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                          Double belopTaksering, Double erstatningsbelopUtbetalt) {
 
-        // Ta imot parametere.
+        // Ta imot parametere
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
