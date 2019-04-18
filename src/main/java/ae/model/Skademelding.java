@@ -21,7 +21,7 @@ public class Skademelding implements Serializable {
      * * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
      */
     private transient IntegerProperty skadeNr;
-    //private transient IntegerProperty forsikringsNr; //kunde ID
+    private transient IntegerProperty forsikringsNr; //kunde ID
     private transient ObjectProperty<LocalDate> datoSkade;
     private transient StringProperty skadeType;
     private transient StringProperty skadeBeskrivelse;
@@ -33,17 +33,18 @@ public class Skademelding implements Serializable {
     /**
      * Konstruktør for midlertidig skademelding i Ny skademelding.
      */
-    public Skademelding(int skadeNr) { this(skadeNr, LocalDate.now(), null, null,
+    public Skademelding(int skadeNr) { this(skadeNr, 0, LocalDate.now(), null, null,
             0.0, 0.0, null); }
 
     /**
      * Konstruktør for Ny skademelding.
      */
-     public Skademelding(int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
+     public Skademelding(int skadeNr, int forsikringsNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                          Double belopTaksering, Double erstatningsbelopUtbetalt) {
 
         // Ta imot parametere
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
+        this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
@@ -56,10 +57,11 @@ public class Skademelding implements Serializable {
     /**
      * Konstruktør for kunde-opprettelse ved innlesing av fil.
      */
-    public Skademelding(int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
+    public Skademelding(int skadeNr, int forsikringsNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                         Double belopTaksering, Double erstatningsbelopUtbetalt,
                         String kontaktinfoVitner) {
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
+        this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
@@ -80,6 +82,17 @@ public class Skademelding implements Serializable {
     }
     public IntegerProperty skadeNrProperty() {
         return skadeNr;
+    }
+
+    // forsikringsNr
+    public int getForsikringsNr() {
+        return forsikringsNr.get();
+    }
+    public void setForsikringsNr(int forsikringsNr) {
+        this.forsikringsNr.set(forsikringsNr);
+    }
+    public IntegerProperty forsikringsNrProperty() {
+        return forsikringsNr;
     }
 
     //datoSkade
@@ -157,6 +170,7 @@ public class Skademelding implements Serializable {
     private void writeObject(ObjectOutputStream os) throws IOException {
         os.defaultWriteObject();
         os.writeObject(getSkadeNr());
+        os.writeObject(getForsikringsNr());
         os.writeObject(getDatoSkade());
         os.writeObject(getSkadeType());
         os.writeObject(getSkadeBeskrivelse());
@@ -171,6 +185,7 @@ public class Skademelding implements Serializable {
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
         this.skadeNr = new SimpleIntegerProperty((int)is.readObject());
+        this.forsikringsNr = new SimpleIntegerProperty((int)is.readObject());
         this.datoSkade = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
         this.skadeType = new SimpleStringProperty((String)is.readObject());
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
@@ -182,7 +197,7 @@ public class Skademelding implements Serializable {
 
     @Override
     public String toString() {
-        return getSkadeNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
+        return getSkadeNr() +"," +getForsikringsNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
                 getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getKontaktinfoVitner();
     }
 }

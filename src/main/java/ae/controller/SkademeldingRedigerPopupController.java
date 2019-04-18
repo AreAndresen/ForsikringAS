@@ -45,7 +45,7 @@ public class SkademeldingRedigerPopupController {
      * Metode for å legge inn kundens data i TextFields.
      */
     public void oppdaterFelter() {
-        forsikringsNrField.setText(forsikringsNrField.getText());
+        forsikringsNrField.setText(Integer.toString(skademeldingÅRedigere.getForsikringsNr()));
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
         skadeTypeField.setText(skademeldingÅRedigere.getSkadeType());
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
@@ -54,7 +54,7 @@ public class SkademeldingRedigerPopupController {
         datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
         vitneInfoField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
 
-        forsikringsNrField.setDisable(true);
+        //forsikringsNrField.setDisable(true);
         skadeNrField.setDisable(true);
         datoSkademeldingOpprettetField.setDisable(true);
     }
@@ -87,6 +87,7 @@ public class SkademeldingRedigerPopupController {
         skademeldingÅRedigere.setSkadeNr(Integer.parseInt(skadeNrField.getText()));
 
         //Bytter set her ut med metoder (se under)
+        msg += redigerForsikrnignsNr();
         msg += redigerSkadetype();
         msg += redigerSkadebeskrivelse();
         msg += redigerTakseringsbeløp();
@@ -106,6 +107,17 @@ public class SkademeldingRedigerPopupController {
     }
 
     //TODO: METODER FOR ENDRING AV SKADEMELDING
+
+    //TODO: METODER FOR ENDRING AV SKADEMELDING
+    //oppdaterer skadetype
+    private String redigerForsikrnignsNr() {
+        String msg = "";
+
+        skademeldingÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
+
+        return msg;
+    }
+
     //oppdaterer skadetype
     private String redigerSkadetype() {
         String msg = "";

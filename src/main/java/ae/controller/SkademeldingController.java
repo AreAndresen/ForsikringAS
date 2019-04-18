@@ -3,10 +3,13 @@ import ae.model.Filbehandling;
 import ae.model.Kunde;
 import ae.model.Viewbehandling;
 import ae.util.IdUtil;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import ae.model.Skademelding;
 import javafx.scene.control.Label;
@@ -20,8 +23,8 @@ public class SkademeldingController {
     // Tabellen.
     @FXML
     private TableView<Skademelding> skademeldingTabell;
-    //@FXML
-    //private TableColumn<Skademelding, Number> forsikringsNrKolonne; //kunde ID
+    @FXML
+    private TableColumn<Skademelding, Number> forsikringsNrKolonne; //kunde ID
     @FXML
     private TableColumn<Skademelding, Number> skadeNrKolonne;
     @FXML
@@ -52,7 +55,7 @@ public class SkademeldingController {
     @FXML
     private void initialize() {
         // Initier skademelding-tabellen med kobling til alle kolonnene
-        //forsikringsNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
+        forsikringsNrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
         //skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
@@ -68,33 +71,39 @@ public class SkademeldingController {
                 (observable, gammelData, nyData) -> visSkademeldingDetaljer(nyData));
     }
 
-    /*@FXML
+    //TODO MÅ FIKSES - NY METODE FOR DIREKTE SKADEMEDLING ---------
+    @FXML
     public void gåTilNySkademeldingPopup() {
-        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
-        boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
-        if (bekreftTrykket) {
-            hovedApplikasjon.getSkademeldingData().add(nySkademelding); //legger til ny skademelding i skademelding array
+            Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
+            boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
-            //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
-            //legger til skademelding til kundearray
-            //nt index = SkadePopup.getKundeNrField();
-            //int reel = (int)index - 1;
-            Kunde kunde = hovedApplikasjon.getKundeData().get(0); //Integer.parseInt(kundeNrKolonne.getText()) -1
-            kunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData()); //legger til en skademelding til kunde
+            if (bekreftTrykket) {
+                hovedApplikasjon.getSkademeldingData().add(nySkademelding); //legger til ny skademelding i skademelding array
 
-            /*
-            /TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
-            // legger til skademelding til riktig kundearray
-            ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData();
-            for(Kunde enKunde : kunder) {
-                if (enKunde.getForsikringsNr() == (valgtKunde.getForsikringsNr())) {
-                    enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
+
+                //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
+                // legger til skademelding til riktig kundearray
+
+                List<Skademelding> skademeldingerArray = new ArrayList<>(); //array som skal fylles hver gang
+                //henter
+                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
+                for(Kunde enKunde : kunder) {
+                    if (enKunde.getForsikringsNr() == (nySkademelding.getForsikringsNr())) {
+                        //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
+
+                        //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
+                        for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
+                            if(melding.getForsikringsNr() == enKunde.getForsikringsNr()){
+                                skademeldingerArray.add(melding);
+                            }
+                        }
+                        enKunde.setSkademeldinger(skademeldingerArray);
+
+                    }
                 }
             }
-
-        }
-    }*/
+    }
 
     @FXML
     public void gåTilRedigerSkademeldingPopup() {
@@ -105,6 +114,24 @@ public class SkademeldingController {
 
             if (bekreftTrykket) {
                 visSkademeldingDetaljer(valgtSkademelding);
+
+                List<Skademelding> skademeldingerArray = new ArrayList<>(); //array som skal fylles hver gang
+                //henter
+                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
+                for(Kunde enKunde : kunder) {
+                    if (enKunde.getForsikringsNr() == (valgtSkademelding.getForsikringsNr())) {
+                        //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
+
+                        //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
+                        for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
+                            if(melding.getForsikringsNr() == enKunde.getForsikringsNr()){
+                                skademeldingerArray.add(melding);
+                            }
+                        }
+                        enKunde.setSkademeldinger(skademeldingerArray);
+
+                    }
+                }
             }
         }
 

@@ -69,7 +69,7 @@
                         <Label fx:id="adresseFakturaLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Dato ny kunde" wrapText="true" GridPane.rowIndex="4" />
                         <Label fx:id="datoKundeOpprettetLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#gåTilNySkademeldingPopupKunde" text="Ny skademelding" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" text="Ny skademelding" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                         <Label text="Antall skademeldinger" GridPane.rowIndex="6" />
                             </children>
                         </GridPane>

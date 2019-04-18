@@ -73,7 +73,7 @@ public class KundeController {
         }
     }
 
-    //TODO MÅ FIKSES - NY METODE FOR DIREKTE SKADEMEDLING ---------
+    /*TODO MÅ FIKSES - NY METODE FOR DIREKTE SKADEMEDLING ---------
     @FXML
     public void gåTilNySkademeldingPopupKunde() {
         Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
@@ -95,21 +95,21 @@ public class KundeController {
                 ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
                 for(Kunde enKunde : kunder) {
                     if (enKunde.getForsikringsNr() == (valgtKunde.getForsikringsNr())) {
-                        enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
+                        //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
 
                         //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
-                        /*for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
+                        for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
                                 if(melding.getForsikringsNr() == enKunde.getForsikringsNr()){
-                                    skademeldinger.add(melding);
+                                    skademeldingerArray.add(melding);
                                 }
                         }
-                        enKunde.setSkademeldinger(skademeldingerArray);*/
+                        enKunde.setSkademeldinger(skademeldingerArray);
 
                     }
                 }
             }
         }
-    }
+    }*/
 
     @FXML
     public void gåTilRedigerKundePopup() {
