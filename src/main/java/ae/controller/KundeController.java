@@ -81,8 +81,6 @@ public class KundeController {
                 visKundensDetaljer(valgtKunde);
             }
         }
-
-        // TODO: else: alert boks
     }
 
 

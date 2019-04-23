@@ -110,39 +110,6 @@ public class SkademeldingController {
         }
     }
 
-    /*@FXML
-    public void gåTilRedigerSkademeldingPopup() {
-        Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
-
-        if (valgtSkademelding != null) {
-            boolean bekreftTrykket = Viewbehandling.visRedigerSkademeldingPopup(hovedApplikasjon, valgtSkademelding);
-
-            if (bekreftTrykket) {
-                visSkademeldingDetaljer(valgtSkademelding);
-
-                List<Skademelding> skademeldingerArray = new ArrayList<>(); //array som skal fylles hver gang
-                //henter
-                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
-                for(Kunde enKunde : kunder) {
-                    if (enKunde.getKundeNr() == (valgtSkademelding.getForsikringsNr())) {
-                        //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
-
-                        //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
-                        for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
-                            if(melding.getForsikringsNr() == enKunde.getKundeNr()){
-                                skademeldingerArray.add(melding);
-                            }
-                        }
-                        enKunde.setSkademeldinger(skademeldingerArray);
-
-                    }
-                }
-            }
-        }
-
-        // TODO: else: alert boks
-    }*/
-
     /**
      * Sletter valgt kunde fra listen, med bekreftelse
      */
@@ -164,7 +131,16 @@ public class SkademeldingController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
+            //sletter fra tabell her
             skademeldingTabell.getItems().remove(valgtSkademeldingIndex);
+
+            //slette fra array her
+            for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+                if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
+                    enKunde.getSkademeldinger().remove(valgtSkademelding);
+                }
+            }
+
         }
     }
 
