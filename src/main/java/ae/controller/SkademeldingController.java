@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import ae.model.Skademelding;
@@ -47,9 +46,6 @@ public class SkademeldingController {
 
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
-
-    private Kunde kundeÅRedigere;
-    private SkademeldingRedigerPopupController SkadePopup;
 
     public SkademeldingController() {}
 
@@ -159,14 +155,6 @@ public class SkademeldingController {
      * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
      * antall av de ulike typene. Knappene skal trykkes for å vise de.
      */
-    /*public void visSkademeldingDetaljer(ObservableList<Kunde> kunder) {
-        if (kunder != null) {
-
-            for(Kunde kunde : kunder){
-                kunde.getSkademeldinger().
-            }
-    */
-
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
 
@@ -198,7 +186,6 @@ public class SkademeldingController {
 
         // Legger til data fra ObservableList til tabellen
         //skademeldingTabell.setItems(hovedApplikasjon.getKundeData());
-
         ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
 
         for(Kunde kunde : hovedApplikasjon.getKundeData()){
