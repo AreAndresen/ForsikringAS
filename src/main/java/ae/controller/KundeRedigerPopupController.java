@@ -134,6 +134,7 @@ public class KundeRedigerPopupController {
         return msg;
     }
 
+
     @FXML
     public void avbrytTrykkes() {
         popupStage.close();

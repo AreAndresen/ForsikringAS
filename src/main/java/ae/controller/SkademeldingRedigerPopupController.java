@@ -9,6 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+
 public class SkademeldingRedigerPopupController {
 
     @FXML
@@ -25,6 +27,7 @@ public class SkademeldingRedigerPopupController {
 
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
+
 
     @FXML
     private void initialize() { }
@@ -94,6 +97,23 @@ public class SkademeldingRedigerPopupController {
         msg += redigerErstatningsbelopUtbetalt();
         msg += redigerKontaktinfoVitner();
 
+
+        //TODO MÅ LØSE UBETALT
+        /*legger til ubetalt i kunde -NYTT
+        HashMap<Integer, Double> erstatningerUbetalte = new HashMap<>(); //array til bruk
+        int skadeNr = Integer.parseInt(skadeNrField.getText());
+        double erstatningUbetalt = Double.parseDouble(erstatningsbelopUtbetaltField.getText());
+        erstatningerUbetalte.put(skadeNr, erstatningUbetalt);
+
+        for(Kunde kunde : hovedApplikasjon.getKundeData()){
+            if(kunde.getKundeNr() == Integer.parseInt(forsikringsNrField.getText())){
+                kunde.setErstatningerUbetalte(erstatningerUbetalte);
+            }
+        }
+        //kundeSkademelding.setErstatningerUbetalte(erstatningerUbetalte);*/
+
+
+
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
 
@@ -159,9 +179,6 @@ public class SkademeldingRedigerPopupController {
         return msg;
     }
 
-    public int getForsikringsNrField(){
-        return Integer.parseInt(forsikringsNrField.getText());
-    }
 
     @FXML
     public void avbrytTrykkes() {
