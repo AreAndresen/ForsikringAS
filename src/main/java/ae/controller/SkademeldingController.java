@@ -80,8 +80,7 @@ public class SkademeldingController {
             // legger til skademelding til riktig kundearray
 
             //henter
-            ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
-            for(Kunde enKunde : kunder) {
+            for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                 if (enKunde.getKundeNr() == nySkademelding.getForsikringsNr()) {
                     List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     skademeldingerArray.add(nySkademelding); //legger til ny skademelding
