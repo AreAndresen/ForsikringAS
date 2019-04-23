@@ -1,5 +1,6 @@
 package ae.controller;
 
+import ae.controller.util.UgyldigInputHandler;
 import ae.model.*;
 import ae.util.IdUtil;
 import javafx.fxml.FXML;
@@ -83,39 +84,40 @@ public class KundeController {
         }
     }
 
-
     /**
      * Sletter valgt kunde fra listen, med bekreftelse
      */
     @FXML
     public void slettValgtKunde() {
-        int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
+        //try{ //koden kommentert ut under leder til indexOutOfBoundsException
+            //int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
+            //Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
 
-        try{
-            if(valgtKundeIndex >= 0){
-                Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
-                String kundeInfo = valgtKunde.getKundeNr() +", "+ valgtKunde.getFornavn() +" "+ valgtKunde.getEtternavn();
+            Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
+            if(valgtKunde != null){
+                String kundeInfo = Integer.toString(valgtKunde.getKundeNr());
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.initOwner(hovedApplikasjon.getHovedStage());
                 alert.setTitle("Slett kunde");
                 alert.setHeaderText("Bekreft sletting av kunde");
-                alert.setContentText("Er du sikker på at du ønsker å slette kunde " + kundeInfo +"?");
+                alert.setContentText("Er du sikker på at du ønsker å slette kunde nummer: " + kundeInfo +"?");
                 ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
                 ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
-                    kundeTabell.getItems().remove(valgtKundeIndex);
+                    kundeTabell.getItems().remove(valgtKunde);
                 }
             }
-        }
-        catch(IndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
+            else{
+                UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne slette."); //alert
+            }
+        //catch(IndexOutOfBoundsException e){ //denne feilen bør ikke skje (er her som påminner enn så lenge
+          //    e.printStackTrace();
+        //}
     }
 
-    //TODO VURDERES OM DENNE TYPEN NAVIGERING SKAL VÆRE MED VIDERE
     //-------SKADEMELDING-------
     //Går til skademeldingversikt ved trykk i meny
     @FXML

@@ -80,17 +80,14 @@ public class RotOppsettController {
             ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
             for(Kunde enKunde : kunder) {
                 if (enKunde.getKundeNr() == (nySkademelding.getForsikringsNr())) {
-
                     List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     skademeldingerArray.add(nySkademelding); //legger til ny skademelding
-
                     enKunde.setSkademeldinger(skademeldingerArray);
 
                 }
             }
         }
     }
-
 
 
     ////-------KUNDE------- - FILER

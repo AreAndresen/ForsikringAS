@@ -1,4 +1,5 @@
 package ae.controller;
+import ae.controller.util.UgyldigInputHandler;
 import ae.model.Filbehandling;
 import ae.model.Kunde;
 import ae.model.Viewbehandling;
@@ -68,26 +69,26 @@ public class SkademeldingController {
                 (observable, gammelData, nyData) -> visSkademeldingDetaljer(nyData));
     }
 
-    //TODO MÅ FIKSES - NY METODE FOR DIREKTE SKADEMEDLING ---------
     @FXML
     public void gåTilNySkademeldingPopup() {
         Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData()));
         boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
         if (bekreftTrykket) {
-            //visSkademeldingDetaljer(nySkademelding);
-            //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
-            // legger til skademelding til riktig kundearray
-
             //henter
+            boolean finnes = false;
             for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                 if (enKunde.getKundeNr() == nySkademelding.getForsikringsNr()) {
+                    finnes = true;
                     List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     skademeldingerArray.add(nySkademelding); //legger til ny skademelding
 
-                    enKunde.setSkademeldinger(skademeldingerArray);
+                    enKunde.setSkademeldinger(skademeldingerArray); //legger nytt array inn i kunde
 
                 }
+            }
+            if(!finnes) { //kundeNr finnes ikke i kundeData
+                UgyldigInputHandler.generateAlert("Det er ingen kunde registrert med det\nkundenummeret i systemet"); //alert
             }
         }
     }
@@ -103,6 +104,9 @@ public class SkademeldingController {
                 visSkademeldingDetaljer(valgtSkademelding);
             }
         }
+        else{
+            UgyldigInputHandler.generateAlert("Du må velge en skademelding for å redigere."); //alert
+        }
     }
 
     /**
@@ -110,33 +114,40 @@ public class SkademeldingController {
      */
     @FXML
     public void slettValgtSkademelding() {
-        int valgtSkademeldingIndex = skademeldingTabell.getSelectionModel().getSelectedIndex();
+        //int valgtSkademeldingIndex = skademeldingTabell.getSelectionModel().getSelectedIndex();
+        Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
-        Skademelding valgtSkademelding = skademeldingTabell.getItems().get(valgtSkademeldingIndex);
-        String skademeldingInfo = valgtSkademelding.getSkadeNr() +", "+ valgtSkademelding.getSkadeType() +" " +
-                ""+ valgtSkademelding.getSkadeBeskrivelse();
+        if(valgtSkademelding != null) {
+        //if (valgtSkademeldingIndex >= 0) {
+            //Skademelding valgtSkademelding = skademeldingTabell.getItems().get(valgtSkademeldingIndex);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initOwner(hovedApplikasjon.getHovedStage());
-        alert.setTitle("Slett Skademelding");
-        alert.setHeaderText("Bekreft sletting av skademelding");
-        alert.setContentText("Er du sikker på at du ønsker å slette skademelding " + skademeldingInfo +"?");
-        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
-        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
+            String skademeldingInfo = Integer.toString(valgtSkademelding.getSkadeNr());
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            //sletter fra tabell her
-            skademeldingTabell.getItems().remove(valgtSkademeldingIndex);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(hovedApplikasjon.getHovedStage());
+            alert.setTitle("Slett Skademelding");
+            alert.setHeaderText("Bekreft sletting av skademelding");
+            alert.setContentText("Er du sikker på at du ønsker å slette skademelding nummer: " + skademeldingInfo +"?");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
-            //slette fra array her
-            for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
-                    enKunde.getSkademeldinger().remove(valgtSkademelding);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                //sletter fra tabell her
+                skademeldingTabell.getItems().remove(valgtSkademelding);
+
+                //slette fra array her
+                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+                    if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
+                        enKunde.getSkademeldinger().remove(valgtSkademelding);
+                    }
                 }
             }
-
         }
+        else{
+            UgyldigInputHandler.generateAlert("Du må velge en skademelding for å kunne slette."); //alert
+        }
+
     }
 
     //TODO VURDERES OM DENNE TYPEN NAVIGERING SKAL VÆRE MED VIDERE
@@ -148,12 +159,8 @@ public class SkademeldingController {
         //lagreFilMenuItem.setDisable(false);
     }
 
-
-    /**
-     * Fyller ut info-feltene om hver kunde.
-     * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
-     * antall av de ulike typene. Knappene skal trykkes for å vise de.
-     */
+    /** Fyller ut info-feltene om hver kunde.Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
+     * antall av de ulike typene. Knappene skal trykkes for å vise de.*/
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
 
@@ -163,7 +170,6 @@ public class SkademeldingController {
             vitneInfoLabel.setText(skademelding.getKontaktinfoVitner());
             //skadeTypeLabel.setText(skademelding.getSkadeType());
             //utbetaltErstatningLabel.setText(Double.toString(skademelding.getErstatningsbelopUtbetalt()));
-
 
         } else {
 
@@ -178,8 +184,7 @@ public class SkademeldingController {
 
     /**
      * Kalles fra RotOppsettController for å gi en referanse til
-     * hovedapplikasjonen.
-     */
+     * hovedapplikasjonen.*/
     public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
         this.hovedApplikasjon = hovedApplikasjon;
 

@@ -66,10 +66,11 @@ public class KundeRedigerPopupController {
     @FXML
     public void bekreftTrykkes() {
         // TODO: input-validering med exceptions venter
-        oppdaterKunde();
-        bekreft = true;
 
+        oppdaterKunde(); //genererer feilmeldinger om aktivert
         if(inputOK){ //implementert en boolean for å lukke om input er riktig/feil
+
+            bekreft = true; //true her legger til kunde
             popupStage.close();
         }
     }
@@ -104,7 +105,7 @@ public class KundeRedigerPopupController {
             kundeÅRedigere.setFornavn(fornavnField.getText());
         }
         catch (UgyldigFornavnException e) {
-            msg +=e.getMessage()+"\n";
+            msg += e.getMessage()+"\n";
         }
         return msg;
     }

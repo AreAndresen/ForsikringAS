@@ -82,6 +82,7 @@ public class Viewbehandling {
             popupStage.showAndWait();
 
             return kundeRedigerPopupController.erBekreftTrykket();
+
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -194,7 +195,6 @@ public class Viewbehandling {
         }
     }
 
-
     /**
      * Brukes i Ny og Rediger popup for å hente det samme vinduet.
      */
@@ -210,6 +210,4 @@ public class Viewbehandling {
         loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingRedigerPopupView.fxml"));
         return loader;
     }
-
-
 }
