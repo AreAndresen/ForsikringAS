@@ -20,11 +20,25 @@ public class IdUtil {
         return ++forrigeId;
     }
 
-    public static int genererLøpenummerSkade(ObservableList<Skademelding> skademeldingData) {
+
+    /*public static int genererLøpenummerSkade(ObservableList<Skademelding> skademeldingData) {
         int forrigeId = 0;
         for (Skademelding skademelding : skademeldingData) {
             if (skademelding.getSkadeNr() > forrigeId) {
                 forrigeId = skademelding.getSkadeNr();
+            }
+        }
+        return ++forrigeId;
+    }*/
+
+    public static int genererLøpenummerSkade(ObservableList<Kunde> kundeData) {
+        int forrigeId = 0;
+
+        for (Kunde kunde : kundeData) {
+            for (Skademelding skademelding : kunde.getSkademeldinger()) {
+                if (skademelding.getSkadeNr() > forrigeId) {
+                    forrigeId = skademelding.getSkadeNr();
+                }
             }
         }
         return ++forrigeId;

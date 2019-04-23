@@ -84,6 +84,17 @@ public class SkademeldingRedigerPopupController {
     public void oppdaterSkademelding() {
         String msg = "";
 
+        /*
+        List<Kunde> kunder = hovedApplikasjon.getKundeData();
+            for (Kunde kunde : kunder) {
+                if(kunde.getForsikringsNr() == Integer.parseInt(skadeNrField.getText()){
+                    skademeldingÅRedigere.setSkadeNr(Integer.parseInt(skadeNrField.getText()));
+                }
+            }
+            List<Skademelding> skademeldinger = kunde.getSkademeldinger();
+            for (Skademelding skademelding : skademeldinger) {
+        }
+         */
         skademeldingÅRedigere.setSkadeNr(Integer.parseInt(skadeNrField.getText()));
 
         //Bytter set her ut med metoder (se under)

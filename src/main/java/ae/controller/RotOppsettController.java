@@ -66,7 +66,7 @@ public class RotOppsettController {
     //Ny skademelding popup
     @FXML
     public void gåTilNySkademeldingPopup() {
-        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
+        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData()));
         boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
         if (bekreftTrykket) {
