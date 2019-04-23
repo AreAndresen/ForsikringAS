@@ -3,6 +3,7 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.model.*;
 import ae.util.IdUtil;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
@@ -12,6 +13,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Controller for RotOppsett. Rotoppsettet inneholder menylinjen
@@ -70,14 +72,22 @@ public class RotOppsettController {
         boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
         if (bekreftTrykket) {
-            hovedApplikasjon.getSkademeldingData().add(nySkademelding);
 
             //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
-            //legger til skademelding til kundearray
-            //nt index = SkadePopup.getKundeNrField();
-            //int reel = (int)index - 1;
-            Kunde kunde = hovedApplikasjon.getKundeData().get(0); //Integer.parseInt(kundeNrKolonne.getText()) -1
-            kunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData()); //legger til en skademelding til kunde
+            // legger til skademelding til riktig kundearray
+
+            //henter
+            ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
+            for(Kunde enKunde : kunder) {
+                if (enKunde.getKundeNr() == (nySkademelding.getForsikringsNr())) {
+
+                    List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
+                    skademeldingerArray.add(nySkademelding); //legger til ny skademelding
+
+                    enKunde.setSkademeldinger(skademeldingerArray);
+
+                }
+            }
         }
     }
 

@@ -70,44 +70,6 @@ public class KundeController {
         }
     }
 
-    /*TODO MÅ FIKSES - NY METODE FOR DIREKTE SKADEMEDLING ---------
-    @FXML
-    public void gåTilNySkademeldingPopupKunde() {
-        Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
-
-        if (valgtKunde != null) {
-            Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getSkademeldingData()));
-            boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
-
-            if (bekreftTrykket) {
-                hovedApplikasjon.getSkademeldingData().add(nySkademelding); //legger til ny skademelding i skademelding array
-
-
-                //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
-                // legger til skademelding til riktig kundearray
-
-                List<Skademelding> skademeldingerArray = new ArrayList<>(); //array som skal fylles hver gang
-
-                //henter
-                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
-                for(Kunde enKunde : kunder) {
-                    if (enKunde.getKundeNr() == (valgtKunde.getKundeNr())) {
-                        //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
-
-                        //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
-                        for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
-                                if(melding.getKundeNr() == enKunde.getKundeNr()){
-                                    skademeldingerArray.add(melding);
-                                }
-                        }
-                        enKunde.setSkademeldinger(skademeldingerArray);
-
-                    }
-                }
-            }
-        }
-    }*/
-
     @FXML
     public void gåTilRedigerKundePopup() {
         Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();

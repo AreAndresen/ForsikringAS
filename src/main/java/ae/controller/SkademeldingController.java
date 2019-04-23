@@ -75,30 +75,42 @@ public class SkademeldingController {
     //TODO MÅ FIKSES - NY METODE FOR DIREKTE SKADEMEDLING ---------
     @FXML
     public void gåTilNySkademeldingPopup() {
-            Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData()));
-            boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
+        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData()));
+        boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
-            if (bekreftTrykket) {
+        if (bekreftTrykket) {
+            //visSkademeldingDetaljer(nySkademelding);
+            //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
+            // legger til skademelding til riktig kundearray
 
-                //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
-                // legger til skademelding til riktig kundearray
+            //henter
+            ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
+            for(Kunde enKunde : kunder) {
+                if (enKunde.getKundeNr() == nySkademelding.getForsikringsNr()) {
+                    List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
+                    skademeldingerArray.add(nySkademelding); //legger til ny skademelding
 
-                //henter
-                ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
-                for(Kunde enKunde : kunder) {
-                    if (enKunde.getKundeNr() == (nySkademelding.getForsikringsNr())) {
+                    enKunde.setSkademeldinger(skademeldingerArray);
 
-                        List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
-                        skademeldingerArray.add(nySkademelding); //legger til ny skademelding
-
-                        enKunde.setSkademeldinger(skademeldingerArray);
-
-                    }
                 }
             }
+        }
     }
 
     @FXML
+    public void gåTilRedigerSkademeldingPopup() {
+        Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtSkademelding != null) {
+            boolean bekreftTrykket = Viewbehandling.visRedigerSkademeldingPopup(hovedApplikasjon, valgtSkademelding);
+
+            if (bekreftTrykket) {
+                visSkademeldingDetaljer(valgtSkademelding);
+            }
+        }
+    }
+
+    /*@FXML
     public void gåTilRedigerSkademeldingPopup() {
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
@@ -129,7 +141,7 @@ public class SkademeldingController {
         }
 
         // TODO: else: alert boks
-    }
+    }*/
 
     /**
      * Sletter valgt kunde fra listen, med bekreftelse
