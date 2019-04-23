@@ -13,8 +13,8 @@ public class IdUtil {
     public static int genererLøpenummer(ObservableList<Kunde> kundeData) {
         int forrigeId = 0;
         for (Kunde kunde : kundeData) {
-            if (kunde.getForsikringsNr() > forrigeId) {
-                forrigeId = kunde.getForsikringsNr();
+            if (kunde.getKundeNr() > forrigeId) {
+                forrigeId = kunde.getKundeNr();
             }
         }
         return ++forrigeId;

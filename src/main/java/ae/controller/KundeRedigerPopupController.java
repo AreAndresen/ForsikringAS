@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class KundeRedigerPopupController {
 
     @FXML
-    private TextField forsikringsNrField, etternavnField, fornavnField,
+    private TextField kundeNrField, etternavnField, fornavnField,
     adresseFakturaField, datoKundeOpprettetField;
 
     private Stage popupStage;
@@ -42,13 +42,13 @@ public class KundeRedigerPopupController {
      * Metode for å legge inn kundens data i TextFields.
      */
     public void oppdaterFelter() {
-        forsikringsNrField.setText(Integer.toString(kundeÅRedigere.getForsikringsNr()));
+        kundeNrField.setText(Integer.toString(kundeÅRedigere.getKundeNr()));
         etternavnField.setText(kundeÅRedigere.getEtternavn());
         fornavnField.setText(kundeÅRedigere.getFornavn());
         adresseFakturaField.setText(kundeÅRedigere.getAdresseFaktura());
         datoKundeOpprettetField.setText(kundeÅRedigere.getDatoKundeOpprettet().toString());
 
-        forsikringsNrField.setDisable(true);
+        kundeNrField.setDisable(true);
         datoKundeOpprettetField.setDisable(true);
     }
 
@@ -77,7 +77,7 @@ public class KundeRedigerPopupController {
     public void oppdaterKunde() {
         String msg = "";
 
-        kundeÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
+        kundeÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
 
         //Bytter set her ut med metoder (se under)
         msg += redigerFornavn();

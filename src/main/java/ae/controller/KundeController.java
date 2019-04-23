@@ -2,14 +2,11 @@ package ae.controller;
 
 import ae.model.*;
 import ae.util.IdUtil;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,7 +19,7 @@ public class KundeController {
     @FXML
     private TableView<Kunde> kundeTabell;
     @FXML
-    private TableColumn<Kunde, Number> forsikringsNrKolonne;
+    private TableColumn<Kunde, Number> kundeNrKolonne;
     @FXML
     private TableColumn<Kunde, String> etternavnKolonne;
     @FXML
@@ -34,7 +31,7 @@ public class KundeController {
 
     // Labels.
     @FXML
-    private Label forsikringsNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
+    private Label kundeNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
             datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
 
     private Filbehandling fb = new Filbehandling();
@@ -47,7 +44,7 @@ public class KundeController {
     @FXML
     private void initialize() {
         // Initier kunde-tabellen med kobling til alle kolonnene
-        forsikringsNrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
+        kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
         etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
         fornavnKolonne.setCellValueFactory(celleData -> celleData.getValue().fornavnProperty());
         adresseFakturaKolonne.setCellValueFactory(celleData -> celleData.getValue().adresseFakturaProperty());
@@ -94,12 +91,12 @@ public class KundeController {
                 //henter
                 ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
                 for(Kunde enKunde : kunder) {
-                    if (enKunde.getForsikringsNr() == (valgtKunde.getForsikringsNr())) {
+                    if (enKunde.getKundeNr() == (valgtKunde.getKundeNr())) {
                         //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
 
                         //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
                         for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
-                                if(melding.getForsikringsNr() == enKunde.getForsikringsNr()){
+                                if(melding.getKundeNr() == enKunde.getKundeNr()){
                                     skademeldingerArray.add(melding);
                                 }
                         }
@@ -135,9 +132,9 @@ public class KundeController {
         int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
 
         try{
-            if(valgtKundeIndex != 0){
+            if(valgtKundeIndex >= 0){
                 Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
-                String kundeInfo = valgtKunde.getForsikringsNr() +", "+ valgtKunde.getFornavn() +" "+ valgtKunde.getEtternavn();
+                String kundeInfo = valgtKunde.getKundeNr() +", "+ valgtKunde.getFornavn() +" "+ valgtKunde.getEtternavn();
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.initOwner(hovedApplikasjon.getHovedStage());
@@ -176,7 +173,7 @@ public class KundeController {
     public void visKundensDetaljer(Kunde kunde) {
         if (kunde != null) {
 
-            forsikringsNrLabel.setText(Integer.toString(kunde.getForsikringsNr()));
+            kundeNrLabel.setText(Integer.toString(kunde.getKundeNr()));
             etternavnLabel.setText(kunde.getEtternavn());
             fornavnLabel.setText(kunde.getFornavn());
             adresseFakturaLabel.setText(kunde.getAdresseFaktura());
@@ -188,7 +185,7 @@ public class KundeController {
         } else {
 
             // Ingen kunde valgt, fjerner all tekst.
-            forsikringsNrLabel.setText("");
+            kundeNrLabel.setText("");
             etternavnLabel.setText("");
             fornavnLabel.setText("");
             adresseFakturaLabel.setText("");

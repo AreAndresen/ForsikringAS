@@ -20,7 +20,7 @@
                     <children>
                         <TableView fx:id="kundeTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn fx:id="forsikringsNrKolonne" prefWidth="89.0" text="Forsikringsnr" />
+                                <TableColumn fx:id="kundeNrKolonne" prefWidth="89.0" text="Kundenr" />
                                 <TableColumn fx:id="etternavnKolonne" prefWidth="119.0" text="Etternavn" />
                         <TableColumn fx:id="fornavnKolonne" prefWidth="72.0" text="Fornavn" />
                         <TableColumn fx:id="adresseFakturaKolonne" prefWidth="136.0" text="Adresse" />
@@ -54,11 +54,11 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label text="Forsikringsnummer" wrapText="true" />
+                                <Label text="Kundenummer" wrapText="true" />
                                 <Label text="Etternavn" wrapText="true" GridPane.rowIndex="1" />
                                 <Label text="Fornavn" wrapText="true" GridPane.rowIndex="2" />
                         <Button mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" prefHeight="27.0" prefWidth="149.0" text="Forsikringer" wrapText="true" GridPane.rowIndex="5" />
-                                <Label fx:id="forsikringsNrLabel" text="Label" wrapText="true" GridPane.columnIndex="1" />
+                                <Label fx:id="kundeNrLabel" text="Label" wrapText="true" GridPane.columnIndex="1" />
                                 <Label fx:id="etternavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label fx:id="fornavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <Label fx:id="forsikringerLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />

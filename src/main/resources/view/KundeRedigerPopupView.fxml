@@ -24,12 +24,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Forsikringsnummer" wrapText="true" />
+                <Label text="Kundenummer" wrapText="true" />
                 <Label text="Etternavn" wrapText="true" GridPane.rowIndex="1" />
                 <Label text="Fornavn" wrapText="true" GridPane.rowIndex="2" />
                 <Label text="Adresse faktura" wrapText="true" GridPane.rowIndex="3" />
                 <Label text="Dato ny kunde" wrapText="true" GridPane.rowIndex="4" />
-                <TextField fx:id="forsikringsNrField" GridPane.columnIndex="1" />
+                <TextField fx:id="kundeNrField" GridPane.columnIndex="1" />
                 <TextField fx:id="etternavnField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="fornavnField" GridPane.columnIndex="1" GridPane.rowIndex="2" />

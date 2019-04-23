@@ -89,12 +89,12 @@ public class SkademeldingController {
                 //henter
                 ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
                 for(Kunde enKunde : kunder) {
-                    if (enKunde.getForsikringsNr() == (nySkademelding.getForsikringsNr())) {
+                    if (enKunde.getKundeNr() == (nySkademelding.getForsikringsNr())) {
                         //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
 
                         //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
                         for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
-                            if(melding.getForsikringsNr() == enKunde.getForsikringsNr()){
+                            if(melding.getForsikringsNr() == enKunde.getKundeNr()){
                                 skademeldingerArray.add(melding);
                             }
                         }
@@ -119,12 +119,12 @@ public class SkademeldingController {
                 //henter
                 ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
                 for(Kunde enKunde : kunder) {
-                    if (enKunde.getForsikringsNr() == (valgtSkademelding.getForsikringsNr())) {
+                    if (enKunde.getKundeNr() == (valgtSkademelding.getForsikringsNr())) {
                         //enKunde.setSkademeldinger(hovedApplikasjon.getSkademeldingData());
 
                         //FORTSETT HER - GI SKADEMELDING forsikringsNr (kundeId)
                         for(Skademelding melding : hovedApplikasjon.getSkademeldingData()){
-                            if(melding.getForsikringsNr() == enKunde.getForsikringsNr()){
+                            if(melding.getForsikringsNr() == enKunde.getKundeNr()){
                                 skademeldingerArray.add(melding);
                             }
                         }

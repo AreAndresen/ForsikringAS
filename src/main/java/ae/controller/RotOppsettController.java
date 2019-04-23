@@ -82,6 +82,7 @@ public class RotOppsettController {
     }
 
 
+
     ////-------KUNDE------- - FILER
     @FXML
     public void lagreFilTrykket() {

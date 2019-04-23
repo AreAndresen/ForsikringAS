@@ -28,7 +28,7 @@ public class Kunde implements Serializable {
      * Nødvendige datafelt for å kommunisere med TableView.
      * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
      */
-    private transient IntegerProperty forsikringsNr;
+    private transient IntegerProperty kundeNr;
     private transient ObjectProperty<LocalDate> datoKundeOpprettet;
     private transient StringProperty etternavn;
     private transient StringProperty fornavn;
@@ -41,18 +41,18 @@ public class Kunde implements Serializable {
     /**
      * Konstruktør for midlertidig kunde i Ny kunde.
      */
-    public Kunde(int forsikringsNr) {
-        this(forsikringsNr, LocalDate.now(), null, null, null);
+    public Kunde(int kundeNr) {
+        this(kundeNr, LocalDate.now(), null, null, null);
     }
 
     /**
      * Konstruktør for Ny kunde.
      */
-    public Kunde(int forsikringsNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
+    public Kunde(int kundeNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
                  String adresseFaktura) {
 
         // Ta imot parametere.
-        this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
+        this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(datoKundeOpprettet);
         this.etternavn = new SimpleStringProperty(etternavn);
         this.fornavn = new SimpleStringProperty(fornavn);
@@ -67,10 +67,10 @@ public class Kunde implements Serializable {
     /**
      * Konstruktør for kunde-opprettelse ved innlesing av fil.
      */
-    public Kunde(int forsikringsNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
+    public Kunde(int kundeNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
                  String adresseFaktura, List<Forsikring> forsikringer, List<Skademelding> skademeldinger,
                  List<Skademelding> erstatningerUbetalte) {
-        this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
+        this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(datoKundeOpprettet);
         this.etternavn = new SimpleStringProperty(etternavn);
         this.fornavn = new SimpleStringProperty(fornavn);
@@ -83,15 +83,15 @@ public class Kunde implements Serializable {
     /**
      * Getter og settere pluss get-metoder for Property-feltene.
      */
-    // forsikringsNr
-    public int getForsikringsNr() {
-        return forsikringsNr.get();
+    // kundeNr
+    public int getKundeNr() {
+        return kundeNr.get();
     }
-    public void setForsikringsNr(int forsikringsNr) {
-        this.forsikringsNr.set(forsikringsNr);
+    public void setKundeNr(int kundeNr) {
+        this.kundeNr.set(kundeNr);
     }
-    public IntegerProperty forsikringsNrProperty() {
-        return forsikringsNr;
+    public IntegerProperty kundeNrProperty() {
+        return kundeNr;
     }
 
     // datoKundeOpprettet
@@ -198,7 +198,7 @@ public class Kunde implements Serializable {
      */
     private void writeObject(ObjectOutputStream os) throws IOException {
         os.defaultWriteObject();
-        os.writeObject(getForsikringsNr());
+        os.writeObject(getKundeNr());
         os.writeObject(getDatoKundeOpprettet());
         os.writeObject(getEtternavn());
         os.writeObject(getFornavn());
@@ -213,7 +213,7 @@ public class Kunde implements Serializable {
      */
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
-        this.forsikringsNr = new SimpleIntegerProperty((int)is.readObject());
+        this.kundeNr = new SimpleIntegerProperty((int)is.readObject());
         this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
         this.etternavn = new SimpleStringProperty((String)is.readObject());
         this.fornavn = new SimpleStringProperty((String)is.readObject());
@@ -225,7 +225,7 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return getForsikringsNr() +","+ getDatoKundeOpprettet() +","+ getEtternavn() +","+ getFornavn() +","+
+        return getKundeNr() +","+ getDatoKundeOpprettet() +","+ getEtternavn() +","+ getFornavn() +","+
                 getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger() +","+ getErstatningerUbetalte();
     }
 }
