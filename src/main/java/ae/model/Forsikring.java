@@ -10,20 +10,22 @@ public abstract class Forsikring {
     private final transient ObjectProperty<LocalDate> datoOpprettet;
     private final transient IntegerProperty forsikringsBelop;
     private final transient StringProperty betingelser;
+    private final transient StringProperty type;
 
     // default konstruktør
     public Forsikring(Kunde kunde, int forsikringsNr) {
-        this(kunde, forsikringsNr, LocalDate.now(), 0, null);
+        this(kunde, forsikringsNr, LocalDate.now(), 0, null, null);
     }
 
     // non-default konstruktør
     public Forsikring(Kunde kunde, int forsikringsNr, LocalDate datoOpprettet,
-                      int forsikringsBelop, String betingelser) {
+                      int forsikringsBelop, String betingelser, String type) {
         this.kunde = new SimpleObjectProperty<Kunde>(kunde);
         this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
         this.datoOpprettet = new SimpleObjectProperty<>(datoOpprettet);
         this.forsikringsBelop = new SimpleIntegerProperty(forsikringsBelop);
         this.betingelser = new SimpleStringProperty(betingelser);
+        this.type = new SimpleStringProperty(type);
     }
 
     /**
@@ -83,5 +85,16 @@ public abstract class Forsikring {
     }
     public StringProperty betingelserProperty() {
         return betingelser;
+    }
+
+    // type
+    public String getType() {
+        return type.get();
+    }
+    public void setType(String type) {
+        this.type.set(type);
+    }
+    public StringProperty typeProperty() {
+        return type;
     }
 }

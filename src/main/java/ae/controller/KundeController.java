@@ -37,8 +37,6 @@ public class KundeController {
     private Label kundeNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
             datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
 
-    private Filbehandling fb = new Filbehandling();
-
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
 
