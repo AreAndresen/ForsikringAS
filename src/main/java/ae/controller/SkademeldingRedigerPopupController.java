@@ -38,7 +38,7 @@ public class SkademeldingRedigerPopupController {
 
     @FXML
     private void initialize() {
-        statusField.setValue("Ubetalt");
+        statusField.setValue("Betalt");
         statusField.setItems(statusListe);
 
     }
