@@ -203,7 +203,7 @@ public class SkademeldingController {
         // Legger til data fra ObservableList til tabellen
         //skademeldingTabell.setItems(hovedApplikasjon.getKundeData());
         ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
-
+//hei
         for(Kunde kunde : hovedApplikasjon.getKundeData()){
             skademeldinger.addAll(kunde.getSkademeldinger());
         }
