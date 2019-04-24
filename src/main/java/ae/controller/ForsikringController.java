@@ -1,6 +1,7 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
+import ae.model.Båtforsikring;
 import ae.model.Forsikring;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,9 +53,56 @@ public class ForsikringController {
         betingelserKolonne.setCellValueFactory(celleData -> celleData.getValue().betingelserProperty());
         typeKolonne.setCellValueFactory(celleData -> celleData.getValue().typeProperty());
 
-        // TODO: lage metoden som styrer labels i oversikten
+        visForsikringDetaljer(null);
 
-        // TODO: opprette ChangeListener for metoden som styrer labels i oversikten
+        forsikringTabell.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, gammelData, nyData) -> visForsikringDetaljer(nyData)));
+    }
+
+    private void visForsikringDetaljer(Forsikring forsikring) {
+
+        // det er forskjellig data for hver type forsikring
+        if (forsikring != null) {
+
+            // båtforsikring
+            if ("Båtforsikring".equals(forsikring.getType())) {
+                Båtforsikring båtforsikring = (Båtforsikring) forsikring;
+
+                // setter inn metadata
+                metaEnLabel.setText("Registreringsnummer");
+                metaToLabel.setText("Båttype og modell");
+                metaTreLabel.setText("Lengde i fot");
+                metaFireLabel.setText("Årsmodell");
+                metaFireLabel.setText("Motortype og styrke");
+
+                // setter inn resultatdata
+                resultatEnLabel.setText(båtforsikring.getRegistreringsNr());
+                resultatToLabel.setText(båtforsikring.getTypeModell());
+                resultatTreLabel.setText(Integer.toString(båtforsikring.getLengdeFot()));
+                resultatFireLabel.setText(Integer.toString(båtforsikring.getÅrsmodell()));
+                resultatFemLabel.setText(båtforsikring.getMotorEgenskaper());
+            }
+            // TODO: fullføre for resterende forsikringer
+        } else {
+            // tømmer metadata
+            metaEnLabel.setText("");
+            metaToLabel.setText("");
+            metaTreLabel.setText("");
+            metaFireLabel.setText("");
+            metaFemLabel.setText("");
+            metaSeksLabel.setText("");
+            metaSjuLabel.setText("");
+            metaÅtteLabel.setText("");
+
+            // tømmer resultatdataen
+            resultatEnLabel.setText("");
+            resultatToLabel.setText("");
+            resultatTreLabel.setText("");
+            resultatFireLabel.setText("");
+            resultatFemLabel.setText("");
+            resultatSjuLabel.setText("");
+            resultatÅtteLabel.setText("");
+        }
     }
 
     @FXML
