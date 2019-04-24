@@ -102,6 +102,7 @@ public class SkademeldingRedigerPopupController {
         skademeldingÅRedigere.setSkadeNr(Integer.parseInt(skadeNrField.getText()));
 
         //Bytter set her ut med metoder (se under)
+
         msg += redigerForsikrnignsNr();
         msg += redigerSkadetype();
         msg += redigerSkadebeskrivelse();
@@ -199,6 +200,8 @@ public class SkademeldingRedigerPopupController {
 
         return msg;
     }
+
+
 
 
     @FXML

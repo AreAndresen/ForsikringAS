@@ -39,11 +39,13 @@ public class Kunde implements Serializable {
     private transient ObjectProperty<List<Forsikring>> forsikringer;
     //private transient ObjectProperty<List<Skademelding>> skademeldinger;
     private transient ObjectProperty<ObservableList<Skademelding>> skademeldinger;
+    private transient ObjectProperty<ObservableList<Integer>> antallErstatningerUbetalte;
 
     //private ObservableList<Kunde> kundeData = FXCollections.observableArrayList();
 
     //private transient ObjectProperty<List<Skademelding>> erstatningerUbetalte;
-    private transient ObjectProperty<HashMap<Integer, Double>> erstatningerUbetalte;
+    //private transient ObjectProperty<HashMap<Integer, Double>> antallErstatningerUbetalte;
+    //private transient IntegerProperty antallErstatningerUbetalte;
 
 
     /**
@@ -71,8 +73,11 @@ public class Kunde implements Serializable {
         //this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>(new ArrayList<>());
         this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>(FXCollections.observableArrayList());
 
-        //this.erstatningerUbetalte = new SimpleObjectProperty<List<Skademelding>>(new ArrayList<>());
-        this.erstatningerUbetalte = new SimpleObjectProperty<HashMap<Integer, Double>>(new HashMap<>());
+
+        this.antallErstatningerUbetalte = new SimpleObjectProperty<ObservableList<Integer>>(FXCollections.observableArrayList());
+        //this.antallErstatningerUbetalte = new SimpleObjectProperty<HashMap<Integer, Double>>(new HashMap<>());
+
+        //this.antallErstatningerUbetalte = new SimpleIntegerProperty(antallErstatningerUbetalte);
     }
 
     /**
@@ -80,7 +85,7 @@ public class Kunde implements Serializable {
      */
     public Kunde(int kundeNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
                  String adresseFaktura, List<Forsikring> forsikringer, ObservableList<Skademelding> skademeldinger,
-                 HashMap<Integer, Double> erstatningerUbetalte) { //List<Skademelding> her
+                 ObservableList<Integer> antallErstatningerUbetalte) { //List<Skademelding> her
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(datoKundeOpprettet);
         this.etternavn = new SimpleStringProperty(etternavn);
@@ -90,8 +95,9 @@ public class Kunde implements Serializable {
         //this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>(skademeldinger);
         this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>(skademeldinger);
 
-        //this.erstatningerUbetalte = new SimpleObjectProperty<List<Skademelding>>(erstatningerUbetalte);
-        this.erstatningerUbetalte = new SimpleObjectProperty<HashMap<Integer, Double>>(erstatningerUbetalte);
+        //this.antallErstatningerUbetalte = new SimpleObjectProperty<HashMap<Integer, Double>>(antallErstatningerUbetalte);
+        this.antallErstatningerUbetalte  = new SimpleObjectProperty<ObservableList<Integer>>(antallErstatningerUbetalte);
+        //this.antallErstatningerUbetalte = new SimpleIntegerProperty(antallErstatningerUbetalte);
     }
 
     /**
@@ -197,7 +203,19 @@ public class Kunde implements Serializable {
     }
 
 
-    // erstatningerUbetalte
+    //antallErstatningerUbetalte
+    public ObservableList<Integer> getAntallErstatningerUbetalte() {
+        return antallErstatningerUbetalte.get();
+    }
+    public void setAntallErstatningerUbetalte(ObservableList<Integer> antallErstatningerUbetalte) {
+        this.antallErstatningerUbetalte.set(antallErstatningerUbetalte);
+    }
+    public ObjectProperty<ObservableList<Integer>> antallErstatningerUbetalteProperty() {
+        return antallErstatningerUbetalte;
+    }
+
+
+    /* erstatningerUbetalte
     public HashMap<Integer, Double> getErstatningerUbetalte() {
         return erstatningerUbetalte.get();
     }
@@ -207,11 +225,11 @@ public class Kunde implements Serializable {
 
     /*public void addErstatningUtbetalt(Integer skadeNr, Double erstatningUbetalt){
         this.erstatningerUbetalte.put(skadeNr, erstatningUbetalt);
-    }*/
+    }
 
     public ObjectProperty<HashMap<Integer, Double>> erstatningerUbetalteProperty() {
         return erstatningerUbetalte;
-    }
+    }*/
 
 
     // erstatningerUbetalte
@@ -237,7 +255,7 @@ public class Kunde implements Serializable {
         os.writeObject(getAdresseFaktura());
         os.writeObject(getForsikringer());
         os.writeObject(getSkademeldinger());
-        os.writeObject(getErstatningerUbetalte());
+        os.writeObject(getAntallErstatningerUbetalte());
     }
 
     /**
@@ -254,13 +272,14 @@ public class Kunde implements Serializable {
         //this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>((List<Skademelding>)is.readObject());
         this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>((ObservableList<Skademelding>)is.readObject());
 
-        //this.erstatningerUbetalte = new SimpleObjectProperty<List<Skademelding>>((List<Skademelding>)is.readObject());
-        this.erstatningerUbetalte = new SimpleObjectProperty<HashMap<Integer, Double>>((HashMap<Integer, Double>)is.readObject());
+        this.antallErstatningerUbetalte = new SimpleObjectProperty<ObservableList<Integer>>((ObservableList<Integer>)is.readObject());
+        //this.antallErstatningerUbetalte = new SimpleObjectProperty<HashMap<Integer, Double>>((HashMap<Integer, Double>)is.readObject());
+        //this.antallErstatningerUbetalte = new SimpleIntegerProperty((int)is.readObject());
     }
 
     @Override
     public String toString() {
         return getKundeNr() +","+ getDatoKundeOpprettet() +","+ getEtternavn() +","+ getFornavn() +","+
-                getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger() +","+ getErstatningerUbetalte();
+                getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger() +","+ getAntallErstatningerUbetalte();
     }
 }
