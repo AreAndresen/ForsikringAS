@@ -92,31 +92,31 @@ public class KundeController {
     @FXML
     public void slettValgtKunde() {
         //try{ //koden kommentert ut under leder til indexOutOfBoundsException
-            //int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
-            //Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
+        //int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
+        //Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
 
-            Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
-            if(valgtKunde != null){
-                String kundeInfo = Integer.toString(valgtKunde.getKundeNr());
+        Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
+        if(valgtKunde != null){
+            String kundeInfo = Integer.toString(valgtKunde.getKundeNr());
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.initOwner(hovedApplikasjon.getHovedStage());
-                alert.setTitle("Slett kunde");
-                alert.setHeaderText("Bekreft sletting av kunde");
-                alert.setContentText("Er du sikker på at du ønsker å slette kunde nummer: " + kundeInfo +"?");
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(hovedApplikasjon.getHovedStage());
+            alert.setTitle("Slett kunde");
+            alert.setHeaderText("Bekreft sletting av kunde");
+            alert.setContentText("Er du sikker på at du ønsker å slette kunde nummer: " + kundeInfo +"?");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
-                    kundeTabell.getItems().remove(valgtKunde);
-                }
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                kundeTabell.getItems().remove(valgtKunde);
             }
-            else{
-                UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne slette."); //alert
-            }
+        }
+        else{
+            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne slette."); //alert
+        }
         //catch(IndexOutOfBoundsException e){ //denne feilen bør ikke skje (er her som påminner enn så lenge
-          //    e.printStackTrace();
+        //    e.printStackTrace();
         //}
     }
 
