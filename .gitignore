@@ -58,3 +58,4 @@ nbdist/
 .idea/modules.xml
 .idea/*.iml
 .idea/modules
+/.idea/compiler.xml

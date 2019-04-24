@@ -29,10 +29,10 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu mnemonicParsing="false" text="Forsikring">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Oversikt" />
+                        <MenuItem mnemonicParsing="false" onAction="#gåTilForsikringoversikt" text="Oversikt" />
                         <Menu mnemonicParsing="false" text="Ny...">
                           <items>
-                                    <MenuItem mnemonicParsing="false" text="Båtforsikring" />
+                                    <MenuItem mnemonicParsing="false" onAction="#gåTilNyBåtforsikringPopup" text="Båtforsikring" />
                                     <MenuItem mnemonicParsing="false" text="Hus- og innboforsikring" />
                                     <MenuItem mnemonicParsing="false" text="Fritidsboligforsikring" />
                                     <MenuItem mnemonicParsing="false" text="Reiseforsikring" />

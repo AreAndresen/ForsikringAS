@@ -20,7 +20,7 @@
                <children>
                   <TableView fx:id="skademeldingTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="forsikringsNrKolonne" prefWidth="75.0" text="Forsikringsnr" />
+                        <TableColumn fx:id="forsikringsNrKolonne" prefWidth="75.0" text="Kunde" />
                         <TableColumn fx:id="skadeNrKolonne" prefWidth="109.0" text="Skadenr" />
                         <TableColumn fx:id="skadeTypeKolonne" prefWidth="112.0" text="Skadetype" />
                         <TableColumn fx:id="erstatningUtbetaltKolonne" prefWidth="174.0" text="Utbetalt erstatning" />
@@ -53,7 +53,7 @@
                         <Label alignment="TOP_LEFT" text="Beskrivelse av skade:" wrapText="true" GridPane.rowIndex="2" />
                         <Label text="Vitneinformasjon:" wrapText="true" GridPane.rowIndex="3" />
                         <Label fx:id="beskrivelseAvSkadeLabel" alignment="TOP_LEFT" prefHeight="96.0" prefWidth="169.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Skadenr:" GridPane.rowIndex="1" />
+                        <Label text="Skadenummer:" GridPane.rowIndex="1" />
                         <Label fx:id="skadeNrLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="vitneInfoLabel" alignment="TOP_LEFT" prefHeight="134.0" prefWidth="158.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2147483647" />
                         <Button mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Kunde" />

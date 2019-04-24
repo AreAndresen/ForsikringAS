@@ -4,6 +4,7 @@ import ae.HovedApplikasjon;
 import ae.model.*;
 import ae.util.IdUtil;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
@@ -125,5 +126,14 @@ public class RotOppsettController {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * <--- FORSIKRING --->
+     */
+    public void gåTilForsikringoversikt(ActionEvent actionEvent) {
+    }
+
+    public void gåTilNyBåtforsikringPopup(ActionEvent actionEvent) {
     }
 }
