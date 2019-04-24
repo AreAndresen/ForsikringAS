@@ -26,6 +26,7 @@
                         <TableColumn fx:id="erstatningUtbetaltKolonne" prefWidth="174.0" text="Utbetalt erstatning" />
                         <TableColumn fx:id="belopTakseringKolonne" prefWidth="136.0" text="Takseringsbeløp" />
                         <TableColumn fx:id="datoSkadeKolonne" prefWidth="75.0" text="Dato skade" />
+                        <TableColumn fx:id="statusKolonne" prefWidth="75.0" text="Status" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -38,6 +38,8 @@ public class SkademeldingController {
     private TableColumn<Skademelding, Double> erstatningUtbetaltKolonne;
     @FXML
     private TableColumn<Skademelding, LocalDate> datoSkadeKolonne;
+    @FXML
+    private TableColumn<Skademelding, String> statusKolonne;
 
     // Labels.
     @FXML
@@ -60,6 +62,7 @@ public class SkademeldingController {
         belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
         erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
         datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
+        statusKolonne.setCellValueFactory(celleData -> celleData.getValue().statusProperty());
 
         // Sender inn null for å tømme feltene.
         visSkademeldingDetaljer(null);

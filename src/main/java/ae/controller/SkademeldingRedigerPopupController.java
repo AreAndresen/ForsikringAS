@@ -4,7 +4,10 @@ import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
 import ae.model.Skademelding;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -13,9 +16,13 @@ import java.util.HashMap;
 
 public class SkademeldingRedigerPopupController {
 
+    ObservableList<String> statusListe = FXCollections.observableArrayList("Betalt", "Ubetalt");
+
     @FXML
     private TextField forsikringsNrField, skadeNrField, skadeTypeField, skadebeskrivelseField,
             belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
+    @FXML
+    private ChoiceBox statusField;
     @FXML
     private TextArea vitneInfoField;
 
@@ -30,7 +37,11 @@ public class SkademeldingRedigerPopupController {
 
 
     @FXML
-    private void initialize() { }
+    private void initialize() {
+        statusField.setValue("Ubetalt");
+        statusField.setItems(statusListe);
+
+    }
 
     public void setPopupStage(Stage popupStage) {
         this.popupStage = popupStage;
@@ -56,6 +67,7 @@ public class SkademeldingRedigerPopupController {
         erstatningsbelopUtbetaltField.setText(Double.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
         datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
         vitneInfoField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
+        //statusField.setValue(skademeldingÅRedigere.get);
 
         //forsikringsNrField.setDisable(true);
         skadeNrField.setDisable(true);
@@ -96,6 +108,7 @@ public class SkademeldingRedigerPopupController {
         msg += redigerTakseringsbeløp();
         msg += redigerErstatningsbelopUtbetalt();
         msg += redigerKontaktinfoVitner();
+        msg += redigerStatus();
 
 
         //TODO MÅ LØSE UBETALT
@@ -175,6 +188,14 @@ public class SkademeldingRedigerPopupController {
     private String redigerKontaktinfoVitner() {
         String msg = "";
         skademeldingÅRedigere.setKontaktinfoVitner(vitneInfoField.getText());
+
+        return msg;
+    }
+
+    //oppdaterer skadebeskrivelse
+    private String redigerStatus() {
+        String msg = "";
+        skademeldingÅRedigere.setStatus(statusField.getValue().toString());
 
         return msg;
     }

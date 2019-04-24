@@ -28,19 +28,20 @@ public class Skademelding implements Serializable {
     private transient DoubleProperty belopTaksering;
     private transient DoubleProperty erstatningsbelopUtbetalt;
     private transient StringProperty kontaktinfoVitner;
+    private transient StringProperty status;
     //private transient ObjectProperty<HashMap<Integer, String>> kontaktinfoVitner;
 
     /**
      * Konstruktør for midlertidig skademelding i Ny skademelding.
      */
     public Skademelding(int skadeNr) { this(skadeNr, 0, LocalDate.now(), null, null,
-            0.0, 0.0, null); }
+            0.0, 0.0, null, null); }
 
     /**
      * Konstruktør for Ny skademelding.
      */
      public Skademelding(int skadeNr, int forsikringsNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
-                         Double belopTaksering, Double erstatningsbelopUtbetalt) {
+                         Double belopTaksering, Double erstatningsbelopUtbetalt, String status) {
 
         // Ta imot parametere
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
@@ -50,6 +51,8 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
+        this.status = new SimpleStringProperty(status);
+
         //Instansiere listene så de er opprettet.
         //this.kontaktinfoVitner = new SimpleStringProperty(kontaktinfoVitner);
     }
@@ -59,7 +62,7 @@ public class Skademelding implements Serializable {
      */
     public Skademelding(int skadeNr, int forsikringsNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                         Double belopTaksering, Double erstatningsbelopUtbetalt,
-                        String kontaktinfoVitner) {
+                        String kontaktinfoVitner, String status) {
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
         this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
@@ -68,6 +71,7 @@ public class Skademelding implements Serializable {
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
         this.kontaktinfoVitner = new SimpleStringProperty(kontaktinfoVitner);
+        this.status = new SimpleStringProperty(status);
     }
 
     /**
@@ -153,6 +157,7 @@ public class Skademelding implements Serializable {
         return kontaktinfoVitner;
     }*/
 
+    //kontaktinfo
     public String getKontaktinfoVitner() {
         return kontaktinfoVitner.get();
     }
@@ -162,6 +167,18 @@ public class Skademelding implements Serializable {
     public StringProperty kontaktinfoVitnerProperty() {
         return kontaktinfoVitner;
     }
+
+    //status
+    public String getStatus() {
+        return status.get();
+    }
+    public void setStatus(String status) {
+        this.status.set(status);
+    }
+    public StringProperty statusProperty() {
+        return status;
+    }
+
 
     /**
      * Tilpasset writeObject-serialisering av Skademelding-objektet da ObservableList og
@@ -177,6 +194,7 @@ public class Skademelding implements Serializable {
         os.writeObject(getBelopTaksering());
         os.writeObject(getErstatningsbelopUtbetalt());
         os.writeObject(getKontaktinfoVitner());
+        os.writeObject(getStatus());
     }
 
     /**
@@ -193,12 +211,13 @@ public class Skademelding implements Serializable {
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
         //this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>((HashMap<Integer, String>)is.readObject());
         this.kontaktinfoVitner = new SimpleStringProperty((String)is.readObject());
+        this.status = new SimpleStringProperty((String)is.readObject());
     }
 
     @Override
     public String toString() {
         return getSkadeNr() +"," +getForsikringsNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
-                getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getKontaktinfoVitner();
+                getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getKontaktinfoVitner() +","+getStatus();
     }
 }
 
