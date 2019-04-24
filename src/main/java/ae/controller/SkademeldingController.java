@@ -80,7 +80,8 @@ public class SkademeldingController {
             for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                 if (enKunde.getKundeNr() == nySkademelding.getForsikringsNr()) {
                     finnes = true;
-                    List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
+                    //List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
+                    ObservableList<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     skademeldingerArray.add(nySkademelding); //legger til ny skademelding
 
                     enKunde.setSkademeldinger(skademeldingerArray); //legger nytt array inn i kunde
@@ -136,11 +137,22 @@ public class SkademeldingController {
                 //sletter fra tabell her
                 skademeldingTabell.getItems().remove(valgtSkademelding);
 
-                //slette fra array her
-                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+                //slette fra kundedata array her
+                /*for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                     if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
                         enKunde.getSkademeldinger().remove(valgtSkademelding);
                     }
+                }*/
+
+                //slette fra kundedata array her
+                Kunde slettKundeSkademelding = null;
+                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+                    if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
+                        slettKundeSkademelding = enKunde;
+                    }
+                }
+                if(slettKundeSkademelding != null){
+                    slettKundeSkademelding.getSkademeldinger().remove(valgtSkademelding);
                 }
             }
         }
