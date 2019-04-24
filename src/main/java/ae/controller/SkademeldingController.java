@@ -79,7 +79,8 @@ public class SkademeldingController {
             boolean finnes = false;
             for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                 if (enKunde.getKundeNr() == nySkademelding.getForsikringsNr()) {
-                    finnes = true;
+
+                    finnes = true; //kontrollerer at kunden finnes
                     //List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     ObservableList<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     skademeldingerArray.add(nySkademelding); //legger til ny skademelding
@@ -202,12 +203,12 @@ public class SkademeldingController {
 
         // Legger til data fra ObservableList til tabellen
         //skademeldingTabell.setItems(hovedApplikasjon.getKundeData());
-        ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
-//hei
+        /*ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
+
         for(Kunde kunde : hovedApplikasjon.getKundeData()){
             skademeldinger.addAll(kunde.getSkademeldinger());
-        }
+        }*/
 
-        skademeldingTabell.setItems(skademeldinger);
+        skademeldingTabell.setItems(hovedApplikasjon.getAlleSkademeldinger());
     }
 }

@@ -1,6 +1,7 @@
 package ae;
 
 import ae.model.Kunde;
+import ae.model.Skademelding;
 import ae.model.Viewbehandling;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -38,6 +39,19 @@ public class HovedApplikasjon extends Application {
     public ObservableList<Kunde> getKundeData() {
         return kundeData;
     }
+
+    /** Returnerer alle skademeldinger som en ObservableList.*/
+    public ObservableList<Skademelding> getAlleSkademeldinger() {
+
+        ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
+
+        for(Kunde kunde : kundeData) {
+            skademeldinger.addAll(kunde.getSkademeldinger());
+        }
+        return skademeldinger;
+    }
+
+
 
 
     @Override
