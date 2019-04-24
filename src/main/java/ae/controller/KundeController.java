@@ -14,6 +14,8 @@ import java.util.Optional;
  * Controller for KundeView. KundeView inneholder visning av kunder, legge til
  * ny kunde, endre kunde og slette kunde.
  */
+
+//Hei
 public class KundeController {
 
     // Tabellen.
