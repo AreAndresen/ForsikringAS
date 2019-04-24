@@ -1,5 +1,7 @@
 package ae;
 
+import ae.model.Båtforsikring;
+import ae.model.Forsikring;
 import ae.model.Kunde;
 import ae.model.Skademelding;
 import ae.model.Viewbehandling;
@@ -61,6 +63,25 @@ public class HovedApplikasjon extends Application {
 
         // Rotoppsettet kjører så lenge applikasjonen kjører.
         Viewbehandling.initierRotOppsett(this);
+
+        Kunde enKunde = new Kunde(1);
+        Forsikring enBåtforsikring = new Båtforsikring(enKunde, 29);
+        enBåtforsikring.setType("Båtforsikring");
+        Forsikring toBåtforsikring = new Båtforsikring(enKunde, 30);
+        toBåtforsikring.setType("Båtforsikring");
+        enKunde.getForsikringer().add(enBåtforsikring);
+        enKunde.getForsikringer().add(toBåtforsikring);
+
+        Kunde toKunde = new Kunde(2);
+        Forsikring treBåtforsikring = new Båtforsikring(toKunde, 31);
+        treBåtforsikring.setType("Båtforsikring");
+        Forsikring fireBåtforsikring = new Båtforsikring(toKunde, 32);
+        fireBåtforsikring.setType("Båtforsikring");
+        toKunde.getForsikringer().add(treBåtforsikring);
+        toKunde.getForsikringer().add(fireBåtforsikring);
+
+        kundeData.add(enKunde);
+        kundeData.add(toKunde);
 
     }
 }

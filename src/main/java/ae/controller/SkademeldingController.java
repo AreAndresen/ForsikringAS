@@ -156,7 +156,7 @@ public class SkademeldingController {
                     }
                 }
                 if(slettKundeSkademelding != null){
-                    slettKundeSkademelding.getSkademeldinger().remove(valgtSkademelding);
+                    // slettKundeSkademelding.getSkademeldinger().remove(valgtSkademelding);
                 }
             }
         }

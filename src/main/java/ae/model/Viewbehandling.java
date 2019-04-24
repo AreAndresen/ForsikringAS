@@ -195,6 +195,28 @@ public class Viewbehandling {
         }
     }
 
+    //--------------------FORSIKRING --------------------
+    /**
+     * Åpner forsikringsoversikten når bruker trykker på Forsikring i menylinjen
+     */
+    public static void visForsikringOversikt(HovedApplikasjon hovedApplikasjon) {
+        try {
+            // Last inn kundeoversikten fra fxml-fil.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringView.fxml"));
+            AnchorPane forsikringOversikt = (AnchorPane) loader.load();
+
+            // Plasser kundeoversikten i senter av rotoppsettet.
+            hovedApplikasjon.getRotOppsett().setCenter(forsikringOversikt);
+
+            ForsikringController forsikringController = loader.getController();
+            forsikringController.setHovedApplikasjon(hovedApplikasjon);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Brukes i Ny og Rediger popup for å hente det samme vinduet.
      */

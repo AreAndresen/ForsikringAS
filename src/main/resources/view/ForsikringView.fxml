@@ -85,7 +85,7 @@
                           </items>
                         </MenuButton>
                                 <Button mnemonicParsing="false" text="Rediger" />
-                                <Button mnemonicParsing="false" text="Slett" />
+                                <Button mnemonicParsing="false" onAction="#slettValgtForsikring" text="Slett" />
                             </buttons>
                         </ButtonBar>
                     </children>

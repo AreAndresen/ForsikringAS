@@ -3,6 +3,10 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.model.Båtforsikring;
 import ae.model.Forsikring;
+import ae.model.Kunde;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -10,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ForsikringController {
 
@@ -100,12 +105,52 @@ public class ForsikringController {
             resultatTreLabel.setText("");
             resultatFireLabel.setText("");
             resultatFemLabel.setText("");
+            resultatSeksLabel.setText("");
             resultatSjuLabel.setText("");
             resultatÅtteLabel.setText("");
         }
     }
 
     @FXML
+    public void slettValgtForsikring() {
+        Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtForsikring != null) {
+            Forsikring forsikringTilSletting = null;
+
+            for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                if (valgtForsikring.getKunde().equals(kunde)) {
+                    for (Forsikring forsikring : kunde.getForsikringer()) {
+                        if (valgtForsikring.equals(forsikring)) {
+                            forsikringTilSletting = forsikring;
+                        }
+                    }
+                }
+                kunde.getForsikringer().remove(forsikringTilSletting);
+            }
+        }
+    }
+
+    @FXML
     public void gåTilNyBåtforsikringPopup(ActionEvent actionEvent) {
+    }
+
+    /**
+     * Kalles fra RotOppsettController for å gi en referanse til
+     * hovedapplikasjonen.
+     */
+    public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
+        this.hovedApplikasjon = hovedApplikasjon;
+        oppdaterTabell();
+    }
+
+    public void oppdaterTabell() {
+        this.forsikringTabell.getItems().clear();
+        ObservableList<Forsikring> forsikringer = FXCollections.observableArrayList();
+        // Legger til data fra ObservableList til tabellen
+        for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+            forsikringer.addAll(kunde.getForsikringer());
+        }
+        forsikringTabell.setItems(forsikringer);
     }
 }

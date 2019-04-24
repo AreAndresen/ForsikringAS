@@ -36,7 +36,8 @@ public class Kunde implements Serializable {
     private transient StringProperty etternavn;
     private transient StringProperty fornavn;
     private transient StringProperty adresseFaktura;
-    private transient ObjectProperty<List<Forsikring>> forsikringer;
+    //private transient ObjectProperty<List<Forsikring>> forsikringer;
+    private transient ObjectProperty<ObservableList<Forsikring>> forsikringer;
     //private transient ObjectProperty<List<Skademelding>> skademeldinger;
     private transient ObjectProperty<ObservableList<Skademelding>> skademeldinger;
 
@@ -67,7 +68,8 @@ public class Kunde implements Serializable {
         this.adresseFaktura = new SimpleStringProperty(adresseFaktura);
 
         // Instansiere listene så de er opprettet.
-        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>(new ArrayList<>());
+        //this.forsikringer = new SimpleObjectProperty<List<Forsikring>>(new ArrayList<>());
+        this.forsikringer = new SimpleObjectProperty<ObservableList<Forsikring>>(FXCollections.observableArrayList());
         //this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>(new ArrayList<>());
         this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>(FXCollections.observableArrayList());
 
@@ -79,14 +81,15 @@ public class Kunde implements Serializable {
      * Konstruktør for kunde-opprettelse ved innlesing av fil.
      */
     public Kunde(int kundeNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
-                 String adresseFaktura, List<Forsikring> forsikringer, ObservableList<Skademelding> skademeldinger,
+                 String adresseFaktura, ObservableList<Forsikring> forsikringer, ObservableList<Skademelding> skademeldinger,
                  HashMap<Integer, Double> erstatningerUbetalte) { //List<Skademelding> her
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(datoKundeOpprettet);
         this.etternavn = new SimpleStringProperty(etternavn);
         this.fornavn = new SimpleStringProperty(fornavn);
         this.adresseFaktura = new SimpleStringProperty(adresseFaktura);
-        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>(forsikringer);
+        //this.forsikringer = new SimpleObjectProperty<List<Forsikring>>(forsikringer);
+        this.forsikringer = new SimpleObjectProperty<ObservableList<Forsikring>>(forsikringer);
         //this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>(skademeldinger);
         this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>(skademeldinger);
 
@@ -165,13 +168,13 @@ public class Kunde implements Serializable {
     }
 
     // forsikringer
-    public List<Forsikring> getForsikringer() {
+    public ObservableList<Forsikring> getForsikringer() {
         return forsikringer.get();
     }
-    public void setForsikringer(List<Forsikring> forsikringer) {
+    public void setForsikringer(ObservableList<Forsikring> forsikringer) {
         this.forsikringer.set(forsikringer);
     }
-    public ObjectProperty<List<Forsikring>> forsikringerProperty() {
+    public ObjectProperty<ObservableList<Forsikring>> forsikringerProperty() {
         return forsikringer;
     }
 
@@ -250,7 +253,7 @@ public class Kunde implements Serializable {
         this.etternavn = new SimpleStringProperty((String)is.readObject());
         this.fornavn = new SimpleStringProperty((String)is.readObject());
         this.adresseFaktura = new SimpleStringProperty((String)is.readObject());
-        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>((List<Forsikring>)is.readObject());
+        this.forsikringer = new SimpleObjectProperty<ObservableList<Forsikring>>((ObservableList<Forsikring>)is.readObject());
         //this.skademeldinger = new SimpleObjectProperty<List<Skademelding>>((List<Skademelding>)is.readObject());
         this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>((ObservableList<Skademelding>)is.readObject());
 

@@ -132,7 +132,10 @@ public class RotOppsettController {
     /**
      * <--- FORSIKRING --->
      */
-    public void gåTilForsikringoversikt(ActionEvent actionEvent) {
+    @FXML
+    public void gåTilForsikringoversikt() {
+        Viewbehandling.visForsikringOversikt(hovedApplikasjon);
+        lagreFilMenuItem.setDisable(false);
     }
 
     public void gåTilNyBåtforsikringPopup(ActionEvent actionEvent) {
