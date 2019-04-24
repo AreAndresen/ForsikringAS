@@ -90,7 +90,7 @@ public class KundeRedigerPopupController {
         msg += redigerEtternavn();
         msg += redigerAdresseFaktura();
         //legger inn antall ubetalte
-        redigerAntallUbetalteErstatninger();
+        //redigerAntallUbetalteErstatninger();
 
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
@@ -141,7 +141,7 @@ public class KundeRedigerPopupController {
         return msg;
     }
 
-    //oppdaterer adresseFaktura
+    /*//oppdaterer adresseFaktura
     private void redigerAntallUbetalteErstatninger() {
         //oppdaterer antallUbetalte
         //HashMap<Integer, Double> erstatninger = new HashMap<Integer, Double>();
@@ -155,7 +155,7 @@ public class KundeRedigerPopupController {
         kundeÅRedigere.setAntallErstatningerUbetalte(erstatninger);
 
         //kundeÅRedigere.setAntallErstatningerUbetalte(erstatninger);
-    }
+    }*/
 
 
 

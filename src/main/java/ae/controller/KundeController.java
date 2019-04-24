@@ -131,7 +131,7 @@ public class KundeController {
     }
 
     //-------SKADEMELDING-------
-    //Går til skademeldingversikt ved trykk i meny
+    //Går til skademeldingversikt ved trykk på knapp for skademeldinger
     @FXML
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);

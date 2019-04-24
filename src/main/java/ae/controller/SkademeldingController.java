@@ -85,10 +85,24 @@ public class SkademeldingController {
 
                     finnes = true; //kontrollerer at kunden finnes
                     //List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
+
                     ObservableList<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     skademeldingerArray.add(nySkademelding); //legger til ny skademelding
 
                     enKunde.setSkademeldinger(skademeldingerArray); //legger nytt array inn i kunde
+
+
+                    //todo MÅ FULLFØRE AT ANTALL SKADEMELDINGER OPPDATERER FORTLØPENDE PÅ ALLE
+                    // Legger til antallUbetalte
+                    //HashMap<Integer, Double> erstatninger = new HashMap<Integer, Double>();
+                    ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
+
+                    for(Skademelding skade : enKunde.getSkademeldinger()){
+                        if(skade.getStatus().equals("Ubetalt")){
+                            erstatninger.add(skade.getForsikringsNr());
+                        }
+                    }
+                    enKunde.setAntallErstatningerUbetalte(erstatninger);
 
                 }
             }
@@ -107,6 +121,8 @@ public class SkademeldingController {
 
             if (bekreftTrykket) {
                 visSkademeldingDetaljer(valgtSkademelding);
+
+
             }
         }
         else{
@@ -141,6 +157,7 @@ public class SkademeldingController {
                 //sletter fra tabell her
                 skademeldingTabell.getItems().remove(valgtSkademelding);
 
+                //gammel metode - har ikke != null
                 //slette fra kundedata array her
                 /*for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                     if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
