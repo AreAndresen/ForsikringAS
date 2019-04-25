@@ -16,7 +16,7 @@ public class Båtforsikring extends Forsikring {
 
     // default konstruktør
     public Båtforsikring(int forsikringsNr) {
-        this(0, forsikringsNr, LocalDate.now(), 0, null, null, null,
+        this(0, forsikringsNr, LocalDate.now(), 0, null, "Båtforsikring", null,
                 null, 0, 0, null);
     }
 

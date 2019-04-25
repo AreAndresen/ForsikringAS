@@ -28,7 +28,7 @@
             <children>
                 <Label text="Kundenummer" wrapText="true" />
                 <Label text="Forsikringsnummer" wrapText="true" GridPane.rowIndex="1" />
-                <Label text="Dato" wrapText="true" GridPane.rowIndex="2" />
+                <Label text="Dato opprettet" wrapText="true" GridPane.rowIndex="2" />
                 <Label text="Forsikringsbeløp" wrapText="true" GridPane.rowIndex="3" />
                 <Label text="Forsikringsbetingelser" wrapText="true" GridPane.rowIndex="4" />
             <Label text="Forsikringstype" GridPane.rowIndex="5" />

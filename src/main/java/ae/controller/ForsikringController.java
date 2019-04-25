@@ -5,9 +5,6 @@ import ae.model.Båtforsikring;
 import ae.model.Forsikring;
 import ae.model.Kunde;
 import ae.model.Viewbehandling;
-import ae.model.exceptions.UgyldigDatoException;
-import ae.model.exceptions.UgyldigKundenrException;
-import ae.model.exceptions.forsikring.UgyldigForsikringsnrException;
 import ae.util.IdUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,9 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 
 public class ForsikringController {

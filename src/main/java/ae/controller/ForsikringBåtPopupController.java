@@ -4,18 +4,9 @@ import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Båtforsikring;
 import ae.model.Forsikring;
-import ae.model.Kunde;
-import ae.model.exceptions.UgyldigDatoException;
-import ae.model.exceptions.forsikring.UgyldigForsikringsbelopException;
-import ae.model.exceptions.forsikring.UgyldigForsikringsnrException;
-import ae.model.exceptions.UgyldigKundenrException;
-import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.time.DateTimeException;
-import java.time.LocalDate;
 
 /**
  * Popup-vindu for å opprette og redigere båtforsikring.
@@ -59,7 +50,6 @@ public class ForsikringBåtPopupController {
         årsmodellField.setText(Integer.toString(båtforsikringÅRedigere.getÅrsmodell()));
         motortypeField.setText(båtforsikringÅRedigere.getMotorEgenskaper());
 
-        typeField.setPromptText("Båtforsikring");
         forsikringsNrField.setDisable(true);
         datoOpprettetField.setDisable(true);
         typeField.setDisable(true);
@@ -86,6 +76,8 @@ public class ForsikringBåtPopupController {
         msg += Forsikring.sjekkForsikringsNr(forsikringsNrField, (Båtforsikring) båtforsikringÅRedigere);
         msg += Forsikring.sjekkDatoOpprettet(datoOpprettetField, (Båtforsikring) båtforsikringÅRedigere);
         msg += Forsikring.sjekkForsikringsbelop(forsikringsbelopField, (Båtforsikring) båtforsikringÅRedigere);
+        msg += Forsikring.sjekkBetingelser(betingelserField, (Båtforsikring) båtforsikringÅRedigere);
+        msg += Forsikring.sjekkType(typeField, (Båtforsikring) båtforsikringÅRedigere);
 
         if (msg.length() != 0) {
             UgyldigInputHandler.generateAlert(msg);

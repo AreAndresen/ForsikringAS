@@ -3,8 +3,8 @@ package ae.model;
 import ae.HovedApplikasjon;
 import ae.model.exceptions.UgyldigDatoException;
 import ae.model.exceptions.forsikring.UgyldigForsikringsbelopException;
-import ae.model.exceptions.forsikring.UgyldigForsikringsnrException;
-import ae.model.exceptions.UgyldigKundenrException;
+import ae.model.exceptions.UgyldigLopeNrException;
+import ae.model.exceptions.forsikring.UgyldigTypeException;
 import javafx.beans.property.*;
 import javafx.scene.control.TextField;
 
@@ -45,7 +45,7 @@ public abstract class Forsikring {
     }
     public void setKundeNr(int kundeNr) {
         if (kundeNr <= 0) {
-            throw new UgyldigKundenrException();
+            throw new UgyldigLopeNrException("Kundenummer må være større enn 0.");
         }
         this.kundeNr.set(kundeNr);
     }
@@ -59,7 +59,7 @@ public abstract class Forsikring {
     }
     public void setForsikringsNr(int forsikringsNr) {
         if (forsikringsNr <= 0) {
-            throw new UgyldigForsikringsnrException();
+            throw new UgyldigLopeNrException("Forsikringsnummer må være større enn 0.");
         }
         this.forsikringsNr.set(forsikringsNr);
     }
@@ -86,7 +86,7 @@ public abstract class Forsikring {
         return forsikringsBelop.get();
     }
     public void setForsikringsBelop(int forsikringsBelop) {
-        if (forsikringsBelop < 0) {
+        if (forsikringsBelop <= 0) {
             throw new UgyldigForsikringsbelopException();
         }
         this.forsikringsBelop.set(forsikringsBelop);
@@ -111,6 +111,10 @@ public abstract class Forsikring {
         return type.get();
     }
     public void setType(String type) {
+        if (!"Båtforsikring".equals(type) && !"Hus- og innboforsikring".equals(type)
+                && !"Fritidsboligforsikring".equals(type) && !"Reiseforsikring".equals(type)) {
+            throw new UgyldigTypeException();
+        }
         this.type.set(type);
     }
     public StringProperty typeProperty() {
@@ -141,7 +145,7 @@ public abstract class Forsikring {
                 }
             } catch (NumberFormatException e) {
                 msg += "Kundenummer må være tall.\n";
-            } catch (UgyldigKundenrException e) {
+            } catch (UgyldigLopeNrException e) {
                 msg += e.getMessage() + "\n";
             }
         }
@@ -158,7 +162,7 @@ public abstract class Forsikring {
                 forsikringÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringsnummer nå være tall.\n";
-            } catch (UgyldigForsikringsnrException e) {
+            } catch (UgyldigLopeNrException e) {
                 msg += e.getMessage() + "\n";
             }
         }
@@ -193,6 +197,32 @@ public abstract class Forsikring {
             } catch (NumberFormatException e) {
                 msg += "Forsikringsbeløp må være tall.\n";
             } catch (UgyldigForsikringsbelopException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    public static String sjekkBetingelser(TextField betingelserField, Forsikring forsikringÅRedigere) {
+        String msg = "";
+
+        if (betingelserField.getText() == null || betingelserField.getText().isEmpty()) {
+            msg += "Betingelser kan ikke være tom.\n";
+        } else {
+            forsikringÅRedigere.setBetingelser(betingelserField.getText());
+        }
+        return msg;
+    }
+
+    public static String sjekkType(TextField typeField, Forsikring forsikringÅRedigere) {
+        String msg = "";
+
+        if (typeField.getText() == null || typeField.getText().isEmpty()) {
+            msg += "Type kan ikke være tom.\n";
+        } else {
+            try {
+                forsikringÅRedigere.setType(typeField.getText());
+            } catch (UgyldigTypeException e) {
                 msg += e.getMessage() + "\n";
             }
         }
