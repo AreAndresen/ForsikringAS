@@ -1,6 +1,6 @@
 package ae.model;
 
-import ae.model.exceptions.skademelding.UgyldigLopeNrException;
+import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.beans.property.*;
 
 import java.io.IOException;
