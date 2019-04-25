@@ -1,7 +1,10 @@
 package ae.controller;
 
+import ae.HovedApplikasjon;
+import ae.controller.util.UgyldigInputHandler;
 import ae.model.Båtforsikring;
-import javafx.event.ActionEvent;
+import ae.model.Kunde;
+import ae.model.exceptions.skademelding.UgyldigKundenrException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,6 +24,7 @@ public class ForsikringBåtPopupController {
     private Båtforsikring båtforsikringÅRedigere;
     private boolean bekreft = false;
     private boolean inputOK = false;
+    private HovedApplikasjon hovedApplikasjon;
 
     @FXML
     private void initialize() {}
@@ -35,7 +39,7 @@ public class ForsikringBåtPopupController {
     }
 
     private void oppdaterFelter() {
-        kundeNrField.setText(Integer.toString(båtforsikringÅRedigere.getKunde().getKundeNr()));
+        kundeNrField.setText(Integer.toString(båtforsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(båtforsikringÅRedigere.getForsikringsNr()));
         datoOpprettetField.setText(båtforsikringÅRedigere.getDatoOpprettet().toString());
         forsikringsbelopField.setText(Integer.toString(båtforsikringÅRedigere.getForsikringsBelop()));
@@ -47,6 +51,7 @@ public class ForsikringBåtPopupController {
         årsmodellField.setText(Integer.toString(båtforsikringÅRedigere.getÅrsmodell()));
         motortypeField.setText(båtforsikringÅRedigere.getMotorEgenskaper());
 
+        typeField.setPromptText("Båtforsikring");
         forsikringsNrField.setDisable(true);
         datoOpprettetField.setDisable(true);
         typeField.setDisable(true);
@@ -58,14 +63,57 @@ public class ForsikringBåtPopupController {
 
     @FXML
     public void bekreftTrykkes() {
-        //oppdaterBåtforsikring();
+        sjekkBåtforsikring();
+
+        if (inputOK) {
+            bekreft = true;
+            popupStage.close();
+        }
     }
 
+    private void sjekkBåtforsikring() {
+        String msg = "";
 
+        msg += sjekkKundeNr();
 
-    public void bekreftTrykkes(ActionEvent actionEvent) {
+        if (msg.length() != 0) {
+            UgyldigInputHandler.generateAlert(msg);
+        } else {
+            inputOK = true;
+        }
     }
 
-    public void avbrytTrykkes(ActionEvent actionEvent) {
+    private String sjekkKundeNr() {
+        String msg = "";
+
+        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+            msg += "Kundenummer kan ikke være tomt.\n";
+        } else {
+            try {
+                boolean kundeFinnes = false;
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == Integer.parseInt(kundeNrField.getText())) {
+                        kundeFinnes = true;
+                    }
+                }
+                if (!kundeFinnes) {
+                    msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.";
+                } else {
+                    båtforsikringÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
+                }
+            } catch (UgyldigKundenrException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
+        this.hovedApplikasjon = hovedApplikasjon;
+    }
+
+    @FXML
+    public void avbrytTrykkes() {
+        popupStage.close();
     }
 }

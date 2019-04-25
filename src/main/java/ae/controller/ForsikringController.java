@@ -4,17 +4,16 @@ import ae.HovedApplikasjon;
 import ae.model.Båtforsikring;
 import ae.model.Forsikring;
 import ae.model.Kunde;
-import javafx.beans.property.ObjectProperty;
+import ae.model.Viewbehandling;
+import ae.util.IdUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ForsikringController {
 
@@ -51,7 +50,7 @@ public class ForsikringController {
     @FXML
     private void initialize() {
         // koble kolonnene med datafeltene
-        kundeKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeProperty().get().kundeNrProperty());
+        kundeKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
         forsikringsnrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
         datoOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoOpprettetProperty());
         forsikringsbelopKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsBelopProperty());
@@ -120,7 +119,7 @@ public class ForsikringController {
             Forsikring forsikringTilSletting = null;
 
             for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                if (valgtForsikring.getKunde().equals(kunde)) {
+                if (valgtForsikring.getKundeNr() == kunde.getKundeNr()) {
                     for (Forsikring forsikring : kunde.getForsikringer()) {
                         if (valgtForsikring.equals(forsikring)) {
                             forsikringTilSletting = forsikring;
@@ -134,6 +133,17 @@ public class ForsikringController {
 
     @FXML
     public void gåTilNyBåtforsikringPopup() {
+        int index = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+        Forsikring nyBåtforsikring = new Båtforsikring(index);
+        boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (Båtforsikring) nyBåtforsikring);
+
+        if (bekreftTrykket) {
+            for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                if (kunde.getKundeNr() == nyBåtforsikring.getKundeNr()) {
+                    kunde.getForsikringer().add(nyBåtforsikring);
+                }
+            }
+        }
     }
 
     /**

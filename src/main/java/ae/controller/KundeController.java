@@ -62,7 +62,7 @@ public class KundeController {
     // TODO: flytte denne til rotoppsettet
     @FXML
     public void gåTilNyKundePopup() {
-        int index = IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData());
+        int index = IdUtil.genererLøpenummerKunde(hovedApplikasjon.getKundeData());
         Kunde nyKunde = new Kunde(index);
         boolean bekreftTrykket = Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
 

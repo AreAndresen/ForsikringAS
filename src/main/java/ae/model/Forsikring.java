@@ -5,7 +5,7 @@ import javafx.beans.property.*;
 import java.time.LocalDate;
 
 public abstract class Forsikring {
-    private final transient ObjectProperty<Kunde> kunde;
+    private final transient IntegerProperty kundeNr;
     private final transient IntegerProperty forsikringsNr;
     private final transient ObjectProperty<LocalDate> datoOpprettet;
     private final transient IntegerProperty forsikringsBelop;
@@ -13,14 +13,14 @@ public abstract class Forsikring {
     private final transient StringProperty type;
 
     // default konstruktør
-    public Forsikring(Kunde kunde, int forsikringsNr) {
-        this(kunde, forsikringsNr, LocalDate.now(), 0, null, null);
+    public Forsikring(int forsikringsNr) {
+        this(0, forsikringsNr, LocalDate.now(), 0, null, null);
     }
 
     // non-default konstruktør
-    public Forsikring(Kunde kunde, int forsikringsNr, LocalDate datoOpprettet,
+    public Forsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet,
                       int forsikringsBelop, String betingelser, String type) {
-        this.kunde = new SimpleObjectProperty<Kunde>(kunde);
+        this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
         this.datoOpprettet = new SimpleObjectProperty<>(datoOpprettet);
         this.forsikringsBelop = new SimpleIntegerProperty(forsikringsBelop);
@@ -33,14 +33,14 @@ public abstract class Forsikring {
      */
 
     // kunde
-    public Kunde getKunde() {
-        return kunde.get();
+    public int getKundeNr() {
+        return kundeNr.get();
     }
-    public void setKunde(Kunde kunde) {
-        this.kunde.set(kunde);
+    public void setKundeNr(int kundeNr) {
+        this.kundeNr.set(kundeNr);
     }
-    public ObjectProperty<Kunde> kundeProperty() {
-        return kunde;
+    public IntegerProperty kundeNrProperty() {
+        return kundeNr;
     }
 
     // forsikringsNr

@@ -232,6 +232,7 @@ public class Viewbehandling {
             ForsikringBåtPopupController forsikringBåtPopupController = loader.getController();
             forsikringBåtPopupController.setPopupStage(popupStage);
             forsikringBåtPopupController.setBåtforsikringÅRedigere(båtforsikring);
+            forsikringBåtPopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();
 
@@ -261,7 +262,7 @@ public class Viewbehandling {
     // FORSIKRING
     private static FXMLLoader hentBåtforsikringPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("view/ForsikringBåtPopup.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringBåtPopup.fxml"));
         return loader;
     }
 }
