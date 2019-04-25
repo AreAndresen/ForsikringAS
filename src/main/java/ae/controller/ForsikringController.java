@@ -133,7 +133,7 @@ public class ForsikringController {
     }
 
     @FXML
-    public void gåTilNyBåtforsikringPopup(ActionEvent actionEvent) {
+    public void gåTilNyBåtforsikringPopup() {
     }
 
     /**

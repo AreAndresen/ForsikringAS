@@ -217,6 +217,31 @@ public class Viewbehandling {
         }
     }
 
+    public static boolean visNyBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, Båtforsikring båtforsikring) {
+        try {
+            FXMLLoader loader = hentBåtforsikringPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Registrer ny båtforsikring");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            ForsikringBåtPopupController forsikringBåtPopupController = loader.getController();
+            forsikringBåtPopupController.setPopupStage(popupStage);
+            forsikringBåtPopupController.setBåtforsikringÅRedigere(båtforsikring);
+
+            popupStage.showAndWait();
+
+            return forsikringBåtPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /**
      * Brukes i Ny og Rediger popup for å hente det samme vinduet.
      */
@@ -230,6 +255,13 @@ public class Viewbehandling {
     private static FXMLLoader hentSkademeldingRedigerPopup() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingRedigerPopupView.fxml"));
+        return loader;
+    }
+
+    // FORSIKRING
+    private static FXMLLoader hentBåtforsikringPopup() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HovedApplikasjon.class.getResource("view/ForsikringBåtPopup.fxml"));
         return loader;
     }
 }

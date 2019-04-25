@@ -2,17 +2,12 @@ package ae.controller;
 
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
-import ae.model.Skademelding;
-import ae.model.exceptions.KundeExc.UgyldigAdresseFakturaException;
-import ae.model.exceptions.KundeExc.UgyldigEtternavnException;
-import ae.model.exceptions.KundeExc.UgyldigFornavnException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import ae.model.exceptions.kunde.UgyldigAdresseFakturaException;
+import ae.model.exceptions.kunde.UgyldigEtternavnException;
+import ae.model.exceptions.kunde.UgyldigFornavnException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.util.HashMap;
 
 /**
  * Popup-vindu for å redigere kunde
@@ -72,7 +67,7 @@ public class KundeRedigerPopupController {
     public void bekreftTrykkes() {
         // TODO: input-validering med exceptions venter
 
-        oppdaterKunde(); //genererer feilmeldinger om aktivert
+        sjekkKunde(); //genererer feilmeldinger om aktivert
         if(inputOK){ //implementert en boolean for å lukke om input er riktig/feil
 
             bekreft = true; //true her legger til kunde
@@ -80,13 +75,13 @@ public class KundeRedigerPopupController {
         }
     }
 
-    public void oppdaterKunde() {
+    public void sjekkKunde() {
         String msg = "";
 
         kundeÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
 
         //Bytter set her ut med metoder (se under)
-        msg += redigerFornavn();
+        msg += sjekkFornavn();
         msg += redigerEtternavn();
         msg += redigerAdresseFaktura();
         //legger inn antall ubetalte
@@ -106,13 +101,17 @@ public class KundeRedigerPopupController {
 
     //TODO: METODER FOR ENDRING AV KUNDE
     //oppdaterer fornavn
-    private String redigerFornavn() {
+    private String sjekkFornavn() {
         String msg = "";
-        try {
-            kundeÅRedigere.setFornavn(fornavnField.getText());
-        }
-        catch (UgyldigFornavnException e) {
-            msg += e.getMessage()+"\n";
+
+        if (fornavnField.getText() == null || fornavnField.getText().isEmpty()) {
+            msg += "Fornavn kan ikke være tomt.\n";
+        } else {
+            try {
+                kundeÅRedigere.setFornavn(fornavnField.getText());
+            } catch (UgyldigFornavnException e) {
+                msg += e.getMessage()+"\n";
+            }
         }
         return msg;
     }

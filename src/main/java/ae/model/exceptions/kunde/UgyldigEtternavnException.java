@@ -1,4 +1,4 @@
-package ae.model.exceptions.KundeExc;
+package ae.model.exceptions.kunde;
 
 public class UgyldigEtternavnException extends IllegalArgumentException{
     public UgyldigEtternavnException() {

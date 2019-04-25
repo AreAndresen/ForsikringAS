@@ -1,7 +1,7 @@
-package ae.model.exceptions.KundeExc;
+package ae.model.exceptions.kunde;
 
 public class UgyldigFornavnException extends IllegalArgumentException {
     public UgyldigFornavnException() {
-        super("Fornavnet er tomt eller inneholder ugyldig input.");
+        super("Fornavn må være mellom 2 og 20 norske bokstaver.");
     }
 }

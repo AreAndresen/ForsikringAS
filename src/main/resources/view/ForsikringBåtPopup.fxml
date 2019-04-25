@@ -33,7 +33,7 @@
                 <Label text="Forsikringsbetingelser" wrapText="true" GridPane.rowIndex="4" />
             <Label text="Forsikringstype" GridPane.rowIndex="5" />
                 <TextField fx:id="kundeNrField" GridPane.columnIndex="1" />
-                <TextField fx:id="forsikringsnrField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="forsikringsNrField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <TextField fx:id="datoOpprettetField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="forsikringsbelopField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="betingelserField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -59,11 +59,11 @@
             <Label text="Lengde i fot" GridPane.rowIndex="2" />
             <Label text="Årsmodell" GridPane.rowIndex="3" />
             <Label text="Motortype og styrke" GridPane.rowIndex="4" />
-            <TextField fx:id="regnrField1" GridPane.columnIndex="1" />
-            <TextField fx:id="båttypeField1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="lengdeFotField1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="årsmodellField1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="motortypeField1" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="regnrField" GridPane.columnIndex="1" />
+            <TextField fx:id="båttypeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="lengdeFotField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="årsmodellField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="motortypeField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
         <ButtonBar layoutX="176.0" layoutY="233.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

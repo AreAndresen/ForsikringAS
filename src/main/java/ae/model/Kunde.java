@@ -6,12 +6,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import ae.model.exceptions.KundeExc.UgyldigAdresseFakturaException;
-import ae.model.exceptions.KundeExc.UgyldigEtternavnException;
-import ae.model.exceptions.KundeExc.UgyldigFornavnException;
+import ae.model.exceptions.kunde.UgyldigAdresseFakturaException;
+import ae.model.exceptions.kunde.UgyldigEtternavnException;
+import ae.model.exceptions.kunde.UgyldigFornavnException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -146,7 +145,7 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setFornavn(String fornavn) {
-        if(fornavn == null || fornavn.length() == 0){
+        if(fornavn == null || !fornavn.matches("[a-zA-ZæøåÆØÅ]{2,20}+")){
             throw new UgyldigFornavnException();
         }
         this.fornavn.set(fornavn);
