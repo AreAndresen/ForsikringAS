@@ -30,25 +30,23 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
+            <Label text="Kundenummer" />
             <Label text="Skadenr" wrapText="true" GridPane.rowIndex="1" />
             <Label text="Skade type" wrapText="true" GridPane.rowIndex="2" />
             <Label text="Skadebeskrivelse" wrapText="true" GridPane.rowIndex="3" />
             <Label text="Takseringsbeløp" wrapText="true" GridPane.rowIndex="4" />
             <Label text="Erstatning utbetalt" wrapText="true" GridPane.rowIndex="5" />
+            <Label text="Dato ny skademelding" GridPane.rowIndex="6" />
+            <Label text="Vitner" GridPane.rowIndex="7" />
+            <Label text="Status" GridPane.rowIndex="8" />
+            <TextField fx:id="forsikringsNrField" GridPane.columnIndex="1" />
             <TextField fx:id="skadeNrField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="skadeTypeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="skadebeskrivelseField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="belopTakseringField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="erstatningsbelopUtbetaltField" prefHeight="26.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="datoSkademeldingOpprettetField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Dato ny skademelding" GridPane.rowIndex="6" />
-            <Label text="Kundenummer" />
-            <TextField fx:id="forsikringsNrField" GridPane.columnIndex="1" />
-            <TextField prefHeight="26.0" prefWidth="99.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label text="Vitner" GridPane.rowIndex="7" />
             <TextArea fx:id="vitneInfoField" prefHeight="77.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label text="Status" GridPane.rowIndex="8" />
             <ChoiceBox fx:id="statusField" prefHeight="26.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
          </children>
       </GridPane>
