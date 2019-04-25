@@ -52,6 +52,14 @@ public class SkademeldingRedigerPopupController {
      */
     public void setSkademeldingÅRedigere(Skademelding skademelding) {
         this.skademeldingÅRedigere = skademelding;
+
+        //legger til kunden som eier skademeldingen
+        for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+            if (enKunde.getKundeNr() == skademeldingÅRedigere.getForsikringsNr()) {
+                kundeSkademelding = enKunde;
+            }
+        }
+
         oppdaterFelter();
     }
 
@@ -188,25 +196,6 @@ public class SkademeldingRedigerPopupController {
     }
 
 
-    /*todo MÅ FULLFØRE AT ANTALL SKADEMELDINGER OPPDATERER FORTLØPENDE PÅ ALLE
-    // Legger til antallUbetalte
-    //oppdaterer adresseFaktura
-    private void redigerAntallUbetalteErstatninger() {
-        //oppdaterer antallUbetalte
-        for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-            if (enKunde.getKundeNr() == skademeldingÅRedigere.getForsikringsNr()) {
-
-                ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
-
-                for(Skademelding skade : enKunde.getSkademeldinger()){
-                    if(skade.getStatus().equals("Ubetalt")){
-                        erstatninger.add(skade.getForsikringsNr());
-                    }
-                }
-                enKunde.setAntallErstatningerUbetalte(erstatninger);
-            }
-        }
-    }*/
 
 
     @FXML
