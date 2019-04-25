@@ -1,5 +1,6 @@
 package ae.model;
 
+import ae.model.exceptions.UgyldigDatoException;
 import ae.model.exceptions.skademelding.UgyldigLopeNrException;
 import javafx.beans.property.*;
 
@@ -96,6 +97,9 @@ public class Skademelding implements Serializable {
         return kundeNr.get();
     }
     public void setKundeNr(int kundeNr) {
+        if (kundeNr < 0) {
+            throw new UgyldigLopeNrException("Kundenummer må være større enn 0.");
+        }
         this.kundeNr.set(kundeNr);
     }
     public IntegerProperty kundeNrProperty() {
@@ -107,6 +111,9 @@ public class Skademelding implements Serializable {
         return datoSkade.get();
     }
     public void setDatoSkade(LocalDate datoSkade) {
+        if (datoSkade.isAfter(LocalDate.now())) {
+            throw new UgyldigDatoException();
+        }
         this.datoSkade.set(datoSkade);
     }
     public ObjectProperty<LocalDate> datoSkadeProperty() {
