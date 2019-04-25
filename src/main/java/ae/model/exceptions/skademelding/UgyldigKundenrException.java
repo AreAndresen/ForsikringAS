@@ -1,7 +1,7 @@
 package ae.model.exceptions.skademelding;
 
-public class UgyldigKundenrException extends NumberFormatException {
+public class UgyldigKundenrException extends IllegalArgumentException {
     public UgyldigKundenrException() {
-        super ("Kundenummer må være et tall.");
+        super ("Kundenummer må være større enn 0.");
     }
 }

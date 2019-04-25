@@ -1,5 +1,8 @@
 package ae.model;
 
+import ae.model.exceptions.forsikring.UgyldigDatoException;
+import ae.model.exceptions.forsikring.UgyldigForsikringsnrException;
+import ae.model.exceptions.skademelding.UgyldigKundenrException;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
@@ -37,6 +40,9 @@ public abstract class Forsikring {
         return kundeNr.get();
     }
     public void setKundeNr(int kundeNr) {
+        if (kundeNr < 0) {
+            throw new UgyldigKundenrException();
+        }
         this.kundeNr.set(kundeNr);
     }
     public IntegerProperty kundeNrProperty() {
@@ -48,6 +54,9 @@ public abstract class Forsikring {
         return forsikringsNr.get();
     }
     public void setForsikringsNr(int forsikringsNr) {
+        if (forsikringsNr < 0) {
+            throw new UgyldigForsikringsnrException();
+        }
         this.forsikringsNr.set(forsikringsNr);
     }
     public IntegerProperty forsikringsNrProperty() {
@@ -58,7 +67,10 @@ public abstract class Forsikring {
     public LocalDate getDatoOpprettet() {
         return datoOpprettet.get();
     }
-    public void setDatoOpprettet(LocalDate datoOpprettet) {
+    public void setDatoOpprettet(LocalDate datoOpprettet) throws UgyldigDatoException {
+        if (datoOpprettet.isAfter(LocalDate.now())) {
+            throw new UgyldigDatoException();
+        }
         this.datoOpprettet.set(datoOpprettet);
     }
     public ObjectProperty<LocalDate> datoOpprettetProperty() {
