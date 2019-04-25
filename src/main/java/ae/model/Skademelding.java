@@ -1,7 +1,9 @@
 package ae.model;
 
+import ae.model.exceptions.UgyldigBelopException;
 import ae.model.exceptions.UgyldigDatoException;
 import ae.model.exceptions.UgyldigLopeNrException;
+import ae.model.exceptions.forsikring.UgyldigForsikringsbelopException;
 import javafx.beans.property.*;
 
 import java.io.IOException;
@@ -84,7 +86,7 @@ public class Skademelding implements Serializable {
     }
     public void setSkadeNr(int skadeNr) {
         if (skadeNr < 0) {
-            throw new UgyldigLopeNrException("Forsikringsnummer må være større enn 0.");
+            throw new UgyldigLopeNrException("Skadenummer må være større enn 0.");
         }
         this.kundeNr.set(skadeNr);
     }
@@ -141,6 +143,9 @@ public class Skademelding implements Serializable {
     // belopTaksering
     public Double getBelopTaksering() { return belopTaksering.get(); }
     public void setBelopTaksering(Double belopTaksering) {
+        if (belopTaksering <= 0) {
+            throw new UgyldigBelopException("Takseringsbeløp kan ikke være mindre enn 0.");
+        }
         this.belopTaksering.set(belopTaksering);
     }
     public DoubleProperty belopTakseringProperty() {
@@ -150,6 +155,9 @@ public class Skademelding implements Serializable {
     // erstatningsbelopUtbetalt
     public Double getErstatningsbelopUtbetalt() { return erstatningsbelopUtbetalt.get(); }
     public void setErstatningsbelopUtbetalt(Double erstatningsbelopUtbetalt) {
+        if (erstatningsbelopUtbetalt <= 0) {
+            throw new UgyldigBelopException("ErstatningsbelopUtbetalt kan ikke være mindre enn 0.");
+        }
         this.erstatningsbelopUtbetalt.set(erstatningsbelopUtbetalt);
     }
     public DoubleProperty erstatningsbelopUtbetaltProperty() {

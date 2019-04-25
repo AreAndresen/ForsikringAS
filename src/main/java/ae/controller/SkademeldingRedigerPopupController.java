@@ -2,10 +2,9 @@ package ae.controller;
 
 import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
-import ae.model.Kunde;
 import ae.model.Skademelding;
-import ae.model.exceptions.UgyldigKundenrException;
-import ae.model.exceptions.skademelding.UgyldigBelopException;
+import ae.model.exceptions.UgyldigBelopException;
+import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,8 +12,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.util.HashMap;
 
 public class SkademeldingRedigerPopupController {
 
@@ -134,8 +131,14 @@ public class SkademeldingRedigerPopupController {
     //oppdaterer skadetype
     private String redigerKundeNr() {
         String msg = "";
-
-        skademeldingÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
+        try{
+            skademeldingÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
+        }
+        catch (NumberFormatException e) {
+            msg += "Kundenummer må være tall.\n";
+        } catch (UgyldigLopeNrException e) {
+            msg += e.getMessage() + "\n";
+        }
 
         return msg;
     }
@@ -160,12 +163,11 @@ public class SkademeldingRedigerPopupController {
     //oppdaterer Takseringsbeløp
     private String redigerTakseringsbeløp() {
         String msg = "";
-
         try{
             skademeldingÅRedigere.setBelopTaksering(Double.parseDouble(belopTakseringField.getText()));
         }
         catch (NumberFormatException e) {
-            msg += "Takseringsbeløp må være tall.\n";
+            msg += "Takseringsbeløp må være et tall.\n";
         } catch (UgyldigBelopException e) {
             msg += e.getMessage() + "\n";
         }
@@ -175,9 +177,14 @@ public class SkademeldingRedigerPopupController {
     //oppdaterer erstatningsbelop Utbetalt
     private String redigerErstatningsbelopUtbetalt() {
         String msg = "";
-
+        try{
             skademeldingÅRedigere.setErstatningsbelopUtbetalt(Double.parseDouble(erstatningsbelopUtbetaltField.getText()));
-
+        }
+        catch (NumberFormatException e) {
+            msg += "Erstatningssbeløp må være et tall.\n";
+        } catch (UgyldigBelopException e) {
+            msg += e.getMessage() + "\n";
+        }
         return msg;
     }
 
@@ -196,7 +203,6 @@ public class SkademeldingRedigerPopupController {
 
         return msg;
     }
-
 
 
 
