@@ -77,7 +77,7 @@ public class ForsikringController {
                 metaToLabel.setText("Båttype og modell");
                 metaTreLabel.setText("Lengde i fot");
                 metaFireLabel.setText("Årsmodell");
-                metaFireLabel.setText("Motortype og styrke");
+                metaFemLabel.setText("Motortype og styrke");
 
                 // setter inn resultatdata
                 resultatEnLabel.setText(båtforsikring.getRegistreringsNr());

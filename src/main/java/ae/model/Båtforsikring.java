@@ -44,7 +44,7 @@ public class Båtforsikring extends Forsikring {
     }
     public void setRegistreringsNr(String registreringsNr) {
         if (registreringsNr == null || !registreringsNr.matches("[a-zA-ZæøåÆØÅ0-9]{4,10}+")) {
-            throw new UgyldigInputException("Registreringsnummer må være på gyldig format.");
+            throw new UgyldigInputException("Registreringsnummer må være mellom 4 og 10 tegn.");
         }
         this.registreringsNr.set(registreringsNr);
     }
@@ -57,6 +57,9 @@ public class Båtforsikring extends Forsikring {
         return typeModell.get();
     }
     public void setTypeModell(String typeModell) {
+        if (typeModell == null || !typeModell.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
+            throw new UgyldigInputException("Båttype og modell kan ikke overstige 30 tegn.");
+        }
         this.typeModell.set(typeModell);
     }
     public StringProperty typeModellProperty() {
@@ -68,6 +71,9 @@ public class Båtforsikring extends Forsikring {
         return lengdeFot.get();
     }
     public void setLengdeFot(int lengdeFot) {
+        if (lengdeFot <= 0 || lengdeFot > 512) {
+            throw new UgyldigInputException("Lengde må være mellom 1 og 512 fot.");
+        }
         this.lengdeFot.set(lengdeFot);
     }
     public IntegerProperty lengdeFotProperty() {
@@ -79,9 +85,12 @@ public class Båtforsikring extends Forsikring {
         return årsmodell.get();
     }
     public void setÅrsmodell(int årsmodell) {
+        if (årsmodell < 1899 || årsmodell > 2020) {
+            throw new UgyldigInputException("Årsmodell må være etter 1899 og før 2020.");
+        }
         this.årsmodell.set(årsmodell);
     }
-    public IntegerProperty årsmodellPropert() {
+    public IntegerProperty årsmodellProperty() {
         return årsmodell;
     }
 
@@ -90,6 +99,9 @@ public class Båtforsikring extends Forsikring {
         return motorEgenskaper.get();
     }
     public void setMotorEgenskaper(String motorEgenskaper) {
+        if (motorEgenskaper == null || !motorEgenskaper.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
+            throw new UgyldigInputException("Motortype og styrke kan ikke overstige 30 tegn.");
+        }
         this.motorEgenskaper.set(motorEgenskaper);
     }
     public StringProperty motorEgenskaperProperty() {
@@ -107,6 +119,70 @@ public class Båtforsikring extends Forsikring {
         } else {
             try {
                 setRegistreringsNr(registreringsnrField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    public String sjekkTypeModell(TextField typeModellField) {
+        String msg = "";
+
+        if (typeModellField.getText() == null || typeModellField.getText().isEmpty()) {
+            msg += "Båttype og modell kan ikke være tom.\n";
+        } else {
+            try {
+                setTypeModell(typeModellField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    public String sjekkLengdeFot(TextField lengdeFotField) {
+        String msg = "";
+
+        if (lengdeFotField.getText() == null || lengdeFotField.getText().isEmpty()) {
+            msg += "Lengde kan ikke være tom.\n";
+        } else {
+            try {
+                setLengdeFot(Integer.parseInt(lengdeFotField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Lengde må være tall.\n";
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    public String sjekkÅrsmodell(TextField årsmodellField) {
+        String msg = "";
+
+        if (årsmodellField.getText() == null || årsmodellField.getText().isEmpty()) {
+            msg += "Årsmodell kan ikke være tom.\n";
+        } else {
+            try {
+                setÅrsmodell(Integer.parseInt(årsmodellField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Årsmodell må være tall.\n";
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    public String sjekkMotorEgenskaper(TextField motorEgenskaperField) {
+        String msg = "";
+
+        if (motorEgenskaperField.getText() == null || motorEgenskaperField.getText().isEmpty()) {
+            msg += "Motortype og styrke kan ikke være tom.\n";
+        } else {
+            try {
+                setMotorEgenskaper(motorEgenskaperField.getText());
             } catch (UgyldigInputException e) {
                 msg += e.getMessage() + "\n";
             }

@@ -22,7 +22,6 @@ public class ForsikringBåtPopupController {
     private Stage popupStage;
     private Båtforsikring båtforsikringÅRedigere;
     private boolean bekreft = false;
-    private boolean inputOK = false;
     private HovedApplikasjon hovedApplikasjon;
 
     @FXML
@@ -61,15 +60,14 @@ public class ForsikringBåtPopupController {
 
     @FXML
     public void bekreftTrykkes() {
-        sjekkBåtforsikring();
 
-        if (inputOK) {
+        if (oppdaterBåtforsikring()) {
             bekreft = true;
             popupStage.close();
         }
     }
 
-    private void sjekkBåtforsikring() {
+    private boolean oppdaterBåtforsikring() {
         String msg = "";
 
         msg += båtforsikringÅRedigere.sjekkKundeNr(kundeNrField, hovedApplikasjon);
@@ -79,11 +77,16 @@ public class ForsikringBåtPopupController {
         msg += båtforsikringÅRedigere.sjekkBetingelser(betingelserField);
         msg += båtforsikringÅRedigere.sjekkType(typeField);
         msg += båtforsikringÅRedigere.sjekkRegistreringsNr(regnrField);
+        msg += båtforsikringÅRedigere.sjekkTypeModell(båttypeField);
+        msg += båtforsikringÅRedigere.sjekkLengdeFot(lengdeFotField);
+        msg += båtforsikringÅRedigere.sjekkÅrsmodell(årsmodellField);
+        msg += båtforsikringÅRedigere.sjekkMotorEgenskaper(motortypeField);
 
         if (msg.length() != 0) {
             UgyldigInputHandler.generateAlert(msg);
+            return false;
         } else {
-            inputOK = true;
+            return true;
         }
     }
 
