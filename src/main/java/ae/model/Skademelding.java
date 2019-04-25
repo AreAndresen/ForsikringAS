@@ -4,6 +4,7 @@ import ae.model.exceptions.UgyldigBelopException;
 import ae.model.exceptions.UgyldigDatoException;
 import ae.model.exceptions.UgyldigLopeNrException;
 import ae.model.exceptions.forsikring.UgyldigForsikringsbelopException;
+import ae.model.exceptions.forsikring.UgyldigTypeException;
 import javafx.beans.property.*;
 
 import java.io.IOException;
@@ -125,6 +126,10 @@ public class Skademelding implements Serializable {
     // skadeType
     public String getSkadeType() { return skadeType.get(); }
     public void setSkadeType(String skadeType) {
+        if (!"Båtforsikring".equals(skadeType) && !"Hus- og innboforsikring".equals(skadeType)
+                && !"Fritidsboligforsikring".equals(skadeType) && !"Reiseforsikring".equals(skadeType)) {
+            throw new UgyldigTypeException();
+        }
         this.skadeType.set(skadeType);
     }
     public StringProperty skadeTypeProperty() {
