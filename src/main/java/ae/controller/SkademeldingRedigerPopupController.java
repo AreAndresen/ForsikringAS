@@ -4,6 +4,8 @@ import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
 import ae.model.Skademelding;
+import ae.model.exceptions.UgyldigKundenrException;
+import ae.model.exceptions.skademelding.UgyldigBelopException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -159,8 +161,14 @@ public class SkademeldingRedigerPopupController {
     private String redigerTakseringsbeløp() {
         String msg = "";
 
+        try{
             skademeldingÅRedigere.setBelopTaksering(Double.parseDouble(belopTakseringField.getText()));
-
+        }
+        catch (NumberFormatException e) {
+            msg += "Takseringsbeløp må være tall.\n";
+        } catch (UgyldigBelopException e) {
+            msg += e.getMessage() + "\n";
+        }
         return msg;
     }
 
