@@ -28,7 +28,6 @@ public class SkademeldingRedigerPopupController {
 
     private Stage popupStage;
     private Skademelding skademeldingÅRedigere;
-    private Kunde kundeSkademelding;
     private boolean bekreft = false;
     private boolean inputOK = false;
 
@@ -52,6 +51,7 @@ public class SkademeldingRedigerPopupController {
      */
     public void setSkademeldingÅRedigere(Skademelding skademelding) {
         this.skademeldingÅRedigere = skademelding;
+
         oppdaterFelter();
     }
 
@@ -188,25 +188,6 @@ public class SkademeldingRedigerPopupController {
     }
 
 
-    /*todo MÅ FULLFØRE AT ANTALL SKADEMELDINGER OPPDATERER FORTLØPENDE PÅ ALLE
-    // Legger til antallUbetalte
-    //oppdaterer adresseFaktura
-    private void redigerAntallUbetalteErstatninger() {
-        //oppdaterer antallUbetalte
-        for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-            if (enKunde.getKundeNr() == skademeldingÅRedigere.getForsikringsNr()) {
-
-                ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
-
-                for(Skademelding skade : enKunde.getSkademeldinger()){
-                    if(skade.getStatus().equals("Ubetalt")){
-                        erstatninger.add(skade.getForsikringsNr());
-                    }
-                }
-                enKunde.setAntallErstatningerUbetalte(erstatninger);
-            }
-        }
-    }*/
 
 
     @FXML

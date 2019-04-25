@@ -140,24 +140,6 @@ public class KundeRedigerPopupController {
         return msg;
     }
 
-    /*//oppdaterer adresseFaktura
-    private void redigerAntallUbetalteErstatninger() {
-        //oppdaterer antallUbetalte
-        //HashMap<Integer, Double> erstatninger = new HashMap<Integer, Double>();
-        ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
-
-        for(Skademelding skade : kundeÅRedigere.getSkademeldinger()){
-            if(skade.getStatus().equals("Ubetalt")){
-                erstatninger.add(skade.getForsikringsNr());
-            }
-        }
-        kundeÅRedigere.setAntallErstatningerUbetalte(erstatninger);
-
-        //kundeÅRedigere.setAntallErstatningerUbetalte(erstatninger);
-    }*/
-
-
-
 
     @FXML
     public void avbrytTrykkes() {
