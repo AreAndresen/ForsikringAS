@@ -28,7 +28,6 @@ public class SkademeldingRedigerPopupController {
 
     private Stage popupStage;
     private Skademelding skademeldingÅRedigere;
-    private Kunde kundeSkademelding;
     private boolean bekreft = false;
     private boolean inputOK = false;
 
@@ -52,13 +51,6 @@ public class SkademeldingRedigerPopupController {
      */
     public void setSkademeldingÅRedigere(Skademelding skademelding) {
         this.skademeldingÅRedigere = skademelding;
-
-        //legger til kunden som eier skademeldingen
-        for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-            if (enKunde.getKundeNr() == skademeldingÅRedigere.getForsikringsNr()) {
-                kundeSkademelding = enKunde;
-            }
-        }
 
         oppdaterFelter();
     }
