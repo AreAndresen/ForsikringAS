@@ -202,6 +202,20 @@ public class Kunde implements Serializable {
     }
 
 
+    //TODO metoder for å finne antall ubetalte erstatninger
+    public ObservableList<Integer> finnAntallErstatningerUbetalte(){
+
+        ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
+
+        for(Skademelding skade : this.getSkademeldinger()){
+            if(skade.getStatus().equals("Ubetalt")){
+                erstatninger.add(skade.getForsikringsNr());
+            }
+        }
+        return erstatninger;
+    }
+
+
     //antallErstatningerUbetalte
     public ObservableList<Integer> getAntallErstatningerUbetalte() {
         return antallErstatningerUbetalte.get();
