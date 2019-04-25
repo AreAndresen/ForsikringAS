@@ -4,8 +4,8 @@ import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Skademelding;
 import ae.model.exceptions.UgyldigBelopException;
+import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
-import ae.model.exceptions.forsikring.UgyldigTypeException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -153,7 +153,7 @@ public class SkademeldingRedigerPopupController {
         } else {
             try {
                 skademeldingÅRedigere.setSkadeType(skadeTypeField.getValue().toString());
-            } catch (UgyldigTypeException e) {
+            } catch (UgyldigInputException e) {
                 msg += e.getMessage() + "\n";
             }
         }

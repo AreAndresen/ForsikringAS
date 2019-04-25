@@ -1,9 +1,11 @@
 package ae.model;
 
+import ae.model.exceptions.UgyldigInputException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 
@@ -41,6 +43,9 @@ public class Båtforsikring extends Forsikring {
         return registreringsNr.get();
     }
     public void setRegistreringsNr(String registreringsNr) {
+        if (registreringsNr == null || !registreringsNr.matches("[a-zA-ZæøåÆØÅ0-9]{4,10}+")) {
+            throw new UgyldigInputException("Registreringsnummer må være på gyldig format.");
+        }
         this.registreringsNr.set(registreringsNr);
     }
     public StringProperty registreringsNrProperty() {
@@ -89,5 +94,23 @@ public class Båtforsikring extends Forsikring {
     }
     public StringProperty motorEgenskaperProperty() {
         return motorEgenskaper;
+    }
+
+    /**
+     * --- METODER FOR INPUT-VALIDERING
+     */
+    public String sjekkRegistreringsNr(TextField registreringsnrField) {
+        String msg = "";
+
+        if (registreringsnrField.getText() == null || registreringsnrField.getText().isEmpty()) {
+            msg += "Registreringsnummer kan ikke være tom.\n";
+        } else {
+            try {
+                setRegistreringsNr(registreringsnrField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
     }
 }

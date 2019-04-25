@@ -2,9 +2,8 @@ package ae.model;
 
 import ae.model.exceptions.UgyldigBelopException;
 import ae.model.exceptions.UgyldigDatoException;
+import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
-import ae.model.exceptions.forsikring.UgyldigForsikringsbelopException;
-import ae.model.exceptions.forsikring.UgyldigTypeException;
 import javafx.beans.property.*;
 
 import java.io.IOException;
@@ -128,7 +127,7 @@ public class Skademelding implements Serializable {
     public void setSkadeType(String skadeType) {
         if (!"Båtforsikring".equals(skadeType) && !"Hus- og innboforsikring".equals(skadeType)
                 && !"Fritidsboligforsikring".equals(skadeType) && !"Reiseforsikring".equals(skadeType)) {
-            throw new UgyldigTypeException();
+            throw new UgyldigInputException("Type må være en gyldig forsikringstype.");
         }
         this.skadeType.set(skadeType);
     }

@@ -1,10 +1,10 @@
 package ae.model;
 
 import ae.HovedApplikasjon;
+import ae.model.exceptions.UgyldigBelopException;
 import ae.model.exceptions.UgyldigDatoException;
-import ae.model.exceptions.forsikring.UgyldigForsikringsbelopException;
+import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
-import ae.model.exceptions.forsikring.UgyldigTypeException;
 import javafx.beans.property.*;
 import javafx.scene.control.TextField;
 
@@ -87,7 +87,7 @@ public abstract class Forsikring {
     }
     public void setForsikringsBelop(int forsikringsBelop) {
         if (forsikringsBelop <= 0) {
-            throw new UgyldigForsikringsbelopException();
+            throw new UgyldigBelopException("Forsikringsbeløp kan ikke være mindre enn 0.");
         }
         this.forsikringsBelop.set(forsikringsBelop);
     }
@@ -100,6 +100,9 @@ public abstract class Forsikring {
         return betingelser.get();
     }
     public void setBetingelser(String betingelser) {
+        if (betingelser == null || !betingelser.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
+            throw new UgyldigInputException("Betingelser kan ikke overstige 30 tegn.");
+        }
         this.betingelser.set(betingelser);
     }
     public StringProperty betingelserProperty() {
@@ -113,7 +116,7 @@ public abstract class Forsikring {
     public void setType(String type) {
         if (!"Båtforsikring".equals(type) && !"Hus- og innboforsikring".equals(type)
                 && !"Fritidsboligforsikring".equals(type) && !"Reiseforsikring".equals(type)) {
-            throw new UgyldigTypeException();
+            throw new UgyldigInputException("Type må være en gyldig forsikringstype.");
         }
         this.type.set(type);
     }
@@ -122,10 +125,9 @@ public abstract class Forsikring {
     }
 
     /**
-     * STATISKE METODER FOR INPUT-VALIDERING AV FELLES FELTER I FORSIKRING
+     * METODER FOR INPUT-VALIDERING AV FELLES FELTER I FORSIKRING
      */
-    public static String sjekkKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon,
-                                      Forsikring forsikringÅRedigere) {
+    public String sjekkKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
         if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
@@ -141,7 +143,7 @@ public abstract class Forsikring {
                 if (!kundeFinnes) {
                     msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.\n";
                 } else {
-                    forsikringÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
+                    setKundeNr(Integer.parseInt(kundeNrField.getText()));
                 }
             } catch (NumberFormatException e) {
                 msg += "Kundenummer må være tall.\n";
@@ -152,14 +154,14 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public static String sjekkForsikringsNr(TextField forsikringsNrField, Forsikring forsikringÅRedigere) {
+    public String sjekkForsikringsNr(TextField forsikringsNrField) {
         String msg = "";
 
         if (forsikringsNrField.getText() == null || forsikringsNrField.getText().isEmpty()) {
             msg += "Forsikringsnummer kan ikke være tomt.\n";
         } else {
             try {
-                forsikringÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
+                setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringsnummer nå være tall.\n";
             } catch (UgyldigLopeNrException e) {
@@ -169,14 +171,14 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public static String sjekkDatoOpprettet(TextField datoOpprettetField, Forsikring forsikringÅRedigere) {
+    public String sjekkDatoOpprettet(TextField datoOpprettetField) {
         String msg = "";
 
         if (datoOpprettetField.getText() == null || datoOpprettetField.getText().isEmpty()) {
             msg += "Dato kan ikke være tom.\n";
         } else {
             try {
-                forsikringÅRedigere.setDatoOpprettet(LocalDate.parse(datoOpprettetField.getText()));
+                setDatoOpprettet(LocalDate.parse(datoOpprettetField.getText()));
             } catch (DateTimeException e) {
                 msg += "Dato er ikke en gyldig dato.\n";
             } catch (UgyldigDatoException e) {
@@ -186,43 +188,47 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public static String sjekkForsikringsbelop(TextField forsikringsbelopField, Forsikring forsikringÅRedigere) {
+    public String sjekkForsikringsbelop(TextField forsikringsbelopField) {
         String msg = "";
 
         if (forsikringsbelopField.getText() == null || forsikringsbelopField.getText().isEmpty()) {
             msg += "Forsikringsbeløp kan ikke være tomt.\n";
         } else {
             try {
-                forsikringÅRedigere.setForsikringsBelop(Integer.parseInt(forsikringsbelopField.getText()));
+                setForsikringsBelop(Integer.parseInt(forsikringsbelopField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringsbeløp må være tall.\n";
-            } catch (UgyldigForsikringsbelopException e) {
+            } catch (UgyldigBelopException e) {
                 msg += e.getMessage() + "\n";
             }
         }
         return msg;
     }
 
-    public static String sjekkBetingelser(TextField betingelserField, Forsikring forsikringÅRedigere) {
+    public String sjekkBetingelser(TextField betingelserField) {
         String msg = "";
 
         if (betingelserField.getText() == null || betingelserField.getText().isEmpty()) {
             msg += "Betingelser kan ikke være tom.\n";
         } else {
-            forsikringÅRedigere.setBetingelser(betingelserField.getText());
+            try {
+                setBetingelser(betingelserField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
         }
         return msg;
     }
 
-    public static String sjekkType(TextField typeField, Forsikring forsikringÅRedigere) {
+    public String sjekkType(TextField typeField) {
         String msg = "";
 
         if (typeField.getText() == null || typeField.getText().isEmpty()) {
             msg += "Type kan ikke være tom.\n";
         } else {
             try {
-                forsikringÅRedigere.setType(typeField.getText());
-            } catch (UgyldigTypeException e) {
+                setType(typeField.getText());
+            } catch (UgyldigInputException e) {
                 msg += e.getMessage() + "\n";
             }
         }

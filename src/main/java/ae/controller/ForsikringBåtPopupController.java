@@ -72,12 +72,13 @@ public class ForsikringBåtPopupController {
     private void sjekkBåtforsikring() {
         String msg = "";
 
-        msg += Forsikring.sjekkKundeNr(kundeNrField, hovedApplikasjon, (Båtforsikring) båtforsikringÅRedigere);
-        msg += Forsikring.sjekkForsikringsNr(forsikringsNrField, (Båtforsikring) båtforsikringÅRedigere);
-        msg += Forsikring.sjekkDatoOpprettet(datoOpprettetField, (Båtforsikring) båtforsikringÅRedigere);
-        msg += Forsikring.sjekkForsikringsbelop(forsikringsbelopField, (Båtforsikring) båtforsikringÅRedigere);
-        msg += Forsikring.sjekkBetingelser(betingelserField, (Båtforsikring) båtforsikringÅRedigere);
-        msg += Forsikring.sjekkType(typeField, (Båtforsikring) båtforsikringÅRedigere);
+        msg += båtforsikringÅRedigere.sjekkKundeNr(kundeNrField, hovedApplikasjon);
+        msg += båtforsikringÅRedigere.sjekkForsikringsNr(forsikringsNrField);
+        msg += båtforsikringÅRedigere.sjekkDatoOpprettet(datoOpprettetField);
+        msg += båtforsikringÅRedigere.sjekkForsikringsbelop(forsikringsbelopField);
+        msg += båtforsikringÅRedigere.sjekkBetingelser(betingelserField);
+        msg += båtforsikringÅRedigere.sjekkType(typeField);
+        msg += båtforsikringÅRedigere.sjekkRegistreringsNr(regnrField);
 
         if (msg.length() != 0) {
             UgyldigInputHandler.generateAlert(msg);
