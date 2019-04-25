@@ -97,7 +97,7 @@ public class SkademeldingController {
                     //todo MÅ FULLFØRE AT ANTALL SKADEMELDINGER OPPDATERER FORTLØPENDE PÅ ALLE
                     // Legger til antallUbetalte
                     //setter antall ubetalte
-                    enKunde.setAntallErstatningerUbetalte(enKunde.finnAntallErstatningerUbetalte());
+                    enKunde.setAntallErstatningerUbetalte();
                 }
             }
             if(!finnes) { //kundeNr finnes ikke i kundeData
@@ -120,7 +120,7 @@ public class SkademeldingController {
                     if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
 
                         //setter antall ubetalte
-                        enKunde.setAntallErstatningerUbetalte(enKunde.finnAntallErstatningerUbetalte());
+                        enKunde.setAntallErstatningerUbetalte();
                     }
                 }
             }
@@ -170,7 +170,7 @@ public class SkademeldingController {
                     slettKundeSkademelding.getSkademeldinger().remove(valgtSkademelding);
 
                     //setter antall ubetalte
-                    slettKundeSkademelding.setAntallErstatningerUbetalte(slettKundeSkademelding.finnAntallErstatningerUbetalte());
+                    slettKundeSkademelding.setAntallErstatningerUbetalte();
                 }
             }
         }
