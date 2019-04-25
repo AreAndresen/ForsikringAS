@@ -2,12 +2,17 @@ package ae.controller;
 
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
+import ae.model.Skademelding;
 import ae.model.exceptions.KundeExc.UgyldigAdresseFakturaException;
 import ae.model.exceptions.KundeExc.UgyldigEtternavnException;
 import ae.model.exceptions.KundeExc.UgyldigFornavnException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
 
 /**
  * Popup-vindu for å redigere kunde
@@ -84,6 +89,8 @@ public class KundeRedigerPopupController {
         msg += redigerFornavn();
         msg += redigerEtternavn();
         msg += redigerAdresseFaktura();
+        //legger inn antall ubetalte
+        //redigerAntallUbetalteErstatninger();
 
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
@@ -133,6 +140,24 @@ public class KundeRedigerPopupController {
         }
         return msg;
     }
+
+    /*//oppdaterer adresseFaktura
+    private void redigerAntallUbetalteErstatninger() {
+        //oppdaterer antallUbetalte
+        //HashMap<Integer, Double> erstatninger = new HashMap<Integer, Double>();
+        ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
+
+        for(Skademelding skade : kundeÅRedigere.getSkademeldinger()){
+            if(skade.getStatus().equals("Ubetalt")){
+                erstatninger.add(skade.getForsikringsNr());
+            }
+        }
+        kundeÅRedigere.setAntallErstatningerUbetalte(erstatninger);
+
+        //kundeÅRedigere.setAntallErstatningerUbetalte(erstatninger);
+    }*/
+
+
 
 
     @FXML

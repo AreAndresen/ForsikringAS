@@ -102,6 +102,7 @@ public class SkademeldingRedigerPopupController {
         skademeldingÅRedigere.setSkadeNr(Integer.parseInt(skadeNrField.getText()));
 
         //Bytter set her ut med metoder (se under)
+
         msg += redigerForsikrnignsNr();
         msg += redigerSkadetype();
         msg += redigerSkadebeskrivelse();
@@ -109,22 +110,8 @@ public class SkademeldingRedigerPopupController {
         msg += redigerErstatningsbelopUtbetalt();
         msg += redigerKontaktinfoVitner();
         msg += redigerStatus();
-
-
-        //TODO MÅ LØSE UBETALT
-        /*legger til ubetalt i kunde -NYTT
-        HashMap<Integer, Double> erstatningerUbetalte = new HashMap<>(); //array til bruk
-        int skadeNr = Integer.parseInt(skadeNrField.getText());
-        double erstatningUbetalt = Double.parseDouble(erstatningsbelopUtbetaltField.getText());
-        erstatningerUbetalte.put(skadeNr, erstatningUbetalt);
-
-        for(Kunde kunde : hovedApplikasjon.getKundeData()){
-            if(kunde.getKundeNr() == Integer.parseInt(forsikringsNrField.getText())){
-                kunde.setErstatningerUbetalte(erstatningerUbetalte);
-            }
-        }
-        //kundeSkademelding.setErstatningerUbetalte(erstatningerUbetalte);*/
-
+        //legger inn antall ubetalte
+        //redigerAntallUbetalteErstatninger();
 
 
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
@@ -199,6 +186,27 @@ public class SkademeldingRedigerPopupController {
 
         return msg;
     }
+
+
+    /*todo MÅ FULLFØRE AT ANTALL SKADEMELDINGER OPPDATERER FORTLØPENDE PÅ ALLE
+    // Legger til antallUbetalte
+    //oppdaterer adresseFaktura
+    private void redigerAntallUbetalteErstatninger() {
+        //oppdaterer antallUbetalte
+        for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+            if (enKunde.getKundeNr() == skademeldingÅRedigere.getForsikringsNr()) {
+
+                ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
+
+                for(Skademelding skade : enKunde.getSkademeldinger()){
+                    if(skade.getStatus().equals("Ubetalt")){
+                        erstatninger.add(skade.getForsikringsNr());
+                    }
+                }
+                enKunde.setAntallErstatningerUbetalte(erstatninger);
+            }
+        }
+    }*/
 
 
     @FXML
