@@ -94,9 +94,10 @@ public class SkademeldingRedigerPopupController {
     public void bekreftTrykkes() {
         // TODO: input-validering med exceptions venter
         oppdaterSkademelding();
-        bekreft = true;
+
 
         if(inputOK){ //implementert en boolean for å lukke om input er riktig/feil
+            bekreft = true;
             popupStage.close();
         }
     }
