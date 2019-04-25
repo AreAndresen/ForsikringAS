@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class SkademeldingRedigerPopupController {
 
     @FXML
-    private TextField forsikringsNrField, skadeNrField, skadebeskrivelseField,
+    private TextField kundeNrField, skadeNrField, skadebeskrivelseField,
             belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
     @FXML
     private ChoiceBox statusField, skadeTypeField;
@@ -64,7 +64,7 @@ public class SkademeldingRedigerPopupController {
      * Metode for å legge inn kundens data i TextFields.
      */
     public void oppdaterFelter() {
-        forsikringsNrField.setText(Integer.toString(skademeldingÅRedigere.getForsikringsNr()));
+        kundeNrField.setText(Integer.toString(skademeldingÅRedigere.getKundeNr()));
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
         //skadeTypeField.setText(skademeldingÅRedigere.getSkadeType());
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
@@ -108,7 +108,7 @@ public class SkademeldingRedigerPopupController {
 
         //Bytter set her ut med metoder (se under)
 
-        msg += redigerForsikrnignsNr();
+        msg += redigerKundeNr();
         msg += redigerSkadetype();
         msg += redigerSkadebeskrivelse();
         msg += redigerTakseringsbeløp();
@@ -130,10 +130,10 @@ public class SkademeldingRedigerPopupController {
 
     //TODO: METODER FOR ENDRING AV SKADEMELDING
     //oppdaterer skadetype
-    private String redigerForsikrnignsNr() {
+    private String redigerKundeNr() {
         String msg = "";
 
-        skademeldingÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
+        skademeldingÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
 
         return msg;
     }

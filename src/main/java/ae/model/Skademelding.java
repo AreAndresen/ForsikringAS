@@ -21,7 +21,7 @@ public class Skademelding implements Serializable {
      * * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
      */
     private transient IntegerProperty skadeNr;
-    private transient IntegerProperty forsikringsNr; //kunde ID
+    private transient IntegerProperty kundeNr; //kunde ID
     private transient ObjectProperty<LocalDate> datoSkade;
     private transient StringProperty skadeType;
     private transient StringProperty skadeBeskrivelse;
@@ -40,12 +40,12 @@ public class Skademelding implements Serializable {
     /**
      * Konstruktør for Ny skademelding.
      */
-     public Skademelding(int skadeNr, int forsikringsNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
+     public Skademelding(int skadeNr, int kundeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                          Double belopTaksering, Double erstatningsbelopUtbetalt, String status) {
 
         // Ta imot parametere
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
-        this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
+        this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
@@ -60,11 +60,11 @@ public class Skademelding implements Serializable {
     /**
      * Konstruktør for kunde-opprettelse ved innlesing av fil.
      */
-    public Skademelding(int skadeNr, int forsikringsNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
+    public Skademelding(int skadeNr, int kundeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                         Double belopTaksering, Double erstatningsbelopUtbetalt,
                         String kontaktinfoVitner, String status) {
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
-        this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
+        this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
@@ -89,14 +89,14 @@ public class Skademelding implements Serializable {
     }
 
     // forsikringsNr
-    public int getForsikringsNr() {
-        return forsikringsNr.get();
+    public int getKundeNr() {
+        return kundeNr.get();
     }
-    public void setForsikringsNr(int forsikringsNr) {
-        this.forsikringsNr.set(forsikringsNr);
+    public void setKundeNr(int kundeNr) {
+        this.kundeNr.set(kundeNr);
     }
-    public IntegerProperty forsikringsNrProperty() {
-        return forsikringsNr;
+    public IntegerProperty kundeNrProperty() {
+        return kundeNr;
     }
 
     //datoSkade
@@ -187,7 +187,7 @@ public class Skademelding implements Serializable {
     private void writeObject(ObjectOutputStream os) throws IOException {
         os.defaultWriteObject();
         os.writeObject(getSkadeNr());
-        os.writeObject(getForsikringsNr());
+        os.writeObject(getKundeNr());
         os.writeObject(getDatoSkade());
         os.writeObject(getSkadeType());
         os.writeObject(getSkadeBeskrivelse());
@@ -203,7 +203,7 @@ public class Skademelding implements Serializable {
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
         this.skadeNr = new SimpleIntegerProperty((int)is.readObject());
-        this.forsikringsNr = new SimpleIntegerProperty((int)is.readObject());
+        this.kundeNr = new SimpleIntegerProperty((int)is.readObject());
         this.datoSkade = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
         this.skadeType = new SimpleStringProperty((String)is.readObject());
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
@@ -216,7 +216,7 @@ public class Skademelding implements Serializable {
 
     @Override
     public String toString() {
-        return getSkadeNr() +"," +getForsikringsNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
+        return getSkadeNr() +"," +getKundeNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
                 getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getKontaktinfoVitner() +","+getStatus();
     }
 }

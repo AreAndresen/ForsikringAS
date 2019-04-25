@@ -39,7 +39,7 @@
             <Label text="Dato ny skademelding" GridPane.rowIndex="6" />
             <Label text="Vitner" GridPane.rowIndex="7" />
             <Label text="Status" GridPane.rowIndex="8" />
-            <TextField fx:id="forsikringsNrField" GridPane.columnIndex="1" />
+            <TextField fx:id="kundeNrField" GridPane.columnIndex="1" />
             <TextField fx:id="skadeNrField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="skadebeskrivelseField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="belopTakseringField" GridPane.columnIndex="1" GridPane.rowIndex="4" />

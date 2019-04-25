@@ -25,7 +25,7 @@ public class SkademeldingController {
     @FXML
     private TableView<Skademelding> skademeldingTabell;
     @FXML
-    private TableColumn<Skademelding, Number> forsikringsNrKolonne; //kunde ID
+    private TableColumn<Skademelding, Number> kundeNrKolonne; //kunde ID
     @FXML
     private TableColumn<Skademelding, Number> skadeNrKolonne;
     @FXML
@@ -53,7 +53,7 @@ public class SkademeldingController {
     @FXML
     private void initialize() {
         // Initier skademelding-tabellen med kobling til alle kolonnene
-        forsikringsNrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
+        kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
         belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
@@ -78,7 +78,7 @@ public class SkademeldingController {
             //henter
             boolean finnes = false;
             for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                if (enKunde.getKundeNr() == nySkademelding.getForsikringsNr()) {
+                if (enKunde.getKundeNr() == nySkademelding.getKundeNr()) {
 
                     finnes = true; //kontrollerer at kunden finnes
 
@@ -114,7 +114,7 @@ public class SkademeldingController {
                 visSkademeldingDetaljer(valgtSkademelding);
 
                 for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
+                    if (enKunde.getKundeNr() == valgtSkademelding.getKundeNr()) {
 
                         //setter antall ubetalte
                         enKunde.setAntallErstatningerUbetalte();
@@ -158,7 +158,7 @@ public class SkademeldingController {
                 //slette fra kundedata array her
                 Kunde slettKundeSkademelding = null;
                 for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
+                    if (enKunde.getKundeNr() == valgtSkademelding.getKundeNr()) {
                         slettKundeSkademelding = enKunde;
                     }
                 }
