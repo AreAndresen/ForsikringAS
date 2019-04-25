@@ -1,10 +1,12 @@
 package ae.model;
 
+import ae.HovedApplikasjon;
 import ae.model.exceptions.UgyldigBelopException;
 import ae.model.exceptions.UgyldigDatoException;
 import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.beans.property.*;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -201,6 +203,38 @@ public class Skademelding implements Serializable {
         return status;
     }
 
+
+    //TODO SJEKKE OM DETTE ER NOE Å HA HER
+    /**
+     * STATISKE METODER FOR INPUT-VALIDERING AV FELLES FELTER I FORSIKRING
+     */
+    public static String sjekkKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon,
+                                      Forsikring forsikringÅRedigere) {
+        String msg = "";
+
+        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+            msg += "Kundenummer kan ikke være tomt.\n";
+        } else {
+            try {
+                boolean kundeFinnes = false;
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == Integer.parseInt(kundeNrField.getText())) {
+                        kundeFinnes = true;
+                    }
+                }
+                if (!kundeFinnes) {
+                    msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.\n";
+                } else {
+                    forsikringÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
+                }
+            } catch (NumberFormatException e) {
+                msg += "Kundenummer må være tall.\n";
+            } catch (UgyldigLopeNrException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
 
     /**
      * Tilpasset writeObject-serialisering av Skademelding-objektet da ObservableList og
