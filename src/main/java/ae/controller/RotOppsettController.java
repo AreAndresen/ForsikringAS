@@ -38,7 +38,7 @@ public class RotOppsettController {
         this.hovedApplikasjon = hovedApplikasjon;
     }
 
-    //-------KUNDE-------
+    // <------- KUNDE ------->
     //Går til kundeoversikt ved trykk i meny
     @FXML
     private void gåTilKundeoversikt() {
@@ -46,19 +46,8 @@ public class RotOppsettController {
         lagreFilMenuItem.setDisable(false);
     }
 
-    //Ny skademelding popup
-    @FXML
-    public void gåTilNyKundePopup() {
-        Kunde nyKunde = new Kunde(IdUtil.genererLøpenummer(hovedApplikasjon.getKundeData()));
-        boolean bekreftTrykket = Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
 
-        if (bekreftTrykket) {
-            hovedApplikasjon.getKundeData().add(nyKunde);
-        }
-    }
-
-
-    //-------SKADEMELDING-------
+    // <------SKADEMELDING------>
     //Går til skademeldingversikt ved trykk i meny
     @FXML
     private void gåTilSkademeldingoversikt() {
@@ -66,33 +55,16 @@ public class RotOppsettController {
         lagreFilMenuItem.setDisable(false);
     }
 
-    //Ny skademelding popup
+    /**
+     * <--- FORSIKRING --->
+     */
     @FXML
-    public void gåTilNySkademeldingPopup() {
-        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData()));
-        boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
-
-        if (bekreftTrykket) {
-
-            //TODO MÅ FÅ TIL EN KOBLIG PÅ KUNDENØKKEL TIL SKADEMELDING
-            // legger til skademelding til riktig kundearray
-
-            //henter
-            ObservableList<Kunde> kunder =  hovedApplikasjon.getKundeData(); //kundeData
-            for(Kunde enKunde : kunder) {
-                if (enKunde.getKundeNr() == (nySkademelding.getForsikringsNr())) {
-                    //List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
-                    ObservableList<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
-                    skademeldingerArray.add(nySkademelding); //legger til ny skademelding
-                    enKunde.setSkademeldinger(skademeldingerArray);
-
-                }
-            }
-        }
+    public void gåTilForsikringoversikt() {
+        Viewbehandling.visForsikringOversikt(hovedApplikasjon);
+        lagreFilMenuItem.setDisable(false);
     }
 
-
-    ////-------KUNDE------- - FILER
+    // FILER
     @FXML
     public void lagreFilTrykket() {
         File filPath = Filbehandling.lagreFilVelger(hovedApplikasjon.getHovedStage());
@@ -127,17 +99,5 @@ public class RotOppsettController {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * <--- FORSIKRING --->
-     */
-    @FXML
-    public void gåTilForsikringoversikt() {
-        Viewbehandling.visForsikringOversikt(hovedApplikasjon);
-        lagreFilMenuItem.setDisable(false);
-    }
-
-    public void gåTilNyBåtforsikringPopup(ActionEvent actionEvent) {
     }
 }

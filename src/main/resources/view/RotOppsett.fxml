@@ -13,33 +13,11 @@
             <menus>
                 <Menu mnemonicParsing="false" text="Meny">
                     <items>
-                  <Menu mnemonicParsing="false" text="Kunder">
-                    <items>
-                              <MenuItem mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Oversikt" />
-                      <MenuItem mnemonicParsing="false" onAction="#gåTilNyKundePopup" text="Ny kunde" />
-                    </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Kunder" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                  <Menu mnemonicParsing="false" text="Skademelding">
-                    <items>
-                              <MenuItem mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" text="Oversikt" />
-                        <MenuItem mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" text="Ny skademelding" />
-                    </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" text="Skademelding" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                  <Menu mnemonicParsing="false" text="Forsikring">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#gåTilForsikringoversikt" text="Oversikt" />
-                        <Menu mnemonicParsing="false" text="Ny...">
-                          <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#gåTilNyBåtforsikringPopup" text="Båtforsikring" />
-                                    <MenuItem mnemonicParsing="false" text="Hus- og innboforsikring" />
-                                    <MenuItem mnemonicParsing="false" text="Fritidsboligforsikring" />
-                                    <MenuItem mnemonicParsing="false" text="Reiseforsikring" />
-                          </items>
-                        </Menu>
-                    </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#gåTilForsikringoversikt" text="Forsikring" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Avslutt" />
                     </items>

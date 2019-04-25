@@ -111,6 +111,7 @@ public class ForsikringController {
         }
     }
 
+    // TODO: FIKSE SLETT ORDENTLIG
     @FXML
     public void slettValgtForsikring() {
         Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
@@ -144,6 +145,7 @@ public class ForsikringController {
         oppdaterTabell();
     }
 
+    // TODO: MÅ BLI DYNAMISK
     public void oppdaterTabell() {
         this.forsikringTabell.getItems().clear();
         ObservableList<Forsikring> forsikringer = FXCollections.observableArrayList();

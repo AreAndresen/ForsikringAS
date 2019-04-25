@@ -71,13 +71,13 @@
                         <Button mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" prefHeight="26.0" prefWidth="174.0" text="Antall skademeldinger" GridPane.rowIndex="6" />
                             </children>
                         </GridPane>
-                        <ButtonBar layoutX="54.0" layoutY="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                            <buttons>
-                                <Button mnemonicParsing="false" onAction="#gåTilNyKundePopup" text="Ny kunde" />
-                                <Button mnemonicParsing="false" onAction="#gåTilRedigerKundePopup" text="Rediger" />
-                                <Button mnemonicParsing="false" onAction="#slettValgtKunde" text="Slett" />
-                            </buttons>
-                        </ButtonBar>
+                  <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="27.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <buttons>
+                        <Button mnemonicParsing="false" onAction="#gåTilNyKundePopup" prefHeight="26.0" prefWidth="130.0" text="Ny kunde" />
+                        <Button mnemonicParsing="false" onAction="#gåTilRedigerKundePopup" text="Rediger" />
+                        <Button mnemonicParsing="false" onAction="#slettValgtKunde" text="Slett" />
+                     </buttons>
+                  </ButtonBar>
                     </children>
                 </AnchorPane>
             </items>
