@@ -1,5 +1,6 @@
 package ae.model;
 
+import ae.model.exceptions.skademelding.UgyldigLopeNrException;
 import javafx.beans.property.*;
 
 import java.io.IOException;
@@ -7,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
 
 /**
      * Domenemodell for skademelding
@@ -82,7 +82,10 @@ public class Skademelding implements Serializable {
         return skadeNr.get();
     }
     public void setSkadeNr(int skadeNr) {
-        this.skadeNr.set(skadeNr);
+        if (skadeNr < 0) {
+            throw new UgyldigLopeNrException("Forsikringsnummer må være større enn 0.");
+        }
+        this.kundeNr.set(skadeNr);
     }
     public IntegerProperty skadeNrProperty() {
         return skadeNr;
