@@ -84,26 +84,20 @@ public class SkademeldingController {
                 if (enKunde.getKundeNr() == nySkademelding.getForsikringsNr()) {
 
                     finnes = true; //kontrollerer at kunden finnes
-                    //List<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
 
+                    //Oppretter et dummie array å fylle
                     ObservableList<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
-                    skademeldingerArray.add(nySkademelding); //legger til ny skademelding
+                    //legger til ny skademelding
+                    skademeldingerArray.add(nySkademelding);
 
-                    enKunde.setSkademeldinger(skademeldingerArray); //legger nytt array inn i kunde
+                    //legger dummie-array inn i kunde
+                    enKunde.setSkademeldinger(skademeldingerArray);
 
 
                     //todo MÅ FULLFØRE AT ANTALL SKADEMELDINGER OPPDATERER FORTLØPENDE PÅ ALLE
                     // Legger til antallUbetalte
-                    //HashMap<Integer, Double> erstatninger = new HashMap<Integer, Double>();
-                    ObservableList<Integer> erstatninger = FXCollections.observableArrayList();
-
-                    for(Skademelding skade : enKunde.getSkademeldinger()){
-                        if(skade.getStatus().equals("Ubetalt")){
-                            erstatninger.add(skade.getForsikringsNr());
-                        }
-                    }
-                    enKunde.setAntallErstatningerUbetalte(erstatninger);
-
+                    //setter antall ubetalte
+                    enKunde.setAntallErstatningerUbetalte(enKunde.finnAntallErstatningerUbetalte());
                 }
             }
             if(!finnes) { //kundeNr finnes ikke i kundeData
@@ -122,7 +116,13 @@ public class SkademeldingController {
             if (bekreftTrykket) {
                 visSkademeldingDetaljer(valgtSkademelding);
 
+                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+                    if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
 
+                        //setter antall ubetalte
+                        enKunde.setAntallErstatningerUbetalte(enKunde.finnAntallErstatningerUbetalte());
+                    }
+                }
             }
         }
         else{
@@ -157,13 +157,6 @@ public class SkademeldingController {
                 //sletter fra tabell her
                 skademeldingTabell.getItems().remove(valgtSkademelding);
 
-                //gammel metode - har ikke != null
-                //slette fra kundedata array her
-                /*for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (enKunde.getKundeNr() == valgtSkademelding.getForsikringsNr()) {
-                        enKunde.getSkademeldinger().remove(valgtSkademelding);
-                    }
-                }*/
 
                 //slette fra kundedata array her
                 Kunde slettKundeSkademelding = null;
@@ -173,7 +166,11 @@ public class SkademeldingController {
                     }
                 }
                 if(slettKundeSkademelding != null){
-                    // slettKundeSkademelding.getSkademeldinger().remove(valgtSkademelding);
+                    //sletter skademelding
+                    slettKundeSkademelding.getSkademeldinger().remove(valgtSkademelding);
+
+                    //setter antall ubetalte
+                    slettKundeSkademelding.setAntallErstatningerUbetalte(slettKundeSkademelding.finnAntallErstatningerUbetalte());
                 }
             }
         }

@@ -82,6 +82,9 @@ public class KundeController {
                 visKundensDetaljer(valgtKunde);
             }
         }
+        else{
+            UgyldigInputHandler.generateAlert("Du må velge en kunde for å redigere."); //alert
+        }
     }
 
     /**
