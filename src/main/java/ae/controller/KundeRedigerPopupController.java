@@ -84,8 +84,6 @@ public class KundeRedigerPopupController {
         msg += sjekkFornavn();
         msg += redigerEtternavn();
         msg += redigerAdresseFaktura();
-        //legger inn antall ubetalte
-        //redigerAntallUbetalteErstatninger();
 
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres

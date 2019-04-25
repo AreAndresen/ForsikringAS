@@ -20,10 +20,10 @@
                <children>
                   <TableView fx:id="skademeldingTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="forsikringsNrKolonne" prefWidth="75.0" text="Kunde" />
-                        <TableColumn fx:id="skadeNrKolonne" prefWidth="109.0" text="Skadenr" />
-                        <TableColumn fx:id="skadeTypeKolonne" prefWidth="112.0" text="Skadetype" />
-                        <TableColumn fx:id="erstatningUtbetaltKolonne" prefWidth="174.0" text="Utbetalt erstatning" />
+                        <TableColumn fx:id="forsikringsNrKolonne" prefWidth="80.80004888772964" text="Kunde" />
+                        <TableColumn fx:id="skadeNrKolonne" prefWidth="61.60003662109375" text="Skadenr" />
+                        <TableColumn fx:id="skadeTypeKolonne" prefWidth="143.99993896484375" text="Skadetype" />
+                        <TableColumn fx:id="erstatningUtbetaltKolonne" prefWidth="136.0" text="Utbetalt erstatning" />
                         <TableColumn fx:id="belopTakseringKolonne" prefWidth="136.0" text="Takseringsbeløp" />
                         <TableColumn fx:id="datoSkadeKolonne" prefWidth="75.0" text="Dato skade" />
                         <TableColumn fx:id="statusKolonne" prefWidth="75.0" text="Status" />

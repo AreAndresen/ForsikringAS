@@ -30,8 +30,6 @@ public class SkademeldingController {
     private TableColumn<Skademelding, Number> skadeNrKolonne;
     @FXML
     private TableColumn<Skademelding, String> skadeTypeKolonne;
-    //@FXML
-    //private TableColumn<Skademelding, String> skadeBeskrivelseKolonne;
     @FXML
     private TableColumn<Skademelding, Double> belopTakseringKolonne;
     @FXML
@@ -58,7 +56,6 @@ public class SkademeldingController {
         forsikringsNrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
-        //skadeBeskrivelseKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeBeskrivelseProperty());
         belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
         erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
         datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
@@ -193,13 +190,9 @@ public class SkademeldingController {
      * antall av de ulike typene. Knappene skal trykkes for å vise de.*/
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
-
-            //forsikringsNrLabel.setText(Integer.toString(kunde.));
             skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
             vitneInfoLabel.setText(skademelding.getKontaktinfoVitner());
-            //skadeTypeLabel.setText(skademelding.getSkadeType());
-            //utbetaltErstatningLabel.setText(Double.toString(skademelding.getErstatningsbelopUtbetalt()));
 
         } else {
 
@@ -207,8 +200,6 @@ public class SkademeldingController {
             skadeNrLabel.setText("");
             beskrivelseAvSkadeLabel.setText("");
             vitneInfoLabel.setText("");
-            //skadeTypeLabel.setText("");
-            //utbetaltErstatningLabel.setText("");
         }
     }
 
@@ -216,15 +207,8 @@ public class SkademeldingController {
      * Kalles fra RotOppsettController for å gi en referanse til
      * hovedapplikasjonen.*/
     public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
+
         this.hovedApplikasjon = hovedApplikasjon;
-
-        // Legger til data fra ObservableList til tabellen
-        //skademeldingTabell.setItems(hovedApplikasjon.getKundeData());
-        /*ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
-
-        for(Kunde kunde : hovedApplikasjon.getKundeData()){
-            skademeldinger.addAll(kunde.getSkademeldinger());
-        }*/
 
         skademeldingTabell.setItems(hovedApplikasjon.getAlleSkademeldinger());
     }

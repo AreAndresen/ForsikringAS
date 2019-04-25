@@ -16,15 +16,17 @@ import java.util.HashMap;
 
 public class SkademeldingRedigerPopupController {
 
-    ObservableList<String> statusListe = FXCollections.observableArrayList("Betalt", "Ubetalt");
-
     @FXML
-    private TextField forsikringsNrField, skadeNrField, skadeTypeField, skadebeskrivelseField,
+    private TextField forsikringsNrField, skadeNrField, skadebeskrivelseField,
             belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
     @FXML
-    private ChoiceBox statusField;
+    private ChoiceBox statusField, skadeTypeField;
     @FXML
     private TextArea vitneInfoField;
+
+    private ObservableList<String> statusListe = FXCollections.observableArrayList("Betalt", "Ubetalt");
+    private ObservableList<String> skadeTypeListe = FXCollections.observableArrayList("Båtforsikring",
+            "Hus- og innboForsikring", "Fritidsboligforsikring", "Reiseforsikring");
 
     private Stage popupStage;
     private Skademelding skademeldingÅRedigere;
@@ -39,6 +41,9 @@ public class SkademeldingRedigerPopupController {
     private void initialize() {
         statusField.setValue("Betalt");
         statusField.setItems(statusListe);
+
+        skadeTypeField.setValue("Båtforsikring");
+        skadeTypeField.setItems(skadeTypeListe);
 
     }
 
@@ -61,7 +66,7 @@ public class SkademeldingRedigerPopupController {
     public void oppdaterFelter() {
         forsikringsNrField.setText(Integer.toString(skademeldingÅRedigere.getForsikringsNr()));
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
-        skadeTypeField.setText(skademeldingÅRedigere.getSkadeType());
+        //skadeTypeField.setText(skademeldingÅRedigere.getSkadeType());
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
         belopTakseringField.setText(Double.toString(skademeldingÅRedigere.getBelopTaksering()));
         erstatningsbelopUtbetaltField.setText(Double.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
@@ -110,9 +115,6 @@ public class SkademeldingRedigerPopupController {
         msg += redigerErstatningsbelopUtbetalt();
         msg += redigerKontaktinfoVitner();
         msg += redigerStatus();
-        //legger inn antall ubetalte
-        //redigerAntallUbetalteErstatninger();
-
 
         //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
         // TODO: må parse LocalDate så riktig format lagres
@@ -140,7 +142,7 @@ public class SkademeldingRedigerPopupController {
     private String redigerSkadetype() {
         String msg = "";
 
-            skademeldingÅRedigere.setSkadeType(skadeTypeField.getText());
+            skademeldingÅRedigere.setSkadeType(skadeTypeField.getValue().toString());
 
         return msg;
     }
@@ -179,7 +181,7 @@ public class SkademeldingRedigerPopupController {
         return msg;
     }
 
-    //oppdaterer skadebeskrivelse
+    //oppdaterer status
     private String redigerStatus() {
         String msg = "";
         skademeldingÅRedigere.setStatus(statusField.getValue().toString());
