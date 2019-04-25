@@ -1,4 +1,4 @@
-package ae.model.exceptions.skademelding;
+package ae.model.exceptions;
 
 public class UgyldigKundenrException extends IllegalArgumentException {
     public UgyldigKundenrException() {

@@ -3,14 +3,18 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Båtforsikring;
+import ae.model.Forsikring;
 import ae.model.Kunde;
-import ae.model.exceptions.forsikring.UgyldigDatoException;
+import ae.model.exceptions.UgyldigDatoException;
+import ae.model.exceptions.forsikring.UgyldigForsikringsbelopException;
 import ae.model.exceptions.forsikring.UgyldigForsikringsnrException;
-import ae.model.exceptions.skademelding.UgyldigKundenrException;
+import ae.model.exceptions.UgyldigKundenrException;
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 /**
@@ -78,74 +82,16 @@ public class ForsikringBåtPopupController {
     private void sjekkBåtforsikring() {
         String msg = "";
 
-        msg += sjekkKundeNr();
-        msg += sjekkForsikringsNr();
-        msg += sjekkDatoOpprettet();
+        msg += Forsikring.sjekkKundeNr(kundeNrField, hovedApplikasjon, (Båtforsikring) båtforsikringÅRedigere);
+        msg += Forsikring.sjekkForsikringsNr(forsikringsNrField, (Båtforsikring) båtforsikringÅRedigere);
+        msg += Forsikring.sjekkDatoOpprettet(datoOpprettetField, (Båtforsikring) båtforsikringÅRedigere);
+        msg += Forsikring.sjekkForsikringsbelop(forsikringsbelopField, (Båtforsikring) båtforsikringÅRedigere);
 
         if (msg.length() != 0) {
             UgyldigInputHandler.generateAlert(msg);
         } else {
             inputOK = true;
         }
-    }
-
-    private String sjekkKundeNr() {
-        String msg = "";
-
-        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
-            msg += "Kundenummer kan ikke være tomt.\n";
-        } else {
-            try {
-                boolean kundeFinnes = false;
-                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                    if (kunde.getKundeNr() == Integer.parseInt(kundeNrField.getText())) {
-                        kundeFinnes = true;
-                    }
-                }
-                if (!kundeFinnes) {
-                    msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.\n";
-                } else {
-                    båtforsikringÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
-                }
-            } catch (NumberFormatException e) {
-                msg += "Kundenummer må være tall.\n";
-            } catch (UgyldigKundenrException e) {
-                msg += e.getMessage() + "\n";
-            }
-        }
-        return msg;
-    }
-
-    private String sjekkForsikringsNr() {
-        String msg = "";
-
-        if (forsikringsNrField.getText() == null || kundeNrField.getText().isEmpty()) {
-            msg += "Forsikringsnummer kan ikke være tomt.";
-        } else {
-            try {
-                båtforsikringÅRedigere.setForsikringsNr(Integer.parseInt(forsikringsNrField.getText()));
-            } catch (NumberFormatException e) {
-                msg += "Forsikringsnummer nå være tall.\n";
-            } catch (UgyldigForsikringsnrException e) {
-                msg += e.getMessage() + "\n";
-            }
-        }
-        return msg;
-    }
-
-    private String sjekkDatoOpprettet() {
-        String msg = "";
-
-        if (datoOpprettetField.getText() == null || datoOpprettetField.getText().isEmpty()) {
-            msg += "Dato kan ikke være tom.";
-        } else {
-            try {
-                båtforsikringÅRedigere.setDatoOpprettet(LocalDate.parse(datoOpprettetField.getText()));
-            } catch (UgyldigDatoException e) {
-                msg += e.getMessage() + "\n";
-            }
-        }
-        return msg;
     }
 
     public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {

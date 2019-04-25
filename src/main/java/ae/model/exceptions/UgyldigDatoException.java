@@ -1,4 +1,4 @@
-package ae.model.exceptions.forsikring;
+package ae.model.exceptions;
 
 public class UgyldigDatoException extends IllegalArgumentException {
     public UgyldigDatoException() {
