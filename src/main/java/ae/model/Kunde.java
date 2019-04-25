@@ -203,7 +203,7 @@ public class Kunde implements Serializable {
     }
 
 
-    //antallErstatningerUbetalte
+    //antallErstatningerUbetalte - hei
     public ObservableList<Integer> getAntallErstatningerUbetalte() {
         return antallErstatningerUbetalte.get();
     }
