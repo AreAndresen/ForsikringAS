@@ -157,7 +157,7 @@ public class KundeController {
             datoKundeOpprettetLabel.setText(kunde.getDatoKundeOpprettet().toString());
             forsikringerLabel.setText(Integer.toString(kunde.getForsikringer().size()));
             skademeldingerLabel.setText(Integer.toString(kunde.getSkademeldinger().size()));
-            erstatningerUbetalteLabel.setText(Integer.toString(kunde.getAntallErstatningerUbetalte().size()));
+            erstatningerUbetalteLabel.setText(Integer.toString(kunde.getAntallErstatningerUbetalte()));
 
         } else {
 
