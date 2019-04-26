@@ -7,15 +7,20 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class BåtForsikring extends Forsikring implements Serializable {
-    private final transient StringProperty registreringsNr;
-    private final transient StringProperty typeModell;
-    private final transient IntegerProperty lengdeFot;
-    private final transient IntegerProperty årsmodell;
-    private final transient StringProperty motorEgenskaper;
+    private transient StringProperty registreringsNr;
+    private transient StringProperty typeModell;
+    private transient IntegerProperty lengdeFot;
+    private transient IntegerProperty årsmodell;
+    private transient StringProperty motorEgenskaper;
+
+    // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // default konstruktør
     public BåtForsikring(int forsikringsNr) {
@@ -35,9 +40,7 @@ public class BåtForsikring extends Forsikring implements Serializable {
         this.motorEgenskaper = new SimpleStringProperty(motorEgenskaper);
     }
 
-    /**
-     * Get- og Set-metoder for datafeltene
-     */
+    // < ------------------------------------ GET OG SET ------------------------------------ >
 
     // registreringsNr
     public String getRegistreringsNr() {
@@ -109,9 +112,9 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return motorEgenskaper;
     }
 
-    /**
-     * --- METODER FOR INPUT-VALIDERING
-     */
+    // < ------------------------------------ INPUT-VALIDERING ------------------------------------ >
+
+    // registreringsNr
     public String sjekkOgOppdaterRegistreringsNr(TextField registreringsnrField) {
         String msg = "";
 
@@ -127,6 +130,7 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return msg;
     }
 
+    // typeModell
     public String sjekkOgOppdaterTypeModell(TextField typeModellField) {
         String msg = "";
 
@@ -142,6 +146,7 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return msg;
     }
 
+    // lengdeFot
     public String sjekkOgOppdaterLengdeFot(TextField lengdeFotField) {
         String msg = "";
 
@@ -159,6 +164,7 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return msg;
     }
 
+    // årsmodell
     public String sjekkOgOppdaterÅrsmodell(TextField årsmodellField) {
         String msg = "";
 
@@ -176,6 +182,7 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return msg;
     }
 
+    // motorEgenskaper
     public String sjekkOgOppdaterMotorEgenskaper(TextField motorEgenskaperField) {
         String msg = "";
 
@@ -189,5 +196,35 @@ public class BåtForsikring extends Forsikring implements Serializable {
             }
         }
         return msg;
+    }
+
+    // < ------------------------------------ SERIALISERING ------------------------------------ >
+
+    // writeObject
+    private void writeObject(ObjectOutputStream os) throws IOException {
+        os.defaultWriteObject();
+        os.writeObject(getRegistreringsNr());
+        os.writeObject(getTypeModell());
+        os.writeObject(getLengdeFot());
+        os.writeObject(getÅrsmodell());
+        os.writeObject(getMotorEgenskaper());
+    }
+
+    // readObject
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+        is.defaultReadObject();
+        this.registreringsNr = new SimpleStringProperty((String) is.readObject());
+        this.typeModell = new SimpleStringProperty((String) is.readObject());
+        this.lengdeFot = new SimpleIntegerProperty((int) is.readObject());
+        this.årsmodell = new SimpleIntegerProperty((int) is.readObject());
+        this.motorEgenskaper = new SimpleStringProperty((String) is.readObject());
+    }
+
+    // < ------------------------------------ toString - CSV ------------------------------------ >
+
+    @Override
+    public String toString() {
+        return super.toString() + "," + getRegistreringsNr() + "," + getTypeModell()  + "," + lengdeFot
+                + "," + årsmodell  + "," + motorEgenskaper;
     }
 }
