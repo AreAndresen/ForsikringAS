@@ -8,16 +8,22 @@ import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.beans.property.*;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-public abstract class Forsikring {
-    private final transient IntegerProperty kundeNr;
-    private final transient IntegerProperty forsikringsNr;
-    private final transient ObjectProperty<LocalDate> datoOpprettet;
-    private final transient DoubleProperty forsikringsBelop;
-    private final transient StringProperty betingelser;
-    private final transient StringProperty type;
+public abstract class Forsikring implements Serializable {
+    private transient IntegerProperty kundeNr;
+    private transient IntegerProperty forsikringsNr;
+    private transient ObjectProperty<LocalDate> datoOpprettet;
+    private transient DoubleProperty forsikringsBelop;
+    private transient StringProperty betingelser;
+    private transient StringProperty type;
+
+    // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // default konstruktør
     public Forsikring(int forsikringsNr) {
@@ -35,9 +41,7 @@ public abstract class Forsikring {
         this.type = new SimpleStringProperty(type);
     }
 
-    /**
-     * Get- og Set-metoder for datafeltene
-     */
+    // < ------------------------------------ GET OG SET ------------------------------------ >
 
     // kunde
     public int getKundeNr() {
@@ -124,9 +128,9 @@ public abstract class Forsikring {
         return type;
     }
 
-    /**
-     * METODER FOR INPUT-VALIDERING AV FELLES FELTER I FORSIKRING
-     */
+    // < ------------------------------------ INPUT-VALIDERING ------------------------------------ >
+
+    // kundeNr
     public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
@@ -154,6 +158,7 @@ public abstract class Forsikring {
         return msg;
     }
 
+    // forsikringsNr
     public String sjekkOgOppdaterForsikringsNr(TextField forsikringsNrField) {
         String msg = "";
 
@@ -171,6 +176,7 @@ public abstract class Forsikring {
         return msg;
     }
 
+    // datoOpprettet
     public String sjekkOgOppdaterDatoOpprettet(TextField datoOpprettetField) {
         String msg = "";
 
@@ -188,6 +194,7 @@ public abstract class Forsikring {
         return msg;
     }
 
+    // forsikringsbelop
     public String sjekkOgOppdaterForsikringsbelop(TextField forsikringsbelopField) {
         String msg = "";
 
@@ -205,6 +212,7 @@ public abstract class Forsikring {
         return msg;
     }
 
+    // betingelser
     public String sjekkOgOppdaterBetingelser(TextField betingelserField) {
         String msg = "";
 
@@ -220,6 +228,7 @@ public abstract class Forsikring {
         return msg;
     }
 
+    // type
     public String sjekkOgOppdaterType(TextField typeField) {
         String msg = "";
 
@@ -233,5 +242,37 @@ public abstract class Forsikring {
             }
         }
         return msg;
+    }
+
+    // < ------------------------------------ SERIALISERING ------------------------------------ >
+
+    // writeObject
+    private void writeObject(ObjectOutputStream os) throws IOException {
+        os.defaultWriteObject();
+        os.writeObject(getKundeNr());
+        os.writeObject(getForsikringsNr());
+        os.writeObject(getDatoOpprettet());
+        os.writeObject(getForsikringsBelop());
+        os.writeObject(getBetingelser());
+        os.writeObject(getType());
+    }
+
+    // readObject
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+        is.defaultReadObject();
+        this.kundeNr = new SimpleIntegerProperty((int) is.readObject());
+        this.forsikringsNr = new SimpleIntegerProperty((int) is.readObject());
+        this.datoOpprettet = new SimpleObjectProperty<>((LocalDate) is.readObject());
+        this.forsikringsBelop = new SimpleDoubleProperty((double) is.readObject());
+        this.betingelser = new SimpleStringProperty((String) is.readObject());
+        this.type = new SimpleStringProperty((String) is.readObject());
+    }
+
+    // < ------------------------------------ toString - CSV ------------------------------------ >
+
+    @Override
+    public String toString() {
+        return getKundeNr() + "," + getForsikringsNr() + "," + getDatoOpprettet()  + "," + getForsikringsBelop()
+                + "," + getBetingelser() + "," + getType();
     }
 }

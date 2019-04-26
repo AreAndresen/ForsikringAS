@@ -2,7 +2,6 @@ package ae.model;
 
 import ae.HovedApplikasjon;
 import ae.controller.*;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -217,8 +216,8 @@ public class Viewbehandling {
         }
     }
 
-    // Åpner Båtforsikring-popup når bruker trykker på Ny båtforsikring-knappen
-    public static boolean visNyBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, Båtforsikring båtforsikring) {
+    // Åpner BåtForsikring-popup når bruker trykker på Ny båtforsikring-knappen
+    public static boolean visNyBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, BåtForsikring båtforsikring) {
         try {
             FXMLLoader loader = hentBåtforsikringPopup();
             AnchorPane side = (AnchorPane) loader.load();
@@ -232,7 +231,7 @@ public class Viewbehandling {
 
             ForsikringBåtPopupController forsikringBåtPopupController = loader.getController();
             forsikringBåtPopupController.setPopupStage(popupStage);
-            forsikringBåtPopupController.setBåtforsikringÅRedigere(båtforsikring);
+            forsikringBåtPopupController.setBåtForsikringÅRedigere(båtforsikring);
             forsikringBåtPopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();
@@ -244,8 +243,8 @@ public class Viewbehandling {
         }
     }
 
-    // Åpner Båtforsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type Båtforsikring
-    public static boolean visRedigerBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, Båtforsikring båtforsikring) {
+    // Åpner BåtForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type BåtForsikring
+    public static boolean visRedigerBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, BåtForsikring båtforsikring) {
         try {
             FXMLLoader loader = hentBåtforsikringPopup();
             AnchorPane side = (AnchorPane) loader.load();
@@ -259,7 +258,7 @@ public class Viewbehandling {
 
             ForsikringBåtPopupController forsikringBåtPopupController = loader.getController();
             forsikringBåtPopupController.setPopupStage(popupStage);
-            forsikringBåtPopupController.setBåtforsikringÅRedigere(båtforsikring);
+            forsikringBåtPopupController.setBåtForsikringÅRedigere(båtforsikring);
             forsikringBåtPopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();

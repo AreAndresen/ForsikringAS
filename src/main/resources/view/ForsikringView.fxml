@@ -78,7 +78,7 @@
                             <buttons>
                         <MenuButton mnemonicParsing="false" text="Ny forsikring">
                           <items>
-                            <MenuItem mnemonicParsing="false" onAction="#gåTilNyBåtforsikringPopup" text="Båtforsikring" />
+                            <MenuItem mnemonicParsing="false" onAction="#gåTilNyBåtForsikringPopup" text="Båtforsikring" />
                             <MenuItem mnemonicParsing="false" text="Hus- og innboforsikring" />
                               <MenuItem mnemonicParsing="false" text="Fritidsboligforsikring" />
                               <MenuItem mnemonicParsing="false" text="Reiseforsikring" />

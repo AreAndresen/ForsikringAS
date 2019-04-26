@@ -25,7 +25,7 @@ public class SkademeldingRedigerPopupController {
     private TextArea vitneInfoField;
 
     private ObservableList<String> statusListe = FXCollections.observableArrayList("Betalt", "Ubetalt");
-    private ObservableList<String> skadeTypeListe = FXCollections.observableArrayList("Båtforsikring",
+    private ObservableList<String> skadeTypeListe = FXCollections.observableArrayList("BåtForsikring",
             "Hus- og innboForsikring", "Fritidsboligforsikring", "Reiseforsikring");
 
     private Stage popupStage;
@@ -42,7 +42,7 @@ public class SkademeldingRedigerPopupController {
         statusField.setValue("Betalt");
         statusField.setItems(statusListe);
 
-        skadeTypeField.setValue("Båtforsikring");
+        skadeTypeField.setValue("BåtForsikring");
         skadeTypeField.setItems(skadeTypeListe);
 
     }

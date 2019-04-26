@@ -7,9 +7,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextField;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Båtforsikring extends Forsikring {
+public class BåtForsikring extends Forsikring implements Serializable {
     private final transient StringProperty registreringsNr;
     private final transient StringProperty typeModell;
     private final transient IntegerProperty lengdeFot;
@@ -17,14 +18,14 @@ public class Båtforsikring extends Forsikring {
     private final transient StringProperty motorEgenskaper;
 
     // default konstruktør
-    public Båtforsikring(int forsikringsNr) {
+    public BåtForsikring(int forsikringsNr) {
         this(0, forsikringsNr, LocalDate.now(), 0, null, "Båtforsikring", null,
                 null, 0, 0, null);
     }
 
     // non-default konstruktør
-    public Båtforsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet, int forsikringsBelop,
-                         String betingelser, String type, String registreringsNr,  String typeModell, int lengdeFot,
+    public BåtForsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet, int forsikringsBelop,
+                         String betingelser, String type, String registreringsNr, String typeModell, int lengdeFot,
                          int årsmodell, String motorEgenskaper) {
         super(kundeNr, forsikringsNr, datoOpprettet, forsikringsBelop, betingelser, type);
         this.registreringsNr = new SimpleStringProperty(registreringsNr);

@@ -1,10 +1,7 @@
 package ae;
 
-import ae.model.Båtforsikring;
-import ae.model.Forsikring;
-import ae.model.Kunde;
-import ae.model.Skademelding;
-import ae.model.Viewbehandling;
+import ae.model.*;
+import ae.model.BåtForsikring;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,18 +62,18 @@ public class HovedApplikasjon extends Application {
         Viewbehandling.initierRotOppsett(this);
 
         Kunde enKunde = new Kunde(1);
-        Forsikring enBåtforsikring = new Båtforsikring(29);
-        enBåtforsikring.setType("Båtforsikring");
-        Forsikring toBåtforsikring = new Båtforsikring(30);
-        toBåtforsikring.setType("Båtforsikring");
+        Forsikring enBåtforsikring = new BåtForsikring(29);
+        enBåtforsikring.setType("BåtForsikring");
+        Forsikring toBåtforsikring = new BåtForsikring(30);
+        toBåtforsikring.setType("BåtForsikring");
         enKunde.getForsikringer().add(enBåtforsikring);
         enKunde.getForsikringer().add(toBåtforsikring);
 
         Kunde toKunde = new Kunde(2);
-        Forsikring treBåtforsikring = new Båtforsikring(31);
-        treBåtforsikring.setType("Båtforsikring");
-        Forsikring fireBåtforsikring = new Båtforsikring(32);
-        fireBåtforsikring.setType("Båtforsikring");
+        Forsikring treBåtforsikring = new BåtForsikring(31);
+        treBåtforsikring.setType("BåtForsikring");
+        Forsikring fireBåtforsikring = new BåtForsikring(32);
+        fireBåtforsikring.setType("BåtForsikring");
         toKunde.getForsikringer().add(treBåtforsikring);
         toKunde.getForsikringer().add(fireBåtforsikring);
 

@@ -219,12 +219,12 @@ public class Kunde implements Serializable {
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
         this.kundeNr = new SimpleIntegerProperty((int)is.readObject());
-        this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
+        this.datoKundeOpprettet = new SimpleObjectProperty<>((LocalDate) is.readObject());
         this.etternavn = new SimpleStringProperty((String)is.readObject());
         this.fornavn = new SimpleStringProperty((String)is.readObject());
         this.adresseFaktura = new SimpleStringProperty((String)is.readObject());
-        this.forsikringer = new SimpleObjectProperty<List<Forsikring>>((List<Forsikring>)is.readObject());
-        this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>((ObservableList<Skademelding>)is.readObject());
+        this.forsikringer = new SimpleObjectProperty<>((List<Forsikring>) is.readObject());
+        this.skademeldinger = new SimpleObjectProperty<>((ObservableList<Skademelding>) is.readObject());
         this.antallErstatningerUbetalte = new SimpleIntegerProperty((int)is.readObject());
 
     }

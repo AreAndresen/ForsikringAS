@@ -2,11 +2,10 @@ package ae.controller;
 
 import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
-import ae.model.Båtforsikring;
+import ae.model.BåtForsikring;
 import ae.model.Forsikring;
 import ae.model.Kunde;
 import ae.model.Viewbehandling;
-import ae.model.exceptions.UgyldigInputException;
 import ae.util.IdUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,8 +69,8 @@ public class ForsikringController {
         if (forsikring != null) {
 
             // båtforsikring
-            if ("Båtforsikring".equals(forsikring.getType())) {
-                Båtforsikring båtforsikring = (Båtforsikring) forsikring;
+            if ("BåtForsikring".equals(forsikring.getType())) {
+                BåtForsikring båtForsikring = (BåtForsikring) forsikring;
 
                 // setter inn metadata
                 metaEnLabel.setText("Registreringsnummer");
@@ -81,11 +80,11 @@ public class ForsikringController {
                 metaFemLabel.setText("Motortype og styrke");
 
                 // setter inn resultatdata
-                resultatEnLabel.setText(båtforsikring.getRegistreringsNr());
-                resultatToLabel.setText(båtforsikring.getTypeModell());
-                resultatTreLabel.setText(Integer.toString(båtforsikring.getLengdeFot()));
-                resultatFireLabel.setText(Integer.toString(båtforsikring.getÅrsmodell()));
-                resultatFemLabel.setText(båtforsikring.getMotorEgenskaper());
+                resultatEnLabel.setText(båtForsikring.getRegistreringsNr());
+                resultatToLabel.setText(båtForsikring.getTypeModell());
+                resultatTreLabel.setText(Integer.toString(båtForsikring.getLengdeFot()));
+                resultatFireLabel.setText(Integer.toString(båtForsikring.getÅrsmodell()));
+                resultatFemLabel.setText(båtForsikring.getMotorEgenskaper());
             }
             // TODO: fullføre for resterende forsikringer
         } else {
@@ -112,15 +111,15 @@ public class ForsikringController {
     }
 
     @FXML
-    public void gåTilNyBåtforsikringPopup() {
+    public void gåTilNyBåtForsikringPopup() {
         int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-        Forsikring nyBåtforsikring = new Båtforsikring(forsikringsNr);
-        boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (Båtforsikring) nyBåtforsikring);
+        Forsikring nyBåtForsikring = new BåtForsikring(forsikringsNr);
+        boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
 
         if (bekreftTrykket) {
             for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                if (kunde.getKundeNr() == nyBåtforsikring.getKundeNr()) {
-                    kunde.getForsikringer().add(nyBåtforsikring);
+                if (kunde.getKundeNr() == nyBåtForsikring.getKundeNr()) {
+                    kunde.getForsikringer().add(nyBåtForsikring);
                 }
             }
         }
@@ -133,7 +132,7 @@ public class ForsikringController {
         if (valgtForsikring != null) {
             if ("Båtforsikring".equals(valgtForsikring.getType())) {
                 boolean bekreftTrykket = Viewbehandling.visRedigerBåtforsikringPopup(
-                        hovedApplikasjon, (Båtforsikring) valgtForsikring);
+                        hovedApplikasjon, (BåtForsikring) valgtForsikring);
 
                 if (bekreftTrykket) {
                     visForsikringDetaljer(valgtForsikring);

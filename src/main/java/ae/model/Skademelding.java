@@ -127,7 +127,7 @@ public class Skademelding implements Serializable {
     // skadeType
     public String getSkadeType() { return skadeType.get(); }
     public void setSkadeType(String skadeType) {
-        if (!"Båtforsikring".equals(skadeType) && !"Hus- og innboforsikring".equals(skadeType)
+        if (!"BåtForsikring".equals(skadeType) && !"Hus- og innboforsikring".equals(skadeType)
                 && !"Fritidsboligforsikring".equals(skadeType) && !"Reiseforsikring".equals(skadeType)) {
             throw new UgyldigInputException("Type må være en gyldig forsikringstype.");
         }
