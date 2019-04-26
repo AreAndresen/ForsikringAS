@@ -186,7 +186,6 @@ public class Kunde implements Serializable {
 
         for(Skademelding skade : this.getSkademeldinger()){
             if(skade.getStatus().equals("Ubetalt")){
-                //erstatninger.add(skade.getForsikringsNr());
                 antall++;
             }
         }

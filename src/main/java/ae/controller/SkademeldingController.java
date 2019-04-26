@@ -80,6 +80,7 @@ public class SkademeldingController {
                     //legger til ny skademelding
                     enKunde.getSkademeldinger().add(nySkademelding);
 
+
                     //setter antall ubetalte
                     enKunde.setAntallErstatningerUbetalte();
                 }
@@ -177,7 +178,7 @@ public class SkademeldingController {
         if (skademelding != null) {
             skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
-            vitneInfoLabel.setText(skademelding.getKontaktinfoVitner());
+            //vitneInfoLabel.setText(skademelding.getKontaktinfoVitner().toString());
 
         } else {
 
