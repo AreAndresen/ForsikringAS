@@ -15,7 +15,7 @@ public abstract class Forsikring {
     private final transient IntegerProperty kundeNr;
     private final transient IntegerProperty forsikringsNr;
     private final transient ObjectProperty<LocalDate> datoOpprettet;
-    private final transient IntegerProperty forsikringsBelop;
+    private final transient DoubleProperty forsikringsBelop;
     private final transient StringProperty betingelser;
     private final transient StringProperty type;
 
@@ -26,11 +26,11 @@ public abstract class Forsikring {
 
     // non-default konstruktør
     public Forsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet,
-                      int forsikringsBelop, String betingelser, String type) {
+                      double forsikringsBelop, String betingelser, String type) {
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
         this.datoOpprettet = new SimpleObjectProperty<>(datoOpprettet);
-        this.forsikringsBelop = new SimpleIntegerProperty(forsikringsBelop);
+        this.forsikringsBelop = new SimpleDoubleProperty(forsikringsBelop);
         this.betingelser = new SimpleStringProperty(betingelser);
         this.type = new SimpleStringProperty(type);
     }
@@ -82,16 +82,16 @@ public abstract class Forsikring {
     }
 
     // forsikringsBelop
-    public int getForsikringsBelop() {
+    public double getForsikringsBelop() {
         return forsikringsBelop.get();
     }
-    public void setForsikringsBelop(int forsikringsBelop) {
+    public void setForsikringsBelop(double forsikringsBelop) {
         if (forsikringsBelop <= 0) {
             throw new UgyldigBelopException("Forsikringsbeløp kan ikke være mindre enn 0.");
         }
         this.forsikringsBelop.set(forsikringsBelop);
     }
-    public IntegerProperty forsikringsBelopProperty() {
+    public DoubleProperty forsikringsBelopProperty() {
         return forsikringsBelop;
     }
 
@@ -127,7 +127,7 @@ public abstract class Forsikring {
     /**
      * METODER FOR INPUT-VALIDERING AV FELLES FELTER I FORSIKRING
      */
-    public String sjekkKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
+    public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
         if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
@@ -154,7 +154,7 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public String sjekkForsikringsNr(TextField forsikringsNrField) {
+    public String sjekkOgOppdaterForsikringsNr(TextField forsikringsNrField) {
         String msg = "";
 
         if (forsikringsNrField.getText() == null || forsikringsNrField.getText().isEmpty()) {
@@ -171,7 +171,7 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public String sjekkDatoOpprettet(TextField datoOpprettetField) {
+    public String sjekkOgOppdaterDatoOpprettet(TextField datoOpprettetField) {
         String msg = "";
 
         if (datoOpprettetField.getText() == null || datoOpprettetField.getText().isEmpty()) {
@@ -188,14 +188,14 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public String sjekkForsikringsbelop(TextField forsikringsbelopField) {
+    public String sjekkOgOppdaterForsikringsbelop(TextField forsikringsbelopField) {
         String msg = "";
 
         if (forsikringsbelopField.getText() == null || forsikringsbelopField.getText().isEmpty()) {
             msg += "Forsikringsbeløp kan ikke være tomt.\n";
         } else {
             try {
-                setForsikringsBelop(Integer.parseInt(forsikringsbelopField.getText()));
+                setForsikringsBelop(Double.parseDouble(forsikringsbelopField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringsbeløp må være tall.\n";
             } catch (UgyldigBelopException e) {
@@ -205,7 +205,7 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public String sjekkBetingelser(TextField betingelserField) {
+    public String sjekkOgOppdaterBetingelser(TextField betingelserField) {
         String msg = "";
 
         if (betingelserField.getText() == null || betingelserField.getText().isEmpty()) {
@@ -220,7 +220,7 @@ public abstract class Forsikring {
         return msg;
     }
 
-    public String sjekkType(TextField typeField) {
+    public String sjekkOgOppdaterType(TextField typeField) {
         String msg = "";
 
         if (typeField.getText() == null || typeField.getText().isEmpty()) {

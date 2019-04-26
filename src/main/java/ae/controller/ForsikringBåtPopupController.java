@@ -3,7 +3,6 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Båtforsikring;
-import ae.model.Forsikring;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -33,14 +32,14 @@ public class ForsikringBåtPopupController {
 
     public void setBåtforsikringÅRedigere(Båtforsikring båtforsikring) {
         this.båtforsikringÅRedigere = båtforsikring;
-        oppdaterFelter();
+        instansierFelter();
     }
 
-    private void oppdaterFelter() {
+    private void instansierFelter() {
         kundeNrField.setText(Integer.toString(båtforsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(båtforsikringÅRedigere.getForsikringsNr()));
         datoOpprettetField.setText(båtforsikringÅRedigere.getDatoOpprettet().toString());
-        forsikringsbelopField.setText(Integer.toString(båtforsikringÅRedigere.getForsikringsBelop()));
+        forsikringsbelopField.setText(Double.toString(båtforsikringÅRedigere.getForsikringsBelop()));
         betingelserField.setText(båtforsikringÅRedigere.getBetingelser());
         typeField.setText(båtforsikringÅRedigere.getType());
         regnrField.setText(båtforsikringÅRedigere.getRegistreringsNr());
@@ -61,26 +60,26 @@ public class ForsikringBåtPopupController {
     @FXML
     public void bekreftTrykkes() {
 
-        if (oppdaterBåtforsikring()) {
+        if (sjekkOgOppdaterBåtforsikring()) {
             bekreft = true;
             popupStage.close();
         }
     }
 
-    private boolean oppdaterBåtforsikring() {
+    private boolean sjekkOgOppdaterBåtforsikring() {
         String msg = "";
 
-        msg += båtforsikringÅRedigere.sjekkKundeNr(kundeNrField, hovedApplikasjon);
-        msg += båtforsikringÅRedigere.sjekkForsikringsNr(forsikringsNrField);
-        msg += båtforsikringÅRedigere.sjekkDatoOpprettet(datoOpprettetField);
-        msg += båtforsikringÅRedigere.sjekkForsikringsbelop(forsikringsbelopField);
-        msg += båtforsikringÅRedigere.sjekkBetingelser(betingelserField);
-        msg += båtforsikringÅRedigere.sjekkType(typeField);
-        msg += båtforsikringÅRedigere.sjekkRegistreringsNr(regnrField);
-        msg += båtforsikringÅRedigere.sjekkTypeModell(båttypeField);
-        msg += båtforsikringÅRedigere.sjekkLengdeFot(lengdeFotField);
-        msg += båtforsikringÅRedigere.sjekkÅrsmodell(årsmodellField);
-        msg += båtforsikringÅRedigere.sjekkMotorEgenskaper(motortypeField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterForsikringsNr(forsikringsNrField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterDatoOpprettet(datoOpprettetField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterForsikringsbelop(forsikringsbelopField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterBetingelser(betingelserField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterType(typeField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterRegistreringsNr(regnrField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterTypeModell(båttypeField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterLengdeFot(lengdeFotField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterÅrsmodell(årsmodellField);
+        msg += båtforsikringÅRedigere.sjekkOgOppdaterMotorEgenskaper(motortypeField);
 
         if (msg.length() != 0) {
             UgyldigInputHandler.generateAlert(msg);

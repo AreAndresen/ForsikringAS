@@ -2,6 +2,7 @@ package ae.model;
 
 import ae.HovedApplikasjon;
 import ae.controller.*;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -38,7 +39,7 @@ public class Viewbehandling {
     }
 
 
-    //--------------------KUNDE POPUPS! --------------------
+    // < ------------------------------------ KUNDER ------------------------------------ >
     /**
      * Åpner kundeoversikten når bruker trykker på Kunder i menylinjen
      */
@@ -117,7 +118,7 @@ public class Viewbehandling {
         }
     }
 
-    //--------------------SKADEMELDING POPUPS! --------------------
+    // < ------------------------------------ SKADEMELDING ------------------------------------ >
     /**
      * Åpner skademeldingoversikten når bruker trykker på skademelding i menylinjen
      */
@@ -195,10 +196,9 @@ public class Viewbehandling {
         }
     }
 
-    //--------------------FORSIKRING --------------------
-    /**
-     * Åpner forsikringsoversikten når bruker trykker på Forsikring i menylinjen
-     */
+    // < ------------------------------------ FORSIKRING ------------------------------------ >
+
+    // Åpner Oversikt - Forsikring når bruker trykker på Forsikring i menylinjen
     public static void visForsikringOversikt(HovedApplikasjon hovedApplikasjon) {
         try {
             // Last inn kundeoversikten fra fxml-fil.
@@ -217,6 +217,7 @@ public class Viewbehandling {
         }
     }
 
+    // Åpner Båtforsikring-popup når bruker trykker på Ny båtforsikring-knappen
     public static boolean visNyBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, Båtforsikring båtforsikring) {
         try {
             FXMLLoader loader = hentBåtforsikringPopup();
@@ -243,23 +244,48 @@ public class Viewbehandling {
         }
     }
 
-    /**
-     * Brukes i Ny og Rediger popup for å hente det samme vinduet.
-     */
-    //KUNDE ---
+    // Åpner Båtforsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type Båtforsikring
+    public static boolean visRedigerBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, Båtforsikring båtforsikring) {
+        try {
+            FXMLLoader loader = hentBåtforsikringPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Rediger eksisterende båtforsikring");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            ForsikringBåtPopupController forsikringBåtPopupController = loader.getController();
+            forsikringBåtPopupController.setPopupStage(popupStage);
+            forsikringBåtPopupController.setBåtforsikringÅRedigere(båtforsikring);
+            forsikringBåtPopupController.setHovedApplikasjon(hovedApplikasjon);
+
+            popupStage.showAndWait();
+
+            return forsikringBåtPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // < ------------------------------------ FELLES LOADERE ------------------------------------ >
+    // for KUNDE
     private static FXMLLoader hentKundeRedigerPopup() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeRedigerPopupView.fxml"));
         return loader;
     }
-    //SKADEMELDING --
+    // for SKADEMELDING
     private static FXMLLoader hentSkademeldingRedigerPopup() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingRedigerPopupView.fxml"));
         return loader;
     }
 
-    // FORSIKRING
+    // for FORSIKRING
     private static FXMLLoader hentBåtforsikringPopup() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringBåtPopup.fxml"));

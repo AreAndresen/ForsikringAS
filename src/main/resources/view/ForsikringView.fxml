@@ -84,7 +84,7 @@
                               <MenuItem mnemonicParsing="false" text="Reiseforsikring" />
                           </items>
                         </MenuButton>
-                                <Button mnemonicParsing="false" text="Rediger" />
+                                <Button mnemonicParsing="false" onAction="#gåTilRedigerForsikringPopup" text="Rediger" />
                                 <Button mnemonicParsing="false" onAction="#slettValgtForsikring" text="Slett" />
                             </buttons>
                         </ButtonBar>

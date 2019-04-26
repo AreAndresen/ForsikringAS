@@ -111,7 +111,7 @@ public class Båtforsikring extends Forsikring {
     /**
      * --- METODER FOR INPUT-VALIDERING
      */
-    public String sjekkRegistreringsNr(TextField registreringsnrField) {
+    public String sjekkOgOppdaterRegistreringsNr(TextField registreringsnrField) {
         String msg = "";
 
         if (registreringsnrField.getText() == null || registreringsnrField.getText().isEmpty()) {
@@ -126,7 +126,7 @@ public class Båtforsikring extends Forsikring {
         return msg;
     }
 
-    public String sjekkTypeModell(TextField typeModellField) {
+    public String sjekkOgOppdaterTypeModell(TextField typeModellField) {
         String msg = "";
 
         if (typeModellField.getText() == null || typeModellField.getText().isEmpty()) {
@@ -141,7 +141,7 @@ public class Båtforsikring extends Forsikring {
         return msg;
     }
 
-    public String sjekkLengdeFot(TextField lengdeFotField) {
+    public String sjekkOgOppdaterLengdeFot(TextField lengdeFotField) {
         String msg = "";
 
         if (lengdeFotField.getText() == null || lengdeFotField.getText().isEmpty()) {
@@ -158,7 +158,7 @@ public class Båtforsikring extends Forsikring {
         return msg;
     }
 
-    public String sjekkÅrsmodell(TextField årsmodellField) {
+    public String sjekkOgOppdaterÅrsmodell(TextField årsmodellField) {
         String msg = "";
 
         if (årsmodellField.getText() == null || årsmodellField.getText().isEmpty()) {
@@ -175,7 +175,7 @@ public class Båtforsikring extends Forsikring {
         return msg;
     }
 
-    public String sjekkMotorEgenskaper(TextField motorEgenskaperField) {
+    public String sjekkOgOppdaterMotorEgenskaper(TextField motorEgenskaperField) {
         String msg = "";
 
         if (motorEgenskaperField.getText() == null || motorEgenskaperField.getText().isEmpty()) {

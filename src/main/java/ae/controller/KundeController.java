@@ -59,7 +59,6 @@ public class KundeController {
                 (observable, gammelData, nyData) -> visKundensDetaljer(nyData));
     }
 
-    // TODO: flytte denne til rotoppsettet
     @FXML
     public void gåTilNyKundePopup() {
         int index = IdUtil.genererLøpenummerKunde(hovedApplikasjon.getKundeData());

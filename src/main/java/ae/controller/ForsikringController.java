@@ -1,19 +1,20 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
+import ae.controller.util.UgyldigInputHandler;
 import ae.model.Båtforsikring;
 import ae.model.Forsikring;
 import ae.model.Kunde;
 import ae.model.Viewbehandling;
+import ae.model.exceptions.UgyldigInputException;
 import ae.util.IdUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class ForsikringController {
 
@@ -110,37 +111,67 @@ public class ForsikringController {
         }
     }
 
-    // TODO: FIKSE SLETT ORDENTLIG
-    @FXML
-    public void slettValgtForsikring() {
-        Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
-
-        if (valgtForsikring != null) {
-            Forsikring forsikringTilSletting = null;
-
-            for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                if (valgtForsikring.getKundeNr() == kunde.getKundeNr()) {
-                    for (Forsikring forsikring : kunde.getForsikringer()) {
-                        if (valgtForsikring.equals(forsikring)) {
-                            forsikringTilSletting = forsikring;
-                        }
-                    }
-                }
-                kunde.getForsikringer().remove(forsikringTilSletting);
-            }
-        }
-    }
-
     @FXML
     public void gåTilNyBåtforsikringPopup() {
-        int index = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-        Forsikring nyBåtforsikring = new Båtforsikring(index);
+        int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+        Forsikring nyBåtforsikring = new Båtforsikring(forsikringsNr);
         boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (Båtforsikring) nyBåtforsikring);
 
         if (bekreftTrykket) {
             for (Kunde kunde : hovedApplikasjon.getKundeData()) {
                 if (kunde.getKundeNr() == nyBåtforsikring.getKundeNr()) {
                     kunde.getForsikringer().add(nyBåtforsikring);
+                }
+            }
+        }
+    }
+
+    @FXML
+    public void gåTilRedigerForsikringPopup() {
+        Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtForsikring != null) {
+            if ("Båtforsikring".equals(valgtForsikring.getType())) {
+                boolean bekreftTrykket = Viewbehandling.visRedigerBåtforsikringPopup(
+                        hovedApplikasjon, (Båtforsikring) valgtForsikring);
+
+                if (bekreftTrykket) {
+                    visForsikringDetaljer(valgtForsikring);
+                }
+            }
+        } else {
+            UgyldigInputHandler.generateAlert("Du må velge en kunde for å redigere.");
+        }
+    }
+
+    // TODO: FIKSE SLETT ORDENTLIG (DYNAMISK)
+    @FXML
+    public void slettValgtForsikring() {
+        Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtForsikring != null) {
+            String forsikringInfo = Integer.toString(valgtForsikring.getForsikringsNr());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(hovedApplikasjon.getHovedStage());
+            alert.setTitle("Slett forsikring");
+            alert.setHeaderText("Bekreft sletting av forsikring");
+            alert.setContentText("Er du sikker på at du ønsker å slette forsikring nummer: " + forsikringInfo +"?");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                Forsikring forsikringTilSletting = null;
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (valgtForsikring.getKundeNr() == kunde.getKundeNr()) {
+                        for (Forsikring forsikring : kunde.getForsikringer()) {
+                            if (valgtForsikring.equals(forsikring)) {
+                                forsikringTilSletting = forsikring;
+                            }
+                        }
+                    }
+                    kunde.getForsikringer().remove(forsikringTilSletting);
                 }
             }
         }
