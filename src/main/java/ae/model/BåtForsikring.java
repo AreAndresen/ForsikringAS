@@ -22,13 +22,13 @@ public class BåtForsikring extends Forsikring implements Serializable {
 
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
-    // default konstruktør
+    // tomt objekt-konstruktør
     public BåtForsikring(int forsikringsNr) {
         this(0, forsikringsNr, LocalDate.now(), 0, null, "Båtforsikring", null,
                 null, 0, 0, null);
     }
 
-    // non-default konstruktør
+    // default konstruktør
     public BåtForsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet, int forsikringsBelop,
                          String betingelser, String type, String registreringsNr, String typeModell, int lengdeFot,
                          int årsmodell, String motorEgenskaper) {
@@ -89,8 +89,8 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return årsmodell.get();
     }
     public void setÅrsmodell(int årsmodell) {
-        if (årsmodell < 1899 || årsmodell > 2020) {
-            throw new UgyldigInputException("Årsmodell må være etter 1899 og før 2020.");
+        if (årsmodell < 1899 || årsmodell > 2030) {
+            throw new UgyldigInputException("Årsmodell må være etter 1899 og før 2030.");
         }
         this.årsmodell.set(årsmodell);
     }
@@ -224,7 +224,7 @@ public class BåtForsikring extends Forsikring implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + "," + getRegistreringsNr() + "," + getTypeModell()  + "," + lengdeFot
-                + "," + årsmodell  + "," + motorEgenskaper;
+        return super.toString() + "," + getRegistreringsNr() + "," + getTypeModell()  + "," + getLengdeFot()
+                + "," + getÅrsmodell()  + "," + getMotorEgenskaper();
     }
 }

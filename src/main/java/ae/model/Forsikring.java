@@ -25,12 +25,12 @@ public abstract class Forsikring implements Serializable {
 
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
-    // default konstruktør
+    // tomt objekt-konstruktør
     public Forsikring(int forsikringsNr) {
         this(0, forsikringsNr, LocalDate.now(), 0, null, null);
     }
 
-    // non-default konstruktør
+    // default konstruktør
     public Forsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet,
                       double forsikringsBelop, String betingelser, String type) {
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
@@ -91,7 +91,7 @@ public abstract class Forsikring implements Serializable {
     }
     public void setForsikringsBelop(double forsikringsBelop) {
         if (forsikringsBelop <= 0) {
-            throw new UgyldigBelopException("Forsikringsbeløp kan ikke være mindre enn 0.");
+            throw new UgyldigBelopException("Forsikringsbeløp må være større enn 0.");
         }
         this.forsikringsBelop.set(forsikringsBelop);
     }
