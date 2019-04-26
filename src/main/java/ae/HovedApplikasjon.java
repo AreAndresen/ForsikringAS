@@ -2,11 +2,14 @@ package ae;
 
 import ae.model.*;
 import ae.model.BåtForsikring;
+import ae.util.IdUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.time.LocalDate;
 
 public class HovedApplikasjon extends Application {
 
@@ -61,24 +64,22 @@ public class HovedApplikasjon extends Application {
         // Rotoppsettet kjører så lenge applikasjonen kjører.
         Viewbehandling.initierRotOppsett(this);
 
-        Kunde enKunde = new Kunde(1);
-        Forsikring enBåtforsikring = new BåtForsikring(29);
-        enBåtforsikring.setType("Båtforsikring");
-        Forsikring toBåtforsikring = new BåtForsikring(30);
-        toBåtforsikring.setType("Båtforsikring");
-        enKunde.getForsikringer().add(enBåtforsikring);
-        enKunde.getForsikringer().add(toBåtforsikring);
+        Kunde testKunde1 = new Kunde(1001, LocalDate.parse("2015-10-05"), "Eidsvold", "Hans-Erling",
+                "Pilestredet 31 0166 Oslo");
 
-        Kunde toKunde = new Kunde(2);
-        Forsikring treBåtforsikring = new BåtForsikring(31);
-        treBåtforsikring.setType("Båtforsikring");
-        Forsikring fireBåtforsikring = new BåtForsikring(32);
-        fireBåtforsikring.setType("Båtforsikring");
-        toKunde.getForsikringer().add(treBåtforsikring);
-        toKunde.getForsikringer().add(fireBåtforsikring);
+        kundeData.add(testKunde1);
 
-        kundeData.add(enKunde);
-        kundeData.add(toKunde);
+        Kunde testKunde2 = new Kunde(IdUtil.genererLøpenummerKunde(kundeData), LocalDate.parse("2017-07-14"), "Andresen",
+                "Are", "Parkveien 3 0170 Oslo");
+        Kunde testKunde3 = new Kunde(IdUtil.genererLøpenummerKunde(kundeData), LocalDate.now(), "Johansen",
+                "Frida", "Vaklyriegata 3 0260 Oslo");
 
+        kundeData.addAll(testKunde2, testKunde3);
+
+        Forsikring testForsikring1 = new BåtForsikring(testKunde1.getKundeNr(), IdUtil.genererLøpenummerForsikring(kundeData),
+                LocalDate.now(), 200000, "Hel-kasko", "Båtforsikring", "ABC123",
+                "Yacht", 152, 2017, "DX500 2000HK");
+
+        testKunde1.getForsikringer().add(testForsikring1);
     }
 }

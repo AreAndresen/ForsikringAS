@@ -23,8 +23,8 @@ public class BåtForsikring extends Forsikring implements Serializable {
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // tomt objekt-konstruktør
-    public BåtForsikring(int forsikringsNr) {
-        this(0, forsikringsNr, LocalDate.now(), 0, null, "Båtforsikring", null,
+    public BåtForsikring(int kundeNr, int forsikringsNr) {
+        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, "Båtforsikring", null,
                 null, 0, 0, null);
     }
 

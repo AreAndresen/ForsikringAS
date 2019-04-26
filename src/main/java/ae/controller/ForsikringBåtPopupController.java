@@ -48,6 +48,7 @@ public class ForsikringBåtPopupController {
         årsmodellField.setText(Integer.toString(båtForsikringÅRedigere.getÅrsmodell()));
         motortypeField.setText(båtForsikringÅRedigere.getMotorEgenskaper());
 
+        kundeNrField.setDisable(true);
         forsikringsNrField.setDisable(true);
         datoOpprettetField.setDisable(true);
         typeField.setDisable(true);

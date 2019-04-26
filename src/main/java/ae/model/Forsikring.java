@@ -26,8 +26,8 @@ public abstract class Forsikring implements Serializable {
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // tomt objekt-konstruktør
-    public Forsikring(int forsikringsNr) {
-        this(0, forsikringsNr, LocalDate.now(), 0, null, null);
+    public Forsikring(int kundeNr, int forsikringsNr) {
+        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, null);
     }
 
     // default konstruktør

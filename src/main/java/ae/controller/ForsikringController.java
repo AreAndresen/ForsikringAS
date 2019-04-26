@@ -13,15 +13,24 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class ForsikringController {
 
-    // tabellen
+    // kundenr-tabellen
+    @FXML
+    public TableView<Kunde> kundeNrTabell;
+    @FXML
+    public TableColumn<Kunde, Number> kundeNrKolonne;
+    @FXML
+    public TableColumn<Kunde, String> etternavnKolonne;
+
+    // forsikring-tabellen
     @FXML
     public TableView<Forsikring> forsikringTabell;
-    @FXML
-    public TableColumn<Forsikring, Number> kundeKolonne;
     @FXML
     public TableColumn<Forsikring, Number> forsikringsnrKolonne;
     @FXML
@@ -41,6 +50,12 @@ public class ForsikringController {
     public Label resultatEnLabel, resultatToLabel, resultatTreLabel, resultatFireLabel,
             resultatFemLabel, resultatSeksLabel, resultatSjuLabel, resultatÅtteLabel;
 
+    @FXML
+    public ChoiceBox typeChoice;
+
+    private ObservableList<String> typeSortering = FXCollections.observableArrayList("Alle", "Båtforsikring",
+            "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
+
     // referanse til hovedapplikasjonen
     private HovedApplikasjon hovedApplikasjon;
 
@@ -50,17 +65,36 @@ public class ForsikringController {
     @FXML
     private void initialize() {
         // koble kolonnene med datafeltene
-        kundeKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
+
+        kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
+        etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
+
         forsikringsnrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
         datoOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoOpprettetProperty());
         forsikringsbelopKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsBelopProperty());
         betingelserKolonne.setCellValueFactory(celleData -> celleData.getValue().betingelserProperty());
         typeKolonne.setCellValueFactory(celleData -> celleData.getValue().typeProperty());
 
+        typeChoice.setValue("Alle");
+        typeChoice.setItems(typeSortering);
+
         visForsikringDetaljer(null);
+        visForsikringer(null);
 
         forsikringTabell.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, gammelData, nyData) -> visForsikringDetaljer(nyData)));
+
+        kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
+                (((observable, gammelData, nyData) -> visForsikringer(nyData))));
+    }
+
+    private void visForsikringer(Kunde kunde) {
+
+        if (kunde != null) {
+            forsikringTabell.setItems(kunde.getForsikringer());
+        } else {
+            forsikringTabell.getItems().clear();
+        }
     }
 
     private void visForsikringDetaljer(Forsikring forsikring) {
@@ -69,7 +103,7 @@ public class ForsikringController {
         if (forsikring != null) {
 
             // båtforsikring
-            if ("BåtForsikring".equals(forsikring.getType())) {
+            if ("Båtforsikring".equals(forsikring.getType())) {
                 BåtForsikring båtForsikring = (BåtForsikring) forsikring;
 
                 // setter inn metadata
@@ -113,7 +147,8 @@ public class ForsikringController {
     @FXML
     public void gåTilNyBåtForsikringPopup() {
         int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-        Forsikring nyBåtForsikring = new BåtForsikring(forsikringsNr);
+        Forsikring nyBåtForsikring = new BåtForsikring(
+                kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
         boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
 
         if (bekreftTrykket) {
@@ -139,11 +174,10 @@ public class ForsikringController {
                 }
             }
         } else {
-            UgyldigInputHandler.generateAlert("Du må velge en kunde for å redigere.");
+            UgyldigInputHandler.generateAlert("Du må velge en forsikring for å kunne redigere!");
         }
     }
 
-    // TODO: FIKSE SLETT ORDENTLIG (DYNAMISK)
     @FXML
     public void slettValgtForsikring() {
         Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
@@ -161,18 +195,11 @@ public class ForsikringController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                Forsikring forsikringTilSletting = null;
-                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                    if (valgtForsikring.getKundeNr() == kunde.getKundeNr()) {
-                        for (Forsikring forsikring : kunde.getForsikringer()) {
-                            if (valgtForsikring.equals(forsikring)) {
-                                forsikringTilSletting = forsikring;
-                            }
-                        }
-                    }
-                    kunde.getForsikringer().remove(forsikringTilSletting);
-                }
+                Kunde kunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+                kunde.getForsikringer().remove(valgtForsikring);
             }
+        } else {
+            UgyldigInputHandler.generateAlert("Du må velge en forsikring for å kunne slette!");
         }
     }
 
@@ -182,17 +209,7 @@ public class ForsikringController {
      */
     public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
         this.hovedApplikasjon = hovedApplikasjon;
-        oppdaterTabell();
-    }
 
-    // TODO: MÅ BLI DYNAMISK
-    public void oppdaterTabell() {
-        this.forsikringTabell.getItems().clear();
-        ObservableList<Forsikring> forsikringer = FXCollections.observableArrayList();
-        // Legger til data fra ObservableList til tabellen
-        for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-            forsikringer.addAll(kunde.getForsikringer());
-        }
-        forsikringTabell.setItems(forsikringer);
+        kundeNrTabell.setItems(hovedApplikasjon.getKundeData());
     }
 }

@@ -5,6 +5,9 @@ import javafx.beans.property.*;
 import javafx.scene.control.ChoiceBox;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -261,5 +264,40 @@ public class HusOgInnboForsikring extends Forsikring implements Serializable {
             }
         }
         return msg;
+    }
+
+    // < ------------------------------------ SERIALISERING ------------------------------------ >
+
+    // writeObject
+    private void writeObject(ObjectOutputStream os) throws IOException {
+        os.defaultWriteObject();
+        os.writeObject(getAdresseBolig());
+        os.writeObject(getByggeår());
+        os.writeObject(getByggemateriale());
+        os.writeObject(getStandard());
+        os.writeObject(getAntallKvm());
+        os.writeObject(getForsikringsbelopBygning());
+        os.writeObject(getForsikringsbelopInnbo());
+    }
+
+    // readObject
+    private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+        is.defaultReadObject();
+        this.adresseBolig = new SimpleStringProperty((String) is.readObject());
+        this.byggeår = new SimpleIntegerProperty((int) is.readObject());
+        this.byggemateriale = new SimpleStringProperty((String) is.readObject());
+        this.standard = new SimpleStringProperty((String) is.readObject());
+        this.antallKvm = new SimpleIntegerProperty((int) is.readObject());
+        this.forsikringsbelopBygning = new SimpleDoubleProperty((double) is.readObject());
+        this.forsikringsbelopInnbo = new SimpleDoubleProperty((double) is.readObject());
+    }
+
+    // < ------------------------------------ toString - CSV ------------------------------------ >
+
+    @Override
+    public String toString() {
+        return super.toString() + "," + getAdresseBolig()  + "," + getByggeår()  + "," + getByggemateriale()  + "," +
+                getStandard() + "," + getAntallKvm() + "," + getForsikringsbelopBygning() + "," +
+                getForsikringsbelopInnbo();
     }
 }
