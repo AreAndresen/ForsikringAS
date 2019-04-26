@@ -6,12 +6,15 @@ import ae.model.exceptions.UgyldigDatoException;
 import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.beans.property.*;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 /**
@@ -235,6 +238,166 @@ public class Skademelding implements Serializable {
         }
         return msg;
     }
+
+
+    //TODO: METODER FOR ENDRING AV SKADEMELDING
+    //oppdaterer skadenr
+    public String sjekkOgOppdaterSkadeNr(TextField skadeNrField) {
+        String msg = "";
+
+        if (skadeNrField.getText() == null || skadeNrField.getText().isEmpty()) {
+            msg += "Skadenummer kan ikke være tomt.\n";
+        } else {
+            try {
+                setSkadeNr(Integer.parseInt(skadeNrField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Skadenummer nå være tall.\n";
+            } catch (UgyldigLopeNrException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer skadetype
+    public String sjekkOgOppdaterKundeNr(TextField kundeNrField) {
+        String msg = "";
+
+        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+            msg += "Kundenummer kan ikke være tomt.\n";
+        } else {
+            try {
+                setKundeNr(Integer.parseInt(kundeNrField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Kundenummer nå være tall.\n";
+            } catch (UgyldigLopeNrException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer skadedato
+    public String sjekkOgOppdaterDatoSkade(TextField datoSkademeldingOpprettetField) {
+        String msg = "";
+
+        if (datoSkademeldingOpprettetField.getText() == null || datoSkademeldingOpprettetField.getText().isEmpty()) {
+            msg += "Dato kan ikke være tom.\n";
+        } else {
+            try {
+                setDatoSkade(LocalDate.parse(datoSkademeldingOpprettetField.getText()));
+            } catch (DateTimeException e) {
+                msg += "Dato er ikke en gyldig dato.\n";
+            } catch (UgyldigDatoException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+
+    //Todo EKSTRA SJEKK PÅ EMPTY PÅ DE ANDRE???
+    //oppdaterer skadetype
+    public String sjekkOgOppdaterSkadetype(ChoiceBox skadeTypeField) {
+        String msg = "";
+
+        if (skadeTypeField.getValue() == null || skadeTypeField.getItems().isEmpty()) {
+            msg += "Skadetype kan ikke være tom.\n";
+        } else {
+            try {
+                setSkadeType(skadeTypeField.getValue().toString());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer skadebeskrivelse
+    public String sjekkOgOppdaterSkadebeskrivelse(TextField skadebeskrivelseField) {
+        String msg = "";
+
+        if (skadebeskrivelseField.getText() == null || skadebeskrivelseField.getText().isEmpty()) {
+            msg += "Skadebeskrivelse kan ikke være tom.\n";
+        } else {
+            try {
+                setSkadeBeskrivelse(skadebeskrivelseField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer Takseringsbeløp
+    public String sjekkOgOppdaterTakseringsbeløp(TextField belopTakseringField) {
+        String msg = "";
+
+        if (belopTakseringField.getText() == null || belopTakseringField.getText().isEmpty()) {
+            msg += "Takseringssbeløp kan ikke være tomt.\n";
+        } else {
+            try {
+                setBelopTaksering(Double.parseDouble(belopTakseringField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Takseringssbeløp må være tall.\n";
+            } catch (UgyldigBelopException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer erstatningsbelop Utbetalt
+    public String sjekkOgOppdaterErstatningsbelopUtbetalt(TextField erstatningsbelopUtbetaltField) {
+        String msg = "";
+
+        if (erstatningsbelopUtbetaltField.getText() == null || erstatningsbelopUtbetaltField.getText().isEmpty()) {
+            msg += "Utbetalt erstatningssbeløp kan ikke være tomt.\n";
+        } else {
+            try {
+                setErstatningsbelopUtbetalt(Double.parseDouble(erstatningsbelopUtbetaltField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Utbetalt erstatningssbeløp må være tall.\n";
+            } catch (UgyldigBelopException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer skadebeskrivelse
+    public String sjekkOgOppdaterKontaktinfoVitner(TextArea vitneInfoField) {
+        String msg = "";
+
+        if (vitneInfoField.getText() == null || vitneInfoField.getText().isEmpty()) {
+            msg += "Vitneinfo kan ikke være tom.\n";
+        } else {
+            try {
+                setKontaktinfoVitner(vitneInfoField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer status
+    public String sjekkOgOppdaterStatus(ChoiceBox statusField) {
+        String msg = "";
+
+        if (statusField.getValue() == null || statusField.getItems().isEmpty()) {
+            msg += "Status kan ikke være tom.\n";
+        } else {
+            try {
+                setStatus(statusField.getValue().toString());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+
 
     /**
      * Tilpasset writeObject-serialisering av Skademelding-objektet da ObservableList og

@@ -63,17 +63,17 @@ public class HovedApplikasjon extends Application {
 
         Kunde enKunde = new Kunde(1);
         Forsikring enBåtforsikring = new BåtForsikring(29);
-        enBåtforsikring.setType("BåtForsikring");
+        enBåtforsikring.setType("Båtforsikring");
         Forsikring toBåtforsikring = new BåtForsikring(30);
-        toBåtforsikring.setType("BåtForsikring");
+        toBåtforsikring.setType("Båtforsikring");
         enKunde.getForsikringer().add(enBåtforsikring);
         enKunde.getForsikringer().add(toBåtforsikring);
 
         Kunde toKunde = new Kunde(2);
         Forsikring treBåtforsikring = new BåtForsikring(31);
-        treBåtforsikring.setType("BåtForsikring");
+        treBåtforsikring.setType("Båtforsikring");
         Forsikring fireBåtforsikring = new BåtForsikring(32);
-        fireBåtforsikring.setType("BåtForsikring");
+        fireBåtforsikring.setType("Båtforsikring");
         toKunde.getForsikringer().add(treBåtforsikring);
         toKunde.getForsikringer().add(fireBåtforsikring);
 
