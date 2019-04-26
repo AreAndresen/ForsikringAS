@@ -157,6 +157,7 @@ public class Viewbehandling {
             SkademeldingRedigerPopupController skademeldingRedigerPopupController = loader.getController();
             skademeldingRedigerPopupController.setPopupStage(popupStage);
             skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
+            skademeldingRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();
 
@@ -185,6 +186,7 @@ public class Viewbehandling {
             SkademeldingRedigerPopupController skademeldingRedigerPopupController = loader.getController();
             skademeldingRedigerPopupController.setPopupStage(popupStage);
             skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
+            skademeldingRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();
 

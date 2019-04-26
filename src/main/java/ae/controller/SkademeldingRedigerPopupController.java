@@ -3,9 +3,6 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Skademelding;
-import ae.model.exceptions.UgyldigBelopException;
-import ae.model.exceptions.UgyldigInputException;
-import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,7 +28,6 @@ public class SkademeldingRedigerPopupController {
     private Stage popupStage;
     private Skademelding skademeldingÅRedigere;
     private boolean bekreft = false;
-    private boolean inputOK = false;
 
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
@@ -44,7 +40,6 @@ public class SkademeldingRedigerPopupController {
 
         skadeTypeField.setValue("Båtforsikring");
         skadeTypeField.setItems(skadeTypeListe);
-
     }
 
     public void setPopupStage(Stage popupStage) {
@@ -57,13 +52,13 @@ public class SkademeldingRedigerPopupController {
     public void setSkademeldingÅRedigere(Skademelding skademelding) {
         this.skademeldingÅRedigere = skademelding;
 
-        oppdaterFelter();
+        instansierFelter();
     }
 
     /**
      * Metode for å legge inn kundens data i TextFields.
      */
-    public void oppdaterFelter() {
+    public void instansierFelter() {
         kundeNrField.setText(Integer.toString(skademeldingÅRedigere.getKundeNr()));
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
         //skadeTypeField.setText(skademeldingÅRedigere.getSkadeType());
@@ -92,25 +87,20 @@ public class SkademeldingRedigerPopupController {
      */
     @FXML
     public void bekreftTrykkes() {
-        // TODO: input-validering med exceptions venter
-        oppdaterSkademelding();
 
-
-        if(inputOK){ //implementert en boolean for å lukke om input er riktig/feil
+        if(sjekkOgOppdaterSkademelding()){ //implementert en boolean for å lukke om input er riktig/feil
             bekreft = true;
             popupStage.close();
         }
     }
 
-    public void oppdaterSkademelding() {
+    private boolean sjekkOgOppdaterSkademelding() {
         String msg = "";
 
-        //skademeldingÅRedigere.setSkadeNr(Integer.parseInt(skadeNrField.getText()));
-
-        //Bytter set her ut med metoder (se under)
-
         msg += skademeldingÅRedigere.sjekkOgOppdaterSkadeNr(skadeNrField);
-        msg += skademeldingÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField);
+
+        msg += skademeldingÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
+
         msg += skademeldingÅRedigere.sjekkOgOppdaterDatoSkade(datoSkademeldingOpprettetField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterSkadetype(skadeTypeField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterSkadebeskrivelse(skadebeskrivelseField);
@@ -119,18 +109,20 @@ public class SkademeldingRedigerPopupController {
         msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitner(vitneInfoField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterStatus(statusField);
 
-        //kundeÅRedigere.setDatoKundeOpprettet(LocalDate.datoKundeOpprettetField.getText());
-        // TODO: må parse LocalDate så riktig format lagres
 
         //kontrollerer etter aktiverte feilmeldinger
         if(msg.length() != 0){
             UgyldigInputHandler.generateAlert(msg); //alert
+            return false;
         }
         else{
-            inputOK = true; //riktig input
+            return true; //riktig input
         }
     }
 
+    public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
+        this.hovedApplikasjon = hovedApplikasjon;
+    }
 
     @FXML
     public void avbrytTrykkes() {

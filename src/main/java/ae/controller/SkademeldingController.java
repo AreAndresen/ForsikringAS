@@ -75,30 +75,14 @@ public class SkademeldingController {
         boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
         if (bekreftTrykket) {
-            //henter
-            boolean finnes = false;
             for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                 if (enKunde.getKundeNr() == nySkademelding.getKundeNr()) {
-
-                    finnes = true; //kontrollerer at kunden finnes
-
-                    //Oppretter et dummie array å fylle
-                    ObservableList<Skademelding> skademeldingerArray = enKunde.getSkademeldinger();
                     //legger til ny skademelding
-                    skademeldingerArray.add(nySkademelding);
+                    enKunde.getSkademeldinger().add(nySkademelding);
 
-                    //legger dummie-array inn i kunde
-                    enKunde.setSkademeldinger(skademeldingerArray);
-
-
-                    //todo MÅ FULLFØRE AT ANTALL SKADEMELDINGER OPPDATERER FORTLØPENDE PÅ ALLE
-                    // Legger til antallUbetalte
                     //setter antall ubetalte
                     enKunde.setAntallErstatningerUbetalte();
                 }
-            }
-            if(!finnes) { //kundeNr finnes ikke i kundeData
-                UgyldigInputHandler.generateAlert("Det er ingen kunde registrert med det\nkundenummeret i systemet"); //alert
             }
         }
     }
@@ -113,9 +97,9 @@ public class SkademeldingController {
             if (bekreftTrykket) {
                 visSkademeldingDetaljer(valgtSkademelding);
 
+                //finner kunden for å oppdatere skademeldingerubetalte
                 for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
                     if (enKunde.getKundeNr() == valgtSkademelding.getKundeNr()) {
-
                         //setter antall ubetalte
                         enKunde.setAntallErstatningerUbetalte();
                     }
@@ -151,23 +135,24 @@ public class SkademeldingController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
+
                 //sletter fra tabell her
                 skademeldingTabell.getItems().remove(valgtSkademelding);
 
+                Skademelding skademeldingTilSletting = null;
+                for (Kunde enKunde : hovedApplikasjon.getKundeData()) {
+                    if (valgtSkademelding.getKundeNr() == enKunde.getKundeNr()) {
 
-                //slette fra kundedata array her
-                Kunde slettKundeSkademelding = null;
-                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (enKunde.getKundeNr() == valgtSkademelding.getKundeNr()) {
-                        slettKundeSkademelding = enKunde;
+                        for (Skademelding skademelding : enKunde.getSkademeldinger()) {
+                            if (valgtSkademelding.equals(skademelding)) {
+                                skademeldingTilSletting = skademelding;
+                            }
+                        }
                     }
-                }
-                if(slettKundeSkademelding != null){
                     //sletter skademelding
-                    slettKundeSkademelding.getSkademeldinger().remove(valgtSkademelding);
-
+                    enKunde.getSkademeldinger().remove(skademeldingTilSletting);
                     //setter antall ubetalte
-                    slettKundeSkademelding.setAntallErstatningerUbetalte();
+                    enKunde.setAntallErstatningerUbetalte();
                 }
             }
         }

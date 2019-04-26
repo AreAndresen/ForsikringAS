@@ -130,7 +130,7 @@ public class Skademelding implements Serializable {
     // skadeType
     public String getSkadeType() { return skadeType.get(); }
     public void setSkadeType(String skadeType) {
-        if (!"BåtForsikring".equals(skadeType) && !"Hus- og innboforsikring".equals(skadeType)
+        if (!"Båtforsikring".equals(skadeType) && !"Hus- og innboforsikring".equals(skadeType)
                 && !"Fritidsboligforsikring".equals(skadeType) && !"Reiseforsikring".equals(skadeType)) {
             throw new UgyldigInputException("Type må være en gyldig forsikringstype.");
         }
@@ -207,39 +207,6 @@ public class Skademelding implements Serializable {
     }
 
 
-    //TODO SJEKKE OM DETTE ER NOE Å HA HER
-    /**
-     * STATISKE METODER FOR INPUT-VALIDERING AV FELLES FELTER I FORSIKRING
-     */
-    public static String sjekkKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon,
-                                      Forsikring forsikringÅRedigere) {
-        String msg = "";
-
-        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
-            msg += "Kundenummer kan ikke være tomt.\n";
-        } else {
-            try {
-                boolean kundeFinnes = false;
-                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                    if (kunde.getKundeNr() == Integer.parseInt(kundeNrField.getText())) {
-                        kundeFinnes = true;
-                    }
-                }
-                if (!kundeFinnes) {
-                    msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.\n";
-                } else {
-                    forsikringÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
-                }
-            } catch (NumberFormatException e) {
-                msg += "Kundenummer må være tall.\n";
-            } catch (UgyldigLopeNrException e) {
-                msg += e.getMessage() + "\n";
-            }
-        }
-        return msg;
-    }
-
-
     //TODO: METODER FOR ENDRING AV SKADEMELDING
     //oppdaterer skadenr
     public String sjekkOgOppdaterSkadeNr(TextField skadeNrField) {
@@ -259,17 +226,27 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    //oppdaterer skadetype
-    public String sjekkOgOppdaterKundeNr(TextField kundeNrField) {
+    //oppdaterer kundeNr
+    public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
         if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
             msg += "Kundenummer kan ikke være tomt.\n";
         } else {
             try {
-                setKundeNr(Integer.parseInt(kundeNrField.getText()));
+                boolean kundeFinnes = false;
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == Integer.parseInt(kundeNrField.getText())) {
+                        kundeFinnes = true;
+                    }
+                }
+                if (!kundeFinnes) {
+                    msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.\n";
+                } else {
+                    setKundeNr(Integer.parseInt(kundeNrField.getText()));
+                }
             } catch (NumberFormatException e) {
-                msg += "Kundenummer nå være tall.\n";
+                msg += "Kundenummer må være tall.\n";
             } catch (UgyldigLopeNrException e) {
                 msg += e.getMessage() + "\n";
             }
