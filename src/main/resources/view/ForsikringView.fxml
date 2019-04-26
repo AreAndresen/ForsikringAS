@@ -48,7 +48,7 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                        <Label layoutX="309.0" layoutY="316.0" text="Type forsikring:" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="309.0" />
+                        <Label layoutX="309.0" layoutY="316.0" text="Type forsikring:" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="172.0" />
                   <ChoiceBox fx:id="typeChoice" layoutX="414.0" layoutY="312.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                     </children>
                 </AnchorPane>

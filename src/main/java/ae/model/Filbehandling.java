@@ -1,5 +1,6 @@
 package ae.model;
 
+import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -9,11 +10,13 @@ import java.io.IOException;
 
 public class Filbehandling {
 
-    public static void lagreKunde(LagreFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path) throws IOException {
+    public static void lagreKunde(LagreFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path)
+            throws IOException {
         lagringsmetode.skrivKundeTilFil(kundeTabell, path);
     }
 
-    public static ObservableList<Kunde> hentKunde(HenteFilStrategy hentemetode, String path) throws IOException, ClassNotFoundException {
+    public static ObservableList<Kunde> hentKunde(HenteFilStrategy hentemetode, String path) throws IOException,
+            ClassNotFoundException, UgyldigKundeFormatException {
         return hentemetode.lesKundeFraFil(path);
     }
 

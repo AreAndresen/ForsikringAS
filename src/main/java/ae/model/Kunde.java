@@ -207,8 +207,8 @@ public class Kunde implements Serializable {
         os.writeObject(getEtternavn());
         os.writeObject(getFornavn());
         os.writeObject(getAdresseFaktura());
-        os.writeObject(getForsikringer());
-        os.writeObject(getSkademeldinger());
+        os.writeObject(new ArrayList<>(getForsikringer()));
+        os.writeObject(new ArrayList<>(getSkademeldinger()));
         os.writeObject(getAntallErstatningerUbetalte());
     }
 
@@ -222,8 +222,8 @@ public class Kunde implements Serializable {
         this.etternavn = new SimpleStringProperty((String)is.readObject());
         this.fornavn = new SimpleStringProperty((String)is.readObject());
         this.adresseFaktura = new SimpleStringProperty((String)is.readObject());
-        this.forsikringer = new SimpleObjectProperty<>((ObservableList<Forsikring>) is.readObject());
-        this.skademeldinger = new SimpleObjectProperty<>((ObservableList<Skademelding>) is.readObject());
+        this.forsikringer = new SimpleObjectProperty<>(FXCollections.observableArrayList((List<Forsikring>) is.readObject()));
+        this.skademeldinger = new SimpleObjectProperty<>(FXCollections.observableArrayList((List<Skademelding>) is.readObject()));
         this.antallErstatningerUbetalte = new SimpleIntegerProperty((int)is.readObject());
 
     }
@@ -231,6 +231,6 @@ public class Kunde implements Serializable {
     @Override
     public String toString() {
         return getKundeNr() +","+ getDatoKundeOpprettet() +","+ getEtternavn() +","+ getFornavn() +","+
-                getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger() +","+ getAntallErstatningerUbetalte();
+                getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger();
     }
 }

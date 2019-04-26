@@ -1,7 +1,9 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
+import ae.controller.util.UgyldigInputHandler;
 import ae.model.*;
+import ae.model.exceptions.UgyldigKundeFormatException;
 import ae.util.IdUtil;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,7 +30,8 @@ public class RotOppsettController {
     @FXML
     private MenuItem lagreFilMenuItem;
 
-    public RotOppsettController() { }
+    public RotOppsettController() {
+    }
 
     /**
      * Kalles fra hovedapplikasjonen for å gi en referanse til seg
@@ -93,9 +96,23 @@ public class RotOppsettController {
         if (filPath.getPath().endsWith(".jobj")) {
             try {
                 hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new HenteJobjStrategy(), filPath.getPath()));
+            } catch (UgyldigKundeFormatException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (filPath.getPath().endsWith(".csv")) {
+            try {
+                hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new HenteCsvStrategy(), filPath.getPath()));
+            } catch (UgyldigKundeFormatException e) {
+                UgyldigInputHandler.generateAlert(e.getMessage());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
