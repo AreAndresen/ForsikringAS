@@ -399,6 +399,8 @@ public class Skademelding implements Serializable {
 
 
 
+    // < ------------------------------------ SERIALISERING ------------------------------------ >
+
     /**
      * Tilpasset writeObject-serialisering av Skademelding-objektet da ObservableList og
      * Property-felter ikke er serialiserbart.*/
@@ -432,6 +434,8 @@ public class Skademelding implements Serializable {
         this.kontaktinfoVitner = new SimpleStringProperty((String)is.readObject());
         this.status = new SimpleStringProperty((String)is.readObject());
     }
+
+    // < ------------------------------------ toString - CSV ------------------------------------ >
 
     @Override
     public String toString() {
