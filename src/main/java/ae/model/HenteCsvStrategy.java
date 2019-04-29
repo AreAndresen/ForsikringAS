@@ -36,7 +36,7 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         // først sjekke om det er kunde, forsikring og skademelding formattert
         String[] linjeSplit = linje.split(",\\[");
         if (linjeSplit.length != 3) {
-            throw new UgyldigKundeFormatException("Fil er ikke skrevet på riktig format. 1");
+            throw new UgyldigKundeFormatException("Fil er ikke skrevet på riktig format.");
         }
 
         String[] kundeData = linjeSplit[0].split(",");
@@ -59,7 +59,7 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         }
 
         if (kundeData.length != 5) {
-            throw new UgyldigKundeFormatException("Fil er ikke skrevet på riktig format. 2");
+            throw new UgyldigKundeFormatException("Kunde er ikke formattert korrekt.");
         }
 
         int kundeNr = parseInt(kundeData[0], "Kundenummer er ikke et tall.");
@@ -100,6 +100,8 @@ public class HenteCsvStrategy implements HenteFilStrategy {
                 }
             }
 
+        } else {
+            throw new UgyldigKundeFormatException("Forsikringer er ikke formattert korrekt.");
         }
         return tmpKunde;
     }

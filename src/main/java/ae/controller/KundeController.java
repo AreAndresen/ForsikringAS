@@ -3,6 +3,8 @@ package ae.controller;
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.*;
 import ae.util.IdUtil;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
@@ -37,6 +39,10 @@ public class KundeController {
     private Label kundeNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
             datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
 
+    // Søke-feltet.
+    @FXML
+    private TextField søkField;
+
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
 
@@ -57,6 +63,17 @@ public class KundeController {
         // ChangeListener som ser etter endringer.
         kundeTabell.getSelectionModel().selectedItemProperty().addListener(
                 (observable, gammelData, nyData) -> visKundensDetaljer(nyData));
+
+        // Behandling av søk
+        søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
+            FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
+
+            kundeFiltered.setPredicate(kunde -> Kunde.behandleSøk(kunde, nyVerdi));
+
+            SortedList<Kunde> kundeSorted = new SortedList<>(kundeFiltered);
+            kundeSorted.comparatorProperty().bind(kundeTabell.comparatorProperty());
+            kundeTabell.setItems(kundeSorted);
+        })));
     }
 
     @FXML

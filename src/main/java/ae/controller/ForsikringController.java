@@ -24,38 +24,38 @@ public class ForsikringController {
 
     // kundenr-tabellen
     @FXML
-    public TableView<Kunde> kundeNrTabell;
+    private TableView<Kunde> kundeNrTabell;
     @FXML
-    public TableColumn<Kunde, Number> kundeNrKolonne;
+    private TableColumn<Kunde, Number> kundeNrKolonne;
     @FXML
-    public TableColumn<Kunde, String> etternavnKolonne;
+    private TableColumn<Kunde, String> etternavnKolonne;
     @FXML
-    public TextField søkField;
+    private TextField søkField;
 
     // forsikring-tabellen
     @FXML
-    public TableView<Forsikring> forsikringTabell;
+    private TableView<Forsikring> forsikringTabell;
     @FXML
-    public TableColumn<Forsikring, Number> forsikringsnrKolonne;
+    private TableColumn<Forsikring, Number> forsikringsnrKolonne;
     @FXML
-    public TableColumn<Forsikring, LocalDate> datoOpprettetKolonne;
+    private TableColumn<Forsikring, LocalDate> datoOpprettetKolonne;
     @FXML
-    public TableColumn<Forsikring, Number> forsikringsbelopKolonne;
+    private TableColumn<Forsikring, Number> forsikringsbelopKolonne;
     @FXML
-    public TableColumn<Forsikring, String> betingelserKolonne;
+    private TableColumn<Forsikring, String> betingelserKolonne;
     @FXML
-    public TableColumn<Forsikring, String> typeKolonne;
+    private TableColumn<Forsikring, String> typeKolonne;
 
     // labels
     @FXML
-    public Label metaEnLabel, metaToLabel, metaTreLabel, metaFireLabel, metaFemLabel,
+    private Label metaEnLabel, metaToLabel, metaTreLabel, metaFireLabel, metaFemLabel,
             metaSeksLabel, metaSjuLabel, metaÅtteLabel;
     @FXML
-    public Label resultatEnLabel, resultatToLabel, resultatTreLabel, resultatFireLabel,
+    private Label resultatEnLabel, resultatToLabel, resultatTreLabel, resultatFireLabel,
             resultatFemLabel, resultatSeksLabel, resultatSjuLabel, resultatÅtteLabel;
 
     @FXML
-    public ChoiceBox typeChoice;
+    private ChoiceBox typeChoice;
 
     private ObservableList<String> typeSortering = FXCollections.observableArrayList("Alle", "Båtforsikring",
             "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
@@ -90,7 +90,7 @@ public class ForsikringController {
         kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
                 (((observable, gammelData, nyData) -> visForsikringer(nyData))));
 
-        søkField.textProperty().addListener((((observable, oldValue, nyVerdi) -> {
+        søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
             FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
             kundeFiltered.setPredicate(kunde -> Kunde.behandleSøk(kunde, nyVerdi));
@@ -99,7 +99,6 @@ public class ForsikringController {
             kundeSorted.comparatorProperty().bind(kundeNrTabell.comparatorProperty());
             kundeNrTabell.setItems(kundeSorted);
         })));
-
     }
 
     private void visForsikringer(Kunde kunde) {
