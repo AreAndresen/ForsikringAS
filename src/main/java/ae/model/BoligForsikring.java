@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class HusOgInnboForsikring extends Forsikring implements Serializable {
+public class BoligForsikring extends Forsikring implements Serializable {
     private transient StringProperty adresseBolig;
     private transient IntegerProperty byggeår;
     private transient StringProperty byggemateriale;
@@ -23,17 +23,17 @@ public class HusOgInnboForsikring extends Forsikring implements Serializable {
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // tomt objekt-konstruktør
-    public HusOgInnboForsikring(int kundeNr, int forsikringsNr) {
-        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, "Hus- og innboforsikring",
+    public BoligForsikring(int kundeNr, int forsikringsNr, String type) {
+        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, type,
                 null, 0, null, null, 0, 0,
                 0);
     }
 
     // default konstruktør
-    public HusOgInnboForsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet, int forsikringsBelop,
-                                String betingelser, String type, String adresseBolig, int byggeår,
-                                String byggemateriale, String standard, int antallKvm, double forsikringsbelopBygning,
-                                double forsikringsbelopInnbo) {
+    public BoligForsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet, int forsikringsBelop,
+                           String betingelser, String type, String adresseBolig, int byggeår,
+                           String byggemateriale, String standard, int antallKvm, double forsikringsbelopBygning,
+                           double forsikringsbelopInnbo) {
         super(kundeNr, forsikringsNr, datoOpprettet, forsikringsBelop, betingelser, type);
         this.adresseBolig = new SimpleStringProperty(adresseBolig);
         this.byggeår = new SimpleIntegerProperty(byggeår);

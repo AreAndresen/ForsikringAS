@@ -1,6 +1,5 @@
 package ae.model;
 
-import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,7 +89,18 @@ public class HenteCsvStrategy implements HenteFilStrategy {
                     tmpKunde.getForsikringer().add(tmpBåtforsikring);
                 }
                 if ("Hus- og innboforsikring".equals(type)) {
-                    Forsikring tmpInnboforsikring = new HusOgInnboForsikring(kundeNrForsikring, forsikringsNr);
+                    Forsikring tmpInnboforsikring = new BoligForsikring(kundeNrForsikring, forsikringsNr,
+                            "Hus- og innboforsikring");
+                    tmpInnboforsikring.setDatoOpprettet(datoOpprettet);
+                    tmpInnboforsikring.setForsikringsBelop(forsikringsbelop);
+                    tmpInnboforsikring.setBetingelser(betingelser);
+                    tmpInnboforsikring.setType(type);
+
+                    tmpKunde.getForsikringer().add(tmpInnboforsikring);
+                }
+                if ("Fritidsboligforsikring".equals(type)) {
+                    Forsikring tmpInnboforsikring = new BoligForsikring(kundeNrForsikring, forsikringsNr,
+                            "Fritidsboligforsikring");
                     tmpInnboforsikring.setDatoOpprettet(datoOpprettet);
                     tmpInnboforsikring.setForsikringsBelop(forsikringsbelop);
                     tmpInnboforsikring.setBetingelser(betingelser);

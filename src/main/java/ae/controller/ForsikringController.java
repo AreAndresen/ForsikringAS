@@ -74,7 +74,7 @@ public class ForsikringController {
         betingelserKolonne.setCellValueFactory(celleData -> celleData.getValue().betingelserProperty());
         typeKolonne.setCellValueFactory(celleData -> celleData.getValue().typeProperty());
 
-        typeChoice.setValue("Alle");
+        //typeChoice.setValue("Alle");
         typeChoice.setItems(typeSortering);
 
         visForsikringDetaljer(null);
@@ -98,7 +98,10 @@ public class ForsikringController {
     }
 
     private void visForsikringer(Kunde kunde) {
+        typeChoice.setValue("Alle");
+        typeChoice.setDisable(true);
         if (kunde != null) {
+            typeChoice.setDisable(false);
             FilteredList<Forsikring> forsikringerFiltered = new FilteredList<>(kunde.getForsikringer());
 
             typeChoice.valueProperty().addListener(new ChangeListener<String>() {
@@ -110,8 +113,6 @@ public class ForsikringController {
             });
 
             forsikringTabell.setItems(forsikringerFiltered);
-        } else {
-            forsikringTabell.getItems().removeAll();
         }
     }
 
@@ -147,8 +148,9 @@ public class ForsikringController {
                 resultatÅtteLabel.setText("");
             }
 
-            if ("Hus- og innboforsikring".equals(forsikring.getType())) {
-                HusOgInnboForsikring innboForsikring = (HusOgInnboForsikring) forsikring;
+            if ("Hus- og innboforsikring".equals(forsikring.getType()) ||
+                    "Fritidsboligforsikring".equals(forsikring.getType())) {
+                BoligForsikring boligForsikring = (BoligForsikring) forsikring;
 
                 // setter inn metadata
                 metaEnLabel.setText("Adresse bolig");
@@ -160,13 +162,13 @@ public class ForsikringController {
                 metaSjuLabel.setText("Forsikringsbeløp innbo");
 
                 // setter inn resultatdata
-                resultatEnLabel.setText(innboForsikring.getAdresseBolig());
-                resultatToLabel.setText(Integer.toString(innboForsikring.getByggeår()));
-                resultatTreLabel.setText(innboForsikring.getByggemateriale());
-                resultatFireLabel.setText(innboForsikring.getStandard());
-                resultatFemLabel.setText(Integer.toString(innboForsikring.getAntallKvm()));
-                resultatSeksLabel.setText(Double.toString(innboForsikring.getForsikringsbelopBygning()));
-                resultatSjuLabel.setText(Double.toString(innboForsikring.getForsikringsbelopInnbo()));
+                resultatEnLabel.setText(boligForsikring.getAdresseBolig());
+                resultatToLabel.setText(Integer.toString(boligForsikring.getByggeår()));
+                resultatTreLabel.setText(boligForsikring.getByggemateriale());
+                resultatFireLabel.setText(boligForsikring.getStandard());
+                resultatFemLabel.setText(Integer.toString(boligForsikring.getAntallKvm()));
+                resultatSeksLabel.setText(Double.toString(boligForsikring.getForsikringsbelopBygning()));
+                resultatSjuLabel.setText(Double.toString(boligForsikring.getForsikringsbelopInnbo()));
 
                 // tømmer de andre
                 metaÅtteLabel.setText("");
@@ -223,15 +225,39 @@ public class ForsikringController {
     public void gåTilNyHusOgInnboForsikringPopup() {
         if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
             int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-            Forsikring nyHusOgInnboForsikring = new HusOgInnboForsikring(
-                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
-            boolean bekreftTrykket = Viewbehandling.visNyHusOgInnboforsikringPopup(hovedApplikasjon,
-                    (HusOgInnboForsikring) nyHusOgInnboForsikring);
+            Forsikring nyHusOgInnboForsikring = new BoligForsikring(
+                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr,
+                    "Hus- og innboforsikring");
+            boolean bekreftTrykket = Viewbehandling.visNyBoligforsikringPopup(hovedApplikasjon,
+                    (BoligForsikring) nyHusOgInnboForsikring);
 
             if (bekreftTrykket) {
                 for (Kunde kunde : hovedApplikasjon.getKundeData()) {
                     if (kunde.getKundeNr() == nyHusOgInnboForsikring.getKundeNr()) {
                         kunde.getForsikringer().add(nyHusOgInnboForsikring);
+                    }
+                }
+            }
+        } else {
+            AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
+                    "Du må velge en kunde for å kunne registrere forsikringer!");
+        }
+    }
+
+    @FXML
+    public void gåTilNyFritidsboligForsikringPopup() {
+        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+            int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+            Forsikring nyFritidsboligForsikring = new BoligForsikring(
+                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr,
+                    "Fritidsboligforsikring");
+            boolean bekreftTrykket = Viewbehandling.visNyBoligforsikringPopup(hovedApplikasjon,
+                    (BoligForsikring) nyFritidsboligForsikring);
+
+            if (bekreftTrykket) {
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == nyFritidsboligForsikring.getKundeNr()) {
+                        kunde.getForsikringer().add(nyFritidsboligForsikring);
                     }
                 }
             }
@@ -255,14 +281,16 @@ public class ForsikringController {
                 }
             }
 
-            if ("Hus- og innboforsikring".equals(valgtForsikring.getType())) {
-                boolean bekreftTrykket = Viewbehandling.visRedigerHusOgInnboforsikringPopup(
-                        hovedApplikasjon, (HusOgInnboForsikring) valgtForsikring);
+            if ("Hus- og innboforsikring".equals(valgtForsikring.getType()) ||
+                    "Fritidsboligforsikring".equals(valgtForsikring.getType())) {
+                boolean bekreftTrykket = Viewbehandling.visRedigerBoligforsikringPopup(
+                        hovedApplikasjon, (BoligForsikring) valgtForsikring);
 
                 if (bekreftTrykket) {
                     visForsikringDetaljer(valgtForsikring);
                 }
             }
+
         } else {
             AlertHandler.genererWarningAlert("Rediger forsikring", "Ingen forsikring valgt",
                     "Du må velge en forsikring for å kunne redigere!");
