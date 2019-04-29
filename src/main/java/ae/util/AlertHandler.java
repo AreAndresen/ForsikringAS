@@ -1,4 +1,4 @@
-package ae.controller.util;
+package ae.util;
 
 import ae.HovedApplikasjon;
 import javafx.scene.control.Alert;

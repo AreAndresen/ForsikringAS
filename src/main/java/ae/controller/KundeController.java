@@ -1,6 +1,6 @@
 package ae.controller;
 
-import ae.controller.util.AlertHandler;
+import ae.util.AlertHandler;
 import ae.model.*;
 import ae.util.IdUtil;
 import javafx.collections.transformation.FilteredList;

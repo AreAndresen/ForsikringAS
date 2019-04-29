@@ -1,7 +1,7 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.controller.util.AlertHandler;
+import ae.util.AlertHandler;
 import ae.model.*;
 import ae.util.IdUtil;
 import javafx.beans.value.ChangeListener;

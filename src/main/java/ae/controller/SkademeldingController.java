@@ -1,5 +1,5 @@
 package ae.controller;
-import ae.controller.util.AlertHandler;
+import ae.util.AlertHandler;
 import ae.model.Filbehandling;
 import ae.model.Kunde;
 import ae.model.Viewbehandling;

@@ -1,7 +1,7 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.controller.util.AlertHandler;
+import ae.util.AlertHandler;
 import ae.model.Kunde;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

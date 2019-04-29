@@ -2,7 +2,7 @@ package ae.controller;
 
 
 import ae.HovedApplikasjon;
-import ae.controller.util.AlertHandler;
+import ae.util.AlertHandler;
 import ae.model.HusOgInnboForsikring;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
