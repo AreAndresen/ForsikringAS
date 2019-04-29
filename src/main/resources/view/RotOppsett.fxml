@@ -19,7 +19,7 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#gåTilForsikringoversikt" text="Forsikring" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Avslutt" />
+                        <MenuItem mnemonicParsing="false" onAction="#avsluttTrykket" text="Avslutt" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Fil">
@@ -31,7 +31,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Hjelp">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Om Forsikring AS" />
+                        <MenuItem mnemonicParsing="false" onAction="#visOmOss" text="Om Forsikring AS" />
                     </items>
                 </Menu>
             </menus>

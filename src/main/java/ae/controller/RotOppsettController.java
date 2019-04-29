@@ -5,10 +5,14 @@ import ae.util.AlertHandler;
 import ae.model.*;
 import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Controller for RotOppsett. Rotoppsettet inneholder menylinjen
@@ -108,5 +112,32 @@ public class RotOppsettController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    public void avsluttTrykket() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(hovedApplikasjon.getHovedStage());
+        alert.setTitle("Avslutt");
+        alert.setHeaderText("Bekreft avlsutning");
+        alert.setContentText("Er du sikker på at du ønsker å avslutte?");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            hovedApplikasjon.getHovedStage().close();
+        }
+    }
+
+    @FXML
+    public void visOmOss() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(hovedApplikasjon.getHovedStage());
+        alert.setTitle("Om oss");
+        alert.setHeaderText("Semesteroppgave DATA1600 Vår 2019");
+        alert.setContentText("Dette er en semesteroppgave av studenter ved OsloMet.");
+
+        alert.showAndWait();
     }
 }
