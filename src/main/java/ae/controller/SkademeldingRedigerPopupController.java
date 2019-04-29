@@ -76,6 +76,7 @@ public class SkademeldingRedigerPopupController {
     }
 
 
+
     /**
      * Returnerer true dersom bruker trykker på Bekreft, hvis ikke
      * så false

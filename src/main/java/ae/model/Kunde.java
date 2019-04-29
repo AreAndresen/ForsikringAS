@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ae.HovedApplikasjon;
+import ae.model.exceptions.UgyldigDatoException;
+import ae.model.exceptions.UgyldigInputException;
+import ae.model.exceptions.UgyldigLopeNrException;
 import ae.model.exceptions.kunde.UgyldigAdresseException;
 import ae.model.exceptions.kunde.UgyldigEtternavnException;
 import ae.model.exceptions.kunde.UgyldigFornavnException;
@@ -19,19 +24,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 
-/**
- * Domenemodell for kunder
- */
+import javafx.scene.control.TextField;
+import org.w3c.dom.Text;
+
+
+
 public class Kunde implements Serializable {
     private static final long serialVersionUID = 1;
 
-    /**
-     * Nødvendige datafelt for å kommunisere med TableView.
-     * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
-     */
     private transient IntegerProperty kundeNr;
     private transient ObjectProperty<LocalDate> datoKundeOpprettet;
     private transient StringProperty etternavn;
@@ -41,6 +42,8 @@ public class Kunde implements Serializable {
     private transient ObjectProperty<ObservableList<Skademelding>> skademeldinger;
     private transient IntegerProperty antallErstatningerUbetalte;
 
+
+    // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
     /**
      * Konstruktør for midlertidig kunde i Ny kunde.
      */
@@ -84,14 +87,17 @@ public class Kunde implements Serializable {
         this.antallErstatningerUbetalte  = new SimpleIntegerProperty(antallErstatningerUbetalte);
     }
 
-    /**
-     * Getter og settere pluss get-metoder for Property-feltene.
-     */
+
+    // < ------------------------------------ GET OG SET ------------------------------------ >
+
     // kundeNr
     public int getKundeNr() {
         return kundeNr.get();
     }
     public void setKundeNr(int kundeNr) {
+        if (kundeNr < 0) {
+            throw new UgyldigLopeNrException("Kundenummer må være større enn 0.");
+        }
         this.kundeNr.set(kundeNr);
     }
     public IntegerProperty kundeNrProperty() {
@@ -103,6 +109,9 @@ public class Kunde implements Serializable {
         return datoKundeOpprettet.get();
     }
     public void setDatoKundeOpprettet(LocalDate datoKundeOpprettet) {
+        if (datoKundeOpprettet.isAfter(LocalDate.now())) {
+            throw new UgyldigDatoException();
+        }
         this.datoKundeOpprettet.set(datoKundeOpprettet);
     }
     public ObjectProperty<LocalDate> datoKundeOpprettetProperty() {
@@ -115,8 +124,9 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setEtternavn(String etternavn) {
-        if(etternavn == null || etternavn.length() == 0){
-            throw new UgyldigEtternavnException();
+        if(etternavn == null || !etternavn.matches("[a-zA-ZæøåÆØÅ]{2,30}+")){
+            throw new UgyldigInputException("Etternavn må være mellom 2-30 bokstaver og " +
+                    " kan kun inneholde bokstaver og spesialtegnet - ");
         }
         this.etternavn.set(etternavn);
     }
@@ -130,8 +140,9 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setFornavn(String fornavn) {
-        if(fornavn == null || !fornavn.matches("[a-zA-ZæøåÆØÅ]{2,20}+")){
-            throw new UgyldigFornavnException();
+        if(fornavn == null || !fornavn.matches("[a-zA-ZæøåÆØÅ]{2,30}+")){
+            throw new UgyldigInputException("må være mellom 2-30 bokstaver og " +
+                    " kan kun inneholde bokstaver og spesialtegnet - ");
         }
         this.fornavn.set(fornavn);
     }
@@ -145,8 +156,9 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setAdresseFaktura(String adresseFaktura) {
-        if(adresseFaktura == null || adresseFaktura.length() == 0){
-            throw new UgyldigAdresseException();
+        if (adresseFaktura == null || !adresseFaktura.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException("Adresse kan ikke overstige 30 tegn og eneste tillate\n spesialtegn" +
+                    "er bindestrek og punktum.");
         }
         this.adresseFaktura.set(adresseFaktura);
     }
@@ -165,7 +177,6 @@ public class Kunde implements Serializable {
         return forsikringer;
     }
 
-
     // skademeldinger
     public ObservableList<Skademelding> getSkademeldinger() {
         return skademeldinger.get();
@@ -177,15 +188,13 @@ public class Kunde implements Serializable {
         return skademeldinger;
     }
 
-
     //antallErstatningerUbetalte
     public int getAntallErstatningerUbetalte() {
         return antallErstatningerUbetalte.get();
     }
-    //TODO metoder for å finne antall ubetalte erstatninger
     public void setAntallErstatningerUbetalte(){
         int antall = 0;
-
+        //teller antall ubetalte
         for(Skademelding skade : this.getSkademeldinger()){
             if(skade.getStatus().equals("Ubetalt")){
                 antall++;
@@ -197,34 +206,126 @@ public class Kunde implements Serializable {
         return antallErstatningerUbetalte;
     }
 
-    // Statisk metode som brukes for søk
-    public static boolean behandleSøk(Kunde kunde, String input) {
-        // viser alt hvis det ikke er noe skrevet inn
-        if (input == null || input.isEmpty()) {
-            return true;
-        } else {
-            // må ta til lower case for å sjekke på alt
-            String søkeord = input.toLowerCase();
 
-            if (Integer.toString(kunde.getKundeNr()).startsWith(søkeord)) {
-                return true;
-            }
-            if (kunde.getEtternavn().toLowerCase().startsWith(søkeord)) {
-                return true;
-            }
-            if (kunde.getFornavn().toLowerCase().startsWith(søkeord)) {
-                return true;
-            }
-            if (kunde.getAdresseFaktura().toLowerCase().contains(søkeord)) {
-                return true;
-            }
-            if (kunde.getDatoKundeOpprettet().toString().contains(søkeord)) {
-                return true;
+
+
+
+    // < ------------------------------------ INPUT-VALIDERING ------------------------------------ >
+
+    //skadenr
+    public String sjekkOgOppdaterKundeNr2(TextField kundeNrField) {
+        String msg = "";
+
+        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+            msg += "Skadenummer kan ikke være tomt.\n";
+        } else {
+            try {
+                setKundeNr(Integer.parseInt(kundeNrField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Kundeenummer nå være tall.\n";
+            } catch (UgyldigLopeNrException e) {
+                msg += e.getMessage() + "\n";
             }
         }
-        return false;
+        return msg;
     }
 
+    /* kundeNr
+    public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
+        String msg = "";
+
+        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+            msg += "Kundenummer kan ikke være tomt.\n";
+        } else {
+            try {
+                boolean kundeFinnes = false;
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == Integer.parseInt(kundeNrField.getText())) {
+                        kundeFinnes = true;
+                    }
+                }
+                if (!kundeFinnes) {
+                    msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.\n";
+                } else {
+                    setKundeNr(Integer.parseInt(kundeNrField.getText()));
+                }
+            } catch (NumberFormatException e) {
+                msg += "Kundenummer må være tall.\n";
+            } catch (UgyldigLopeNrException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }*/
+
+    //oppdaterer fornavn
+    public String sjekkOgOppdaterFornavn(TextField fornavnField) {
+        String msg = "";
+
+        if (fornavnField.getText() == null || fornavnField.getText().isEmpty()) {
+            msg += "Fornavn kan ikke være tom.\n";
+        } else {
+            try {
+                setFornavn(fornavnField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer etternavn
+    public String sjekkOgOppdaterEtternavn(TextField etternavnField) {
+        String msg = "";
+
+        if (etternavnField.getText() == null || etternavnField.getText().isEmpty()) {
+            msg += "Etternavn kan ikke være tom.\n";
+        } else {
+            try {
+                setEtternavn(etternavnField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //oppdaterer adresseFaktura
+    public String sjekkOgOppdaterAdresseFaktura(TextField adresseField) {
+        String msg = "";
+
+        if (adresseField.getText() == null || adresseField.getText().isEmpty()) {
+            msg += "Adresse kan ikke være tom.\n";
+        } else {
+            try {
+                setAdresseFaktura(adresseField.getText());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    // skadedato
+    public String sjekkOgOppdaterDatoKundeOpprettet(TextField datoKundeOpprettetField) {
+        String msg = "";
+
+        if ( datoKundeOpprettetField.getText() == null || datoKundeOpprettetField.getText().isEmpty()) {
+            msg += "Dato kan ikke være tom.\n";
+        } else {
+            try {
+                setDatoKundeOpprettet(LocalDate.parse(datoKundeOpprettetField.getText()));
+            } catch (DateTimeException e) {
+                msg += "Dato er ikke en gyldig dato.\n";
+            } catch (UgyldigDatoException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+
+    // < ------------------------------------ SERIALISERING ------------------------------------ >
 
     /**
      * Tilpasset writeObject-serialisering av Kunde-objektet da ObservableList og

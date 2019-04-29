@@ -36,7 +36,7 @@ public class Skademelding implements Serializable {
 
     // tomt objekt-konstruktør
     public Skademelding(int kundeNr, int skadeNr) { this(kundeNr, skadeNr, LocalDate.now(), null, null,
-            0.0, 0.0, null, null); }
+            0.0, 0.0, "", null); }
 
     // default konstruktør
      public Skademelding(int kundeNr, int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
@@ -149,7 +149,7 @@ public class Skademelding implements Serializable {
     //kontaktinfo
     public String getKontaktinfoVitner() { return kontaktinfoVitner.get(); }
     public void setKontaktinfoVitner(String kontaktinfoVitner) {
-        if (!kontaktinfoVitner.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.\\?]{1,200}+")) {
+        if (kontaktinfoVitner == null || !kontaktinfoVitner.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.\\?]{0,200}+")) {
             throw new UgyldigInputException("Vitner kan ikke overstige 200 tegn og eneste tillate\n spesialtegn" +
                     "er bindestrek, punktum og ?");
         }

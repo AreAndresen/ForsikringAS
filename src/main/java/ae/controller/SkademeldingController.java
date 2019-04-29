@@ -111,7 +111,7 @@ public class SkademeldingController {
     @FXML
     public void gåTilNySkademeldingPopup() {
         if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
-            int skadeNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+            int skadeNr = IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData());
 
             Skademelding nySkademelding = new Skademelding(
                     kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), skadeNr);
