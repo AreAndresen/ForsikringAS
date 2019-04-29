@@ -70,7 +70,7 @@ public class SkademeldingRedigerPopupController {
         kontaktinfoVitnerField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
         //statusField.setValue(skademeldingÅRedigere.get);
 
-        //kundeNrField.setDisable(true);
+        kundeNrField.setDisable(true);
         skadeNrField.setDisable(true);
         datoSkademeldingOpprettetField.setDisable(true);
     }

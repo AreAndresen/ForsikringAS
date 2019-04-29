@@ -21,11 +21,18 @@ import javafx.scene.control.TableView;
 
 public class SkademeldingController {
 
+
+    // kundenr-tabellen
+    @FXML
+    public TableView<Kunde> kundeNrTabell;
+    @FXML
+    public TableColumn<Kunde, Number> kundeNrKolonne;
+    @FXML
+    public TableColumn<Kunde, String> etternavnKolonne;
+
     // Tabellen.
     @FXML
     private TableView<Skademelding> skademeldingTabell;
-    @FXML
-    private TableColumn<Skademelding, Number> kundeNrKolonne; //kunde ID
     @FXML
     private TableColumn<Skademelding, Number> skadeNrKolonne;
     @FXML
@@ -54,6 +61,8 @@ public class SkademeldingController {
     private void initialize() {
         // Initier skademelding-tabellen med kobling til alle kolonnene
         kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
+        etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
+
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
         belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
@@ -63,29 +72,69 @@ public class SkademeldingController {
 
         // Sender inn null for å tømme feltene.
         visSkademeldingDetaljer(null);
+        visSkademeldinger(null);
 
         // ChangeListener som ser etter endringer.
         skademeldingTabell.getSelectionModel().selectedItemProperty().addListener(
                 (observable, gammelData, nyData) -> visSkademeldingDetaljer(nyData));
+
+        kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
+                (((observable, gammelData, nyData) -> visSkademeldinger(nyData))));
     }
+
+    private void visSkademeldinger(Kunde kunde) {
+
+        if (kunde != null) {
+            skademeldingTabell.setItems(kunde.getSkademeldinger());
+        } else {
+            skademeldingTabell.getItems().clear();
+        }
+    }
+
+    /** Fyller ut info-feltene om hver kunde.Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
+     * antall av de ulike typene. Knappene skal trykkes for å vise de.*/
+    public void visSkademeldingDetaljer(Skademelding skademelding) {
+        if (skademelding != null) {
+            skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
+            beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
+            kontaktinfoVitnerLabel.setText(skademelding.getKontaktinfoVitner());
+
+        } else {
+
+            // Ingen skademelding valgt, fjerner all tekst.
+            skadeNrLabel.setText("");
+            beskrivelseAvSkadeLabel.setText("");
+            kontaktinfoVitnerLabel.setText("");
+        }
+    }
+
 
     @FXML
     public void gåTilNySkademeldingPopup() {
-        Skademelding nySkademelding = new Skademelding(IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData()));
-        boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
+        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+            int skadeNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
 
-        if (bekreftTrykket) {
-            for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                if (enKunde.getKundeNr() == nySkademelding.getKundeNr()) {
-                    //legger til ny skademelding
-                    enKunde.getSkademeldinger().add(nySkademelding);
+            Skademelding nySkademelding = new Skademelding(
+                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), skadeNr);
 
+            boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
-                    //setter antall ubetalte
-                    enKunde.setAntallErstatningerUbetalte();
+            if (bekreftTrykket) {
+                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
+                    if (enKunde.getKundeNr() == nySkademelding.getKundeNr()) {
+                        //legger til ny skademelding
+                        enKunde.getSkademeldinger().add(nySkademelding);
+
+                        //setter antall ubetalte
+                        enKunde.setAntallErstatningerUbetalte();
+                    }
                 }
             }
         }
+        else {
+            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne registrere en skademelding!");
+        }
+
     }
 
     @FXML
@@ -172,22 +221,7 @@ public class SkademeldingController {
         //lagreFilMenuItem.setDisable(false);
     }
 
-    /** Fyller ut info-feltene om hver kunde.Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
-     * antall av de ulike typene. Knappene skal trykkes for å vise de.*/
-    public void visSkademeldingDetaljer(Skademelding skademelding) {
-        if (skademelding != null) {
-            skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
-            beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
-            kontaktinfoVitnerLabel.setText(skademelding.getKontaktinfoVitner());
 
-        } else {
-
-            // Ingen skademelding valgt, fjerner all tekst.
-            skadeNrLabel.setText("");
-            beskrivelseAvSkadeLabel.setText("");
-            kontaktinfoVitnerLabel.setText("");
-        }
-    }
 
     /**
      * Kalles fra RotOppsettController for å gi en referanse til
@@ -196,6 +230,8 @@ public class SkademeldingController {
 
         this.hovedApplikasjon = hovedApplikasjon;
 
-        skademeldingTabell.setItems(hovedApplikasjon.getAlleSkademeldinger());
+        //skademeldingTabell.setItems(hovedApplikasjon.getAlleSkademeldinger());
+
+        kundeNrTabell.setItems(hovedApplikasjon.getKundeData());
     }
 }

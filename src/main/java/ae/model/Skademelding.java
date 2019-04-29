@@ -31,8 +31,9 @@ public class Skademelding implements Serializable {
      * * Nødvendige datafelt for å kommunisere med TableView.
      * * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
      */
-    private transient IntegerProperty skadeNr;
+
     private transient IntegerProperty kundeNr; //kunde ID
+    private transient IntegerProperty skadeNr;
     private transient ObjectProperty<LocalDate> datoSkade;
     private transient StringProperty skadeType;
     private transient StringProperty skadeBeskrivelse;
@@ -45,18 +46,18 @@ public class Skademelding implements Serializable {
     /**
      * Konstruktør for midlertidig skademelding i Ny skademelding.
      */
-    public Skademelding(int skadeNr) { this(skadeNr, 0, LocalDate.now(), null, null,
+    public Skademelding(int kundeNr, int skadeNr) { this(kundeNr, skadeNr, LocalDate.now(), null, null,
             0.0, 0.0, null, null); }
 
     /**
      * Konstruktør for Ny skademelding.
      */
-     public Skademelding(int skadeNr, int kundeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
+     public Skademelding(int kundeNr, int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                          Double belopTaksering, Double erstatningsbelopUtbetalt, String kontaktinfoVitner, String status) {
 
         // Ta imot parametere
+         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
-        this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
@@ -69,6 +70,20 @@ public class Skademelding implements Serializable {
     /**
      * Getter og settere pluss get-metoder for Property-feltene.
      */
+    // kundeNr
+    public int getKundeNr() {
+        return kundeNr.get();
+    }
+    public void setKundeNr(int kundeNr) {
+        if (kundeNr < 0) {
+            throw new UgyldigLopeNrException("Kundenummer må være større enn 0.");
+        }
+        this.kundeNr.set(kundeNr);
+    }
+    public IntegerProperty kundeNrProperty() {
+        return kundeNr;
+    }
+
     // skadeNr
     public int getSkadeNr() {
         return skadeNr.get();
@@ -81,20 +96,6 @@ public class Skademelding implements Serializable {
     }
     public IntegerProperty skadeNrProperty() {
         return skadeNr;
-    }
-
-    // forsikringsNr
-    public int getKundeNr() {
-        return kundeNr.get();
-    }
-    public void setKundeNr(int kundeNr) {
-        if (kundeNr < 0) {
-            throw new UgyldigLopeNrException("Kundenummer må være større enn 0.");
-        }
-        this.kundeNr.set(kundeNr);
-    }
-    public IntegerProperty kundeNrProperty() {
-        return kundeNr;
     }
 
     //datoSkade

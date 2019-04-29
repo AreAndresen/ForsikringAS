@@ -148,8 +148,10 @@ public class ForsikringController {
     public void gåTilNyBåtForsikringPopup() {
         if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
             int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+
             Forsikring nyBåtForsikring = new BåtForsikring(
                     kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
+
             boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
 
             if (bekreftTrykket) {
