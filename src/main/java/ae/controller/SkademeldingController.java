@@ -100,7 +100,6 @@ public class SkademeldingController {
             kontaktinfoVitnerLabel.setText(skademelding.getKontaktinfoVitner());
 
         } else {
-
             // Ingen skademelding valgt, fjerner all tekst.
             skadeNrLabel.setText("");
             beskrivelseAvSkadeLabel.setText("");

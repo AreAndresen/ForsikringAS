@@ -16,23 +16,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-/**
-     * Domenemodell for skademelding
-     */
 
 public class Skademelding implements Serializable {
-    private static final long serialVersionUID = 2;
+    private static final long serialVersionUID = 1;
 
-    /**
-     * * Nødvendige datafelt for å kommunisere med TableView.
-     * * transient brukes for at maskinen ikke skal prøve å serialisere Property feltene
-     */
-
-    private transient IntegerProperty kundeNr; //kunde ID
+    private transient IntegerProperty kundeNr;
     private transient IntegerProperty skadeNr;
     private transient ObjectProperty<LocalDate> datoSkade;
     private transient StringProperty skadeType;
@@ -43,19 +32,15 @@ public class Skademelding implements Serializable {
     private transient StringProperty status;
 
 
-    /**
-     * Konstruktør for midlertidig skademelding i Ny skademelding.
-     */
+    // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
+
+    // tomt objekt-konstruktør
     public Skademelding(int kundeNr, int skadeNr) { this(kundeNr, skadeNr, LocalDate.now(), null, null,
             0.0, 0.0, null, null); }
 
-    /**
-     * Konstruktør for Ny skademelding.
-     */
+    // default konstruktør
      public Skademelding(int kundeNr, int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
                          Double belopTaksering, Double erstatningsbelopUtbetalt, String kontaktinfoVitner, String status) {
-
-        // Ta imot parametere
          this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
@@ -67,9 +52,8 @@ public class Skademelding implements Serializable {
         this.status = new SimpleStringProperty(status);
     }
 
-    /**
-     * Getter og settere pluss get-metoder for Property-feltene.
-     */
+    // < ------------------------------------ GET OG SET ------------------------------------ >
+
     // kundeNr
     public int getKundeNr() {
         return kundeNr.get();
@@ -158,7 +142,6 @@ public class Skademelding implements Serializable {
         return erstatningsbelopUtbetalt;
     }
 
-
     //kontaktinfo
     public String getKontaktinfoVitner() { return kontaktinfoVitner.get(); }
     public void setKontaktinfoVitner(String kontaktinfoVitner) {
@@ -167,7 +150,6 @@ public class Skademelding implements Serializable {
     public StringProperty kontaktinfoVitnerProperty() {
         return kontaktinfoVitner;
     }
-
 
     //status
     public String getStatus() {
@@ -181,8 +163,9 @@ public class Skademelding implements Serializable {
     }
 
 
-    //TODO: METODER FOR ENDRING AV SKADEMELDING
-    //oppdaterer skadenr
+    // < ------------------------------------ INPUT-VALIDERING ------------------------------------ >
+
+    //skadenr
     public String sjekkOgOppdaterSkadeNr(TextField skadeNrField) {
         String msg = "";
 
@@ -200,7 +183,7 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    //oppdaterer kundeNr
+    // kundeNr
     public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
@@ -228,7 +211,7 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    //oppdaterer skadedato
+    // skadedato
     public String sjekkOgOppdaterDatoSkade(TextField datoSkademeldingOpprettetField) {
         String msg = "";
 
@@ -246,9 +229,7 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-
-    //Todo EKSTRA SJEKK PÅ EMPTY PÅ DE ANDRE???
-    //oppdaterer skadetype
+    // skadetype
     public String sjekkOgOppdaterSkadetype(ChoiceBox skadeTypeField) {
         String msg = "";
 
@@ -264,7 +245,7 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    //oppdaterer skadebeskrivelse
+    // skadebeskrivelse
     public String sjekkOgOppdaterSkadebeskrivelse(TextField skadebeskrivelseField) {
         String msg = "";
 
@@ -280,7 +261,7 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    //oppdaterer Takseringsbeløp
+    // Takseringsbeløp
     public String sjekkOgOppdaterTakseringsbeløp(TextField belopTakseringField) {
         String msg = "";
 
@@ -298,7 +279,7 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    //oppdaterer erstatningsbelop Utbetalt
+    // erstatningsbelop Utbetalt
     public String sjekkOgOppdaterErstatningsbelopUtbetalt(TextField erstatningsbelopUtbetaltField) {
         String msg = "";
 
@@ -316,23 +297,19 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    //oppdaterer skadebeskrivelse
+    // skadebeskrivelse
     public String sjekkOgOppdaterKontaktinfoVitner(TextArea kontaktinfoVitnerField) {
         String msg = "";
+         try {
+             setKontaktinfoVitner(kontaktinfoVitnerField.getText());
+         } catch (UgyldigInputException e) {
+             msg += e.getMessage() + "\n";
+         }
 
-        if (kontaktinfoVitnerField.getText() == null || kontaktinfoVitnerField.getText().isEmpty()) {
-            msg += "Vitner kan ikke være tom.\n";
-        } else {
-            try {
-                setKontaktinfoVitner(kontaktinfoVitnerField.getText());
-            } catch (UgyldigInputException e) {
-                msg += e.getMessage() + "\n";
-            }
-        }
         return msg;
     }
 
-    //oppdaterer status
+    // status
     public String sjekkOgOppdaterStatus(ChoiceBox statusField) {
         String msg = "";
 
@@ -347,7 +324,6 @@ public class Skademelding implements Serializable {
         }
         return msg;
     }
-
 
 
     // < ------------------------------------ SERIALISERING ------------------------------------ >
@@ -382,7 +358,6 @@ public class Skademelding implements Serializable {
         this.belopTaksering = new SimpleDoubleProperty((double)is.readObject());
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
         this.kontaktinfoVitner= new SimpleStringProperty((String)is.readObject());
-        //this.kontaktinfoVitner = new SimpleStringProperty((String)is.readObject());
         this.status = new SimpleStringProperty((String)is.readObject());
     }
 
