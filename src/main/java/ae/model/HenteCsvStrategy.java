@@ -89,6 +89,15 @@ public class HenteCsvStrategy implements HenteFilStrategy {
 
                     tmpKunde.getForsikringer().add(tmpBåtforsikring);
                 }
+                if ("Hus- og innboforsikring".equals(type)) {
+                    Forsikring tmpInnboforsikring = new HusOgInnboForsikring(kundeNrForsikring, forsikringsNr);
+                    tmpInnboforsikring.setDatoOpprettet(datoOpprettet);
+                    tmpInnboforsikring.setForsikringsBelop(forsikringsbelop);
+                    tmpInnboforsikring.setBetingelser(betingelser);
+                    tmpInnboforsikring.setType(type);
+
+                    tmpKunde.getForsikringer().add(tmpInnboforsikring);
+                }
             }
 
         }

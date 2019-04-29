@@ -19,6 +19,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 /**
  * Domenemodell for kunder
@@ -226,6 +228,24 @@ public class Kunde implements Serializable {
         this.skademeldinger = new SimpleObjectProperty<>(FXCollections.observableArrayList((List<Skademelding>) is.readObject()));
         this.antallErstatningerUbetalte = new SimpleIntegerProperty((int)is.readObject());
 
+    }
+
+    public static boolean behandleSøk(Kunde kunde, String input) {
+        // viser alt hvis det ikke er noe skrevet inn
+        if (input == null || input.isEmpty()) {
+            return true;
+        } else {
+            // må ta til lower case for å sjekke på alt
+            String søkeord = input.toLowerCase();
+
+            if (kunde.getEtternavn().toLowerCase().startsWith(søkeord)) {
+                return true;
+
+            } if (Integer.toString(kunde.getKundeNr()).startsWith(søkeord)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

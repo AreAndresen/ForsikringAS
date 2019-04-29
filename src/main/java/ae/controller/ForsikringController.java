@@ -2,13 +2,15 @@ package ae.controller;
 
 import ae.HovedApplikasjon;
 import ae.controller.util.UgyldigInputHandler;
-import ae.model.BåtForsikring;
-import ae.model.Forsikring;
-import ae.model.Kunde;
-import ae.model.Viewbehandling;
+import ae.model.*;
 import ae.util.IdUtil;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -27,6 +29,8 @@ public class ForsikringController {
     public TableColumn<Kunde, Number> kundeNrKolonne;
     @FXML
     public TableColumn<Kunde, String> etternavnKolonne;
+    @FXML
+    public TextField søkField;
 
     // forsikring-tabellen
     @FXML
@@ -65,7 +69,6 @@ public class ForsikringController {
     @FXML
     private void initialize() {
         // koble kolonnene med datafeltene
-
         kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
         etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
 
@@ -86,14 +89,34 @@ public class ForsikringController {
 
         kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
                 (((observable, gammelData, nyData) -> visForsikringer(nyData))));
+
+        søkField.textProperty().addListener((((observable, oldValue, nyVerdi) -> {
+            FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
+
+            kundeFiltered.setPredicate(kunde -> Kunde.behandleSøk(kunde, nyVerdi));
+
+            SortedList<Kunde> kundeSorted = new SortedList<>(kundeFiltered);
+            kundeSorted.comparatorProperty().bind(kundeNrTabell.comparatorProperty());
+            kundeNrTabell.setItems(kundeSorted);
+        })));
+
     }
 
     private void visForsikringer(Kunde kunde) {
-
         if (kunde != null) {
-            forsikringTabell.setItems(kunde.getForsikringer());
+            FilteredList<Forsikring> forsikringerFiltered = new FilteredList<>(kunde.getForsikringer());
+
+            typeChoice.valueProperty().addListener(new ChangeListener<String>() {
+
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String gammelVerdi, String nyVerdi) {
+                    forsikringerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Forsikring f) -> nyVerdi.equals(f.getType()));
+                }
+            });
+
+            forsikringTabell.setItems(forsikringerFiltered);
         } else {
-            forsikringTabell.getItems().clear();
+            forsikringTabell.getItems().removeAll();
         }
     }
 
@@ -119,6 +142,40 @@ public class ForsikringController {
                 resultatTreLabel.setText(Integer.toString(båtForsikring.getLengdeFot()));
                 resultatFireLabel.setText(Integer.toString(båtForsikring.getÅrsmodell()));
                 resultatFemLabel.setText(båtForsikring.getMotorEgenskaper());
+
+                // tømmer de andre
+                metaSeksLabel.setText("");
+                metaSjuLabel.setText("");
+                metaÅtteLabel.setText("");
+                resultatSeksLabel.setText("");
+                resultatSjuLabel.setText("");
+                resultatÅtteLabel.setText("");
+            }
+
+            if ("Hus- og innboforsikring".equals(forsikring.getType())) {
+                HusOgInnboForsikring innboForsikring = (HusOgInnboForsikring) forsikring;
+
+                // setter inn metadata
+                metaEnLabel.setText("Adresse bolig");
+                metaToLabel.setText("Byggeår");
+                metaTreLabel.setText("Byggemateriale");
+                metaFireLabel.setText("Standard");
+                metaFemLabel.setText("Antall kvadratmeter");
+                metaSeksLabel.setText("Forsikringsbeløp bygning");
+                metaSjuLabel.setText("Forsikringsbeløp innbo");
+
+                // setter inn resultatdata
+                resultatEnLabel.setText(innboForsikring.getAdresseBolig());
+                resultatToLabel.setText(Integer.toString(innboForsikring.getByggeår()));
+                resultatTreLabel.setText(innboForsikring.getByggemateriale());
+                resultatFireLabel.setText(innboForsikring.getStandard());
+                resultatFemLabel.setText(Integer.toString(innboForsikring.getAntallKvm()));
+                resultatSeksLabel.setText(Double.toString(innboForsikring.getForsikringsbelopBygning()));
+                resultatSjuLabel.setText(Double.toString(innboForsikring.getForsikringsbelopInnbo()));
+
+                // tømmer de andre
+                metaÅtteLabel.setText("");
+                resultatÅtteLabel.setText("");
             }
             // TODO: fullføre for resterende forsikringer
         } else {
@@ -167,6 +224,27 @@ public class ForsikringController {
     }
 
     @FXML
+    public void gåTilNyHusOgInnboForsikringPopup() {
+        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+            int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+            Forsikring nyHusOgInnboForsikring = new HusOgInnboForsikring(
+                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
+            boolean bekreftTrykket = Viewbehandling.visNyHusOgInnboforsikringPopup(hovedApplikasjon,
+                    (HusOgInnboForsikring) nyHusOgInnboForsikring);
+
+            if (bekreftTrykket) {
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == nyHusOgInnboForsikring.getKundeNr()) {
+                        kunde.getForsikringer().add(nyHusOgInnboForsikring);
+                    }
+                }
+            }
+        } else {
+            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne registrere en forsikring!");
+        }
+    }
+
+    @FXML
     public void gåTilRedigerForsikringPopup() {
         Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
 
@@ -174,6 +252,15 @@ public class ForsikringController {
             if ("Båtforsikring".equals(valgtForsikring.getType())) {
                 boolean bekreftTrykket = Viewbehandling.visRedigerBåtforsikringPopup(
                         hovedApplikasjon, (BåtForsikring) valgtForsikring);
+
+                if (bekreftTrykket) {
+                    visForsikringDetaljer(valgtForsikring);
+                }
+            }
+
+            if ("Hus- og innboforsikring".equals(valgtForsikring.getType())) {
+                boolean bekreftTrykket = Viewbehandling.visRedigerHusOgInnboforsikringPopup(
+                        hovedApplikasjon, (HusOgInnboForsikring) valgtForsikring);
 
                 if (bekreftTrykket) {
                     visForsikringDetaljer(valgtForsikring);

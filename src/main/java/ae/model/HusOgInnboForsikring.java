@@ -3,8 +3,8 @@ package ae.model;
 import ae.model.exceptions.UgyldigInputException;
 import javafx.beans.property.*;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,8 +23,8 @@ public class HusOgInnboForsikring extends Forsikring implements Serializable {
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // tomt objekt-konstruktør
-    public HusOgInnboForsikring(int forsikringsNr) {
-        this(0, forsikringsNr, LocalDate.now(), 0, null, "Hus- og innboforsikring",
+    public HusOgInnboForsikring(int kundeNr, int forsikringsNr) {
+        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, "Hus- og innboforsikring",
                 null, 0, null, null, 0, 0,
                 0);
     }

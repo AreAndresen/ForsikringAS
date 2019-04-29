@@ -275,6 +275,61 @@ public class Viewbehandling {
         }
     }
 
+    // Åpner HusOgInnboForsikring-popup når bruker trykker på Ny innboforsikring-knappen
+    public static boolean visNyHusOgInnboforsikringPopup(HovedApplikasjon hovedApplikasjon, HusOgInnboForsikring innboforsikring) {
+        try {
+            FXMLLoader loader = hentInnboforsikringPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Registrer ny hus- og innboforsikring");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            ForsikringHusOgInnboPopupController forsikringHusOgInnboPopupController = loader.getController();
+            forsikringHusOgInnboPopupController.setPopupStage(popupStage);
+            forsikringHusOgInnboPopupController.setInnboForsikringÅRedigere(innboforsikring);
+            forsikringHusOgInnboPopupController.setHovedApplikasjon(hovedApplikasjon);
+
+            popupStage.showAndWait();
+
+            return forsikringHusOgInnboPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Åpner HusOgInnboForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type Hus- og innbo
+    public static boolean visRedigerHusOgInnboforsikringPopup(HovedApplikasjon hovedApplikasjon,
+                                                              HusOgInnboForsikring innboforsikring) {
+        try {
+            FXMLLoader loader = hentInnboforsikringPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Rediger eksisterende hus- og innboforsikring");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            ForsikringHusOgInnboPopupController forsikringHusOgInnboPopupController = loader.getController();
+            forsikringHusOgInnboPopupController.setPopupStage(popupStage);
+            forsikringHusOgInnboPopupController.setInnboForsikringÅRedigere(innboforsikring);
+            forsikringHusOgInnboPopupController.setHovedApplikasjon(hovedApplikasjon);
+
+            popupStage.showAndWait();
+
+            return forsikringHusOgInnboPopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // < ------------------------------------ FELLES LOADERE ------------------------------------ >
     // for KUNDE
     private static FXMLLoader hentKundeRedigerPopup() {
@@ -292,7 +347,12 @@ public class Viewbehandling {
     // for FORSIKRING
     private static FXMLLoader hentBåtforsikringPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringBåtPopup.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringBåtPopupView.fxml"));
+        return loader;
+    }
+    private static FXMLLoader hentInnboforsikringPopup() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringHusOgInnboPopupView.fxml"));
         return loader;
     }
 }

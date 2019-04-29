@@ -81,5 +81,10 @@ public class HovedApplikasjon extends Application {
                 LocalDate.now(), 200000, "Hel-kasko", "Båtforsikring", "ABC123",
                 "Yacht", 152, 2017, "DX500 2000HK");
         testKunde1.getForsikringer().add(testForsikring1);
+
+        Forsikring testForsikring2 = new HusOgInnboForsikring(testKunde1.getKundeNr(), IdUtil.genererLøpenummerForsikring(kundeData),
+                LocalDate.now(), 500000, "All inventar", "Hus- og innboforsikring", "Osloveien 2 2050 Jessheim",
+                2015, "Treverk", "Høy", 280, 350000, 1250000);
+        testKunde1.getForsikringer().add(testForsikring2);
     }
 }
