@@ -14,12 +14,12 @@ import javafx.stage.Stage;
 public class SkademeldingRedigerPopupController {
 
     @FXML
-    private TextField kundeNrField, skadeNrField, skadebeskrivelseField,
+    private TextField kundeNrField, skadeNrField,
             belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
     @FXML
     private ChoiceBox statusField, skadeTypeField;
     @FXML
-    private TextArea kontaktinfoVitnerField;
+    private TextArea kontaktinfoVitnerField, skadebeskrivelseField;
 
     private ObservableList<String> statusListe = FXCollections.observableArrayList("Betalt", "Ubetalt");
     private ObservableList<String> skadeTypeListe = FXCollections.observableArrayList("Båtforsikring",
@@ -74,7 +74,6 @@ public class SkademeldingRedigerPopupController {
         skadeNrField.setDisable(true);
         datoSkademeldingOpprettetField.setDisable(true);
     }
-
 
 
     /**

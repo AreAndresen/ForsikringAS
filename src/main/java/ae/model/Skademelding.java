@@ -112,6 +112,10 @@ public class Skademelding implements Serializable {
     // skadeBeskrivelse
     public String getSkadeBeskrivelse() { return skadeBeskrivelse.get(); }
     public void setSkadeBeskrivelse(String skadeBeskrivelse) {
+        if (skadeBeskrivelse == null || !skadeBeskrivelse.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.\\?]{1,100}+")) {
+            throw new UgyldigInputException("Skadebeskrivelse kan ikke overstige 100 tegn og eneste tillate\n spesialtegn" +
+                    "er bindestrek, punktum og ?");
+        }
         this.skadeBeskrivelse.set(skadeBeskrivelse);
     }
     public StringProperty skadeBeskrivelseProperty() {
@@ -145,6 +149,10 @@ public class Skademelding implements Serializable {
     //kontaktinfo
     public String getKontaktinfoVitner() { return kontaktinfoVitner.get(); }
     public void setKontaktinfoVitner(String kontaktinfoVitner) {
+        if (!kontaktinfoVitner.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.\\?]{1,200}+")) {
+            throw new UgyldigInputException("Vitner kan ikke overstige 200 tegn og eneste tillate\n spesialtegn" +
+                    "er bindestrek, punktum og ?");
+        }
         this.kontaktinfoVitner.set(kontaktinfoVitner);
     }
     public StringProperty kontaktinfoVitnerProperty() {
@@ -246,7 +254,7 @@ public class Skademelding implements Serializable {
     }
 
     // skadebeskrivelse
-    public String sjekkOgOppdaterSkadebeskrivelse(TextField skadebeskrivelseField) {
+    public String sjekkOgOppdaterSkadebeskrivelse(TextArea skadebeskrivelseField) {
         String msg = "";
 
         if (skadebeskrivelseField.getText() == null || skadebeskrivelseField.getText().isEmpty()) {
