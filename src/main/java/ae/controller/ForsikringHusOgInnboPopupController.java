@@ -2,8 +2,7 @@ package ae.controller;
 
 
 import ae.HovedApplikasjon;
-import ae.controller.util.UgyldigInputHandler;
-import ae.model.BåtForsikring;
+import ae.controller.util.AlertHandler;
 import ae.model.HusOgInnboForsikring;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -100,7 +99,7 @@ public class ForsikringHusOgInnboPopupController {
 
 
         if (msg.length() != 0) {
-            UgyldigInputHandler.generateAlert(msg);
+            AlertHandler.genererUgyldigInputAlert(msg);
             return false;
         } else {
             return true;

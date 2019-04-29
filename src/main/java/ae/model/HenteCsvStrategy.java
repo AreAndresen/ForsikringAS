@@ -59,7 +59,7 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         }
 
         if (kundeData.length != 5) {
-            throw new UgyldigKundeFormatException("Kunde er ikke formattert korrekt.");
+            throw new UgyldigKundeFormatException("Kunde er ikke formatert korrekt.");
         }
 
         int kundeNr = parseInt(kundeData[0], "Kundenummer er ikke et tall.");
@@ -101,7 +101,7 @@ public class HenteCsvStrategy implements HenteFilStrategy {
             }
 
         } else {
-            throw new UgyldigKundeFormatException("Forsikringer er ikke formattert korrekt.");
+            throw new UgyldigKundeFormatException("Forsikringer er ikke formatert korrekt.");
         }
         return tmpKunde;
     }

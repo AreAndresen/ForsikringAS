@@ -1,16 +1,13 @@
 package ae.controller;
-import ae.controller.util.UgyldigInputHandler;
+import ae.controller.util.AlertHandler;
 import ae.model.Filbehandling;
 import ae.model.Kunde;
 import ae.model.Viewbehandling;
 import ae.util.IdUtil;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import ae.model.Skademelding;
 import javafx.scene.control.Label;
@@ -131,7 +128,8 @@ public class SkademeldingController {
             }
         }
         else {
-            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne registrere en skademelding!");
+            AlertHandler.genererWarningAlert("Ny skademelding", "Ingen kunde valgt",
+                    "Du må velge en kunde for å kunne registrere skademeldinger!");
         }
 
     }
@@ -156,7 +154,8 @@ public class SkademeldingController {
             }
         }
         else{
-            UgyldigInputHandler.generateAlert("Du må velge en skademelding for å redigere."); //alert
+            AlertHandler.genererWarningAlert("Rediger skademelding", "Ingen skademelding valgt",
+                    "Du må velge en skademelding for å kunne redigere!");
         }
     }
 
@@ -206,7 +205,8 @@ public class SkademeldingController {
             }
         }
         else{
-            UgyldigInputHandler.generateAlert("Du må velge en skademelding for å kunne slette."); //alert
+            AlertHandler.genererWarningAlert("Slett skademelding", "Ingen skademelding valgt",
+                    "Du må velge en skademelding for å kunne slette!");
         }
 
     }

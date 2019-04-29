@@ -1,22 +1,14 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.controller.util.UgyldigInputHandler;
+import ae.controller.util.AlertHandler;
 import ae.model.*;
 import ae.model.exceptions.UgyldigKundeFormatException;
-import ae.util.IdUtil;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Controller for RotOppsett. Rotoppsettet inneholder menylinjen
@@ -109,7 +101,7 @@ public class RotOppsettController {
             try {
                 hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new HenteCsvStrategy(), filPath.getPath()));
             } catch (UgyldigKundeFormatException e) {
-                UgyldigInputHandler.generateAlert(e.getMessage());
+                AlertHandler.genererUgyldigInputAlert(e.getMessage());
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

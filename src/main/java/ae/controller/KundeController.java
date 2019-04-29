@@ -1,6 +1,6 @@
 package ae.controller;
 
-import ae.controller.util.UgyldigInputHandler;
+import ae.controller.util.AlertHandler;
 import ae.model.*;
 import ae.util.IdUtil;
 import javafx.collections.transformation.FilteredList;
@@ -99,7 +99,8 @@ public class KundeController {
             }
         }
         else{
-            UgyldigInputHandler.generateAlert("Du må velge en kunde for å redigere."); //alert
+            AlertHandler.genererWarningAlert("Rediger kunde", "Ingen kunde valgt",
+                    "Du må velge en kunde for å redigere!");
         }
     }
 
@@ -142,7 +143,8 @@ public class KundeController {
             }
         }
         else{
-            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne slette."); //alert
+            AlertHandler.genererWarningAlert("Slett kunde", "Ingen kunde valgt",
+                    "Du må velge en kunde for å kunne slette!");
         }
         //catch(IndexOutOfBoundsException e){ //denne feilen bør ikke skje (er her som påminner enn så lenge
         //    e.printStackTrace();

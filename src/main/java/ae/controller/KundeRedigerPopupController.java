@@ -1,11 +1,8 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.controller.util.UgyldigInputHandler;
+import ae.controller.util.AlertHandler;
 import ae.model.Kunde;
-import ae.model.exceptions.kunde.UgyldigAdresseException;
-import ae.model.exceptions.kunde.UgyldigEtternavnException;
-import ae.model.exceptions.kunde.UgyldigFornavnException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -90,7 +87,7 @@ public class KundeRedigerPopupController {
 
         //kontrollerer etter aktiverte feilmeldinger
         if(msg.length() != 0){
-            UgyldigInputHandler.generateAlert(msg); //alert
+            AlertHandler.genererUgyldigInputAlert(msg);
             return false;
         }
         else{

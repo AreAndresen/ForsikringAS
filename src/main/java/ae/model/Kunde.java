@@ -156,8 +156,8 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setAdresseFaktura(String adresseFaktura) {
-        if (adresseFaktura == null || !adresseFaktura.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
-            throw new UgyldigInputException("Adresse kan ikke overstige 30 tegn og eneste tillate\n spesialtegn" +
+        if (adresseFaktura == null || !adresseFaktura.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{2,50}+")) {
+            throw new UgyldigInputException("Adresse kan ikke overstige 50 tegn og eneste tillate\n spesialtegn" +
                     "er bindestrek og punktum.");
         }
         this.adresseFaktura.set(adresseFaktura);

@@ -1,7 +1,7 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.controller.util.UgyldigInputHandler;
+import ae.controller.util.AlertHandler;
 import ae.model.BåtForsikring;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -83,7 +83,7 @@ public class ForsikringBåtPopupController {
         msg += båtForsikringÅRedigere.sjekkOgOppdaterMotorEgenskaper(motortypeField);
 
         if (msg.length() != 0) {
-            UgyldigInputHandler.generateAlert(msg);
+            AlertHandler.genererUgyldigInputAlert(msg);
             return false;
         } else {
             return true;

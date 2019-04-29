@@ -1,10 +1,9 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.controller.util.UgyldigInputHandler;
+import ae.controller.util.AlertHandler;
 import ae.model.*;
 import ae.util.IdUtil;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,9 +14,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 public class ForsikringController {
@@ -218,7 +214,8 @@ public class ForsikringController {
                 }
             }
         } else {
-            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne registrere en forsikring!");
+            AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
+                    "Du må velge en kunde for å kunne registrere forsikringer!");
         }
     }
 
@@ -239,7 +236,8 @@ public class ForsikringController {
                 }
             }
         } else {
-            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne registrere en forsikring!");
+            AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
+                    "Du må velge en kunde for å kunne registrere forsikringer!");
         }
     }
 
@@ -266,7 +264,8 @@ public class ForsikringController {
                 }
             }
         } else {
-            UgyldigInputHandler.generateAlert("Du må velge en forsikring for å kunne redigere!");
+            AlertHandler.genererWarningAlert("Rediger forsikring", "Ingen forsikring valgt",
+                    "Du må velge en forsikring for å kunne redigere!");
         }
     }
 
@@ -291,7 +290,8 @@ public class ForsikringController {
                 kunde.getForsikringer().remove(valgtForsikring);
             }
         } else {
-            UgyldigInputHandler.generateAlert("Du må velge en forsikring for å kunne slette!");
+            AlertHandler.genererWarningAlert("Slett forsikring", "Ingen forsikring valgt",
+                    "Du må velge en forsikring for å kunne slette!");
         }
     }
 

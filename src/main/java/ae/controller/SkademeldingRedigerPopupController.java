@@ -1,7 +1,7 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.controller.util.UgyldigInputHandler;
+import ae.controller.util.AlertHandler;
 import ae.model.Skademelding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -116,7 +116,7 @@ public class SkademeldingRedigerPopupController {
 
         //kontrollerer etter aktiverte feilmeldinger
         if(msg.length() != 0){
-            UgyldigInputHandler.generateAlert(msg); //alert
+            AlertHandler.genererUgyldigInputAlert(msg);
             return false;
         }
         else{

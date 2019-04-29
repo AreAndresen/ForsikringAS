@@ -51,8 +51,8 @@ public class HusOgInnboForsikring extends Forsikring implements Serializable {
         return adresseBolig.get();
     }
     public void setAdresseBolig(String adresseBolig) {
-        if (adresseBolig == null || !adresseBolig.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
-            throw new UgyldigInputException("Boligadresse kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+        if (adresseBolig == null || !adresseBolig.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{2,50}+")) {
+            throw new UgyldigInputException("Boligadresse kan ikke overstige 50 tegn og eneste tillate spesialtegn" +
                     " er bindestrek og punktum.");
         }
         this.adresseBolig.set(adresseBolig);
