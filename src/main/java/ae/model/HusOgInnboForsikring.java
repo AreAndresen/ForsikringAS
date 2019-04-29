@@ -51,8 +51,9 @@ public class HusOgInnboForsikring extends Forsikring implements Serializable {
         return adresseBolig.get();
     }
     public void setAdresseBolig(String adresseBolig) {
-        if (adresseBolig == null || !adresseBolig.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
-            throw new UgyldigInputException("Boligadresse kan ikke overstige 30 tegn.");
+        if (adresseBolig == null || !adresseBolig.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException("Boligadresse kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+                    " er bindestrek og punktum.");
         }
         this.adresseBolig.set(adresseBolig);
     }
@@ -79,8 +80,9 @@ public class HusOgInnboForsikring extends Forsikring implements Serializable {
         return byggemateriale.get();
     }
     public void setByggemateriale(String byggemateriale) {
-        if (byggemateriale == null || !byggemateriale.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
-            throw new UgyldigInputException("Byggemateriale kan ikke overstige 30 tegn.");
+        if (byggemateriale == null || !byggemateriale.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException("Byggemateriale kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+                    " er bindestrek og punktum.");
         }
         this.byggemateriale.set(byggemateriale);
     }
@@ -294,10 +296,10 @@ public class HusOgInnboForsikring extends Forsikring implements Serializable {
 
     // < ------------------------------------ toString - CSV ------------------------------------ >
 
-    @Override
+    /*@Override
     public String toString() {
         return super.toString() + "," + getAdresseBolig()  + "," + getByggeår()  + "," + getByggemateriale()  + "," +
                 getStandard() + "," + getAntallKvm() + "," + getForsikringsbelopBygning() + "," +
                 getForsikringsbelopInnbo();
-    }
+    }*/
 }

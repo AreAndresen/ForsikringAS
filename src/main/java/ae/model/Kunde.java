@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import ae.model.exceptions.kunde.UgyldigAdresseFakturaException;
+import ae.model.exceptions.kunde.UgyldigAdresseException;
 import ae.model.exceptions.kunde.UgyldigEtternavnException;
 import ae.model.exceptions.kunde.UgyldigFornavnException;
 import javafx.beans.property.IntegerProperty;
@@ -144,7 +144,7 @@ public class Kunde implements Serializable {
     //Set med exception
     public void setAdresseFaktura(String adresseFaktura) {
         if(adresseFaktura == null || adresseFaktura.length() == 0){
-            throw new UgyldigAdresseFakturaException();
+            throw new UgyldigAdresseException();
         }
         this.adresseFaktura.set(adresseFaktura);
     }

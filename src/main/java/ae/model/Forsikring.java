@@ -104,8 +104,9 @@ public abstract class Forsikring implements Serializable {
         return betingelser.get();
     }
     public void setBetingelser(String betingelser) {
-        if (betingelser == null || !betingelser.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
-            throw new UgyldigInputException("Betingelser kan ikke overstige 30 tegn.");
+        if (betingelser == null || !betingelser.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException("Betingelser kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+                    " er bindestrek og punktum.");
         }
         this.betingelser.set(betingelser);
     }

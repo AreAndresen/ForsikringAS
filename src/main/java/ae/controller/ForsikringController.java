@@ -146,17 +146,21 @@ public class ForsikringController {
 
     @FXML
     public void gåTilNyBåtForsikringPopup() {
-        int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-        Forsikring nyBåtForsikring = new BåtForsikring(
-                kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
-        boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
+        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+            int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+            Forsikring nyBåtForsikring = new BåtForsikring(
+                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
+            boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
 
-        if (bekreftTrykket) {
-            for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                if (kunde.getKundeNr() == nyBåtForsikring.getKundeNr()) {
-                    kunde.getForsikringer().add(nyBåtForsikring);
+            if (bekreftTrykket) {
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == nyBåtForsikring.getKundeNr()) {
+                        kunde.getForsikringer().add(nyBåtForsikring);
+                    }
                 }
             }
+        } else {
+            UgyldigInputHandler.generateAlert("Du må velge en kunde for å kunne registrere en forsikring!");
         }
     }
 

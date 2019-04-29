@@ -61,8 +61,9 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return typeModell.get();
     }
     public void setTypeModell(String typeModell) {
-        if (typeModell == null || !typeModell.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
-            throw new UgyldigInputException("Båttype og modell kan ikke overstige 30 tegn.");
+        if (typeModell == null || !typeModell.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException("Båttype kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+                    " er bindestrek og punktum.");
         }
         this.typeModell.set(typeModell);
     }
@@ -103,8 +104,9 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return motorEgenskaper.get();
     }
     public void setMotorEgenskaper(String motorEgenskaper) {
-        if (motorEgenskaper == null || !motorEgenskaper.matches("[a-zA-ZæøåÆØÅ0-9]{1,30}+")) {
-            throw new UgyldigInputException("Motortype og styrke kan ikke overstige 30 tegn.");
+        if (motorEgenskaper == null || !motorEgenskaper.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException("Motortype og styrke kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+                    " er bindestrek og punktum.");
         }
         this.motorEgenskaper.set(motorEgenskaper);
     }
@@ -222,9 +224,9 @@ public class BåtForsikring extends Forsikring implements Serializable {
 
     // < ------------------------------------ toString - CSV ------------------------------------ >
 
-    @Override
+    /*@Override
     public String toString() {
         return super.toString() + "," + getRegistreringsNr() + "," + getTypeModell()  + "," + getLengdeFot()
                 + "," + getÅrsmodell()  + "," + getMotorEgenskaper();
-    }
+    }*/
 }

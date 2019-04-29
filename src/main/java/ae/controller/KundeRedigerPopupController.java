@@ -2,7 +2,7 @@ package ae.controller;
 
 import ae.controller.util.UgyldigInputHandler;
 import ae.model.Kunde;
-import ae.model.exceptions.kunde.UgyldigAdresseFakturaException;
+import ae.model.exceptions.kunde.UgyldigAdresseException;
 import ae.model.exceptions.kunde.UgyldigEtternavnException;
 import ae.model.exceptions.kunde.UgyldigFornavnException;
 import javafx.fxml.FXML;
@@ -132,7 +132,7 @@ public class KundeRedigerPopupController {
         try {
             kundeÅRedigere.setAdresseFaktura(adresseFakturaField.getText());
         }
-        catch (UgyldigAdresseFakturaException e) {
+        catch (UgyldigAdresseException e) {
             msg +=e.getMessage()+"\n";
         }
         return msg;
