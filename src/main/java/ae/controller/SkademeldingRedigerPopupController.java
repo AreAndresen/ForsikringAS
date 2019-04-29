@@ -15,11 +15,11 @@ public class SkademeldingRedigerPopupController {
 
     @FXML
     private TextField kundeNrField, skadeNrField, skadebeskrivelseField,
-            belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField, vitneNavnField, vitneTlfField;
+            belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
     @FXML
     private ChoiceBox statusField, skadeTypeField;
-    //@FXML
-    //private TextArea vitneInfoField;
+    @FXML
+    private TextArea kontaktinfoVitnerField;
 
     private ObservableList<String> statusListe = FXCollections.observableArrayList("Betalt", "Ubetalt");
     private ObservableList<String> skadeTypeListe = FXCollections.observableArrayList("Båtforsikring",
@@ -67,16 +67,15 @@ public class SkademeldingRedigerPopupController {
         erstatningsbelopUtbetaltField.setText(Double.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
         datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
 
-        //vitneNavnField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
-        //vitneTlfField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
-
-        //vitneInfoField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
+        kontaktinfoVitnerField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
         //statusField.setValue(skademeldingÅRedigere.get);
 
         //kundeNrField.setDisable(true);
         skadeNrField.setDisable(true);
         datoSkademeldingOpprettetField.setDisable(true);
     }
+
+
 
     /**
      * Returnerer true dersom bruker trykker på Bekreft, hvis ikke
@@ -110,8 +109,7 @@ public class SkademeldingRedigerPopupController {
         msg += skademeldingÅRedigere.sjekkOgOppdaterSkadebeskrivelse(skadebeskrivelseField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterTakseringsbeløp(belopTakseringField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterErstatningsbelopUtbetalt(erstatningsbelopUtbetaltField);
-        //msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitner(vitneInfoField);
-        //msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitner(vitneNavnField, vitneTlfField);
+        msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitner(kontaktinfoVitnerField);
 
         msg += skademeldingÅRedigere.sjekkOgOppdaterStatus(statusField);
 

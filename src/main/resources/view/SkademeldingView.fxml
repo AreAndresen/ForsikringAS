@@ -56,7 +56,7 @@
                         <Label fx:id="beskrivelseAvSkadeLabel" alignment="TOP_LEFT" prefHeight="96.0" prefWidth="169.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Skadenummer:" GridPane.rowIndex="1" />
                         <Label fx:id="skadeNrLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="vitneInfoLabel" alignment="TOP_LEFT" prefHeight="134.0" prefWidth="158.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2147483647" />
+                        <Label fx:id="kontaktinfoVitnerLabel" alignment="TOP_LEFT" prefHeight="134.0" prefWidth="158.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2147483647" />
                         <Button mnemonicParsing="false" onAction="#gåTilKundeoversikt" text="Kunde" />
                         <Label fx:id="forsikringsNrLabel" text="Label" GridPane.columnIndex="1" />
                      </children>

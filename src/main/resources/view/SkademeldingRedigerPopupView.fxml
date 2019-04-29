@@ -4,15 +4,16 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="408.0" prefWidth="413.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ae.controller.SkademeldingRedigerPopupController">
+<AnchorPane prefHeight="462.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ae.controller.SkademeldingRedigerPopupController">
    <children>
-      <GridPane layoutX="10.0" layoutY="14.0" prefHeight="348.0" prefWidth="394.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="14.0">
+      <GridPane layoutX="10.0" layoutY="14.0" prefHeight="403.0" prefWidth="428.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="14.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="144.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="249.0" />
@@ -46,7 +47,7 @@
             <TextField fx:id="datoSkademeldingOpprettetField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <ChoiceBox fx:id="statusField" prefHeight="26.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <ChoiceBox fx:id="skadeTypeField" prefHeight="26.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" text="Legg til vitne" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextArea fx:id="kontaktinfoVitnerField" prefHeight="62.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
       <ButtonBar layoutX="176.0" layoutY="233.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

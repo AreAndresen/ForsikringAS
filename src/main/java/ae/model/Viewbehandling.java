@@ -159,6 +159,8 @@ public class Viewbehandling {
             skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
             skademeldingRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
 
+
+
             popupStage.showAndWait();
 
             return skademeldingRedigerPopupController.erBekreftTrykket();
@@ -196,6 +198,7 @@ public class Viewbehandling {
             return false;
         }
     }
+
 
     // < ------------------------------------ FORSIKRING ------------------------------------ >
 

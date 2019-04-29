@@ -38,10 +38,9 @@ public class Skademelding implements Serializable {
     private transient StringProperty skadeBeskrivelse;
     private transient DoubleProperty belopTaksering;
     private transient DoubleProperty erstatningsbelopUtbetalt;
-    //private transient StringProperty kontaktinfoVitner;
-
+    private transient StringProperty kontaktinfoVitner;
     private transient StringProperty status;
-    private transient ObjectProperty<HashMap<Integer, String>> kontaktinfoVitner;
+
 
     /**
      * Konstruktør for midlertidig skademelding i Ny skademelding.
@@ -53,8 +52,7 @@ public class Skademelding implements Serializable {
      * Konstruktør for Ny skademelding.
      */
      public Skademelding(int skadeNr, int kundeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
-                         Double belopTaksering,
-                         Double erstatningsbelopUtbetalt, String status) {
+                         Double belopTaksering, Double erstatningsbelopUtbetalt, String kontaktinfoVitner, String status) {
 
         // Ta imot parametere
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
@@ -64,26 +62,7 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
-        this.status = new SimpleStringProperty(status);
-
-        //Instansiere listene så de er opprettet.
-        this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>(new HashMap<>());
-    }
-
-    /**
-     * Konstruktør for kunde-opprettelse ved innlesing av fil.
-     */
-    public Skademelding(int skadeNr, int kundeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
-                        Double belopTaksering, Double erstatningsbelopUtbetalt,
-                        HashMap<Integer, String> kontaktinfoVitner, String status) {
-        this.skadeNr = new SimpleIntegerProperty(skadeNr);
-        this.kundeNr = new SimpleIntegerProperty(kundeNr);
-        this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
-        this.skadeType = new SimpleStringProperty(skadeType);
-        this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
-        this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
-        this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
-        this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>(kontaktinfoVitner);
+        this.kontaktinfoVitner = new SimpleStringProperty(kontaktinfoVitner);
         this.status = new SimpleStringProperty(status);
     }
 
@@ -151,7 +130,7 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse.set(skadeBeskrivelse);
     }
     public StringProperty skadeBeskrivelseProperty() {
-        return skadeType;
+        return skadeBeskrivelse;
     }
 
     // belopTaksering
@@ -178,27 +157,16 @@ public class Skademelding implements Serializable {
         return erstatningsbelopUtbetalt;
     }
 
-    /* kontaktinfoVitner
-    public HashMap<Integer, String> getKontaktinfoVitner() {
-        return kontaktinfoVitner.get();
-    }
-    public void setKontaktinfoVitner(HashMap<Integer, String> kontaktinfoVitner) {
-        this.kontaktinfoVitner.set(kontaktinfoVitner);
-    }
-    public ObjectProperty<HashMap<Integer, String>> kontaktinfoVitnerProperty() {
-        return kontaktinfoVitner;
-    }*/
 
     //kontaktinfo
-    public HashMap<Integer, String> getKontaktinfoVitner() {
-        return kontaktinfoVitner.get();
-    }
-    public void setKontaktinfoVitner(HashMap<Integer, String> kontaktinfoVitner) {
+    public String getKontaktinfoVitner() { return kontaktinfoVitner.get(); }
+    public void setKontaktinfoVitner(String kontaktinfoVitner) {
         this.kontaktinfoVitner.set(kontaktinfoVitner);
     }
-    public ObjectProperty kontaktinfoVitnerProperty() {
+    public StringProperty kontaktinfoVitnerProperty() {
         return kontaktinfoVitner;
     }
+
 
     //status
     public String getStatus() {
@@ -347,32 +315,21 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    /*TODO MÅ FIKSER SKIKKELIG - VITNER
-    /*oppdaterer skadebeskrivelse
-    public String sjekkOgOppdaterKontaktinfoVitner(TextField vitneNavnField, TextField vitneTlfField) {
+    //oppdaterer skadebeskrivelse
+    public String sjekkOgOppdaterKontaktinfoVitner(TextArea kontaktinfoVitnerField) {
         String msg = "";
 
-       /* if (vitneNavnField.getText() == null || vitneNavnField.getText().isEmpty()) {
-            msg += "Vitnenavn kan ikke være tom.\n";
-        }
-        if (vitneTlfField.getText() == null || vitneTlfField.getText().isEmpty()) {
-            msg += "Vitnetlf kan ikke være tom.\n";
-        }
-        else {
+        if (kontaktinfoVitnerField.getText() == null || kontaktinfoVitnerField.getText().isEmpty()) {
+            msg += "Vitner kan ikke være tom.\n";
+        } else {
             try {
-                HashMap<Integer, String> dummie = new HashMap<>();
-                dummie.put(Integer.parseInt(vitneTlfField.getText()), vitneNavnField.getText());
-
-                setKontaktinfoVitner(dummie);
-                //dummie.put()
-
-                //setKontaktinfoVitner(vitneInfoField.getText());
+                setKontaktinfoVitner(kontaktinfoVitnerField.getText());
             } catch (UgyldigInputException e) {
                 msg += e.getMessage() + "\n";
             }
-        //}
+        }
         return msg;
-    }*/
+    }
 
     //oppdaterer status
     public String sjekkOgOppdaterStatus(ChoiceBox statusField) {
@@ -423,7 +380,7 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
         this.belopTaksering = new SimpleDoubleProperty((double)is.readObject());
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
-        this.kontaktinfoVitner = new SimpleObjectProperty<HashMap<Integer, String>>((HashMap<Integer, String>)is.readObject());
+        this.kontaktinfoVitner= new SimpleStringProperty((String)is.readObject());
         //this.kontaktinfoVitner = new SimpleStringProperty((String)is.readObject());
         this.status = new SimpleStringProperty((String)is.readObject());
     }

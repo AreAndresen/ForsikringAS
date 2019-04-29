@@ -41,7 +41,7 @@ public class SkademeldingController {
 
     // Labels.
     @FXML
-    private Label skadeNrLabel, beskrivelseAvSkadeLabel, vitneInfoLabel, kundeNrLabel;
+    private Label skadeNrLabel, beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel, kundeNrLabel;
 
     private Filbehandling fb = new Filbehandling();
 
@@ -178,14 +178,14 @@ public class SkademeldingController {
         if (skademelding != null) {
             skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
-            //vitneInfoLabel.setText(skademelding.getKontaktinfoVitner().toString());
+            kontaktinfoVitnerLabel.setText(skademelding.getKontaktinfoVitner());
 
         } else {
 
             // Ingen skademelding valgt, fjerner all tekst.
             skadeNrLabel.setText("");
             beskrivelseAvSkadeLabel.setText("");
-            vitneInfoLabel.setText("");
+            kontaktinfoVitnerLabel.setText("");
         }
     }
 
