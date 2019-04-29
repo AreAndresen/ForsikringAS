@@ -1,5 +1,13 @@
 package ae.model;
 
+import ae.model.exceptions.UgyldigDatoException;
+import ae.model.exceptions.UgyldigInputException;
+import ae.model.exceptions.UgyldigLopeNrException;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,25 +16,6 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import ae.HovedApplikasjon;
-import ae.model.exceptions.UgyldigDatoException;
-import ae.model.exceptions.UgyldigInputException;
-import ae.model.exceptions.UgyldigLopeNrException;
-import ae.model.exceptions.kunde.UgyldigAdresseException;
-import ae.model.exceptions.kunde.UgyldigEtternavnException;
-import ae.model.exceptions.kunde.UgyldigFornavnException;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import javafx.scene.control.TextField;
-import org.w3c.dom.Text;
 
 
 
