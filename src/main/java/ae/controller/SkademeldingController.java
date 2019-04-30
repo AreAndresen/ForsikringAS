@@ -22,7 +22,6 @@ import javafx.scene.control.TableView;
 
 public class SkademeldingController {
 
-
     // kundenr-tabellen
     @FXML
     public TableView<Kunde> kundeNrTabell;
@@ -93,7 +92,7 @@ public class SkademeldingController {
         kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
                 (((observable, gammelData, nyData) -> visSkademeldinger(nyData))));
 
-
+        //  søkfunksjon
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
             FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
@@ -125,7 +124,7 @@ public class SkademeldingController {
     }
 
     /** Fyller ut info-feltene om hver kunde.Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
-     * antall av de ulike typene. Knappene skal trykkes for å vise de.*/
+     * antall av de ulike typene. Knappene kan trykkes for å vise de.*/
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
@@ -141,50 +140,37 @@ public class SkademeldingController {
 
     @FXML
     public void gåTilNySkademeldingPopup() {
-        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
-            int skadeNr = IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData());
 
-            Skademelding nySkademelding = new Skademelding(
-                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), skadeNr);
+        Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtKunde != null) {
+            int skadeNr = IdUtil.genererLøpenummerSkade(hovedApplikasjon.getKundeData());
+            Skademelding nySkademelding = new Skademelding(valgtKunde.getKundeNr(), skadeNr);
 
             boolean bekreftTrykket = Viewbehandling.visNySkademeldingPopup(hovedApplikasjon, nySkademelding);
 
             if (bekreftTrykket) {
-                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (enKunde.getKundeNr() == nySkademelding.getKundeNr()) {
-                        //legger til ny skademelding
-                        enKunde.getSkademeldinger().add(nySkademelding);
-
-                        //setter antall ubetalte
-                        enKunde.setAntallErstatningerUbetalte();
-                    }
-                }
+                valgtKunde.getSkademeldinger().add(nySkademelding);
+                valgtKunde.setAntallErstatningerUbetalte();
             }
         }
         else {
             AlertHandler.genererWarningAlert("Ny skademelding", "Ingen kunde valgt",
                     "Du må velge en kunde for å kunne registrere skademeldinger!");
         }
-
     }
 
     @FXML
     public void gåTilRedigerSkademeldingPopup() {
+        Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
-        if (valgtSkademelding != null) {
+        if (valgtSkademelding != null || valgtKunde != null) {
             boolean bekreftTrykket = Viewbehandling.visRedigerSkademeldingPopup(hovedApplikasjon, valgtSkademelding);
 
             if (bekreftTrykket) {
                 visSkademeldingDetaljer(valgtSkademelding);
-
-                //finner kunden for å oppdatere skademeldingerubetalte
-                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (enKunde.getKundeNr() == valgtSkademelding.getKundeNr()) {
-                        //setter antall ubetalte
-                        enKunde.setAntallErstatningerUbetalte();
-                    }
-                }
+                valgtKunde.setAntallErstatningerUbetalte();
             }
         }
         else{
@@ -198,12 +184,10 @@ public class SkademeldingController {
      */
     @FXML
     public void slettValgtSkademelding() {
-        //int valgtSkademeldingIndex = skademeldingTabell.getSelectionModel().getSelectedIndex();
+        Kunde valgtkunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
-        if(valgtSkademelding != null) {
-        //if (valgtSkademeldingIndex >= 0) {
-            //Skademelding valgtSkademelding = skademeldingTabell.getItems().get(valgtSkademeldingIndex);
+        if(valgtSkademelding != null || valgtkunde != null) {
 
             String skademeldingInfo = Integer.toString(valgtSkademelding.getSkadeNr());
 
@@ -217,34 +201,16 @@ public class SkademeldingController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-
-                //sletter fra tabell her
-                skademeldingTabell.getItems().remove(valgtSkademelding);
-
-                Skademelding skademeldingTilSletting = null;
-                for (Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (valgtSkademelding.getKundeNr() == enKunde.getKundeNr()) {
-
-                        for (Skademelding skademelding : enKunde.getSkademeldinger()) {
-                            if (valgtSkademelding.equals(skademelding)) {
-                                skademeldingTilSletting = skademelding;
-                            }
-                        }
-                    }
-                    //sletter skademelding
-                    enKunde.getSkademeldinger().remove(skademeldingTilSletting);
-                    //setter antall ubetalte
-                    enKunde.setAntallErstatningerUbetalte();
-                }
+                valgtkunde.getSkademeldinger().remove(valgtSkademelding);
+                //setter antall ubetalte
+                valgtkunde.setAntallErstatningerUbetalte();
             }
         }
         else{
             AlertHandler.genererWarningAlert("Slett skademelding", "Ingen skademelding valgt",
                     "Du må velge en skademelding for å kunne slette!");
         }
-
     }
-
 
     /**
      * Kalles fra RotOppsettController for å gi en referanse til

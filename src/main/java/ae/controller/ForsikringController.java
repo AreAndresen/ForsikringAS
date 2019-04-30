@@ -200,20 +200,17 @@ public class ForsikringController {
 
     @FXML
     public void gåTilNyBåtForsikringPopup() {
-        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+        Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtKunde != null) {
             int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
 
-            Forsikring nyBåtForsikring = new BåtForsikring(
-                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
+            Forsikring nyBåtForsikring = new BåtForsikring(valgtKunde.getKundeNr(), forsikringsNr);
 
             boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
 
             if (bekreftTrykket) {
-                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                    if (kunde.getKundeNr() == nyBåtForsikring.getKundeNr()) {
-                        kunde.getForsikringer().add(nyBåtForsikring);
-                    }
-                }
+                valgtKunde.getForsikringer().add(nyBåtForsikring);
             }
         } else {
             AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
@@ -223,20 +220,19 @@ public class ForsikringController {
 
     @FXML
     public void gåTilNyHusOgInnboForsikringPopup() {
-        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+        Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtKunde != null) {
             int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-            Forsikring nyHusOgInnboForsikring = new BoligForsikring(
-                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr,
+
+            Forsikring nyHusOgInnboForsikring = new BoligForsikring(valgtKunde.getKundeNr(), forsikringsNr,
                     "Hus- og innboforsikring");
+
             boolean bekreftTrykket = Viewbehandling.visNyBoligforsikringPopup(hovedApplikasjon,
                     (BoligForsikring) nyHusOgInnboForsikring);
 
             if (bekreftTrykket) {
-                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                    if (kunde.getKundeNr() == nyHusOgInnboForsikring.getKundeNr()) {
-                        kunde.getForsikringer().add(nyHusOgInnboForsikring);
-                    }
-                }
+                valgtKunde.getForsikringer().add(nyHusOgInnboForsikring);
             }
         } else {
             AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
@@ -246,20 +242,19 @@ public class ForsikringController {
 
     @FXML
     public void gåTilNyFritidsboligForsikringPopup() {
-        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+        Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtKunde != null) {
             int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-            Forsikring nyFritidsboligForsikring = new BoligForsikring(
-                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr,
+
+            Forsikring nyFritidsboligForsikring = new BoligForsikring(valgtKunde.getKundeNr(), forsikringsNr,
                     "Fritidsboligforsikring");
+
             boolean bekreftTrykket = Viewbehandling.visNyBoligforsikringPopup(hovedApplikasjon,
                     (BoligForsikring) nyFritidsboligForsikring);
 
             if (bekreftTrykket) {
-                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                    if (kunde.getKundeNr() == nyFritidsboligForsikring.getKundeNr()) {
-                        kunde.getForsikringer().add(nyFritidsboligForsikring);
-                    }
-                }
+                valgtKunde.getForsikringer().add(nyFritidsboligForsikring);
             }
         } else {
             AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
@@ -269,19 +264,19 @@ public class ForsikringController {
 
     @FXML
     public void gåTilNyReiseForsikringPopup() {
-        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+
+        Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtKunde != null) {
             int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
-            Forsikring nyReiseForsikring = new ReiseForsikring(
-                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
+
+            Forsikring nyReiseForsikring = new ReiseForsikring(valgtKunde.getKundeNr(), forsikringsNr);
+
             boolean bekreftTrykket = Viewbehandling.visNyReiseforsikringPopup(hovedApplikasjon,
                     (ReiseForsikring) nyReiseForsikring);
 
             if (bekreftTrykket) {
-                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
-                    if (kunde.getKundeNr() == nyReiseForsikring.getKundeNr()) {
-                        kunde.getForsikringer().add(nyReiseForsikring);
-                    }
-                }
+                valgtKunde.getForsikringer().add(nyReiseForsikring);
             }
         } else {
             AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
@@ -345,6 +340,7 @@ public class ForsikringController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
+
                 Kunde kunde = kundeNrTabell.getSelectionModel().getSelectedItem();
                 kunde.getForsikringer().remove(valgtForsikring);
             }

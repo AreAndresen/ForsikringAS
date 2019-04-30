@@ -110,6 +110,7 @@ public class KundeController {
     @FXML
     public void slettValgtKunde() {
         Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
+
         if(valgtKunde != null){
             String kundeInfo = Integer.toString(valgtKunde.getKundeNr());
 
@@ -123,19 +124,8 @@ public class KundeController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                //sletter fra tabell
-                //kundeTabell.getItems().remove(valgtKunde);
 
-                //sletter fra kundedata array her
-                Kunde slettKunde = null;
-                for(Kunde enKunde : hovedApplikasjon.getKundeData()) {
-                    if (enKunde.getKundeNr() == valgtKunde.getKundeNr()) {
-                        slettKunde = enKunde;
-                    }
-                }
-                if(slettKunde != null){
-                    hovedApplikasjon.getKundeData().remove(slettKunde);
-                }
+                hovedApplikasjon.getKundeData().remove(valgtKunde);
             }
         }
         else{

@@ -180,6 +180,9 @@ public class Kunde implements Serializable {
         return antallErstatningerUbetalte;
     }
 
+
+    //< ------------------------------------Søkfunksjon ------------------------------------ >
+
     // Statisk metode som brukes for søk
     public static boolean behandleSøk(Kunde kunde, String input) {
         // viser alt hvis det ikke er noe skrevet inn
