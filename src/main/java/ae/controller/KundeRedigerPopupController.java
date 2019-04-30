@@ -74,12 +74,13 @@ public class KundeRedigerPopupController {
     public boolean sjekkOgOppdaterKunde() {
         String msg = "";
 
-        //kundeÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
-
-        //Bytter set her ut med metoder (se under)
-        //msg += kundeÅRedigere.sjekkOgOppdaterKundeNr2(kundeNrField);
-
+        //oppdaterer kundeNr
         msg += kundeÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
+        //Oppretter om det ikke finnes
+        if(msg.equals("Det er ingen kunde registrert med det\nkundenummeret i systemet.\n")){
+            msg = "";
+            msg += kundeÅRedigere.sjekkOgOpprettKundeNr(kundeNrField, hovedApplikasjon);
+        }
 
         msg += kundeÅRedigere.sjekkOgOppdaterFornavn(fornavnField);
         msg += kundeÅRedigere.sjekkOgOppdaterEtternavn(etternavnField);
