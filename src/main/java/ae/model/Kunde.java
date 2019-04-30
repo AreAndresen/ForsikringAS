@@ -61,22 +61,6 @@ public class Kunde implements Serializable {
         this.antallErstatningerUbetalte = new SimpleIntegerProperty(0);
     }
 
-    /**
-     * Konstruktør for kunde-opprettelse ved innlesing av fil.
-     */
-    public Kunde(int kundeNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
-                 String adresseFaktura, ObservableList<Forsikring> forsikringer, ObservableList<Skademelding> skademeldinger,
-                 int antallErstatningerUbetalte) { //List<Skademelding> her
-        this.kundeNr = new SimpleIntegerProperty(kundeNr);
-        this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(datoKundeOpprettet);
-        this.etternavn = new SimpleStringProperty(etternavn);
-        this.fornavn = new SimpleStringProperty(fornavn);
-        this.adresseFaktura = new SimpleStringProperty(adresseFaktura);
-        this.forsikringer = new SimpleObjectProperty<ObservableList<Forsikring>>(forsikringer);
-        this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>(skademeldinger);
-        this.antallErstatningerUbetalte  = new SimpleIntegerProperty(antallErstatningerUbetalte);
-    }
-
 
     // < ------------------------------------ GET OG SET ------------------------------------ >
 
@@ -226,24 +210,6 @@ public class Kunde implements Serializable {
 
     // < ------------------------------------ INPUT-VALIDERING ------------------------------------ >
 
-    /*skadenr
-    public String sjekkOgOppdaterKundeNr2(TextField kundeNrField) {
-        String msg = "";
-
-        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
-            msg += "Skadenummer kan ikke være tomt.\n";
-        } else {
-            try {
-                setKundeNr(Integer.parseInt(kundeNrField.getText()));
-            } catch (NumberFormatException e) {
-                msg += "Kundeenummer nå være tall.\n";
-            } catch (UgyldigLopeNrException e) {
-                msg += e.getMessage() + "\n";
-            }
-        }
-        return msg;
-    }*/
-
     //kundeNr - SJEKK AT KUNDEN IKKE FINNES
     public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
@@ -260,6 +226,34 @@ public class Kunde implements Serializable {
                 }
                 if (!kundeFinnes) {
                     msg += "Det er ingen kunde registrert med det\nkundenummeret i systemet.\n";
+                } else {
+                    setKundeNr(Integer.parseInt(kundeNrField.getText()));
+                }
+            } catch (NumberFormatException e) {
+                msg += "Kundenummer må være tall.\n";
+            } catch (UgyldigLopeNrException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
+    //kundeNr - SJEKK AT KUNDEN ALLEREDE FINNES
+    public String sjekkOgOpprettKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
+        String msg = "";
+
+        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+            msg += "Kundenummer kan ikke være tomt.\n";
+        } else {
+            try {
+                boolean kundeFinnes = false;
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == Integer.parseInt(kundeNrField.getText())) {
+                        kundeFinnes = true;
+                    }
+                }
+                if (kundeFinnes) {
+                    msg += "Det er allerede en kunde registrert med det\nkundenummeret i systemet.\n";
                 } else {
                     setKundeNr(Integer.parseInt(kundeNrField.getText()));
                 }
