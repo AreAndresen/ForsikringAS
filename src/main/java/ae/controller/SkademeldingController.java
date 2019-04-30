@@ -1,15 +1,19 @@
 package ae.controller;
+import ae.model.*;
 import ae.util.AlertHandler;
-import ae.model.Filbehandling;
-import ae.model.Kunde;
-import ae.model.Viewbehandling;
 import ae.util.IdUtil;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import java.time.LocalDate;
 import java.util.Optional;
-import ae.model.Skademelding;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,8 +30,10 @@ public class SkademeldingController {
     public TableColumn<Kunde, Number> kundeNrKolonne;
     @FXML
     public TableColumn<Kunde, String> etternavnKolonne;
+    @FXML
+    private TextField søkField;
 
-    // Tabellen.
+    // skademelding tabellen.
     @FXML
     private TableView<Skademelding> skademeldingTabell;
     @FXML
@@ -46,6 +52,12 @@ public class SkademeldingController {
     // Labels.
     @FXML
     private Label skadeNrLabel, beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel, kundeNrLabel;
+
+    @FXML
+    private ChoiceBox typeChoice;
+
+    private ObservableList<String> typeSortering = FXCollections.observableArrayList("Alle", "Båtforsikring",
+            "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
 
     private Filbehandling fb = new Filbehandling();
 
@@ -67,6 +79,9 @@ public class SkademeldingController {
         datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
         statusKolonne.setCellValueFactory(celleData -> celleData.getValue().statusProperty());
 
+        //typeChoice.setValue("Alle");
+        typeChoice.setItems(typeSortering);
+
         // Sender inn null for å tømme feltene.
         visSkademeldingDetaljer(null);
         visSkademeldinger(null);
@@ -77,14 +92,35 @@ public class SkademeldingController {
 
         kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
                 (((observable, gammelData, nyData) -> visSkademeldinger(nyData))));
+
+
+        søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
+            FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
+
+            kundeFiltered.setPredicate(kunde -> Kunde.behandleSøk(kunde, nyVerdi));
+
+            SortedList<Kunde> kundeSorted = new SortedList<>(kundeFiltered);
+            kundeSorted.comparatorProperty().bind(kundeNrTabell.comparatorProperty());
+            kundeNrTabell.setItems(kundeSorted);
+        })));
     }
 
     private void visSkademeldinger(Kunde kunde) {
-
+        typeChoice.setValue("Alle");
+        typeChoice.setDisable(true);
         if (kunde != null) {
-            skademeldingTabell.setItems(kunde.getSkademeldinger());
-        } else {
-            skademeldingTabell.getItems().clear();
+
+            typeChoice.setDisable(false);
+            FilteredList<Skademelding> skademeldingerFiltered = new FilteredList<>(kunde.getSkademeldinger());
+
+            typeChoice.valueProperty().addListener(new ChangeListener<String>() {
+
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String gammelVerdi, String nyVerdi) {
+                    skademeldingerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Skademelding f) -> nyVerdi.equals(f.getSkadeType()));
+                }
+            });
+            skademeldingTabell.setItems(skademeldingerFiltered);
         }
     }
 
