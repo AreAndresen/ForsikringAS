@@ -1,5 +1,6 @@
 package ae.model;
 
+import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +49,8 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         forsikringString = forsikringString.replaceAll(",\\s*", ",");
         skademeldingString = skademeldingString.replaceAll(",\\s*", ",");
 
+        System.out.println(skademeldingString + "\n<--->");
+
         String[] forsikringData = null ;
         String[] skademeldingData = null;
         if (forsikringString != "") {
@@ -56,11 +59,15 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         if (skademeldingString != "") {
             skademeldingData = skademeldingString.split(",");
         }
+        for (String skade : skademeldingData) {
+            System.out.print(skade + "<--->");
+        }
 
         if (kundeData.length != 5) {
             throw new UgyldigKundeFormatException("Kunde er ikke formatert korrekt.");
         }
 
+        // oppretter kunden
         int kundeNr = parseInt(kundeData[0], "Kundenummer er ikke et tall.");
         LocalDate datoKundeOpprettet = LocalDate.parse(kundeData[1]);
         String etternavn = kundeData[2];
@@ -69,51 +76,78 @@ public class HenteCsvStrategy implements HenteFilStrategy {
 
         Kunde tmpKunde = new Kunde(kundeNr, datoKundeOpprettet, etternavn, fornavn, adresseFaktura);
 
+        // legger til forsikringene til kunden
         if (forsikringData != null && forsikringData.length >= 6) {
-            for (int i = 0; i < forsikringData.length; i+=6)  {
-                int kundeNrForsikring = parseInt(forsikringData[i], "Kundenummer er ikke et heltall.");
-                int forsikringsNr = parseInt(forsikringData[i+1], "Forsikringsnummber er ikke et heltall.");
-                LocalDate datoOpprettet = LocalDate.parse(forsikringData[i+2]);
-                double forsikringsbelop = parseDouble(forsikringData[i+3], "Forsikringsbeløp er ikke et" +
-                        "desimaltall.");
-                String betingelser = forsikringData[i+4];
-                String type = forsikringData[i+5];
-
-                if ("Båtforsikring".equals(type)) {
-                    Forsikring tmpBåtforsikring = new BåtForsikring(kundeNrForsikring, forsikringsNr);
-                    tmpBåtforsikring.setDatoOpprettet(datoOpprettet);
-                    tmpBåtforsikring.setForsikringsBelop(forsikringsbelop);
-                    tmpBåtforsikring.setBetingelser(betingelser);
-                    tmpBåtforsikring.setType(type);
-
-                    tmpKunde.getForsikringer().add(tmpBåtforsikring);
-                }
-                if ("Hus- og innboforsikring".equals(type)) {
-                    Forsikring tmpInnboforsikring = new BoligForsikring(kundeNrForsikring, forsikringsNr,
-                            "Hus- og innboforsikring");
-                    tmpInnboforsikring.setDatoOpprettet(datoOpprettet);
-                    tmpInnboforsikring.setForsikringsBelop(forsikringsbelop);
-                    tmpInnboforsikring.setBetingelser(betingelser);
-                    tmpInnboforsikring.setType(type);
-
-                    tmpKunde.getForsikringer().add(tmpInnboforsikring);
-                }
-                if ("Fritidsboligforsikring".equals(type)) {
-                    Forsikring tmpInnboforsikring = new BoligForsikring(kundeNrForsikring, forsikringsNr,
-                            "Fritidsboligforsikring");
-                    tmpInnboforsikring.setDatoOpprettet(datoOpprettet);
-                    tmpInnboforsikring.setForsikringsBelop(forsikringsbelop);
-                    tmpInnboforsikring.setBetingelser(betingelser);
-                    tmpInnboforsikring.setType(type);
-
-                    tmpKunde.getForsikringer().add(tmpInnboforsikring);
-                }
-            }
-
-        } else {
-            throw new UgyldigKundeFormatException("Forsikringer er ikke formatert korrekt.");
+            leggTilForsikringer(forsikringData, tmpKunde);
         }
+
+        // legger til skademeldingene til kunden
+        if (skademeldingData != null && skademeldingData.length >= 9) {
+            leggTilSkademeldinger(skademeldingData, tmpKunde);
+        }
+
         return tmpKunde;
+    }
+
+    private static void leggTilForsikringer(String[] forsikringer, Kunde kunde) throws UgyldigKundeFormatException {
+        for (int i = 0; i < forsikringer.length; i += 6) {
+            int kundeNr = parseInt(forsikringer[i], "Kundenummer er ikke et heltall.");
+            int forsikringsNr = parseInt(forsikringer[i + 1], "Forsikringsnummber er ikke et heltall.");
+            LocalDate datoOpprettet = LocalDate.parse(forsikringer[i + 2]);
+            double forsikringsbelop = parseDouble(forsikringer[i + 3], "Forsikringsbeløp er ikke et" +
+                    "desimaltall.");
+            String betingelser = forsikringer[i + 4];
+            String type = forsikringer[i + 5];
+
+            Forsikring tmpForsikring = null;
+            if ("Båtforsikring".equals(type)) {
+                tmpForsikring = new BåtForsikring(kundeNr, forsikringsNr);
+            }
+            if ("Hus- og innboforsikring".equals(type)) {
+                tmpForsikring = new BoligForsikring(kundeNr, forsikringsNr,
+                        "Hus- og innboforsikring");
+            }
+            if ("Fritidsboligforsikring".equals(type)) {
+                tmpForsikring = new BoligForsikring(kundeNr, forsikringsNr,
+                        "Fritidsboligforsikring");
+            }
+            if ("Reiseforsikring".equals(type)) {
+                tmpForsikring = new ReiseForsikring(kundeNr, forsikringsNr);
+            }
+            tmpForsikring.setDatoOpprettet(datoOpprettet);
+            tmpForsikring.setForsikringsBelop(forsikringsbelop);
+            tmpForsikring.setBetingelser(betingelser);
+            tmpForsikring.setType(type);
+
+            kunde.getForsikringer().add(tmpForsikring);
+        }
+    }
+
+    private static void leggTilSkademeldinger(String[] skademeldinger, Kunde kunde) throws UgyldigKundeFormatException {
+        for (int i = 0; i < skademeldinger.length; i += 9) {
+            int skadeNr = parseInt(skademeldinger[i], "Skadenummer er ikke et heltall.");
+            int kundeNr = parseInt(skademeldinger[i + 1], "Kundenummer er ikke et heltall.");
+            LocalDate datoSkade = LocalDate.parse(skademeldinger[i + 2]);
+            String skadeType = skademeldinger[i + 3];
+            String skadeBeskrivelse = skademeldinger[i + 4];
+            double belopTaksering = parseDouble(skademeldinger[i + 5], "Takseringsbeløp er ikke et tall.");
+            double erstatningsBelopUtbetalt = parseDouble(skademeldinger[i + 6], "Utbetalt erstatningsbeløp" +
+                    " er ikke et tall.");
+            String kontaktinfoVitner = skademeldinger[i + 7];
+            String status = skademeldinger[i + 8];
+
+            Skademelding tmpSkademelding = new Skademelding(kundeNr, skadeNr);
+            tmpSkademelding.setDatoSkade(datoSkade);
+            tmpSkademelding.setSkadeType(skadeType);
+            tmpSkademelding.setSkadeBeskrivelse(skadeBeskrivelse);
+            tmpSkademelding.setBelopTaksering(belopTaksering);
+            tmpSkademelding.setErstatningsbelopUtbetalt(erstatningsBelopUtbetalt);
+            tmpSkademelding.setKontaktinfoVitner(kontaktinfoVitner);
+            tmpSkademelding.setStatus(status);
+            kunde.setAntallErstatningerUbetalte();
+
+            kunde.getSkademeldinger().add(tmpSkademelding);
+        }
     }
 
     private static int parseInt(String string, String errorMelding) throws UgyldigKundeFormatException {
