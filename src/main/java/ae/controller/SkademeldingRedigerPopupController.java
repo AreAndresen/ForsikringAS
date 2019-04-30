@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -15,9 +16,11 @@ public class SkademeldingRedigerPopupController {
 
     @FXML
     private TextField kundeNrField, skadeNrField,
-            belopTakseringField, erstatningsbelopUtbetaltField, datoSkademeldingOpprettetField;
+            belopTakseringField, erstatningsbelopUtbetaltField;
     @FXML
     private ChoiceBox statusField, skadeTypeField;
+    @FXML
+    private DatePicker datoSkademeldingOpprettetField;
     @FXML
     private TextArea kontaktinfoVitnerField, skadebeskrivelseField;
 
@@ -65,14 +68,14 @@ public class SkademeldingRedigerPopupController {
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
         belopTakseringField.setText(Double.toString(skademeldingÅRedigere.getBelopTaksering()));
         erstatningsbelopUtbetaltField.setText(Double.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
-        datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
+        //datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
 
         kontaktinfoVitnerField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
         //statusField.setValue(skademeldingÅRedigere.get);
 
         kundeNrField.setDisable(true);
         skadeNrField.setDisable(true);
-        datoSkademeldingOpprettetField.setDisable(true);
+        //datoSkademeldingOpprettetField.setDisable(true);
     }
 
 

@@ -7,6 +7,7 @@ import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.beans.property.*;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -220,14 +221,15 @@ public class Skademelding implements Serializable {
     }
 
     // skadedato
-    public String sjekkOgOppdaterDatoSkade(TextField datoSkademeldingOpprettetField) {
+    public String sjekkOgOppdaterDatoSkade(DatePicker datoSkademeldingOpprettetField) {
         String msg = "";
 
-        if (datoSkademeldingOpprettetField.getText() == null || datoSkademeldingOpprettetField.getText().isEmpty()) {
+        if (datoSkademeldingOpprettetField.getValue() == null) {
             msg += "Dato kan ikke være tom.\n";
         } else {
             try {
-                setDatoSkade(LocalDate.parse(datoSkademeldingOpprettetField.getText()));
+                LocalDate dato = datoSkademeldingOpprettetField.getValue();
+                setDatoSkade(dato);
             } catch (DateTimeException e) {
                 msg += "Dato er ikke en gyldig dato.\n";
             } catch (UgyldigDatoException e) {
