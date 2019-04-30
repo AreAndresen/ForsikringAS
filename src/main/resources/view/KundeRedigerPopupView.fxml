@@ -25,15 +25,15 @@
             </rowConstraints>
             <children>
                 <Label text="Kundenummer" wrapText="true" />
-                <Label text="Etternavn" wrapText="true" GridPane.rowIndex="1" />
-                <Label text="Fornavn" wrapText="true" GridPane.rowIndex="2" />
+                <Label text="Fornavn" wrapText="true" GridPane.rowIndex="1" />
                 <Label text="Adresse faktura" wrapText="true" GridPane.rowIndex="3" />
                 <Label text="Dato ny kunde" wrapText="true" GridPane.rowIndex="4" />
                 <TextField fx:id="kundeNrField" GridPane.columnIndex="1" />
-                <TextField fx:id="etternavnField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="fornavnField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="fornavnField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <TextField fx:id="adresseFakturaField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="datoKundeOpprettetField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="etternavnField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Etternavn" wrapText="true" GridPane.rowIndex="2" />
             </children>
         </GridPane>
         <ButtonBar layoutX="176.0" layoutY="233.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

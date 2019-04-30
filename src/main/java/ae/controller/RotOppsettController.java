@@ -77,7 +77,7 @@ public class RotOppsettController {
                     Filbehandling.lagreKunde(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
                 } catch (FileNotFoundException e) {
                     AlertHandler.genererWarningAlert("Feilmelding", "Kunne ikke åpne fil",
-                            "Prøv igjen senere");
+                            "Filen kan allerede være åpnet. Lukk filen og prøv igjen.");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -88,7 +88,7 @@ public class RotOppsettController {
                     Filbehandling.lagreKunde(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
                 } catch (FileNotFoundException e) {
                     AlertHandler.genererWarningAlert("Feilmelding", "Kunne ikke åpne fil",
-                            "Prøv igjen senere");
+                            "Filen kan allerede være åpnet. Lukk filen og prøv igjen.");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
