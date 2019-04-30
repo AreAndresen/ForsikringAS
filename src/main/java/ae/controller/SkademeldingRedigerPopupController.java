@@ -76,7 +76,6 @@ public class SkademeldingRedigerPopupController {
     }
 
 
-
     /**
      * Returnerer true dersom bruker trykker på Bekreft, hvis ikke
      * så false
@@ -101,18 +100,14 @@ public class SkademeldingRedigerPopupController {
         String msg = "";
 
         msg += skademeldingÅRedigere.sjekkOgOppdaterSkadeNr(skadeNrField);
-
         msg += skademeldingÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
-
         msg += skademeldingÅRedigere.sjekkOgOppdaterDatoSkade(datoSkademeldingOpprettetField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterSkadetype(skadeTypeField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterSkadebeskrivelse(skadebeskrivelseField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterTakseringsbeløp(belopTakseringField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterErstatningsbelopUtbetalt(erstatningsbelopUtbetaltField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitner(kontaktinfoVitnerField);
-
         msg += skademeldingÅRedigere.sjekkOgOppdaterStatus(statusField);
-
 
         //kontrollerer etter aktiverte feilmeldinger
         if(msg.length() != 0){

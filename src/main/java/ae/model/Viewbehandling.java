@@ -78,6 +78,7 @@ public class Viewbehandling {
             KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
             kundeRedigerPopupController.setPopupStage(popupStage);
             kundeRedigerPopupController.setKundeÅRedigere(kunde);
+            kundeRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();
 
@@ -107,6 +108,7 @@ public class Viewbehandling {
             KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
             kundeRedigerPopupController.setPopupStage(popupStage);
             kundeRedigerPopupController.setKundeÅRedigere(kunde);
+            kundeRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();
 

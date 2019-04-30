@@ -1,5 +1,6 @@
 package ae.model;
 
+import ae.HovedApplikasjon;
 import ae.model.exceptions.UgyldigDatoException;
 import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
@@ -113,7 +114,7 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setEtternavn(String etternavn) {
-        if(etternavn == null || !etternavn.matches("[a-zA-ZæøåÆØÅ]{2,30}+")){
+        if(etternavn == null || !etternavn.matches("[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")){
             throw new UgyldigInputException("Etternavn må være mellom 2-30 bokstaver og " +
                     " kan kun inneholde bokstaver og spesialtegnet - ");
         }
@@ -129,8 +130,8 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setFornavn(String fornavn) {
-        if(fornavn == null || !fornavn.matches("[a-zA-ZæøåÆØÅ]{2,30}+")){
-            throw new UgyldigInputException("må være mellom 2-30 bokstaver og " +
+        if(fornavn == null || !fornavn.matches("[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")){
+            throw new UgyldigInputException("Fornavn må være mellom 2-30 bokstaver og " +
                     " kan kun inneholde bokstaver og spesialtegnet - ");
         }
         this.fornavn.set(fornavn);
@@ -225,7 +226,7 @@ public class Kunde implements Serializable {
 
     // < ------------------------------------ INPUT-VALIDERING ------------------------------------ >
 
-    //skadenr
+    /*skadenr
     public String sjekkOgOppdaterKundeNr2(TextField kundeNrField) {
         String msg = "";
 
@@ -241,9 +242,9 @@ public class Kunde implements Serializable {
             }
         }
         return msg;
-    }
+    }*/
 
-    /* kundeNr
+    //kundeNr - SJEKK AT KUNDEN IKKE FINNES
     public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
@@ -269,7 +270,7 @@ public class Kunde implements Serializable {
             }
         }
         return msg;
-    }*/
+    }
 
     //oppdaterer fornavn
     public String sjekkOgOppdaterFornavn(TextField fornavnField) {

@@ -77,8 +77,8 @@ public class KundeRedigerPopupController {
         //kundeÅRedigere.setKundeNr(Integer.parseInt(kundeNrField.getText()));
 
         //Bytter set her ut med metoder (se under)
-        msg += kundeÅRedigere.sjekkOgOppdaterKundeNr2(kundeNrField);
-        //msg += kundeÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
+        //msg += kundeÅRedigere.sjekkOgOppdaterKundeNr2(kundeNrField);
+        msg += kundeÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
         msg += kundeÅRedigere.sjekkOgOppdaterFornavn(fornavnField);
         msg += kundeÅRedigere.sjekkOgOppdaterEtternavn(etternavnField);
         msg += kundeÅRedigere.sjekkOgOppdaterAdresseFaktura(adresseFakturaField);

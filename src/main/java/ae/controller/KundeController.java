@@ -109,10 +109,6 @@ public class KundeController {
      */
     @FXML
     public void slettValgtKunde() {
-        //try{ //koden kommentert ut under leder til indexOutOfBoundsException
-        //int valgtKundeIndex = kundeTabell.getSelectionModel().getSelectedIndex();
-        //Kunde valgtKunde = kundeTabell.getItems().get(valgtKundeIndex);
-
         Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
         if(valgtKunde != null){
             String kundeInfo = Integer.toString(valgtKunde.getKundeNr());
@@ -146,9 +142,6 @@ public class KundeController {
             AlertHandler.genererWarningAlert("Slett kunde", "Ingen kunde valgt",
                     "Du må velge en kunde for å kunne slette!");
         }
-        //catch(IndexOutOfBoundsException e){ //denne feilen bør ikke skje (er her som påminner enn så lenge
-        //    e.printStackTrace();
-        //}
     }
 
     //-------SKADEMELDING-------
