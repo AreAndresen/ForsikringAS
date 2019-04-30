@@ -86,6 +86,7 @@ public class ForsikringController {
         kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
                 (((observable, gammelData, nyData) -> visForsikringer(nyData))));
 
+        // Behandling av søk
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
             FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
@@ -325,9 +326,10 @@ public class ForsikringController {
 
     @FXML
     public void slettValgtForsikring() {
+        Kunde valgtkunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
 
-        if (valgtForsikring != null) {
+        if (valgtForsikring != null && valgtkunde != null) {
             String forsikringInfo = Integer.toString(valgtForsikring.getForsikringsNr());
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -341,8 +343,7 @@ public class ForsikringController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
 
-                Kunde kunde = kundeNrTabell.getSelectionModel().getSelectedItem();
-                kunde.getForsikringer().remove(valgtForsikring);
+                valgtkunde.getForsikringer().remove(valgtForsikring);
             }
         } else {
             AlertHandler.genererWarningAlert("Slett forsikring", "Ingen forsikring valgt",

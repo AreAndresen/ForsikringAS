@@ -92,7 +92,7 @@ public class SkademeldingController {
         kundeNrTabell.getSelectionModel().selectedItemProperty().addListener(
                 (((observable, gammelData, nyData) -> visSkademeldinger(nyData))));
 
-        //  søkfunksjon
+        // Behandling av søk
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
             FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
@@ -165,7 +165,7 @@ public class SkademeldingController {
         Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
-        if (valgtSkademelding != null || valgtKunde != null) {
+        if (valgtSkademelding != null && valgtKunde != null) {
             boolean bekreftTrykket = Viewbehandling.visRedigerSkademeldingPopup(hovedApplikasjon, valgtSkademelding);
 
             if (bekreftTrykket) {
@@ -187,7 +187,7 @@ public class SkademeldingController {
         Kunde valgtkunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
-        if(valgtSkademelding != null || valgtkunde != null) {
+        if(valgtSkademelding != null && valgtkunde != null) {
 
             String skademeldingInfo = Integer.toString(valgtSkademelding.getSkadeNr());
 
