@@ -94,6 +94,8 @@ public class KundeController {
         if (valgtKunde != null) {
             boolean bekreftTrykket = Viewbehandling.visRedigerKundePopup(hovedApplikasjon, valgtKunde);
 
+            //valgtKunde.sjekkOgOppdaterKundeNr(toString().valgtKunde.getKundeNr(), hovedApplikasjon);
+
             if (bekreftTrykket) {
                 visKundensDetaljer(valgtKunde);
             }
