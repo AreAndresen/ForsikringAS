@@ -175,7 +175,32 @@ public class ForsikringController {
                 metaÅtteLabel.setText("");
                 resultatÅtteLabel.setText("");
             }
-            // TODO: fullføre for resterende forsikringer
+
+            if ("Reiseforsikring".equals(forsikring.getType())) {
+                ReiseForsikring reiseForsikring = (ReiseForsikring) forsikring;
+
+                // setter inn metadata
+                metaEnLabel.setText("Forsikringsområde");
+                metaToLabel.setText("Forsikringssum");
+
+                // setter inn resultatdata
+                resultatEnLabel.setText(reiseForsikring.getForsikringsOmråde());
+                resultatToLabel.setText(Double.toString(reiseForsikring.getForsikringsSum()));
+
+                // tømmer de andre
+                metaTreLabel.setText("");
+                metaFireLabel.setText("");
+                metaFemLabel.setText("");
+                metaSeksLabel.setText("");
+                metaSjuLabel.setText("");
+                metaÅtteLabel.setText("");
+                resultatTreLabel.setText("");
+                resultatFireLabel.setText("");
+                resultatFemLabel.setText("");
+                resultatSeksLabel.setText("");
+                resultatSjuLabel.setText("");
+                resultatÅtteLabel.setText("");
+            }
         } else {
             // tømmer metadata
             metaEnLabel.setText("");
