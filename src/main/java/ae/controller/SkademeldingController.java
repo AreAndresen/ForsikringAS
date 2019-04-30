@@ -51,7 +51,7 @@ public class SkademeldingController {
 
     // Labels.
     @FXML
-    private Label skadeNrLabel, beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel, kundeNrLabel;
+    private Label beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel;
 
     @FXML
     private ChoiceBox typeChoice;
@@ -128,13 +128,11 @@ public class SkademeldingController {
      * antall av de ulike typene. Knappene skal trykkes for å vise de.*/
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
-            skadeNrLabel.setText(Integer.toString(skademelding.getSkadeNr()));
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
             kontaktinfoVitnerLabel.setText(skademelding.getKontaktinfoVitner());
 
         } else {
             // Ingen skademelding valgt, fjerner all tekst.
-            skadeNrLabel.setText("");
             beskrivelseAvSkadeLabel.setText("");
             kontaktinfoVitnerLabel.setText("");
         }
@@ -246,16 +244,6 @@ public class SkademeldingController {
         }
 
     }
-
-    //TODO VURDERES OM DENNE TYPEN NAVIGERING SKAL VÆRE MED VIDERE
-    //-------KUNDE-------
-    //Går til kundeoversikt ved trykk i meny
-    @FXML
-    private void gåTilKundeoversikt() {
-        Viewbehandling.visKundeOversikt(hovedApplikasjon);
-        //lagreFilMenuItem.setDisable(false);
-    }
-
 
 
     /**

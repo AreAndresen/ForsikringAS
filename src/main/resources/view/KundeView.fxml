@@ -56,19 +56,19 @@
                                 <Label text="Kundenummer" wrapText="true" />
                                 <Label text="Etternavn" wrapText="true" GridPane.rowIndex="1" />
                                 <Label text="Fornavn" wrapText="true" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="174.0" text="Antall forsikringer" wrapText="true" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#gåTilForsikringoversikt" prefHeight="27.0" prefWidth="174.0" text="Antall forsikringer" wrapText="true" GridPane.rowIndex="5" />
                                 <Label fx:id="kundeNrLabel" text="Label" wrapText="true" GridPane.columnIndex="1" />
                                 <Label fx:id="etternavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label fx:id="fornavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <Label fx:id="forsikringerLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                 <Label fx:id="skademeldingerLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                 <Label fx:id="erstatningerUbetalteLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="174.0" text="Antall Ubetalte erstatninger" wrapText="true" GridPane.rowIndex="7" />
                         <Label text="Adresse faktura" wrapText="true" GridPane.rowIndex="3" />
                         <Label fx:id="adresseFakturaLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Dato ny kunde" wrapText="true" GridPane.rowIndex="4" />
                         <Label fx:id="datoKundeOpprettetLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Button mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" prefHeight="26.0" prefWidth="174.0" text="Antall skademeldinger" GridPane.rowIndex="6" />
+                        <Label text="Antall Ubetalte erstatninger" GridPane.rowIndex="7" />
                             </children>
                         </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="27.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

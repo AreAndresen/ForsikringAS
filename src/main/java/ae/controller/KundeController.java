@@ -152,6 +152,14 @@ public class KundeController {
         //lagreFilMenuItem.setDisable(false);
     }
 
+    //-------Forsikringer-------
+    //Går til forsikringsversikt ved trykk på knapp for forsikringer
+    @FXML
+    private void gåTilForsikringoversikt() {
+        Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
+        //lagreFilMenuItem.setDisable(false);
+    }
+
 
     /**
      * Fyller ut info-feltene om hver kunde.
