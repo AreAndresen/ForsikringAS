@@ -96,7 +96,7 @@
                             <MenuItem mnemonicParsing="false" onAction="#gåTilNyBåtForsikringPopup" text="Båtforsikring" />
                             <MenuItem mnemonicParsing="false" onAction="#gåTilNyHusOgInnboForsikringPopup" text="Hus- og innboforsikring" />
                               <MenuItem mnemonicParsing="false" onAction="#gåTilNyFritidsboligForsikringPopup" text="Fritidsboligforsikring" />
-                              <MenuItem mnemonicParsing="false" text="Reiseforsikring" />
+                              <MenuItem mnemonicParsing="false" onAction="#gåTilNyReiseForsikringPopup" text="Reiseforsikring" />
                           </items>
                         </MenuButton>
                                 <Button mnemonicParsing="false" onAction="#gåTilRedigerForsikringPopup" text="Rediger" />

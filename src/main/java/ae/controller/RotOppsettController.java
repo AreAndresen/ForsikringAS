@@ -68,19 +68,21 @@ public class RotOppsettController {
     public void lagreFilTrykket() {
         File filPath = Filbehandling.lagreFilVelger(hovedApplikasjon.getHovedStage());
 
-        if (filPath.getPath().endsWith(".jobj")) {
-            try {
-                Filbehandling.lagreKunde(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (filPath != null) {
+            if (filPath.getPath().endsWith(".jobj")) {
+                try {
+                    Filbehandling.lagreKunde(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        if (filPath.getPath().endsWith(".csv")) {
-            try {
-                Filbehandling.lagreKunde(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (filPath.getPath().endsWith(".csv")) {
+                try {
+                    Filbehandling.lagreKunde(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -89,27 +91,29 @@ public class RotOppsettController {
     public void hentFilTrykket() {
         File filPath = Filbehandling.henteFilVelger(hovedApplikasjon.getHovedStage());
 
-        if (filPath.getPath().endsWith(".jobj")) {
-            try {
-                hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new HenteJobjStrategy(), filPath.getPath()));
-            } catch (UgyldigKundeFormatException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+        if (filPath != null) {
+            if (filPath.getPath().endsWith(".jobj")) {
+                try {
+                    hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new HenteJobjStrategy(), filPath.getPath()));
+                } catch (UgyldigKundeFormatException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        if (filPath.getPath().endsWith(".csv")) {
-            try {
-                hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new HenteCsvStrategy(), filPath.getPath()));
-            } catch (UgyldigKundeFormatException e) {
-                AlertHandler.genererUgyldigInputAlert(e.getMessage());
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (filPath.getPath().endsWith(".csv")) {
+                try {
+                    hovedApplikasjon.getKundeData().setAll(Filbehandling.hentKunde(new HenteCsvStrategy(), filPath.getPath()));
+                } catch (UgyldigKundeFormatException e) {
+                    AlertHandler.genererUgyldigInputAlert(e.getMessage());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

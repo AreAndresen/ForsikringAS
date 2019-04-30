@@ -268,6 +268,28 @@ public class ForsikringController {
     }
 
     @FXML
+    public void gåTilNyReiseForsikringPopup() {
+        if (kundeNrTabell.getSelectionModel().getSelectedItem() != null) {
+            int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+            Forsikring nyReiseForsikring = new ReiseForsikring(
+                    kundeNrTabell.getSelectionModel().getSelectedItem().getKundeNr(), forsikringsNr);
+            boolean bekreftTrykket = Viewbehandling.visNyReiseforsikringPopup(hovedApplikasjon,
+                    (ReiseForsikring) nyReiseForsikring);
+
+            if (bekreftTrykket) {
+                for (Kunde kunde : hovedApplikasjon.getKundeData()) {
+                    if (kunde.getKundeNr() == nyReiseForsikring.getKundeNr()) {
+                        kunde.getForsikringer().add(nyReiseForsikring);
+                    }
+                }
+            }
+        } else {
+            AlertHandler.genererWarningAlert("Ny forsikring", "Ingen kunde valgt",
+                    "Du må velge en kunde for å kunne registrere forsikringer!");
+        }
+    }
+
+    @FXML
     public void gåTilRedigerForsikringPopup() {
         Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
 
@@ -285,6 +307,15 @@ public class ForsikringController {
                     "Fritidsboligforsikring".equals(valgtForsikring.getType())) {
                 boolean bekreftTrykket = Viewbehandling.visRedigerBoligforsikringPopup(
                         hovedApplikasjon, (BoligForsikring) valgtForsikring);
+
+                if (bekreftTrykket) {
+                    visForsikringDetaljer(valgtForsikring);
+                }
+            }
+
+            if ("Reiseforsikring".equals(valgtForsikring.getType())) {
+                boolean bekreftTrykket = Viewbehandling.visRedigerReiseforsikringPopup(hovedApplikasjon,
+                        (ReiseForsikring) valgtForsikring);
 
                 if (bekreftTrykket) {
                     visForsikringDetaljer(valgtForsikring);

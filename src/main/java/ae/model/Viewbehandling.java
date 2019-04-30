@@ -342,6 +342,60 @@ public class Viewbehandling {
         }
     }
 
+    // Åpner ReiseForsikring-popup når bruker trykker på Ny reiseforsikring-knappen
+    public static boolean visNyReiseforsikringPopup(HovedApplikasjon hovedApplikasjon, ReiseForsikring reiseforsikring) {
+        try {
+            FXMLLoader loader = hentReiseforsikringPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Registrer ny reiseforsikring");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            ForsikringReisePopupController forsikringReisePopupController = loader.getController();
+            forsikringReisePopupController.setPopupStage(popupStage);
+            forsikringReisePopupController.setReiseForsikringÅRedigere(reiseforsikring);
+            forsikringReisePopupController.setHovedApplikasjon(hovedApplikasjon);
+
+            popupStage.showAndWait();
+
+            return forsikringReisePopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Åpner ReiseForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type ReiseForsikring
+    public static boolean visRedigerReiseforsikringPopup(HovedApplikasjon hovedApplikasjon, ReiseForsikring reiseforsikring) {
+        try {
+            FXMLLoader loader = hentReiseforsikringPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Rediger eksisterende reiseforsikring");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            ForsikringReisePopupController forsikringReisePopupController = loader.getController();
+            forsikringReisePopupController.setPopupStage(popupStage);
+            forsikringReisePopupController.setReiseForsikringÅRedigere(reiseforsikring);
+            forsikringReisePopupController.setHovedApplikasjon(hovedApplikasjon);
+
+            popupStage.showAndWait();
+
+            return forsikringReisePopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // < ------------------------------------ FELLES LOADERE ------------------------------------ >
     // for KUNDE
     private static FXMLLoader hentKundeRedigerPopup() {
@@ -365,6 +419,11 @@ public class Viewbehandling {
     private static FXMLLoader hentBoligforsikringPopup() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringBoligPopupView.fxml"));
+        return loader;
+    }
+    private static FXMLLoader hentReiseforsikringPopup() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringReisePopupView.fxml"));
         return loader;
     }
 }
