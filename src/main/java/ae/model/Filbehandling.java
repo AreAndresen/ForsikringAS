@@ -4,14 +4,14 @@ import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Filbehandling {
 
     public static void lagreKunde(LagreFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path)
-            throws IOException {
+            throws IOException, FileNotFoundException {
         lagringsmetode.skrivKundeTilFil(kundeTabell, path);
     }
 

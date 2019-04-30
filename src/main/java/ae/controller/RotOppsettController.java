@@ -4,15 +4,18 @@ import ae.HovedApplikasjon;
 import ae.util.AlertHandler;
 import ae.model.*;
 import ae.model.exceptions.UgyldigKundeFormatException;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
-
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Controller for RotOppsett. Rotoppsettet inneholder menylinjen
@@ -72,6 +75,9 @@ public class RotOppsettController {
             if (filPath.getPath().endsWith(".jobj")) {
                 try {
                     Filbehandling.lagreKunde(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+                } catch (FileNotFoundException e) {
+                    AlertHandler.genererWarningAlert("Feilmelding", "Kunne ikke åpne fil",
+                            "Prøv igjen senere");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -80,6 +86,9 @@ public class RotOppsettController {
             if (filPath.getPath().endsWith(".csv")) {
                 try {
                     Filbehandling.lagreKunde(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+                } catch (FileNotFoundException e) {
+                    AlertHandler.genererWarningAlert("Feilmelding", "Kunne ikke åpne fil",
+                            "Prøv igjen senere");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -87,8 +96,15 @@ public class RotOppsettController {
         }
     }
 
+    private ExecutorService service = Executors.newSingleThreadExecutor();
+
     @FXML
     public void hentFilTrykket() {
+        Task<Void> task = new ThreadExample(this::henteFil);
+        service.execute(task);
+    }
+
+    private void henteFil() {
         File filPath = Filbehandling.henteFilVelger(hovedApplikasjon.getHovedStage());
 
         if (filPath != null) {

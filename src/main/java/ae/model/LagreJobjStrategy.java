@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LagreJobjStrategy implements LagreFilStrategy {
     @Override
-    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException {
+    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException, FileNotFoundException {
         ObjectOutputStream out = null;
         try {
 
