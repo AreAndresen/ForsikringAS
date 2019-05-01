@@ -12,11 +12,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.Map;
+
 public class SkademeldingRedigerPopupController {
 
     @FXML
     private TextField kundeNrField, skadeNrField,
-            belopTakseringField, erstatningsbelopUtbetaltField;
+            belopTakseringField, erstatningsbelopUtbetaltField, vitne1navnField, vitne1tlfField, vitne2navnField, vitne2tlfField;
     @FXML
     private ChoiceBox statusField, skadeTypeField;
     @FXML
@@ -34,7 +36,6 @@ public class SkademeldingRedigerPopupController {
 
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;
-
 
     @FXML
     private void initialize() {
@@ -71,6 +72,15 @@ public class SkademeldingRedigerPopupController {
         //datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
 
         kontaktinfoVitnerField.setText(skademeldingÅRedigere.getKontaktinfoVitner());
+
+        //Ny vitner
+        //if(skademeldingÅRedigere.getKontaktinfoVitner2().size() > 0){
+
+        for (Map.Entry<String, String> info : skademeldingÅRedigere.getKontaktinfoVitner2().entrySet()) {
+            vitne1navnField.setText(info.getValue());
+            vitne1tlfField.setText(info.getKey());
+        }
+
         //statusField.setValue(skademeldingÅRedigere.get);
 
         kundeNrField.setDisable(true);
@@ -110,6 +120,11 @@ public class SkademeldingRedigerPopupController {
         msg += skademeldingÅRedigere.sjekkOgOppdaterTakseringsbeløp(belopTakseringField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterErstatningsbelopUtbetalt(erstatningsbelopUtbetaltField);
         msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitner(kontaktinfoVitnerField);
+
+        //vitner
+        msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitne1(vitne1navnField, vitne1tlfField);
+        //msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitne1(vitne2navnField, vitne2tlfField);
+
         msg += skademeldingÅRedigere.sjekkOgOppdaterStatus(statusField);
 
         //kontrollerer etter aktiverte feilmeldinger

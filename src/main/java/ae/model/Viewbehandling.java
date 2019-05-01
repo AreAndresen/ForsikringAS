@@ -223,6 +223,36 @@ public class Viewbehandling {
     }
 
 
+    /**
+     * LEGG TIL VITNE I  eksisterende skademelding .
+     */
+    public static boolean visLeggTilVitnePopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
+        try {
+            FXMLLoader loader = hentVitnerPopup();
+            AnchorPane side = (AnchorPane) loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Legg til vitne");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner(hovedApplikasjon.getHovedStage());
+            Scene scene = new Scene(side);
+            popupStage.setScene(scene);
+
+            VitnePopupController vitnePopupController = loader.getController();
+            vitnePopupController.setPopupStage(popupStage);
+            vitnePopupController.setSkademeldingÅRedigere(skademelding);
+            vitnePopupController.setHovedApplikasjon(hovedApplikasjon);
+
+            popupStage.showAndWait();
+
+            return vitnePopupController.erBekreftTrykket();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     // < ------------------------------------ FORSIKRING ------------------------------------ >
 
     // Åpner Oversikt - Forsikring når bruker trykker på Forsikring i menylinjen
@@ -415,6 +445,13 @@ public class Viewbehandling {
     private static FXMLLoader hentSkademeldingRedigerPopup() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingRedigerPopupView.fxml"));
+        return loader;
+    }
+
+    // for VITNER
+    private static FXMLLoader hentVitnerPopup() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HovedApplikasjon.class.getResource("/view/VitnePopupView.fxml"));
         return loader;
     }
 

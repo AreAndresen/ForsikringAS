@@ -15,11 +15,11 @@
 
 <AnchorPane prefHeight="350.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ae.controller.SkademeldingController">
    <children>
-      <SplitPane styleClass="pane" dividerPositions="0.14754098360655737, 0.663023679417122" layoutX="153.0" layoutY="70.0" prefHeight="350.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.14754098360655737, 0.663023679417122" layoutX="153.0" layoutY="70.0" prefHeight="350.0" prefWidth="800.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView styleClass="table" fx:id="kundeNrTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="kundeNrTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" styleClass="table" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
                         <TableColumn fx:id="kundeNrKolonne" prefWidth="89.0" text="KNr" />
                         <TableColumn fx:id="etternavnKolonne" prefWidth="119.0" text="Etternavn" />
@@ -34,7 +34,7 @@
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView styleClass="table" fx:id="skademeldingTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="skademeldingTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" styleClass="table" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
                         <TableColumn fx:id="skadeNrKolonne" prefWidth="73.60003507137299" text="Skadenr" />
                         <TableColumn fx:id="skadeTypeKolonne" prefWidth="113.5999984741211" text="Skadetype" />
@@ -48,7 +48,7 @@
                      </columnResizePolicy>
                   </TableView>
                   <Label layoutX="314.0" layoutY="321.0" text="Skadetype" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="172.0" />
-                  <ChoiceBox styleClass="btn" fx:id="typeChoice" layoutX="409.0" layoutY="317.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <ChoiceBox fx:id="typeChoice" layoutX="409.0" layoutY="317.0" prefWidth="150.0" styleClass="btn" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -62,19 +62,24 @@
                      <rowConstraints>
                         <RowConstraints maxHeight="95.26667098999023" minHeight="10.0" prefHeight="66.39998779296874" valignment="TOP" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="141.8000213623047" minHeight="10.0" prefHeight="125.59998779296876" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="141.8000213623047" minHeight="10.0" prefHeight="125.59998779296876" valignment="TOP" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="141.8000213623047" minHeight="10.0" prefHeight="125.59998779296876" valignment="TOP" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
                         <Label alignment="TOP_LEFT" text="Beskrivelse av skade:" wrapText="true" />
                         <Label text="Vitneinformasjon:" wrapText="true" GridPane.rowIndex="1" />
                         <Label fx:id="beskrivelseAvSkadeLabel" alignment="TOP_LEFT" prefHeight="96.0" prefWidth="169.0" text="Label" wrapText="true" GridPane.columnIndex="1" />
-                        <Label fx:id="kontaktinfoVitnerLabel" alignment="TOP_LEFT" prefHeight="134.0" prefWidth="158.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" />
+                        <Label fx:id="kontaktinfoVitnerLabel" alignment="TOP_LEFT" prefHeight="94.0" prefWidth="222.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" />
+                        <Label fx:id="kontaktinfoVitner2Label" alignment="TOP_LEFT" prefHeight="94.0" prefWidth="222.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#gåTilNyttVitnePopup" text="Legg til vitne" GridPane.rowIndex="2" />
+                        <Button mnemonicParsing="false" onAction="#slettVitner" text="Button" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="27.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
-                        <Button styleClass="btn" fx:id="nyButton" mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" prefHeight="26.0" prefWidth="130.0" text="Ny skade" />
-                        <Button styleClass="btn" fx:id="redigerButton" mnemonicParsing="false" onAction="#gåTilRedigerSkademeldingPopup" text="Rediger" />
-                        <Button styleClass="btn" fx:id="slettButton" mnemonicParsing="false" onAction="#slettValgtSkademelding" text="Slett" />
+                        <Button fx:id="nyButton" mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" prefHeight="26.0" prefWidth="130.0" styleClass="btn" text="Ny skade" />
+                        <Button fx:id="redigerButton" mnemonicParsing="false" onAction="#gåTilRedigerSkademeldingPopup" styleClass="btn" text="Rediger" />
+                        <Button fx:id="slettButton" mnemonicParsing="false" onAction="#slettValgtSkademelding" styleClass="btn" text="Slett" />
                      </buttons>
                   </ButtonBar>
                </children>

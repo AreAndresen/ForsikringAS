@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javafx.scene.control.Label;
@@ -32,6 +34,8 @@ public class SkademeldingController {
     @FXML
     private TextField søkField;
 
+
+
     // skademelding tabellen.
     @FXML
     private TableView<Skademelding> skademeldingTabell;
@@ -50,7 +54,7 @@ public class SkademeldingController {
 
     // Labels.
     @FXML
-    private Label beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel;
+    private Label beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel, kontaktinfoVitner2Label;
 
     @FXML
     private Button nyButton, redigerButton, slettButton;
@@ -141,10 +145,21 @@ public class SkademeldingController {
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
             kontaktinfoVitnerLabel.setText(skademelding.getKontaktinfoVitner());
 
+
+            //finner alle vitner
+            String vitner = "";
+            for (Map.Entry<String, String> info : skademelding.getKontaktinfoVitner2().entrySet()) {
+                vitner += "Navn: "+info.getValue()+" Tlf:"+info.getKey()+"\n";
+            }
+            kontaktinfoVitner2Label.setText(vitner);
+
+
         } else {
             // Ingen skademelding valgt, fjerner all tekst.
             beskrivelseAvSkadeLabel.setText("");
             kontaktinfoVitnerLabel.setText("");
+
+            kontaktinfoVitner2Label.setText("");
         }
     }
 
@@ -223,15 +238,62 @@ public class SkademeldingController {
         }
     }
 
+
+    //------------------------ VITNE GREIER
+    @FXML
+    public void gåTilNyttVitnePopup() {
+        //Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+        Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
+
+        if (valgtSkademelding != null) {
+            boolean bekreftTrykket = Viewbehandling.visLeggTilVitnePopup(hovedApplikasjon, valgtSkademelding);
+
+            if (bekreftTrykket) {
+                visSkademeldingDetaljer(valgtSkademelding);
+            }
+        }
+        else{
+            AlertHandler.genererWarningAlert("Legg til vitne", "Ingen skademelding valgt",
+                    "Du må velge en skademelding for å kunne legge til vitne!");
+        }
+    }
+
+    @FXML
+    public void slettVitner() {
+        Kunde valgtkunde = kundeNrTabell.getSelectionModel().getSelectedItem();
+        Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
+
+        if(valgtSkademelding != null && valgtkunde != null) {
+            String skademeldingInfo = Integer.toString(valgtSkademelding.getSkadeNr());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(hovedApplikasjon.getHovedStage());
+            alert.setTitle("Slett alle vitner");
+            alert.setHeaderText("Bekreft sletting av vitner");
+            alert.setContentText("Er du sikker på at du ønsker å slette alle vitner til\n skademeldingnummer: " + skademeldingInfo +"?");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+
+                //sletter
+                valgtSkademelding.getKontaktinfoVitner2().clear();
+                kontaktinfoVitner2Label.setText("");
+            }
+        }
+        else{
+            AlertHandler.genererWarningAlert("Slett alle vitner", "Ingen skademelding valgt",
+                    "Du må velge en skademelding for å kunne slette vitner!");
+        }
+    }
+
     /**
      * Kalles fra RotOppsettController for å gi en referanse til
      * hovedapplikasjonen.*/
     public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
 
         this.hovedApplikasjon = hovedApplikasjon;
-
-        //skademeldingTabell.setItems(hovedApplikasjon.getAlleSkademeldinger());
-
         kundeNrTabell.setItems(hovedApplikasjon.getKundeData());
     }
 }
