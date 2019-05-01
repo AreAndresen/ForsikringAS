@@ -1,18 +1,15 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.util.AlertHandler;
 import ae.model.*;
-import ae.model.exceptions.UgyldigKundeFormatException;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +22,8 @@ public class RotOppsettController {
 
     // Referanse til hovedapplikasjonen
     private HovedApplikasjon hovedApplikasjon;
+    private ExecutorService service = Executors.newSingleThreadExecutor();
+    private ObservableList<Kunde> innlesteKunder;
 
     @FXML
     private MenuItem lagreFilMenuItem;
@@ -74,7 +73,13 @@ public class RotOppsettController {
 
     @FXML
     public void hentFilTrykket() {
-        hovedApplikasjon.getKundeData().setAll(Filbehandling.henteFil(hovedApplikasjon));
+        innlesteKunder = Filbehandling.henteFil(hovedApplikasjon);
+        Task<Void> innlesing = new InnlesingThread(this::threadDone);
+        service.execute(innlesing);
+    }
+
+    public void threadDone() {
+        hovedApplikasjon.getKundeData().setAll(innlesteKunder);
     }
 
     @FXML
