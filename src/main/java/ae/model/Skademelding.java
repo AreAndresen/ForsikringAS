@@ -35,10 +35,8 @@ public class Skademelding implements Serializable {
     private transient StringProperty skadeBeskrivelse;
     private transient DoubleProperty belopTaksering;
     private transient DoubleProperty erstatningsbelopUtbetalt;
-    private transient StringProperty kontaktinfoVitner;
-
     //----------forsøk på ny vitneinfo
-    private transient ObjectProperty<ObservableMap<String, String>> kontaktinfoVitner2;
+    private transient ObjectProperty<ObservableMap<String, String>> kontaktinfoVitner;
 
 
     private transient StringProperty status;
@@ -48,11 +46,11 @@ public class Skademelding implements Serializable {
 
     // tomt objekt-konstruktør
     public Skademelding(int kundeNr, int skadeNr) { this(kundeNr, skadeNr, LocalDate.now(), null, null,
-            0.0, 0.0, "", null); }
+            0.0, 0.0, null); }
 
     // default konstruktør
      public Skademelding(int kundeNr, int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
-                         Double belopTaksering, Double erstatningsbelopUtbetalt, String kontaktinfoVitner, String status) {
+                         Double belopTaksering, Double erstatningsbelopUtbetalt, String status) {
          this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
@@ -60,10 +58,9 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
-        this.kontaktinfoVitner = new SimpleStringProperty(kontaktinfoVitner);
 
          //----------forsøk på ny vitneinfo
-         this.kontaktinfoVitner2 = new SimpleObjectProperty<ObservableMap<String, String>>(FXCollections.observableHashMap());
+         this.kontaktinfoVitner = new SimpleObjectProperty<ObservableMap<String, String>>(FXCollections.observableHashMap());
          //this.kontaktinfoVitner2.put(0, "");
 
         this.status = new SimpleStringProperty(status);
@@ -160,31 +157,6 @@ public class Skademelding implements Serializable {
         return erstatningsbelopUtbetalt;
     }
 
-    //kontaktinfo
-    public String getKontaktinfoVitner() { return kontaktinfoVitner.get(); }
-    public void setKontaktinfoVitner(String kontaktinfoVitner) {
-        if (kontaktinfoVitner == null || !kontaktinfoVitner.matches("[a-zA-ZæøåÆØÅ0-9\\-\\:\\ \\.\\?\\\n]{0,200}+")) {
-            throw new UgyldigInputException("Vitner kan ikke overstige 200 tegn og eneste tillate\nspesialtegn" +
-                    "er bindestrek, punktum, ? og :");
-        }
-        this.kontaktinfoVitner.set(kontaktinfoVitner);
-    }
-    public StringProperty kontaktinfoVitnerProperty() {
-        return kontaktinfoVitner;
-    }
-
-
-    //kontaktinfo
-    // ---------------------------------------------------
-    public ObservableMap<String, String> getKontaktinfoVitner2() { return kontaktinfoVitner2.get(); }
-    public void setKontaktinfoVitner2(ObservableMap<String, String> kontaktinfoVitner2) {
-        this.kontaktinfoVitner2.set(kontaktinfoVitner2);
-    }
-    public ObjectProperty<ObservableMap<String, String>> kontaktinfoVitner2Property() {
-        return kontaktinfoVitner2;
-    }
-
-
     //status
     public String getStatus() {
         return status.get();
@@ -195,6 +167,16 @@ public class Skademelding implements Serializable {
     public StringProperty statusProperty() {
         return status;
     }
+
+    //kontaktinfo
+    public ObservableMap<String, String> getKontaktinfoVitner() { return kontaktinfoVitner.get(); }
+    public void setKontaktinfoVitner(ObservableMap<String, String> kontaktinfoVitner) {
+        this.kontaktinfoVitner.set(kontaktinfoVitner);
+    }
+    public ObjectProperty<ObservableMap<String, String>> kontaktinfoVitnerProperty() {
+        return kontaktinfoVitner;
+    }
+
 
 
     // < ------------------------------------ INPUT-VALIDERING ------------------------------------ >
@@ -332,21 +314,26 @@ public class Skademelding implements Serializable {
         return msg;
     }
 
-    // kontaktinfo vitner
-    public String sjekkOgOppdaterKontaktinfoVitner(TextArea kontaktinfoVitnerField) {
+    // status
+    public String sjekkOgOppdaterStatus(ChoiceBox statusField) {
         String msg = "";
-         try {
-             setKontaktinfoVitner(kontaktinfoVitnerField.getText());
-         } catch (UgyldigInputException e) {
-             msg += e.getMessage() + "\n";
-         }
 
+        if (statusField.getValue() == null || statusField.getItems().isEmpty()) {
+            msg += "Status kan ikke være tom.\n";
+        } else {
+            try {
+                setStatus(statusField.getValue().toString());
+            } catch (UgyldigInputException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
         return msg;
     }
 
+
     //-------------------------FORSØK PÅ NY VITNE UTFYLLING-------------------------
-    // kontaktinfo vitne 1
-    public String sjekkOgOppdaterKontaktinfoVitne1(TextField navnVitneField, TextField tlfVitneField) {
+    // kontaktinfo vitne
+    public String sjekkOgOppdaterKontaktinfoVitne(TextField navnVitneField, TextField tlfVitneField) {
         String msg = "";
         if (navnVitneField.getText() == null || navnVitneField.getText().isEmpty()) {
             msg += "Vitne sitt navn kan ikke være tomt.\n";
@@ -365,7 +352,7 @@ public class Skademelding implements Serializable {
                 }
                 //legger til eller oppdaterer vitne
                 //if(!getKontaktinfoVitner2().containsKey(tlfVitneField.getText())) {
-                    getKontaktinfoVitner2().put(tlfVitneField.getText(), navnVitneField.getText());
+                getKontaktinfoVitner().put(tlfVitneField.getText(), navnVitneField.getText());
 
                 //}
                 /*else{
@@ -377,25 +364,7 @@ public class Skademelding implements Serializable {
         }
         return msg;
     }
-
-
     //-----------------------------------------------------------------
-
-    // status
-    public String sjekkOgOppdaterStatus(ChoiceBox statusField) {
-        String msg = "";
-
-        if (statusField.getValue() == null || statusField.getItems().isEmpty()) {
-            msg += "Status kan ikke være tom.\n";
-        } else {
-            try {
-                setStatus(statusField.getValue().toString());
-            } catch (UgyldigInputException e) {
-                msg += e.getMessage() + "\n";
-            }
-        }
-        return msg;
-    }
 
 
     // < ------------------------------------ SERIALISERING ------------------------------------ >
@@ -413,8 +382,7 @@ public class Skademelding implements Serializable {
         os.writeObject(getSkadeBeskrivelse());
         os.writeObject(getBelopTaksering());
         os.writeObject(getErstatningsbelopUtbetalt());
-        os.writeObject(getKontaktinfoVitner());
-        os.writeObject(new HashMap<>(getKontaktinfoVitner2()));
+        os.writeObject(new HashMap<>(getKontaktinfoVitner()));
         os.writeObject(getStatus());
     }
 
@@ -430,8 +398,7 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
         this.belopTaksering = new SimpleDoubleProperty((double)is.readObject());
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
-        this.kontaktinfoVitner = new SimpleStringProperty((String)is.readObject());
-        this.kontaktinfoVitner2 = new SimpleObjectProperty<>(FXCollections.observableMap((ObservableMap<String, String>) is.readObject()));
+        this.kontaktinfoVitner = new SimpleObjectProperty<>(FXCollections.observableMap((ObservableMap<String, String>) is.readObject()));
         this.status = new SimpleStringProperty((String)is.readObject());
     }
 
@@ -440,8 +407,8 @@ public class Skademelding implements Serializable {
     @Override
     public String toString() {
         return getSkadeNr() +"," +getKundeNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
-                getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getKontaktinfoVitner() +","+getStatus()+", "+
-                getKontaktinfoVitner2();
+                getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getStatus() +", "+
+                getKontaktinfoVitner();
     }
 }
 

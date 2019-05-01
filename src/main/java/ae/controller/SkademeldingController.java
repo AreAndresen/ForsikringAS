@@ -54,7 +54,7 @@ public class SkademeldingController {
 
     // Labels.
     @FXML
-    private Label beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel, kontaktinfoVitner2Label;
+    private Label beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel;
 
     @FXML
     private Button nyButton, redigerButton, slettButton;
@@ -143,23 +143,19 @@ public class SkademeldingController {
     public void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
-            kontaktinfoVitnerLabel.setText(skademelding.getKontaktinfoVitner());
-
 
             //finner alle vitner
             String vitner = "";
-            for (Map.Entry<String, String> info : skademelding.getKontaktinfoVitner2().entrySet()) {
+            for (Map.Entry<String, String> info : skademelding.getKontaktinfoVitner().entrySet()) {
                 vitner += "Navn: "+info.getValue()+" Tlf:"+info.getKey()+"\n";
             }
-            kontaktinfoVitner2Label.setText(vitner);
+            kontaktinfoVitnerLabel.setText(vitner);
 
 
         } else {
             // Ingen skademelding valgt, fjerner all tekst.
             beskrivelseAvSkadeLabel.setText("");
             kontaktinfoVitnerLabel.setText("");
-
-            kontaktinfoVitner2Label.setText("");
         }
     }
 
@@ -278,8 +274,8 @@ public class SkademeldingController {
             if (result.get() == ButtonType.OK) {
 
                 //sletter
-                valgtSkademelding.getKontaktinfoVitner2().clear();
-                kontaktinfoVitner2Label.setText("");
+                valgtSkademelding.getKontaktinfoVitner().clear();
+                kontaktinfoVitnerLabel.setText("");
             }
         }
         else{

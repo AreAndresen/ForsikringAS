@@ -48,16 +48,12 @@ public class VitnePopupController {
      * Metode for å legge inn kundens data i TextFields.
      */
     public void instansierFelter() {
-
         //Ny vitner
-        //if(skademeldingÅRedigere.getKontaktinfoVitner2().size() > 0){
-        for (Map.Entry<String, String> info : skademeldingÅRedigere.getKontaktinfoVitner2().entrySet()) {
+        for (Map.Entry<String, String> info : skademeldingÅRedigere.getKontaktinfoVitner().entrySet()) {
             vitne1navnField.setText(info.getValue());
             vitne1tlfField.setText(info.getKey());
         }
-
     }
-
 
     /**
      * Returnerer true dersom bruker trykker på Bekreft, hvis ikke
@@ -83,9 +79,7 @@ public class VitnePopupController {
         String msg = "";
 
         //vitner
-        msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitne1(vitne1navnField, vitne1tlfField);
-        //msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitne1(vitne2navnField, vitne2tlfField);
-
+        msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitne(vitne1navnField, vitne1tlfField);
 
         //kontrollerer etter aktiverte feilmeldinger
         if(msg.length() != 0){
