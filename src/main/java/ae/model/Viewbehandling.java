@@ -93,7 +93,7 @@ public class Viewbehandling {
      * Åpner kundeoversikten når bruker trykker på Kunder i menylinjen
      */
     public static void visKundeOversikt(HovedApplikasjon hovedApplikasjon) {
-            hovedApplikasjon.getRotOppsett().setCenter(kundeOversikt);
+        hovedApplikasjon.getRotOppsett().setCenter(kundeOversikt);
     }
 
     /**

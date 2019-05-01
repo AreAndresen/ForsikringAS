@@ -42,19 +42,6 @@ public class HovedApplikasjon extends Application {
         return kundeData;
     }
 
-    /** Returnerer alle skademeldinger som en ObservableList.*/
-    public ObservableList<Skademelding> getAlleSkademeldinger() {
-
-        ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
-
-        for(Kunde kunde : kundeData) {
-            skademeldinger.addAll(kunde.getSkademeldinger());
-        }
-        return skademeldinger;
-    }
-
-
-
 
     @Override
     public void start(Stage hovedStage) {
@@ -63,6 +50,7 @@ public class HovedApplikasjon extends Application {
 
         // Rotoppsettet kjører så lenge applikasjonen kjører.
         Viewbehandling.initierRotOppsett(this);
+        hovedStage.getScene().getStylesheets().add(this.getClass().getResource("/view/style.css").toExternalForm());
 
         Kunde testKunde1 = new Kunde(1001, LocalDate.parse("2015-10-05"), "Eidsvold", "Hans-Erling",
                 "Pilestredet 31 0166 Oslo");

@@ -14,11 +14,11 @@
 
 <AnchorPane prefHeight="350.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ae.controller.KundeController">
     <children>
-        <SplitPane dividerPositions="0.6578947368421053" layoutX="153.0" layoutY="70.0" prefHeight="350.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <SplitPane styleClass="pane" dividerPositions="0.6578947368421053" layoutX="153.0" layoutY="70.0" prefHeight="350.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <TableView fx:id="kundeTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView styleClass="table" fx:id="kundeTabell" layoutX="-12.0" layoutY="49.0" prefHeight="258.0" prefWidth="521.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="kundeNrKolonne" prefWidth="89.0" text="Kundenr" />
                                 <TableColumn fx:id="etternavnKolonne" prefWidth="119.0" text="Etternavn" />
@@ -34,9 +34,9 @@
                   <TextField fx:id="søkField" layoutX="102.0" layoutY="264.0" prefHeight="27.0" prefWidth="410.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="9.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane styleClass="pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <Label layoutX="104.0" layoutY="51.0" text="Kundeoversikt" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                        <Label id="oversikt" layoutX="104.0" layoutY="51.0" text="Kundeoversikt" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <GridPane layoutX="43.0" layoutY="104.0" prefHeight="240.0" prefWidth="325.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.79990234375" minWidth="10.0" prefWidth="200.79990234375" />
@@ -56,7 +56,7 @@
                                 <Label text="Kundenummer" wrapText="true" />
                                 <Label text="Etternavn" wrapText="true" GridPane.rowIndex="1" />
                                 <Label text="Fornavn" wrapText="true" GridPane.rowIndex="2" />
-                        <Button mnemonicParsing="false" onAction="#gåTilForsikringoversikt" prefHeight="27.0" prefWidth="174.0" text="Antall forsikringer" wrapText="true" GridPane.rowIndex="5" />
+                        <Button styleClass="btn" mnemonicParsing="false" onAction="#gåTilForsikringoversikt" prefHeight="27.0" prefWidth="174.0" text="Antall forsikringer" wrapText="true" GridPane.rowIndex="5" />
                                 <Label fx:id="kundeNrLabel" text="Label" wrapText="true" GridPane.columnIndex="1" />
                                 <Label fx:id="etternavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label fx:id="fornavnLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -67,15 +67,15 @@
                         <Label fx:id="adresseFakturaLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Dato ny kunde" wrapText="true" GridPane.rowIndex="4" />
                         <Label fx:id="datoKundeOpprettetLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" prefHeight="26.0" prefWidth="174.0" text="Antall skademeldinger" GridPane.rowIndex="6" />
+                        <Button styleClass="btn" mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" prefHeight="26.0" prefWidth="174.0" text="Antall skademeldinger" GridPane.rowIndex="6" />
                         <Label text="Antall ubetalte erstatninger" GridPane.rowIndex="7" />
                             </children>
                         </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="27.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
-                        <Button fx:id="nyButton" mnemonicParsing="false" onAction="#gåTilNyKundePopup" prefHeight="26.0" prefWidth="130.0" text="Ny kunde" />
-                        <Button fx:id="redigerButton" mnemonicParsing="false" onAction="#gåTilRedigerKundePopup" text="Rediger" />
-                        <Button fx:id="slettButton" mnemonicParsing="false" onAction="#slettValgtKunde" text="Slett" />
+                        <Button styleClass="btn" fx:id="nyButton" mnemonicParsing="false" onAction="#gåTilNyKundePopup" prefHeight="26.0" prefWidth="130.0" text="Ny kunde" />
+                        <Button styleClass="btn" fx:id="redigerButton" mnemonicParsing="false" onAction="#gåTilRedigerKundePopup" text="Rediger" />
+                        <Button styleClass="btn" fx:id="slettButton" mnemonicParsing="false" onAction="#slettValgtKunde" text="Slett" />
                      </buttons>
                   </ButtonBar>
                     </children>

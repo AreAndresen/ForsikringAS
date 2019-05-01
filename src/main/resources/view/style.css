@@ -1,0 +1,37 @@
+Label {
+	-fx-font-family: "Verdana";
+}
+
+#oversikt {
+	-fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+.pane, .table, .table:focused {
+	-fx-background-color: #f2fffc;
+}
+
+.menuBar {
+	-fx-background-color: #d5e5e0;
+    -fx-font-size: 16px;
+    -fx-margin: 15px;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-border-color: #000000;
+}
+
+.menu:hover, .menu:showing, .menuItem:focused {
+	-fx-background-color: #727c79;
+}
+
+.btn {
+	-fx-background-color: #d5e5e0;
+    -fx-border-width: 1px;
+    -fx-border-color: #000000;
+    -fx-font-family: "Verdana";
+}
+
+.btn:hover {
+	-fx-background-color: #727c79;
+	-fx-text-fill: #ffffff;
+	-fx-cursor: hand;
+}
