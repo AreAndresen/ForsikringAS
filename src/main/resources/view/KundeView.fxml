@@ -68,7 +68,7 @@
                         <Label text="Dato ny kunde" wrapText="true" GridPane.rowIndex="4" />
                         <Label fx:id="datoKundeOpprettetLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Button mnemonicParsing="false" onAction="#gåTilSkademeldingoversikt" prefHeight="26.0" prefWidth="174.0" text="Antall skademeldinger" GridPane.rowIndex="6" />
-                        <Label text="Antall Ubetalte erstatninger" GridPane.rowIndex="7" />
+                        <Label text="Antall ubetalte erstatninger" GridPane.rowIndex="7" />
                             </children>
                         </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="27.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

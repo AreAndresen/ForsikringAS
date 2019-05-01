@@ -100,8 +100,7 @@ public class RotOppsettController {
 
     @FXML
     public void hentFilTrykket() {
-        Task<Void> task = new ThreadExample(this::henteFil);
-        service.execute(task);
+        henteFil();
     }
 
     private void henteFil() {
