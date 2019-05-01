@@ -29,13 +29,24 @@ public class KundeController {
     @FXML
     private TableColumn<Kunde, LocalDate> datoKundeOpprettetKolonne;
 
-    @FXML
-    public Button redigerButton, slettButton;
-
     // Labels.
     @FXML
     private Label kundeNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
             datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
+
+    // Buttons, for å disable/enable ved threading
+    @FXML
+    private Button nyButton, redigerButton, slettButton;
+
+    public Button getNyButton() {
+        return nyButton;
+    }
+    public Button getRedigerButton() {
+        return redigerButton;
+    }
+    public Button getSlettButton() {
+        return slettButton;
+    }
 
     // Søke-feltet.
     @FXML

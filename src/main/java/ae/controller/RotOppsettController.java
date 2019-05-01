@@ -2,17 +2,13 @@ package ae.controller;
 
 import ae.HovedApplikasjon;
 import ae.model.*;
+import ae.util.AlertHandler;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.control.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -27,10 +23,9 @@ public class RotOppsettController {
     // Referanse til hovedapplikasjonen
     private HovedApplikasjon hovedApplikasjon;
     private ExecutorService service = Executors.newSingleThreadExecutor();
-    private ObservableList<Kunde> innlesteKunder;
 
     @FXML
-    private MenuItem lagreFilMenuItem;
+    private Menu filMenu;
 
     public RotOppsettController() {
     }
@@ -48,7 +43,6 @@ public class RotOppsettController {
     @FXML
     private void gåTilKundeoversikt() {
         Viewbehandling.visKundeOversikt(hovedApplikasjon);
-        lagreFilMenuItem.setDisable(false);
     }
 
 
@@ -57,47 +51,69 @@ public class RotOppsettController {
     @FXML
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
-        lagreFilMenuItem.setDisable(false);
     }
 
     /**
      * <--- FORSIKRING --->
      */
     @FXML
-    public void gåTilForsikringoversikt() {
+    private void gåTilForsikringoversikt() {
         Viewbehandling.visForsikringOversikt(hovedApplikasjon);
-        lagreFilMenuItem.setDisable(false);
     }
 
     // <---- FILER ----->
     @FXML
-    public void lagreFilTrykket() {
-        Filbehandling.lagreFil(hovedApplikasjon);
+    private void lagreFilTrykket() {
+        try {
+            Filbehandling.lagreFil(hovedApplikasjon);
+        } catch (FileNotFoundException e) {
+            AlertHandler.genererWarningAlert("Feilmelding", "Kunne ikke åpne fil",
+                    "Filen kan allerede være åpnet. Lukk filen og prøv igjen.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    public void hentFilTrykket() {
+    private void hentFilTrykket() {
         File fil = Filbehandling.henteFilVelger(hovedApplikasjon.getHovedStage());
 
         if (fil != null) {
-            disableButtons();
+            disableKnapper();
             Task<ObservableList<Kunde>> innlesing = new InnlesingThread(fil, hovedApplikasjon,
-                    this::enableButtons);
+                    this::enableKnapper);
             service.execute(innlesing);
         }
-
     }
 
-    private void disableButtons() {
-
+    private void disableKnapper() {
+        filMenu.setDisable(true);
+        Viewbehandling.getKundeController().getNyButton().setDisable(true);
+        Viewbehandling.getKundeController().getRedigerButton().setDisable(true);
+        Viewbehandling.getKundeController().getSlettButton().setDisable(true);
+        Viewbehandling.getSkademeldingController().getNyButton().setDisable(true);
+        Viewbehandling.getSkademeldingController().getRedigerButton().setDisable(true);
+        Viewbehandling.getSkademeldingController().getSlettButton().setDisable(true);
+        Viewbehandling.getForsikringController().getNyMenuButton().setDisable(true);
+        Viewbehandling.getForsikringController().getRedigerButton().setDisable(true);
+        Viewbehandling.getForsikringController().getSlettButton().setDisable(true);
     }
 
-    private void enableButtons() {
-
+    private void enableKnapper() {
+        filMenu.setDisable(false);
+        Viewbehandling.getKundeController().getNyButton().setDisable(false);
+        Viewbehandling.getKundeController().getRedigerButton().setDisable(false);
+        Viewbehandling.getKundeController().getSlettButton().setDisable(false);
+        Viewbehandling.getSkademeldingController().getNyButton().setDisable(false);
+        Viewbehandling.getSkademeldingController().getRedigerButton().setDisable(false);
+        Viewbehandling.getSkademeldingController().getSlettButton().setDisable(false);
+        Viewbehandling.getForsikringController().getNyMenuButton().setDisable(false);
+        Viewbehandling.getForsikringController().getRedigerButton().setDisable(false);
+        Viewbehandling.getForsikringController().getSlettButton().setDisable(false);
     }
 
     @FXML
-    public void avsluttTrykket() {
+    private void avsluttTrykket() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(hovedApplikasjon.getHovedStage());
         alert.setTitle("Avslutt");
@@ -113,7 +129,7 @@ public class RotOppsettController {
     }
 
     @FXML
-    public void visOmOss() {
+    private void visOmOss() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initOwner(hovedApplikasjon.getHovedStage());
         alert.setTitle("Om oss");

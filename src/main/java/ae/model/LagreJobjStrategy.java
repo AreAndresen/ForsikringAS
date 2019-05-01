@@ -1,15 +1,14 @@
 package ae.model;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LagreJobjStrategy implements LagreFilStrategy {
     @Override
-    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException, FileNotFoundException {
+    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException {
         ObjectOutputStream out = null;
         try {
 

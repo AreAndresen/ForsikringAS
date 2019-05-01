@@ -48,20 +48,28 @@ public class SkademeldingController {
     @FXML
     private TableColumn<Skademelding, String> statusKolonne;
 
-    @FXML
-    public Button redigerButton, slettButton;
-
     // Labels.
     @FXML
     private Label beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel;
+
+    @FXML
+    private Button nyButton, redigerButton, slettButton;
+
+    public Button getNyButton() {
+        return nyButton;
+    }
+    public Button getRedigerButton() {
+        return redigerButton;
+    }
+    public Button getSlettButton() {
+        return slettButton;
+    }
 
     @FXML
     private ChoiceBox typeChoice;
 
     private ObservableList<String> typeSortering = FXCollections.observableArrayList("Alle", "Båtforsikring",
             "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
-
-    private Filbehandling fb = new Filbehandling();
 
     // Referanse til Rot-kontrolleren.
     private HovedApplikasjon hovedApplikasjon;

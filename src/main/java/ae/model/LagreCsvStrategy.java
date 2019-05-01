@@ -1,14 +1,12 @@
 package ae.model;
 
 import javafx.collections.ObservableList;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 public class LagreCsvStrategy implements LagreFilStrategy {
     @Override
-    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException, FileNotFoundException {
+    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException {
         PrintWriter skriver = null;
         try {
             skriver = new PrintWriter(path, "UTF-8");

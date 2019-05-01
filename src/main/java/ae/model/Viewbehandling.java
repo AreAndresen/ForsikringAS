@@ -13,6 +13,26 @@ import java.io.IOException;
 
 public class Viewbehandling {
 
+    // <---------------- DATAFELTER FOR Å AKSESSERE BUTTONS SOM SKAL DISABLES UNDER THREAD ----------->
+    private static KundeController kundeController;
+    private static AnchorPane kundeOversikt;
+
+    private static SkademeldingController skademeldingController;
+    private static AnchorPane skademeldingOversikt;
+
+    private static ForsikringController forsikringController;
+    private static AnchorPane forsikringOversikt;
+
+    public static KundeController getKundeController() {
+        return kundeController;
+    }
+    public static SkademeldingController getSkademeldingController() {
+        return skademeldingController;
+    }
+    public static ForsikringController getForsikringController() {
+        return forsikringController;
+    }
+
     /**
      * Initierer rotoppsettet, kjøres i start-metoden.
      */
@@ -32,6 +52,36 @@ public class Viewbehandling {
             RotOppsettController rotOppsettController = loader.getController();
             rotOppsettController.setHovedApplikasjon(hovedApplikasjon);
 
+            setPaneOgControllere(hovedApplikasjon);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void setPaneOgControllere(HovedApplikasjon hovedApplikasjon) {
+        try {
+            // kundeoversikten
+            FXMLLoader kundeLoader = new FXMLLoader();
+            kundeLoader.setLocation(HovedApplikasjon.class.getResource("/view/KundeView.fxml"));
+            kundeOversikt = (AnchorPane) kundeLoader.load();
+            kundeController = kundeLoader.getController();
+            kundeController.setHovedApplikasjon(hovedApplikasjon);
+
+            // skademeldingoversikten
+            FXMLLoader skadeLoader = new FXMLLoader();
+            skadeLoader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
+            skademeldingOversikt = (AnchorPane) skadeLoader.load();
+            skademeldingController = skadeLoader.getController();
+            skademeldingController.setHovedApplikasjon(hovedApplikasjon);
+
+            // forsikringoversikten
+            FXMLLoader forsikringLoader = new FXMLLoader();
+            forsikringLoader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringView.fxml"));
+            forsikringOversikt = (AnchorPane) forsikringLoader.load();
+            forsikringController = forsikringLoader.getController();
+            forsikringController.setHovedApplikasjon(hovedApplikasjon);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,21 +93,7 @@ public class Viewbehandling {
      * Åpner kundeoversikten når bruker trykker på Kunder i menylinjen
      */
     public static void visKundeOversikt(HovedApplikasjon hovedApplikasjon) {
-        try {
-            // Last inn kundeoversikten fra fxml-fil.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeView.fxml"));
-            AnchorPane kundeOversikt = (AnchorPane) loader.load();
-
-            // Plasser kundeoversikten i senter av rotoppsettet.
             hovedApplikasjon.getRotOppsett().setCenter(kundeOversikt);
-
-            KundeController kundeController = loader.getController();
-            kundeController.setHovedApplikasjon(hovedApplikasjon);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -124,21 +160,8 @@ public class Viewbehandling {
      * Åpner skademeldingoversikten når bruker trykker på skademelding i menylinjen
      */
     public static void visSkademeldingOversikt(HovedApplikasjon hovedApplikasjon) {
-        try {
-            // Last inn kundeoversikten fra fxml-fil.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
-            AnchorPane skademeldingOversikt = (AnchorPane) loader.load();
-
-            // Plasser kundeoversikten i senter av rotoppsettet.
-            hovedApplikasjon.getRotOppsett().setCenter(skademeldingOversikt);
-
-            SkademeldingController skademeldingController = loader.getController();
-            skademeldingController.setHovedApplikasjon(hovedApplikasjon);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Plasser kundeoversikten i senter av rotoppsettet.
+        hovedApplikasjon.getRotOppsett().setCenter(skademeldingOversikt);
     }
 
     /**
@@ -160,8 +183,6 @@ public class Viewbehandling {
             skademeldingRedigerPopupController.setPopupStage(popupStage);
             skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
             skademeldingRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
-
-
 
             popupStage.showAndWait();
 
@@ -206,21 +227,8 @@ public class Viewbehandling {
 
     // Åpner Oversikt - Forsikring når bruker trykker på Forsikring i menylinjen
     public static void visForsikringOversikt(HovedApplikasjon hovedApplikasjon) {
-        try {
-            // Last inn kundeoversikten fra fxml-fil.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringView.fxml"));
-            AnchorPane forsikringOversikt = (AnchorPane) loader.load();
-
-            // Plasser kundeoversikten i senter av rotoppsettet.
-            hovedApplikasjon.getRotOppsett().setCenter(forsikringOversikt);
-
-            ForsikringController forsikringController = loader.getController();
-            forsikringController.setHovedApplikasjon(hovedApplikasjon);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Plasser kundeoversikten i senter av rotoppsettet.
+        hovedApplikasjon.getRotOppsett().setCenter(forsikringOversikt);
     }
 
     // Åpner BåtForsikring-popup når bruker trykker på Ny båtforsikring-knappen

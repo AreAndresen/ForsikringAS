@@ -53,6 +53,22 @@ public class ForsikringController {
     @FXML
     private ChoiceBox typeChoice;
 
+    // Buttons, for å disable/enable ved threading
+    @FXML
+    private MenuButton nyMenuButton;
+    @FXML
+    private Button redigerButton, slettButton;
+
+    public MenuButton getNyMenuButton() {
+        return nyMenuButton;
+    }
+    public Button getRedigerButton() {
+        return redigerButton;
+    }
+    public Button getSlettButton() {
+        return slettButton;
+    }
+
     private ObservableList<String> typeSortering = FXCollections.observableArrayList("Alle", "Båtforsikring",
             "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
 

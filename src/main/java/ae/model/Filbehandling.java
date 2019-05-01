@@ -2,7 +2,6 @@ package ae.model;
 
 import ae.HovedApplikasjon;
 import ae.model.exceptions.UgyldigKundeFormatException;
-import ae.util.AlertHandler;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -13,7 +12,7 @@ import java.io.IOException;
 public class Filbehandling {
 
     private static void lagreKunde(LagreFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path)
-            throws IOException, FileNotFoundException {
+            throws IOException {
         lagringsmetode.skrivKundeTilFil(kundeTabell, path);
     }
 
@@ -23,60 +22,31 @@ public class Filbehandling {
     }
 
     // lagrer fil
-    public static void lagreFil(HovedApplikasjon hovedApplikasjon) {
+    public static void lagreFil(HovedApplikasjon hovedApplikasjon) throws IOException {
         File filPath = Filbehandling.lagreFilVelger(hovedApplikasjon.getHovedStage());
 
         if (filPath != null) {
             if (filPath.getPath().endsWith(".jobj")) {
-                try {
-                    Filbehandling.lagreKunde(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
-                } catch (FileNotFoundException e) {
-                    AlertHandler.genererWarningAlert("Feilmelding", "Kunne ikke åpne fil",
-                            "Filen kan allerede være åpnet. Lukk filen og prøv igjen.");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Filbehandling.lagreKunde(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
             }
 
             if (filPath.getPath().endsWith(".csv")) {
-                try {
-                    Filbehandling.lagreKunde(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
-                } catch (FileNotFoundException e) {
-                    AlertHandler.genererWarningAlert("Feilmelding", "Kunne ikke åpne fil",
-                            "Filen kan allerede være åpnet. Lukk filen og prøv igjen.");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Filbehandling.lagreKunde(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
             }
         }
     }
 
     // returnerer innholdet i fil
-    public static ObservableList<Kunde> henteFil(File filPath) {
+    public static ObservableList<Kunde> henteFil(File filPath) throws IOException, ClassNotFoundException,
+            UgyldigKundeFormatException {
 
         if (filPath != null) {
             if (filPath.getPath().endsWith(".jobj")) {
-                try {
-                    return Filbehandling.hentKunde(new HenteJobjStrategy(), filPath.getPath());
-                } catch (UgyldigKundeFormatException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                return Filbehandling.hentKunde(new HenteJobjStrategy(), filPath.getPath());
             }
 
             if (filPath.getPath().endsWith(".csv")) {
-                try {
-                    return Filbehandling.hentKunde(new HenteCsvStrategy(), filPath.getPath());
-                } catch (UgyldigKundeFormatException e) {
-                    AlertHandler.genererUgyldigInputAlert(e.getMessage());
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                return Filbehandling.hentKunde(new HenteCsvStrategy(), filPath.getPath());
             }
         }
         return null;
