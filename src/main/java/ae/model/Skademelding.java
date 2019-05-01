@@ -7,22 +7,19 @@ import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigLopeNrException;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 
 public class Skademelding implements Serializable {
@@ -64,6 +61,7 @@ public class Skademelding implements Serializable {
          //this.kontaktinfoVitner2.put(0, "");
 
         this.status = new SimpleStringProperty(status);
+
     }
 
     // < ------------------------------------ GET OG SET ------------------------------------ >
@@ -398,7 +396,7 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
         this.belopTaksering = new SimpleDoubleProperty((double)is.readObject());
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
-        this.kontaktinfoVitner = new SimpleObjectProperty<>(FXCollections.observableMap((ObservableMap<String, String>) is.readObject()));
+        this.kontaktinfoVitner = new SimpleObjectProperty<>(FXCollections.observableMap((Map<String, String>) is.readObject()));
         this.status = new SimpleStringProperty((String)is.readObject());
     }
 

@@ -68,8 +68,8 @@
                         <Label alignment="TOP_LEFT" text="Beskrivelse av skade:" wrapText="true" />
                         <Label fx:id="beskrivelseAvSkadeLabel" alignment="TOP_LEFT" prefHeight="96.0" prefWidth="169.0" text="Label" wrapText="true" GridPane.columnIndex="1" />
                         <Label fx:id="kontaktinfoVitnerLabel" alignment="TOP_LEFT" prefHeight="131.0" prefWidth="222.0" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" onAction="#gåTilNyttVitnePopup" text="Legg til vitne" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" onAction="#slettVitner" text="Slett alle vitner" GridPane.rowIndex="2" />
+                        <Button styleClass="btn" mnemonicParsing="false" onAction="#gåTilNyttVitnePopup" text="Legg til vitne" GridPane.rowIndex="1" />
+                        <Button styleClass="btn" mnemonicParsing="false" onAction="#slettVitner" text="Slett alle vitner" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="27.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

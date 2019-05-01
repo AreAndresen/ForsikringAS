@@ -4,6 +4,7 @@ import ae.model.exceptions.UgyldigInputException;
 import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -144,8 +145,12 @@ public class HenteCsvStrategy implements HenteFilStrategy {
             double belopTaksering = parseDouble(skademeldinger[i + 5], "Takseringsbeløp er ikke et tall.");
             double erstatningsBelopUtbetalt = parseDouble(skademeldinger[i + 6], "Utbetalt erstatningsbeløp" +
                     " er ikke et tall.");
-            String kontaktinfoVitner = skademeldinger[i + 7];
-            String status = skademeldinger[i + 8];
+            String status = skademeldinger[i + 7];
+
+            // omformaterer vitner-strengen, sånn at det blir hendig å legge til
+            String removeBracket = skademeldinger[i + 8].replace("{", "");
+            String replace = removeBracket.replaceAll("[=|}]",",");
+            String[] kontaktinfoVitner = replace.split(",");
 
             Skademelding tmpSkademelding = new Skademelding(kundeNr, skadeNr);
             tmpSkademelding.setDatoSkade(datoSkade);
@@ -153,8 +158,14 @@ public class HenteCsvStrategy implements HenteFilStrategy {
             tmpSkademelding.setSkadeBeskrivelse(skadeBeskrivelse);
             tmpSkademelding.setBelopTaksering(belopTaksering);
             tmpSkademelding.setErstatningsbelopUtbetalt(erstatningsBelopUtbetalt);
-            tmpSkademelding.setKontaktinfoVitner(kontaktinfoVitner);
             tmpSkademelding.setStatus(status);
+
+            // legger til vitner
+            for (int y = 0; y < kontaktinfoVitner.length; y+=2) {
+                String tlfnr = kontaktinfoVitner[y];
+                String navn = kontaktinfoVitner[y + 1];
+                tmpSkademelding.getKontaktinfoVitner().put(tlfnr, navn);
+            }
             kunde.setAntallErstatningerUbetalte();
 
             kunde.getSkademeldinger().add(tmpSkademelding);
