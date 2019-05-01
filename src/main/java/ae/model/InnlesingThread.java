@@ -1,29 +1,34 @@
 package ae.model;
 
+import ae.HovedApplikasjon;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
-public class InnlesingThread extends Task<Void> {
+import javax.swing.text.TableView;
+import java.io.File;
+
+public class InnlesingThread extends Task<ObservableList<Kunde>> {
+    private File filPath;
+    private HovedApplikasjon hovedApplikasjon;
     private Runnable kjørNårFerdig;
 
-    public InnlesingThread(Runnable kjørNårFerdig) {
+    public InnlesingThread(File filPath, HovedApplikasjon hovedApplikasjon,
+                           Runnable kjørNårFerdig) {
+        this.filPath = filPath;
+        this.hovedApplikasjon = hovedApplikasjon;
         this.kjørNårFerdig = kjørNårFerdig;
     }
 
     @Override
-    protected Void call() throws Exception {
-        // emulerer en "stor" jobb på 3 sekunder...
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            // gjør ikke noe her, men hvis hvis du er i en løkke
-            // burde løkkes stoppes med break hvis isCancelled() er true...
-        }
-
-        return null;
+    protected ObservableList<Kunde> call() throws Exception {
+        Thread.sleep(3000);
+        ObservableList<Kunde> hentetData = Filbehandling.henteFil(filPath);
+        return hentetData;
     }
 
     @Override
     protected void succeeded() {
+        hovedApplikasjon.getKundeData().setAll(this.getValue());
         kjørNårFerdig.run();
     }
 }

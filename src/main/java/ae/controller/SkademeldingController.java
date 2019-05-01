@@ -48,6 +48,9 @@ public class SkademeldingController {
     @FXML
     private TableColumn<Skademelding, String> statusKolonne;
 
+    @FXML
+    public Button redigerButton, slettButton;
+
     // Labels.
     @FXML
     private Label beskrivelseAvSkadeLabel, kontaktinfoVitnerLabel;

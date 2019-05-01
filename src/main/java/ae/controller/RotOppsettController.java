@@ -5,11 +5,15 @@ import ae.model.*;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -73,13 +77,23 @@ public class RotOppsettController {
 
     @FXML
     public void hentFilTrykket() {
-        innlesteKunder = Filbehandling.henteFil(hovedApplikasjon);
-        Task<Void> innlesing = new InnlesingThread(this::threadDone);
-        service.execute(innlesing);
+        File fil = Filbehandling.henteFilVelger(hovedApplikasjon.getHovedStage());
+
+        if (fil != null) {
+            disableButtons();
+            Task<ObservableList<Kunde>> innlesing = new InnlesingThread(fil, hovedApplikasjon,
+                    this::enableButtons);
+            service.execute(innlesing);
+        }
+
     }
 
-    public void threadDone() {
-        hovedApplikasjon.getKundeData().setAll(innlesteKunder);
+    private void disableButtons() {
+
+    }
+
+    private void enableButtons() {
+
     }
 
     @FXML

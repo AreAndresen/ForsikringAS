@@ -52,8 +52,7 @@ public class Filbehandling {
     }
 
     // returnerer innholdet i fil
-    public static ObservableList<Kunde> henteFil(HovedApplikasjon hovedApplikasjon) {
-        File filPath = Filbehandling.henteFilVelger(hovedApplikasjon.getHovedStage());
+    public static ObservableList<Kunde> henteFil(File filPath) {
 
         if (filPath != null) {
             if (filPath.getPath().endsWith(".jobj")) {
@@ -107,7 +106,7 @@ public class Filbehandling {
     /**
      * FileChooser hente fil
      */
-    private static File henteFilVelger(Stage hovedStage) {
+    public static File henteFilVelger(Stage hovedStage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Hent en fil");
 

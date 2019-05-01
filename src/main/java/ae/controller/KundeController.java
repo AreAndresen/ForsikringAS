@@ -29,6 +29,9 @@ public class KundeController {
     @FXML
     private TableColumn<Kunde, LocalDate> datoKundeOpprettetKolonne;
 
+    @FXML
+    public Button redigerButton, slettButton;
+
     // Labels.
     @FXML
     private Label kundeNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,

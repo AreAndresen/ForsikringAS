@@ -73,8 +73,8 @@
                   <ButtonBar layoutX="54.0" layoutY="250.0" prefHeight="27.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
                         <Button mnemonicParsing="false" onAction="#gåTilNySkademeldingPopup" prefHeight="26.0" prefWidth="130.0" text="Ny skade" />
-                        <Button mnemonicParsing="false" onAction="#gåTilRedigerSkademeldingPopup" text="Rediger" />
-                        <Button mnemonicParsing="false" onAction="#slettValgtSkademelding" text="Slett" />
+                        <Button fx:id="redigerButton" mnemonicParsing="false" onAction="#gåTilRedigerSkademeldingPopup" text="Rediger" />
+                        <Button fx:id="slettButton" mnemonicParsing="false" onAction="#slettValgtSkademelding" text="Slett" />
                      </buttons>
                   </ButtonBar>
                </children>
