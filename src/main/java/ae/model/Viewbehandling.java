@@ -224,7 +224,7 @@ public class Viewbehandling {
 
 
     /**
-     * LEGG TIL VITNE I  eksisterende skademelding .
+     * LEGG TIL VITNE I eksisterende skademelding .
      */
     public static boolean visLeggTilVitnePopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
         try {

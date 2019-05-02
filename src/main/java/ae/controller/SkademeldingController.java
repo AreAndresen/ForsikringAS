@@ -235,7 +235,7 @@ public class SkademeldingController {
     }
 
 
-    //------------------------ VITNE GREIER
+    //------------------------ VITNER-------------------------------
     @FXML
     public void gåTilNyttVitnePopup() {
         //Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();

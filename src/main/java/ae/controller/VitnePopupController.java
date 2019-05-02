@@ -43,7 +43,7 @@ public class VitnePopupController {
      * Metode for å legge inn kundens data i TextFields.
      */
     public void instansierFelter() {
-        //Ny vitner
+        //Setter info fra siste vitne lagt til
         for (Map.Entry<String, String> info : skademeldingÅRedigere.getKontaktinfoVitner().entrySet()) {
             vitne1navnField.setText(info.getValue());
             vitne1tlfField.setText(info.getKey());
