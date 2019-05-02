@@ -1,10 +1,7 @@
 package ae.model;
 
 import ae.model.exceptions.UgyldigInputException;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -15,21 +12,21 @@ import java.time.LocalDate;
 
 public class ReiseForsikring extends Forsikring implements Serializable {
     private transient StringProperty forsikringsOmråde;
-    private transient DoubleProperty forsikringsSum;
+    private transient LongProperty forsikringsSum;
 
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // tomt objekt konstruktør
     public ReiseForsikring(int kundeNr, int forsikringsNr) {
-        this(kundeNr, forsikringsNr, 0.0, LocalDate.now(), 0, null, "Reiseforsikring", null, 0);
+        this(kundeNr, forsikringsNr, 0, LocalDate.now(), 0, null, "Reiseforsikring", null, 0);
     }
 
     // default konstruktør
-    public ReiseForsikring(int kundeNr, int forsikringsNr, double premie, LocalDate datoOpprettet, int forsikringsBelop,
-                           String betingelser, String type, String forsikringsOmråde, double forsikringsSum) {
+    public ReiseForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet, long forsikringsBelop,
+                           String betingelser, String type, String forsikringsOmråde, long forsikringsSum) {
         super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
         this.forsikringsOmråde = new SimpleStringProperty(forsikringsOmråde);
-        this.forsikringsSum = new SimpleDoubleProperty(forsikringsSum);
+        this.forsikringsSum = new SimpleLongProperty(forsikringsSum);
     }
 
     // < ------------------------------------ GET OG SET ------------------------------------ >
@@ -50,16 +47,16 @@ public class ReiseForsikring extends Forsikring implements Serializable {
     }
 
     // forsikringsSum
-    public double getForsikringsSum() {
+    public long getForsikringsSum() {
         return forsikringsSum.get();
     }
-    public void setForsikringsSum(double sum) {
+    public void setForsikringsSum(long sum) {
         if (sum <= 0) {
             throw new UgyldigInputException("Forsikringssum må være større enn 0.");
         }
         this.forsikringsSum.set(sum);
     }
-    public DoubleProperty forsikringsSumProperty() {
+    public LongProperty forsikringsSumProperty() {
         return forsikringsSum;
     }
 
@@ -89,7 +86,7 @@ public class ReiseForsikring extends Forsikring implements Serializable {
             msg += "Forsikringssum kan ikke være tom.\n";
         } else {
             try {
-                setForsikringsSum(Double.parseDouble(forsikringsSumField.getText()));
+                setForsikringsSum(Long.parseLong(forsikringsSumField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringssum må være tall.\n";
             } catch (UgyldigInputException e) {
@@ -112,7 +109,7 @@ public class ReiseForsikring extends Forsikring implements Serializable {
     private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
         is.defaultReadObject();
         this.forsikringsOmråde = new SimpleStringProperty((String) is.readObject());
-        this.forsikringsSum = new SimpleDoubleProperty((double) is.readObject());
+        this.forsikringsSum = new SimpleLongProperty((long) is.readObject());
     }
 
     // < ------------------------------------ toString - CSV ------------------------------------ >

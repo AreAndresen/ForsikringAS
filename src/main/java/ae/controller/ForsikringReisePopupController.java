@@ -36,13 +36,13 @@ public class ForsikringReisePopupController {
     private void instansierFelter() {
         kundeNrField.setText(Integer.toString(reiseForsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(reiseForsikringÅRedigere.getForsikringsNr()));
-        premieField.setText(Double.toString(reiseForsikringÅRedigere.getÅrligPremie()));
+        premieField.setText(Long.toString(reiseForsikringÅRedigere.getÅrligPremie()));
         datoOpprettetField.setText(reiseForsikringÅRedigere.getDatoOpprettet().toString());
-        forsikringsbelopField.setText(Double.toString(reiseForsikringÅRedigere.getForsikringsBelop()));
+        forsikringsbelopField.setText(Long.toString(reiseForsikringÅRedigere.getForsikringsBelop()));
         betingelserField.setText(reiseForsikringÅRedigere.getBetingelser());
         typeField.setText(reiseForsikringÅRedigere.getType());
         områdeField.setText(reiseForsikringÅRedigere.getForsikringsOmråde());
-        sumField.setText(Double.toString(reiseForsikringÅRedigere.getForsikringsSum()));
+        sumField.setText(Long.toString(reiseForsikringÅRedigere.getForsikringsSum()));
 
         kundeNrField.setDisable(true);
         forsikringsNrField.setDisable(true);

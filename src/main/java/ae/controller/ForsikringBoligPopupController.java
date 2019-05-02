@@ -50,17 +50,17 @@ public class ForsikringBoligPopupController {
     private void instansierFelter() {
         kundeNrField.setText(Integer.toString(boligForsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(boligForsikringÅRedigere.getForsikringsNr()));
-        premieField.setText(Double.toString(boligForsikringÅRedigere.getÅrligPremie()));
+        premieField.setText(Long.toString(boligForsikringÅRedigere.getÅrligPremie()));
         datoOpprettetField.setText(boligForsikringÅRedigere.getDatoOpprettet().toString());
-        forsikringsbelopField.setText(Double.toString(boligForsikringÅRedigere.getForsikringsBelop()));
+        forsikringsbelopField.setText(Long.toString(boligForsikringÅRedigere.getForsikringsBelop()));
         betingelserField.setText(boligForsikringÅRedigere.getBetingelser());
         typeField.setText(boligForsikringÅRedigere.getType());
         adresseBoligField.setText(boligForsikringÅRedigere.getAdresseBolig());
         byggeårField.setText(Integer.toString(boligForsikringÅRedigere.getByggeår()));
         byggematerialeField.setText(boligForsikringÅRedigere.getByggemateriale());
         antallKvmField.setText(Integer.toString(boligForsikringÅRedigere.getAntallKvm()));
-        forsikringsbelopBygningField.setText(Double.toString(boligForsikringÅRedigere.getForsikringsbelopBygning()));
-        forsikringsbelopInnboField.setText(Double.toString(boligForsikringÅRedigere.getForsikringsbelopInnbo()));
+        forsikringsbelopBygningField.setText(Long.toString(boligForsikringÅRedigere.getForsikringsbelopBygning()));
+        forsikringsbelopInnboField.setText(Long.toString(boligForsikringÅRedigere.getForsikringsbelopInnbo()));
 
         kundeNrField.setDisable(true);
         forsikringsNrField.setDisable(true);

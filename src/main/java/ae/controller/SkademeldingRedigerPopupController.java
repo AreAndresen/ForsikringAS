@@ -65,8 +65,8 @@ public class SkademeldingRedigerPopupController {
         kundeNrField.setText(Integer.toString(skademeldingÅRedigere.getKundeNr()));
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
-        belopTakseringField.setText(Double.toString(skademeldingÅRedigere.getBelopTaksering()));
-        erstatningsbelopUtbetaltField.setText(Double.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
+        belopTakseringField.setText(Long.toString(skademeldingÅRedigere.getBelopTaksering()));
+        erstatningsbelopUtbetaltField.setText(Long.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
 
         kundeNrField.setDisable(true);
         skadeNrField.setDisable(true);

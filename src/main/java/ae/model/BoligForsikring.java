@@ -17,31 +17,31 @@ public class BoligForsikring extends Forsikring implements Serializable {
     private transient StringProperty byggemateriale;
     private transient StringProperty standard;
     private transient IntegerProperty antallKvm;
-    private transient DoubleProperty forsikringsbelopBygning;
-    private transient DoubleProperty forsikringsbelopInnbo;
+    private transient LongProperty forsikringsbelopBygning;
+    private transient LongProperty forsikringsbelopInnbo;
 
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // tomt objekt-konstruktør
     public BoligForsikring(int kundeNr, int forsikringsNr, String type) {
-        this(kundeNr, forsikringsNr, 0.0, LocalDate.now(), 0, null, type,
+        this(kundeNr, forsikringsNr, 0, LocalDate.now(), 0, null, type,
                 null, 0, null, null, 0, 0,
                 0);
     }
 
     // default konstruktør
-    public BoligForsikring(int kundeNr, int forsikringsNr, double premie, LocalDate datoOpprettet, int forsikringsBelop,
+    public BoligForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet, long forsikringsBelop,
                            String betingelser, String type, String adresseBolig, int byggeår,
-                           String byggemateriale, String standard, int antallKvm, double forsikringsbelopBygning,
-                           double forsikringsbelopInnbo) {
+                           String byggemateriale, String standard, int antallKvm, long forsikringsbelopBygning,
+                           long forsikringsbelopInnbo) {
         super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
         this.adresseBolig = new SimpleStringProperty(adresseBolig);
         this.byggeår = new SimpleIntegerProperty(byggeår);
         this.byggemateriale = new SimpleStringProperty(byggemateriale);
         this.standard = new SimpleStringProperty(standard);
         this.antallKvm = new SimpleIntegerProperty(antallKvm);
-        this.forsikringsbelopBygning = new SimpleDoubleProperty(forsikringsbelopBygning);
-        this.forsikringsbelopInnbo = new SimpleDoubleProperty(forsikringsbelopInnbo);
+        this.forsikringsbelopBygning = new SimpleLongProperty(forsikringsbelopBygning);
+        this.forsikringsbelopInnbo = new SimpleLongProperty(forsikringsbelopInnbo);
     }
 
     // < ------------------------------------ GET OG SET ------------------------------------ >
@@ -119,30 +119,30 @@ public class BoligForsikring extends Forsikring implements Serializable {
     }
 
     // forsikringsbelopBygning
-    public double getForsikringsbelopBygning() {
+    public long getForsikringsbelopBygning() {
         return forsikringsbelopBygning.get();
     }
-    public void setForsikringsbelopBygning(double forsikringsbelopBygning) {
+    public void setForsikringsbelopBygning(long forsikringsbelopBygning) {
         if (forsikringsbelopBygning <= 0) {
             throw new UgyldigInputException("Forsikringsbeløp for bygning må være større enn 0.");
         }
         this.forsikringsbelopBygning.set(forsikringsbelopBygning);
     }
-    public DoubleProperty forsikringsbelopBygningProperty() {
+    public LongProperty forsikringsbelopBygningProperty() {
         return forsikringsbelopBygning;
     }
 
     // forsikringsbelopInnbo
-    public double getForsikringsbelopInnbo() {
+    public long getForsikringsbelopInnbo() {
         return forsikringsbelopInnbo.get();
     }
-    public void setForsikringsbelopInnbo(double forsikringsbelopInnbo) {
+    public void setForsikringsbelopInnbo(long forsikringsbelopInnbo) {
         if (forsikringsbelopInnbo <= 0) {
             throw new UgyldigInputException("Forsikringsbeløp for innbo må være større enn 0.");
         }
         this.forsikringsbelopInnbo.set(forsikringsbelopInnbo);
     }
-    public DoubleProperty forsikringsbelopInnboProperty() {
+    public LongProperty forsikringsbelopInnboProperty() {
         return forsikringsbelopInnbo;
     }
 
@@ -240,7 +240,7 @@ public class BoligForsikring extends Forsikring implements Serializable {
             msg += "Forsikringsbeløp for bygning kan ikke være tom.\n";
         } else {
             try {
-                setForsikringsbelopBygning(Double.parseDouble(forsikringsbelopBygningField.getText()));
+                setForsikringsbelopBygning(Long.parseLong(forsikringsbelopBygningField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringsbeløp for bygning må være tall.\n";
             } catch (UgyldigInputException e) {
@@ -258,7 +258,7 @@ public class BoligForsikring extends Forsikring implements Serializable {
             msg += "Forsikringsbeløp for innbo kan ikke være tom.\n";
         } else {
             try {
-                setForsikringsbelopInnbo(Double.parseDouble(forsikringsbelopInnboField.getText()));
+                setForsikringsbelopInnbo(Long.parseLong(forsikringsbelopInnboField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringsbeløp for innbo må være tall.\n";
             } catch (UgyldigInputException e) {
@@ -290,8 +290,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
         this.byggemateriale = new SimpleStringProperty((String) is.readObject());
         this.standard = new SimpleStringProperty((String) is.readObject());
         this.antallKvm = new SimpleIntegerProperty((int) is.readObject());
-        this.forsikringsbelopBygning = new SimpleDoubleProperty((double) is.readObject());
-        this.forsikringsbelopInnbo = new SimpleDoubleProperty((double) is.readObject());
+        this.forsikringsbelopBygning = new SimpleLongProperty((long) is.readObject());
+        this.forsikringsbelopInnbo = new SimpleLongProperty((long) is.readObject());
     }
 
     // < ------------------------------------ toString - CSV ------------------------------------ >

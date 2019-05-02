@@ -20,9 +20,9 @@ public abstract class Forsikring implements Serializable {
 
     private transient IntegerProperty kundeNr;
     private transient IntegerProperty forsikringsNr;
-    private transient DoubleProperty årligPremie;
+    private transient LongProperty årligPremie;
     private transient ObjectProperty<LocalDate> datoOpprettet;
-    private transient DoubleProperty forsikringsBelop;
+    private transient LongProperty forsikringsBelop;
     private transient StringProperty betingelser;
     private transient StringProperty type;
 
@@ -30,17 +30,17 @@ public abstract class Forsikring implements Serializable {
 
     // tomt objekt-konstruktør
     public Forsikring(int kundeNr, int forsikringsNr) {
-        this(kundeNr, forsikringsNr, 0.0, LocalDate.now(), 0, null, null);
+        this(kundeNr, forsikringsNr, 0, LocalDate.now(), 0, null, null);
     }
 
     // default konstruktør
-    public Forsikring(int kundeNr, int forsikringsNr, double premie, LocalDate datoOpprettet,
-                      double forsikringsBelop, String betingelser, String type) {
+    public Forsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet,
+                      long forsikringsBelop, String betingelser, String type) {
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
-        this.årligPremie = new SimpleDoubleProperty(premie);
+        this.årligPremie = new SimpleLongProperty(premie);
         this.datoOpprettet = new SimpleObjectProperty<>(datoOpprettet);
-        this.forsikringsBelop = new SimpleDoubleProperty(forsikringsBelop);
+        this.forsikringsBelop = new SimpleLongProperty(forsikringsBelop);
         this.betingelser = new SimpleStringProperty(betingelser);
         this.type = new SimpleStringProperty(type);
     }
@@ -76,16 +76,16 @@ public abstract class Forsikring implements Serializable {
     }
 
     // årligPremie
-    public double getÅrligPremie() {
+    public long getÅrligPremie() {
         return årligPremie.get();
     }
-    public void setÅrligPremie(double premie) {
+    public void setÅrligPremie(long premie) {
         if (premie <= 0) {
             throw new UgyldigBelopException("Årlig forsikringspremie må være større enn 0.");
         }
         this.årligPremie.set(premie);
     }
-    public DoubleProperty årligPremieProperty() {
+    public LongProperty årligPremieProperty() {
         return årligPremie;
     }
 
@@ -104,16 +104,16 @@ public abstract class Forsikring implements Serializable {
     }
 
     // forsikringsBelop
-    public double getForsikringsBelop() {
+    public long getForsikringsBelop() {
         return forsikringsBelop.get();
     }
-    public void setForsikringsBelop(double forsikringsBelop) {
+    public void setForsikringsBelop(long forsikringsBelop) {
         if (forsikringsBelop <= 0) {
             throw new UgyldigBelopException("Forsikringsbeløp må være større enn 0.");
         }
         this.forsikringsBelop.set(forsikringsBelop);
     }
-    public DoubleProperty forsikringsBelopProperty() {
+    public LongProperty forsikringsBelopProperty() {
         return forsikringsBelop;
     }
 
@@ -203,7 +203,7 @@ public abstract class Forsikring implements Serializable {
             msg += "Årlig forsikringspremie kan ikke være tom.\n";
         } else {
             try {
-                setÅrligPremie(Double.parseDouble(premieField.getText()));
+                setÅrligPremie(Long.parseLong(premieField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Årlig forsikringspremie må være tall.\n";
             } catch (UgyldigBelopException e) {
@@ -239,7 +239,7 @@ public abstract class Forsikring implements Serializable {
             msg += "Forsikringsbeløp kan ikke være tomt.\n";
         } else {
             try {
-                setForsikringsBelop(Double.parseDouble(forsikringsbelopField.getText()));
+                setForsikringsBelop(Long.parseLong(forsikringsbelopField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Forsikringsbeløp må være tall.\n";
             } catch (UgyldigBelopException e) {
@@ -300,9 +300,9 @@ public abstract class Forsikring implements Serializable {
         is.defaultReadObject();
         this.kundeNr = new SimpleIntegerProperty((int) is.readObject());
         this.forsikringsNr = new SimpleIntegerProperty((int) is.readObject());
-        this.årligPremie = new SimpleDoubleProperty((double) is.readObject());
+        this.årligPremie = new SimpleLongProperty((long) is.readObject());
         this.datoOpprettet = new SimpleObjectProperty<>((LocalDate) is.readObject());
-        this.forsikringsBelop = new SimpleDoubleProperty((double) is.readObject());
+        this.forsikringsBelop = new SimpleLongProperty((long) is.readObject());
         this.betingelser = new SimpleStringProperty((String) is.readObject());
         this.type = new SimpleStringProperty((String) is.readObject());
     }

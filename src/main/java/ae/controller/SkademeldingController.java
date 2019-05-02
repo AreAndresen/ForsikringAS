@@ -44,9 +44,9 @@ public class SkademeldingController {
     @FXML
     private TableColumn<Skademelding, String> skadeTypeKolonne;
     @FXML
-    private TableColumn<Skademelding, Double> belopTakseringKolonne;
+    private TableColumn<Skademelding, Number> belopTakseringKolonne;
     @FXML
-    private TableColumn<Skademelding, Double> erstatningUtbetaltKolonne;
+    private TableColumn<Skademelding, Number> erstatningUtbetaltKolonne;
     @FXML
     private TableColumn<Skademelding, LocalDate> datoSkadeKolonne;
     @FXML
@@ -88,8 +88,8 @@ public class SkademeldingController {
 
         skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
         skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
-        belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty().asObject()); //asObject() på tall
-        erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty().asObject());
+        belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty());
+        erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty());
         datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
         statusKolonne.setCellValueFactory(celleData -> celleData.getValue().statusProperty());
 

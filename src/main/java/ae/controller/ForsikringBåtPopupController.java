@@ -39,9 +39,9 @@ public class ForsikringBåtPopupController {
     private void instansierFelter() {
         kundeNrField.setText(Integer.toString(båtForsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(båtForsikringÅRedigere.getForsikringsNr()));
-        premieField.setText(Double.toString(båtForsikringÅRedigere.getÅrligPremie()));
+        premieField.setText(Long.toString(båtForsikringÅRedigere.getÅrligPremie()));
         datoOpprettetField.setText(båtForsikringÅRedigere.getDatoOpprettet().toString());
-        forsikringsbelopField.setText(Double.toString(båtForsikringÅRedigere.getForsikringsBelop()));
+        forsikringsbelopField.setText(Long.toString(båtForsikringÅRedigere.getForsikringsBelop()));
         betingelserField.setText(båtForsikringÅRedigere.getBetingelser());
         typeField.setText(båtForsikringÅRedigere.getType());
         regnrField.setText(båtForsikringÅRedigere.getRegistreringsNr());

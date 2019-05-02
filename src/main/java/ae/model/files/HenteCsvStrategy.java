@@ -99,9 +99,9 @@ public class HenteCsvStrategy implements HenteFilStrategy {
                     throw new UgyldigKundeFormatException("Det er oppdaget flere forsikringer med samme forsikringsnummer.");
                 }
             }
-            double premie = parseDouble(forsikringer[i + 2], "Årlig premie er ikke et tall.");
+            long premie = parseLong(forsikringer[i + 2], "Årlig premie er ikke et tall.");
             LocalDate datoOpprettet = LocalDate.parse(forsikringer[i + 3]);
-            double forsikringsbelop = parseDouble(forsikringer[i + 4], "Forsikringsbeløp er ikke et" +
+            long forsikringsbelop = parseLong(forsikringer[i + 4], "Forsikringsbeløp er ikke et" +
                     "desimaltall.");
             String betingelser = forsikringer[i + 5];
             String type = forsikringer[i + 6];
@@ -145,8 +145,8 @@ public class HenteCsvStrategy implements HenteFilStrategy {
             LocalDate datoSkade = LocalDate.parse(skademeldinger[i + 2]);
             String skadeType = skademeldinger[i + 3];
             String skadeBeskrivelse = skademeldinger[i + 4];
-            double belopTaksering = parseDouble(skademeldinger[i + 5], "Takseringsbeløp er ikke et tall.");
-            double erstatningsBelopUtbetalt = parseDouble(skademeldinger[i + 6], "Utbetalt erstatningsbeløp" +
+            long belopTaksering = parseLong(skademeldinger[i + 5], "Takseringsbeløp er ikke et tall.");
+            long erstatningsBelopUtbetalt = parseLong(skademeldinger[i + 6], "Utbetalt erstatningsbeløp" +
                     " er ikke et tall.");
             String status = skademeldinger[i + 7];
 
@@ -184,11 +184,11 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         return tall;
     }
 
-    private static double parseDouble(String string, String errorMelding) throws UgyldigKundeFormatException {
-        double tall;
+    private static long parseLong(String string, String errorMelding) throws UgyldigKundeFormatException {
+        long tall;
 
         try {
-            tall = Double.parseDouble(string);
+            tall = Long.parseLong(string);
         } catch (NumberFormatException e) {
             throw new UgyldigKundeFormatException(errorMelding);
         }
