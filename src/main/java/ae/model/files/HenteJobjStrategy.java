@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.util.List;
 
@@ -19,7 +20,10 @@ public class HenteJobjStrategy implements HenteFilStrategy {
             is = new ObjectInputStream(fis);
 
             kunder.setAll((List<Kunde>)is.readObject());
-        } finally {
+        } catch (InvalidClassException e) {
+            throw new InvalidClassException("Kunne ikke hente fil. Serialversjon stemmer ikke.");
+        }
+        finally {
             if (is != null) {
                 is.close();
             }
