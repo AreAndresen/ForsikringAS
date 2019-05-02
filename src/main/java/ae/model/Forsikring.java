@@ -137,8 +137,8 @@ public abstract class Forsikring implements Serializable {
         return type.get();
     }
     public void setType(String type) {
-        if (!"Båtforsikring".equals(type) && !"Hus- og innboforsikring".equals(type)
-                && !"Fritidsboligforsikring".equals(type) && !"Reiseforsikring".equals(type)) {
+        if (type == null || (!"Båtforsikring".equals(type) && !"Hus- og innboforsikring".equals(type)
+                && !"Fritidsboligforsikring".equals(type) && !"Reiseforsikring".equals(type))) {
             throw new UgyldigInputException("Type må være en gyldig forsikringstype.");
         }
         this.type.set(type);
