@@ -117,6 +117,7 @@ public class ReiseForsikring extends Forsikring implements Serializable {
 
     // < ------------------------------------ toString - CSV ------------------------------------ >
 
+    // kommentert ut pga. problemer ved lesing fra fil, som nevnt i rapporten
     /*@Override
     public String toString() {
         return super.toString() + "," + getForsikringsOmråde() + "," + getForsikringsSum();

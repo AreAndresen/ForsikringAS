@@ -296,6 +296,7 @@ public class BoligForsikring extends Forsikring implements Serializable {
 
     // < ------------------------------------ toString - CSV ------------------------------------ >
 
+    // kommentert ut pga. problemer ved lesing fra fil, som nevnt i rapporten
     /*@Override
     public String toString() {
         return super.toString() + "," + getAdresseBolig()  + "," + getByggeår()  + "," + getByggemateriale()  + "," +

@@ -64,17 +64,12 @@ public class SkademeldingRedigerPopupController {
     public void instansierFelter() {
         kundeNrField.setText(Integer.toString(skademeldingÅRedigere.getKundeNr()));
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
-        //skadeTypeField.setText(skademeldingÅRedigere.getSkadeType());
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
         belopTakseringField.setText(Double.toString(skademeldingÅRedigere.getBelopTaksering()));
         erstatningsbelopUtbetaltField.setText(Double.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
-        //datoSkademeldingOpprettetField.setText(skademeldingÅRedigere.getDatoSkade().toString());
-
-        //statusField.setValue(skademeldingÅRedigere.get);
 
         kundeNrField.setDisable(true);
         skadeNrField.setDisable(true);
-        //datoSkademeldingOpprettetField.setDisable(true);
     }
 
 

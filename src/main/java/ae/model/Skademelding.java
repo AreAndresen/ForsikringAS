@@ -32,7 +32,6 @@ public class Skademelding implements Serializable {
     private transient StringProperty skadeBeskrivelse;
     private transient DoubleProperty belopTaksering;
     private transient DoubleProperty erstatningsbelopUtbetalt;
-    //----------forsøk på ny vitneinfo
     private transient ObjectProperty<ObservableMap<String, String>> kontaktinfoVitner;
 
 
@@ -55,11 +54,7 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
-
-         //----------forsøk på ny vitneinfo
          this.kontaktinfoVitner = new SimpleObjectProperty<ObservableMap<String, String>>(FXCollections.observableHashMap());
-         //this.kontaktinfoVitner2.put(0, "");
-
         this.status = new SimpleStringProperty(status);
 
     }
@@ -329,7 +324,6 @@ public class Skademelding implements Serializable {
     }
 
 
-    //-------------------------FORSØK PÅ NY VITNE UTFYLLING-------------------------
     // kontaktinfo vitne
     public String sjekkOgOppdaterKontaktinfoVitne(TextField navnVitneField, TextField tlfVitneField) {
         String msg = "";
@@ -349,21 +343,14 @@ public class Skademelding implements Serializable {
                     throw new UgyldigInputException("Vitne sitt telefonnummer må være 4-11 tall, og kan kun inneholde\nspesialtegnene + og -");
                 }
                 //legger til eller oppdaterer vitne
-                //if(!getKontaktinfoVitner2().containsKey(tlfVitneField.getText())) {
                 getKontaktinfoVitner().put(tlfVitneField.getText(), navnVitneField.getText());
 
-                //}
-                /*else{
-                    msg += "Vitne sitt telefonnummer er lagt til tidligere og ble ikke lagt til.\n";
-                }*/
             } catch (UgyldigInputException e) {
                 msg += e.getMessage() + "\n";
             }
         }
         return msg;
     }
-    //-----------------------------------------------------------------
-
 
     // < ------------------------------------ SERIALISERING ------------------------------------ >
 
