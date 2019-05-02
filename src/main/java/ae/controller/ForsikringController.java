@@ -187,8 +187,8 @@ public class ForsikringController {
                 resultatTreLabel.setText(boligForsikring.getByggemateriale());
                 resultatFireLabel.setText(boligForsikring.getStandard());
                 resultatFemLabel.setText(Integer.toString(boligForsikring.getAntallKvm()));
-                resultatSeksLabel.setText(Double.toString(boligForsikring.getForsikringsbelopBygning()));
-                resultatSjuLabel.setText(Double.toString(boligForsikring.getForsikringsbelopInnbo()));
+                resultatSeksLabel.setText(Long.toString(boligForsikring.getForsikringsbelopBygning()));
+                resultatSjuLabel.setText(Long.toString(boligForsikring.getForsikringsbelopInnbo()));
 
                 // tømmer de andre
                 metaÅtteLabel.setText("");
@@ -204,7 +204,7 @@ public class ForsikringController {
 
                 // setter inn resultatdata
                 resultatEnLabel.setText(reiseForsikring.getForsikringsOmråde());
-                resultatToLabel.setText(Double.toString(reiseForsikring.getForsikringsSum()));
+                resultatToLabel.setText(Long.toString(reiseForsikring.getForsikringsSum()));
 
                 // tømmer de andre
                 metaTreLabel.setText("");

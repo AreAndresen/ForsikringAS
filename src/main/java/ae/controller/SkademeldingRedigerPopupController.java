@@ -67,6 +67,7 @@ public class SkademeldingRedigerPopupController {
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());
         belopTakseringField.setText(Long.toString(skademeldingÅRedigere.getBelopTaksering()));
         erstatningsbelopUtbetaltField.setText(Long.toString(skademeldingÅRedigere.getErstatningsbelopUtbetalt()));
+        datoSkademeldingOpprettetField.setValue(skademeldingÅRedigere.getDatoSkade());
 
         kundeNrField.setDisable(true);
         skadeNrField.setDisable(true);
