@@ -78,8 +78,8 @@ public class HovedApplikasjon extends Application {
         testKunde1.getForsikringer().add(testForsikring2);
 
         Skademelding testSkademelding1 = new Skademelding(testKunde1.getKundeNr(), IdUtil.genererLøpenummerSkade(kundeData),
-                LocalDate.now(), "Reiseforsikring", "Ulykke", 500.0,
-                250.0, "Ubetalt");
+                LocalDate.now(), "Reiseforsikring", "Ulykke", 500,
+                250, "Ubetalt");
         testSkademelding1.getKontaktinfoVitner().put("12345678", "Ola Nordmann");
         testSkademelding1.getKontaktinfoVitner().put("87654321", "Kari Olsen");
         testKunde1.getSkademeldinger().add(testSkademelding1);

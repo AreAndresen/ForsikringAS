@@ -30,8 +30,8 @@ public class Skademelding implements Serializable {
     private transient ObjectProperty<LocalDate> datoSkade;
     private transient StringProperty skadeType;
     private transient StringProperty skadeBeskrivelse;
-    private transient DoubleProperty belopTaksering;
-    private transient DoubleProperty erstatningsbelopUtbetalt;
+    private transient LongProperty belopTaksering;
+    private transient LongProperty erstatningsbelopUtbetalt;
     private transient ObjectProperty<ObservableMap<String, String>> kontaktinfoVitner;
 
 
@@ -42,18 +42,18 @@ public class Skademelding implements Serializable {
 
     // tomt objekt-konstruktør
     public Skademelding(int kundeNr, int skadeNr) { this(kundeNr, skadeNr, LocalDate.now(), null, null,
-            0.0, 0.0, null); }
+            0, 0, null); }
 
     // default konstruktør
      public Skademelding(int kundeNr, int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
-                         Double belopTaksering, Double erstatningsbelopUtbetalt, String status) {
+                         long belopTaksering, long erstatningsbelopUtbetalt, String status) {
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
         this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
-        this.belopTaksering = new SimpleDoubleProperty(belopTaksering);
-        this.erstatningsbelopUtbetalt = new SimpleDoubleProperty(erstatningsbelopUtbetalt);
+        this.belopTaksering = new SimpleLongProperty(belopTaksering);
+        this.erstatningsbelopUtbetalt = new SimpleLongProperty(erstatningsbelopUtbetalt);
          this.kontaktinfoVitner = new SimpleObjectProperty<ObservableMap<String, String>>(FXCollections.observableHashMap());
         this.status = new SimpleStringProperty(status);
 
@@ -127,26 +127,26 @@ public class Skademelding implements Serializable {
     }
 
     // belopTaksering
-    public Double getBelopTaksering() { return belopTaksering.get(); }
-    public void setBelopTaksering(Double belopTaksering) {
+    public long getBelopTaksering() { return belopTaksering.get(); }
+    public void setBelopTaksering(long belopTaksering) {
         if (belopTaksering <= 0) {
             throw new UgyldigBelopException("Takseringsbeløp kan ikke være mindre enn 0.");
         }
         this.belopTaksering.set(belopTaksering);
     }
-    public DoubleProperty belopTakseringProperty() {
+    public LongProperty belopTakseringProperty() {
         return belopTaksering;
     }
 
     // erstatningsbelopUtbetalt
-    public Double getErstatningsbelopUtbetalt() { return erstatningsbelopUtbetalt.get(); }
-    public void setErstatningsbelopUtbetalt(Double erstatningsbelopUtbetalt) {
+    public long getErstatningsbelopUtbetalt() { return erstatningsbelopUtbetalt.get(); }
+    public void setErstatningsbelopUtbetalt(long erstatningsbelopUtbetalt) {
         if (erstatningsbelopUtbetalt <= 0) {
             throw new UgyldigBelopException("ErstatningsbelopUtbetalt kan ikke være mindre enn 0.");
         }
         this.erstatningsbelopUtbetalt.set(erstatningsbelopUtbetalt);
     }
-    public DoubleProperty erstatningsbelopUtbetaltProperty() {
+    public LongProperty erstatningsbelopUtbetaltProperty() {
         return erstatningsbelopUtbetalt;
     }
 
@@ -279,7 +279,7 @@ public class Skademelding implements Serializable {
             msg += "Takseringssbeløp kan ikke være tomt.\n";
         } else {
             try {
-                setBelopTaksering(Double.parseDouble(belopTakseringField.getText()));
+                setBelopTaksering(Long.parseLong(belopTakseringField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Takseringssbeløp må være tall.\n";
             } catch (UgyldigBelopException e) {
@@ -297,7 +297,7 @@ public class Skademelding implements Serializable {
             msg += "Utbetalt erstatningssbeløp kan ikke være tomt.\n";
         } else {
             try {
-                setErstatningsbelopUtbetalt(Double.parseDouble(erstatningsbelopUtbetaltField.getText()));
+                setErstatningsbelopUtbetalt(Long.parseLong(erstatningsbelopUtbetaltField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Utbetalt erstatningssbeløp må være tall.\n";
             } catch (UgyldigBelopException e) {
@@ -381,8 +381,8 @@ public class Skademelding implements Serializable {
         this.datoSkade = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
         this.skadeType = new SimpleStringProperty((String)is.readObject());
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
-        this.belopTaksering = new SimpleDoubleProperty((double)is.readObject());
-        this.erstatningsbelopUtbetalt = new SimpleDoubleProperty((double)is.readObject());
+        this.belopTaksering = new SimpleLongProperty((long)is.readObject());
+        this.erstatningsbelopUtbetalt = new SimpleLongProperty((long)is.readObject());
         this.kontaktinfoVitner = new SimpleObjectProperty<>(FXCollections.observableMap((Map<String, String>) is.readObject()));
         this.status = new SimpleStringProperty((String)is.readObject());
     }
