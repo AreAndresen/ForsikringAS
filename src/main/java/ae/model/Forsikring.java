@@ -81,7 +81,7 @@ public abstract class Forsikring implements Serializable {
     }
     public void setÅrligPremie(double premie) {
         if (premie <= 0) {
-            throw new UgyldigLopeNrException("Årlig forsikringspremie må være større enn 0.");
+            throw new UgyldigBelopException("Årlig forsikringspremie må være større enn 0.");
         }
         this.årligPremie.set(premie);
     }
