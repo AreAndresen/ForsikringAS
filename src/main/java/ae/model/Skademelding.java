@@ -404,8 +404,8 @@ public class Skademelding implements Serializable {
 
     @Override
     public String toString() {
-        return getSkadeNr() +"," +getKundeNr() +","+ getDatoSkade() +","+ getSkadeType() +","+ getSkadeBeskrivelse() +","+
-                getBelopTaksering() +","+ getErstatningsbelopUtbetalt()+","+ getStatus() +", "+
+        return getSkadeNr() +";" +getKundeNr() +";"+ getDatoSkade() +";"+ getSkadeType() +";"+ getSkadeBeskrivelse() +";"+
+                getBelopTaksering() +";"+ getErstatningsbelopUtbetalt()+";"+ getStatus() +";"+
                 getKontaktinfoVitner();
     }
 }

@@ -35,28 +35,28 @@ public class HenteCsvStrategy implements HenteFilStrategy {
 
     private static Kunde parseKunde(String linje, ObservableList<Kunde> kunder) throws UgyldigKundeFormatException {
         // først sjekke om det er kunde, forsikring og skademelding formattert
-        String[] linjeSplit = linje.split(",\\[");
+        String[] linjeSplit = linje.split(";\\[");
         if (linjeSplit.length != 3) {
             throw new UgyldigKundeFormatException("Fil er ikke skrevet på riktig format.");
         }
 
-        String[] kundeData = linjeSplit[0].split(",");
+        String[] kundeData = linjeSplit[0].split(";");
 
         // fjerner ] som kommer etter siste verdi i listen
         String forsikringString = linjeSplit[1].replace("]", "");
         String skademeldingString = linjeSplit[2].replace("]", "");
 
-        // fjerner whitespace etter kommaet som separerer objektene i listen
-        forsikringString = forsikringString.replaceAll(",\\s*", ",");
-        skademeldingString = skademeldingString.replaceAll(",\\s*", ",");
+        // fjerner whitespace etter kommaet/semicolon som separerer objektene i listen
+        forsikringString = forsikringString.replaceAll(";\\s*|,\\s*", ";");
+        skademeldingString = skademeldingString.replaceAll("}\\,\\s*", ";");
 
         String[] forsikringData = null ;
         String[] skademeldingData = null;
         if (forsikringString != "") {
-            forsikringData = forsikringString.split(",");
+            forsikringData = forsikringString.split(";");
         }
         if (skademeldingString != "") {
-            skademeldingData = skademeldingString.split(",");
+            skademeldingData = skademeldingString.split(";");
         }
 
         if (kundeData.length != 5) {
@@ -78,7 +78,7 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         Kunde tmpKunde = new Kunde(kundeNr, datoKundeOpprettet, etternavn, fornavn, adresseFaktura);
 
         // legger til forsikringene til kunden
-        if (forsikringData != null && forsikringData.length >= 6) {
+        if (forsikringData != null && forsikringData.length >= 7) {
             leggTilForsikringer(forsikringData, tmpKunde);
         }
 
@@ -87,23 +87,25 @@ public class HenteCsvStrategy implements HenteFilStrategy {
             leggTilSkademeldinger(skademeldingData, tmpKunde);
         }
 
+        tmpKunde.setAntallErstatningerUbetalte();
         return tmpKunde;
     }
 
     private static void leggTilForsikringer(String[] forsikringer, Kunde kunde) throws UgyldigKundeFormatException {
-        for (int i = 0; i < forsikringer.length; i += 6) {
-            int kundeNr = parseInt(forsikringer[i], "Kundenummer er ikke et heltall.");
-            int forsikringsNr = parseInt(forsikringer[i + 1], "Forsikringsnummber er ikke et heltall.");
+        for (int i = 0; i < forsikringer.length && forsikringer != null; i += 7) {
+            int kundeNr = parseInt(forsikringer[i], "Kundenummer i forsikring er ikke et heltall.");
+            int forsikringsNr = parseInt(forsikringer[i + 1], "Forsikringsnummber i forsikring er ikke et heltall.");
             for (Forsikring forsikring : kunde.getForsikringer()) {
                 if (forsikringsNr == forsikring.getForsikringsNr()) {
                     throw new UgyldigKundeFormatException("Det er oppdaget flere forsikringer med samme forsikringsnummer.");
                 }
             }
-            LocalDate datoOpprettet = LocalDate.parse(forsikringer[i + 2]);
-            double forsikringsbelop = parseDouble(forsikringer[i + 3], "Forsikringsbeløp er ikke et" +
+            double premie = parseDouble(forsikringer[i + 2], "Årlig premie er ikke et tall.");
+            LocalDate datoOpprettet = LocalDate.parse(forsikringer[i + 3]);
+            double forsikringsbelop = parseDouble(forsikringer[i + 4], "Forsikringsbeløp er ikke et" +
                     "desimaltall.");
-            String betingelser = forsikringer[i + 4];
-            String type = forsikringer[i + 5];
+            String betingelser = forsikringer[i + 5];
+            String type = forsikringer[i + 6];
 
             Forsikring tmpForsikring = null;
             if ("Båtforsikring".equals(type)) {
@@ -120,6 +122,7 @@ public class HenteCsvStrategy implements HenteFilStrategy {
             if ("Reiseforsikring".equals(type)) {
                 tmpForsikring = new ReiseForsikring(kundeNr, forsikringsNr);
             }
+            tmpForsikring.setÅrligPremie(premie);
             tmpForsikring.setDatoOpprettet(datoOpprettet);
             tmpForsikring.setForsikringsBelop(forsikringsbelop);
             tmpForsikring.setBetingelser(betingelser);
@@ -129,16 +132,17 @@ public class HenteCsvStrategy implements HenteFilStrategy {
         }
     }
 
-    private static void leggTilSkademeldinger(String[] skademeldinger, Kunde kunde) throws UgyldigKundeFormatException {
-        for (int i = 0; i < skademeldinger.length; i += 9) {
-            int skadeNr = parseInt(skademeldinger[i], "Skadenummer er ikke et heltall.");
+    private static void leggTilSkademeldinger(String[] skademeldinger, Kunde kunde)
+            throws UgyldigKundeFormatException {
+        for (int i = 0; i < skademeldinger.length && skademeldinger != null; i += 9) {
+            int skadeNr = parseInt(skademeldinger[i], "Skadenummer i skademelding er ikke et heltall.??");
             for (Skademelding skade : kunde.getSkademeldinger()) {
                 if (skadeNr == skade.getSkadeNr()) {
                     throw new UgyldigKundeFormatException("Det er oppdaget flere skademeldinger med samme" +
                             " skadenummer.");
                 }
             }
-            int kundeNr = parseInt(skademeldinger[i + 1], "Kundenummer er ikke et heltall.");
+            int kundeNr = parseInt(skademeldinger[i + 1], "Kundenummer i skademelding er ikke et heltall.");
             LocalDate datoSkade = LocalDate.parse(skademeldinger[i + 2]);
             String skadeType = skademeldinger[i + 3];
             String skadeBeskrivelse = skademeldinger[i + 4];
@@ -166,8 +170,6 @@ public class HenteCsvStrategy implements HenteFilStrategy {
                 String navn = kontaktinfoVitner[y + 1];
                 tmpSkademelding.getKontaktinfoVitner().put(tlfnr, navn);
             }
-            kunde.setAntallErstatningerUbetalte();
-
             kunde.getSkademeldinger().add(tmpSkademelding);
         }
     }

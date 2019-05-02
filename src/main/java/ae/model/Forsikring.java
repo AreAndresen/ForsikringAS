@@ -309,7 +309,7 @@ public abstract class Forsikring implements Serializable {
 
     @Override
     public String toString() {
-        return getKundeNr() + "," + getForsikringsNr() + "," + getÅrligPremie() + "," + getDatoOpprettet()  + ","
-                + getForsikringsBelop() + "," + getBetingelser() + "," + getType();
+        return getKundeNr() + ";" + getForsikringsNr() + ";" + getÅrligPremie() + ";" + getDatoOpprettet()  + ";"
+                + getForsikringsBelop() + ";" + getBetingelser() + ";" + getType();
     }
 }

@@ -372,7 +372,7 @@ public class Kunde implements Serializable {
 
     @Override
     public String toString() {
-        return getKundeNr() +","+ getDatoKundeOpprettet() +","+ getEtternavn() +","+ getFornavn() +","+
-                getAdresseFaktura() +","+ getForsikringer() +","+ getSkademeldinger();
+        return getKundeNr() +";"+ getDatoKundeOpprettet() +";"+ getEtternavn() +";"+ getFornavn() +";"+
+                getAdresseFaktura() +";"+ getForsikringer() +";"+ getSkademeldinger();
     }
 }
