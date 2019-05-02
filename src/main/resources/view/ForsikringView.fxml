@@ -54,7 +54,7 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <Label layoutX="104.0" layoutY="51.0" text="Forsikringsoversikt" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                        <Label id="oversikt" layoutX="104.0" layoutY="51.0" text="Forsikringsoversikt" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <GridPane layoutX="43.0" layoutY="104.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="172.0" />
