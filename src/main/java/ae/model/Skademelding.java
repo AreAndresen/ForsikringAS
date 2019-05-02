@@ -71,7 +71,7 @@ public class Skademelding implements Serializable {
         return kundeNr.get();
     }
     public void setKundeNr(int kundeNr) {
-        if (kundeNr < 0) {
+        if (kundeNr <= 0) {
             throw new UgyldigLopeNrException("Kundenummer må være større enn 0.");
         }
         this.kundeNr.set(kundeNr);
@@ -85,7 +85,7 @@ public class Skademelding implements Serializable {
         return skadeNr.get();
     }
     public void setSkadeNr(int skadeNr) {
-        if (skadeNr < 0) {
+        if (skadeNr <= 0) {
             throw new UgyldigLopeNrException("Skadenummer må være større enn 0.");
         }
         this.kundeNr.set(skadeNr);
