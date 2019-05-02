@@ -41,7 +41,7 @@
             <TextField fx:id="kundeNrField" GridPane.columnIndex="1" />
             <TextField fx:id="skadeNrField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="skadeTypeField" prefHeight="26.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextArea fx:id="skadebeskrivelseField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextArea fx:id="skadebeskrivelseField" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="belopTakseringField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="erstatningsbelopUtbetaltField" prefHeight="26.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <DatePicker fx:id="datoSkademeldingOpprettetField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
