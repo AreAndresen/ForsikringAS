@@ -232,7 +232,7 @@ public class Viewbehandling {
             AnchorPane side = (AnchorPane) loader.load();
 
             Stage popupStage = new Stage();
-            popupStage.setTitle("Legg til vitne");
+            popupStage.setTitle("Legg til vitne - Endre navn på eksisterende tlf");
             popupStage.initModality(Modality.WINDOW_MODAL);
             popupStage.initOwner(hovedApplikasjon.getHovedStage());
             Scene scene = new Scene(side);

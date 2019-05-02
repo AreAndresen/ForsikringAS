@@ -249,7 +249,7 @@ public class SkademeldingController {
             }
         }
         else{
-            AlertHandler.genererWarningAlert("Legg til vitne", "Ingen skademelding valgt",
+            AlertHandler.genererWarningAlert("Legg til vitne - Endre navn på eksisterende tlf", "Ingen skademelding valgt",
                     "Du må velge en skademelding for å kunne legge til vitne!");
         }
     }
