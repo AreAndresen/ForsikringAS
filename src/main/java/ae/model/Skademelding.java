@@ -123,7 +123,7 @@ public class Skademelding implements Serializable {
     public void setSkadeBeskrivelse(String skadeBeskrivelse) {
         if (skadeBeskrivelse == null || !skadeBeskrivelse.matches("[a-zA-ZæøåÆØÅ0-9\\:\\-\\ \\.\\?\\\n\\,]{1,200}+")) {
             throw new UgyldigInputException("Skadebeskrivelse kan ikke overstige 200 tegn og eneste tillate\nspesialtegn" +
-                    "er bindestrek, punktum, ? og :");
+                    "er bindestrek, punktum, komma, ? og :");
         }
         this.skadeBeskrivelse.set(skadeBeskrivelse);
     }
