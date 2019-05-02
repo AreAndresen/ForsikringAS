@@ -18,7 +18,7 @@ public class ForsikringBoligPopupController {
 
     // textfields + choicebox
     @FXML
-    private TextField kundeNrField, forsikringsNrField, datoOpprettetField, forsikringsbelopField, betingelserField,
+    private TextField kundeNrField, forsikringsNrField, premieField, datoOpprettetField, forsikringsbelopField, betingelserField,
             typeField, adresseBoligField, byggeårField, byggematerialeField, antallKvmField, forsikringsbelopBygningField,
             forsikringsbelopInnboField;
     @FXML
@@ -50,6 +50,7 @@ public class ForsikringBoligPopupController {
     private void instansierFelter() {
         kundeNrField.setText(Integer.toString(boligForsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(boligForsikringÅRedigere.getForsikringsNr()));
+        premieField.setText(Double.toString(boligForsikringÅRedigere.getÅrligPremie()));
         datoOpprettetField.setText(boligForsikringÅRedigere.getDatoOpprettet().toString());
         forsikringsbelopField.setText(Double.toString(boligForsikringÅRedigere.getForsikringsBelop()));
         betingelserField.setText(boligForsikringÅRedigere.getBetingelser());
@@ -85,6 +86,7 @@ public class ForsikringBoligPopupController {
 
         msg += boligForsikringÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
         msg += boligForsikringÅRedigere.sjekkOgOppdaterForsikringsNr(forsikringsNrField);
+        msg += boligForsikringÅRedigere.sjekkOgOppdaterÅrligPremie(premieField);
         msg += boligForsikringÅRedigere.sjekkOgOppdaterDatoOpprettet(datoOpprettetField);
         msg += boligForsikringÅRedigere.sjekkOgOppdaterForsikringsbelop(forsikringsbelopField);
         msg += boligForsikringÅRedigere.sjekkOgOppdaterBetingelser(betingelserField);

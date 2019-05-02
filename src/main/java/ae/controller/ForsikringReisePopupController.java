@@ -13,8 +13,8 @@ public class ForsikringReisePopupController {
 
     // TextFields
     @FXML
-    private TextField kundeNrField, forsikringsNrField, datoOpprettetField, forsikringsbelopField, betingelserField,
-            typeField, områdeField, sumField;
+    private TextField kundeNrField, forsikringsNrField, premieField, datoOpprettetField, forsikringsbelopField,
+            betingelserField, typeField, områdeField, sumField;
 
     private Stage popupStage;
     private ReiseForsikring reiseForsikringÅRedigere;
@@ -36,6 +36,7 @@ public class ForsikringReisePopupController {
     private void instansierFelter() {
         kundeNrField.setText(Integer.toString(reiseForsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(reiseForsikringÅRedigere.getForsikringsNr()));
+        premieField.setText(Double.toString(reiseForsikringÅRedigere.getÅrligPremie()));
         datoOpprettetField.setText(reiseForsikringÅRedigere.getDatoOpprettet().toString());
         forsikringsbelopField.setText(Double.toString(reiseForsikringÅRedigere.getForsikringsBelop()));
         betingelserField.setText(reiseForsikringÅRedigere.getBetingelser());
@@ -66,6 +67,7 @@ public class ForsikringReisePopupController {
 
         msg += reiseForsikringÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
         msg += reiseForsikringÅRedigere.sjekkOgOppdaterForsikringsNr(forsikringsNrField);
+        msg += reiseForsikringÅRedigere.sjekkOgOppdaterÅrligPremie(premieField);
         msg += reiseForsikringÅRedigere.sjekkOgOppdaterDatoOpprettet(datoOpprettetField);
         msg += reiseForsikringÅRedigere.sjekkOgOppdaterForsikringsbelop(forsikringsbelopField);
         msg += reiseForsikringÅRedigere.sjekkOgOppdaterBetingelser(betingelserField);

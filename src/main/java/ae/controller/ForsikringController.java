@@ -34,6 +34,8 @@ public class ForsikringController {
     @FXML
     private TableColumn<Forsikring, Number> forsikringsnrKolonne;
     @FXML
+    private TableColumn<Forsikring, Number> premieKolonne;
+    @FXML
     private TableColumn<Forsikring, LocalDate> datoOpprettetKolonne;
     @FXML
     private TableColumn<Forsikring, Number> forsikringsbelopKolonne;
@@ -85,6 +87,7 @@ public class ForsikringController {
         etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
 
         forsikringsnrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
+        premieKolonne.setCellValueFactory(celleData -> celleData.getValue().årligPremieProperty());
         datoOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoOpprettetProperty());
         forsikringsbelopKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsBelopProperty());
         betingelserKolonne.setCellValueFactory(celleData -> celleData.getValue().betingelserProperty());

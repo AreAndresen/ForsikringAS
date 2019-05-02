@@ -21,13 +21,13 @@ public class ReiseForsikring extends Forsikring implements Serializable {
 
     // tomt objekt konstruktør
     public ReiseForsikring(int kundeNr, int forsikringsNr) {
-        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, "Reiseforsikring", null, 0);
+        this(kundeNr, forsikringsNr, 0.0, LocalDate.now(), 0, null, "Reiseforsikring", null, 0);
     }
 
     // default konstruktør
-    public ReiseForsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet, int forsikringsBelop,
+    public ReiseForsikring(int kundeNr, int forsikringsNr, double premie, LocalDate datoOpprettet, int forsikringsBelop,
                            String betingelser, String type, String forsikringsOmråde, double forsikringsSum) {
-        super(kundeNr, forsikringsNr, datoOpprettet, forsikringsBelop, betingelser, type);
+        super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
         this.forsikringsOmråde = new SimpleStringProperty(forsikringsOmråde);
         this.forsikringsSum = new SimpleDoubleProperty(forsikringsSum);
     }

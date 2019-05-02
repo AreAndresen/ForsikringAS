@@ -3,6 +3,7 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.util.AlertHandler;
 import ae.model.BåtForsikring;
+import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -15,7 +16,7 @@ public class ForsikringBåtPopupController {
 
     // textfields
     @FXML
-    private TextField kundeNrField, forsikringsNrField, datoOpprettetField, forsikringsbelopField, betingelserField,
+    private TextField kundeNrField, forsikringsNrField, premieField, datoOpprettetField, forsikringsbelopField, betingelserField,
             typeField, regnrField, båttypeField, lengdeFotField, årsmodellField, motortypeField;
 
     private Stage popupStage;
@@ -38,6 +39,7 @@ public class ForsikringBåtPopupController {
     private void instansierFelter() {
         kundeNrField.setText(Integer.toString(båtForsikringÅRedigere.getKundeNr()));
         forsikringsNrField.setText(Integer.toString(båtForsikringÅRedigere.getForsikringsNr()));
+        premieField.setText(Double.toString(båtForsikringÅRedigere.getÅrligPremie()));
         datoOpprettetField.setText(båtForsikringÅRedigere.getDatoOpprettet().toString());
         forsikringsbelopField.setText(Double.toString(båtForsikringÅRedigere.getForsikringsBelop()));
         betingelserField.setText(båtForsikringÅRedigere.getBetingelser());
@@ -72,6 +74,7 @@ public class ForsikringBåtPopupController {
 
         msg += båtForsikringÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
         msg += båtForsikringÅRedigere.sjekkOgOppdaterForsikringsNr(forsikringsNrField);
+        msg += båtForsikringÅRedigere.sjekkOgOppdaterÅrligPremie(premieField);
         msg += båtForsikringÅRedigere.sjekkOgOppdaterDatoOpprettet(datoOpprettetField);
         msg += båtForsikringÅRedigere.sjekkOgOppdaterForsikringsbelop(forsikringsbelopField);
         msg += båtForsikringÅRedigere.sjekkOgOppdaterBetingelser(betingelserField);

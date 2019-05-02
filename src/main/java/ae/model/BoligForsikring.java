@@ -24,17 +24,17 @@ public class BoligForsikring extends Forsikring implements Serializable {
 
     // tomt objekt-konstruktør
     public BoligForsikring(int kundeNr, int forsikringsNr, String type) {
-        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, type,
+        this(kundeNr, forsikringsNr, 0.0, LocalDate.now(), 0, null, type,
                 null, 0, null, null, 0, 0,
                 0);
     }
 
     // default konstruktør
-    public BoligForsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet, int forsikringsBelop,
+    public BoligForsikring(int kundeNr, int forsikringsNr, double premie, LocalDate datoOpprettet, int forsikringsBelop,
                            String betingelser, String type, String adresseBolig, int byggeår,
                            String byggemateriale, String standard, int antallKvm, double forsikringsbelopBygning,
                            double forsikringsbelopInnbo) {
-        super(kundeNr, forsikringsNr, datoOpprettet, forsikringsBelop, betingelser, type);
+        super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
         this.adresseBolig = new SimpleStringProperty(adresseBolig);
         this.byggeår = new SimpleIntegerProperty(byggeår);
         this.byggemateriale = new SimpleStringProperty(byggemateriale);

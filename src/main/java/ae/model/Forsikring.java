@@ -18,6 +18,7 @@ import java.time.LocalDate;
 public abstract class Forsikring implements Serializable {
     private transient IntegerProperty kundeNr;
     private transient IntegerProperty forsikringsNr;
+    private transient DoubleProperty årligPremie;
     private transient ObjectProperty<LocalDate> datoOpprettet;
     private transient DoubleProperty forsikringsBelop;
     private transient StringProperty betingelser;
@@ -27,14 +28,15 @@ public abstract class Forsikring implements Serializable {
 
     // tomt objekt-konstruktør
     public Forsikring(int kundeNr, int forsikringsNr) {
-        this(kundeNr, forsikringsNr, LocalDate.now(), 0, null, null);
+        this(kundeNr, forsikringsNr, 0.0, LocalDate.now(), 0, null, null);
     }
 
     // default konstruktør
-    public Forsikring(int kundeNr, int forsikringsNr, LocalDate datoOpprettet,
+    public Forsikring(int kundeNr, int forsikringsNr, double premie, LocalDate datoOpprettet,
                       double forsikringsBelop, String betingelser, String type) {
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.forsikringsNr = new SimpleIntegerProperty(forsikringsNr);
+        this.årligPremie = new SimpleDoubleProperty(premie);
         this.datoOpprettet = new SimpleObjectProperty<>(datoOpprettet);
         this.forsikringsBelop = new SimpleDoubleProperty(forsikringsBelop);
         this.betingelser = new SimpleStringProperty(betingelser);
@@ -69,6 +71,20 @@ public abstract class Forsikring implements Serializable {
     }
     public IntegerProperty forsikringsNrProperty() {
         return forsikringsNr;
+    }
+
+    // årligPremie
+    public double getÅrligPremie() {
+        return årligPremie.get();
+    }
+    public void setÅrligPremie(double premie) {
+        if (premie <= 0) {
+            throw new UgyldigLopeNrException("Årlig forsikringspremie må være større enn 0.");
+        }
+        this.årligPremie.set(premie);
+    }
+    public DoubleProperty årligPremieProperty() {
+        return årligPremie;
     }
 
     // datoOpprettet
@@ -177,6 +193,24 @@ public abstract class Forsikring implements Serializable {
         return msg;
     }
 
+    // årligPremie
+    public String sjekkOgOppdaterÅrligPremie(TextField premieField) {
+        String msg = "";
+
+        if (premieField.getText() == null || premieField.getText().isEmpty()) {
+            msg += "Årlig forsikringspremie kan ikke være tom.\n";
+        } else {
+            try {
+                setÅrligPremie(Double.parseDouble(premieField.getText()));
+            } catch (NumberFormatException e) {
+                msg += "Årlig forsikringspremie må være tall.\n";
+            } catch (UgyldigBelopException e) {
+                msg += e.getMessage() + "\n";
+            }
+        }
+        return msg;
+    }
+
     // datoOpprettet
     public String sjekkOgOppdaterDatoOpprettet(TextField datoOpprettetField) {
         String msg = "";
@@ -252,6 +286,7 @@ public abstract class Forsikring implements Serializable {
         os.defaultWriteObject();
         os.writeObject(getKundeNr());
         os.writeObject(getForsikringsNr());
+        os.writeObject(getÅrligPremie());
         os.writeObject(getDatoOpprettet());
         os.writeObject(getForsikringsBelop());
         os.writeObject(getBetingelser());
@@ -263,6 +298,7 @@ public abstract class Forsikring implements Serializable {
         is.defaultReadObject();
         this.kundeNr = new SimpleIntegerProperty((int) is.readObject());
         this.forsikringsNr = new SimpleIntegerProperty((int) is.readObject());
+        this.årligPremie = new SimpleDoubleProperty((double) is.readObject());
         this.datoOpprettet = new SimpleObjectProperty<>((LocalDate) is.readObject());
         this.forsikringsBelop = new SimpleDoubleProperty((double) is.readObject());
         this.betingelser = new SimpleStringProperty((String) is.readObject());
@@ -273,7 +309,7 @@ public abstract class Forsikring implements Serializable {
 
     @Override
     public String toString() {
-        return getKundeNr() + "," + getForsikringsNr() + "," + getDatoOpprettet()  + "," + getForsikringsBelop()
-                + "," + getBetingelser() + "," + getType();
+        return getKundeNr() + "," + getForsikringsNr() + "," + getÅrligPremie() + "," + getDatoOpprettet()  + ","
+                + getForsikringsBelop() + "," + getBetingelser() + "," + getType();
     }
 }
