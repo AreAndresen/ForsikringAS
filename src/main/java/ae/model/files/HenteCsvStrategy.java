@@ -1,10 +1,9 @@
-package ae.model;
+package ae.model.files;
 
-import ae.model.exceptions.UgyldigInputException;
+import ae.model.*;
 import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
 import java.io.BufferedReader;
 import java.io.IOException;

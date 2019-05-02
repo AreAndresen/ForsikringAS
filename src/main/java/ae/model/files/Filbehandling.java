@@ -1,12 +1,12 @@
-package ae.model;
+package ae.model.files;
 
 import ae.HovedApplikasjon;
+import ae.model.Kunde;
 import ae.model.exceptions.UgyldigKundeFormatException;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Filbehandling {

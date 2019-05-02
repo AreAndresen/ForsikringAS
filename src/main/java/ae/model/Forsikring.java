@@ -16,6 +16,8 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 
 public abstract class Forsikring implements Serializable {
+    private static final long serialVersionUID = 1;
+
     private transient IntegerProperty kundeNr;
     private transient IntegerProperty forsikringsNr;
     private transient DoubleProperty årligPremie;

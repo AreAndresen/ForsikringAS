@@ -1,13 +1,12 @@
-package ae.model;
+package ae.model.files;
 
 import ae.HovedApplikasjon;
-import ae.model.exceptions.UgyldigKundeFormatException;
+import ae.model.Kunde;
 import ae.util.AlertHandler;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
 import java.io.File;
-import java.io.IOException;
 
 public class InnlesingThread extends Task<ObservableList<Kunde>> {
     private File filPath;

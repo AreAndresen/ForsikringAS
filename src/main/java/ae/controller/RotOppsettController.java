@@ -2,6 +2,8 @@ package ae.controller;
 
 import ae.HovedApplikasjon;
 import ae.model.*;
+import ae.model.files.Filbehandling;
+import ae.model.files.InnlesingThread;
 import ae.util.AlertHandler;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;

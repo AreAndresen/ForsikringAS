@@ -1,6 +1,6 @@
-package ae.model;
+package ae.model.files;
 
-import ae.model.exceptions.UgyldigKundeFormatException;
+import ae.model.Kunde;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
