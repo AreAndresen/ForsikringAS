@@ -3,12 +3,7 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.model.Skademelding;
 import ae.util.AlertHandler;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
