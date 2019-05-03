@@ -237,7 +237,6 @@ public class SkademeldingController {
     //------------------------ VITNER-------------------------------
     @FXML
     public void gåTilNyttVitnePopup() {
-        //Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
         if (valgtSkademelding != null) {
@@ -255,10 +254,9 @@ public class SkademeldingController {
 
     @FXML
     public void slettVitner() {
-        Kunde valgtkunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
-        if(valgtSkademelding != null && valgtkunde != null) {
+        if(valgtSkademelding != null) {
             String skademeldingInfo = Integer.toString(valgtSkademelding.getSkadeNr());
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
