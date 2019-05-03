@@ -17,7 +17,8 @@ public class HovedApplikasjon extends Application {
 
     private Stage hovedStage;
     private BorderPane rotOppsett;
-    private ObservableList<Kunde> kundeData = FXCollections.observableArrayList();
+    private ObservableList<Kunde> kundeData =
+            FXCollections.observableArrayList();
 
     /**
      * Konstruktør for hovedapplikasjon. Sett inn dummy-data for testing
@@ -50,7 +51,8 @@ public class HovedApplikasjon extends Application {
 
         // Rotoppsettet kjører så lenge applikasjonen kjører.
         Viewbehandling.initierRotOppsett(this);
-        hovedStage.getScene().getStylesheets().add(this.getClass().getResource("/view/style.css").toExternalForm());
+        hovedStage.getScene().getStylesheets().add(this.getClass().getResource(
+                "/view/style.css").toExternalForm());
 
 
         // <-------------------- TEST DUMMY DATA -------------------->
