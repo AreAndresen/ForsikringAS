@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class LagreJobjStrategy implements LagreFilStrategy {
     @Override
-    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException {
+    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path)
+            throws IOException {
         ObjectOutputStream out = null;
         try {
 

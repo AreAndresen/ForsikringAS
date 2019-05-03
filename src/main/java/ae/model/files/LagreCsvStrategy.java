@@ -8,7 +8,8 @@ import java.nio.charset.StandardCharsets;
 
 public class LagreCsvStrategy implements LagreFilStrategy {
     @Override
-    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path) throws IOException {
+    public void skrivKundeTilFil(ObservableList<Kunde> kundeTabell, String path)
+            throws IOException {
         PrintWriter skriver = null;
         try {
             skriver = new PrintWriter(path, StandardCharsets.UTF_8);

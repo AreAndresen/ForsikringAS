@@ -8,7 +8,6 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,8 +16,6 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 public class Kunde implements Serializable {
     private static final long serialVersionUID = 1;
@@ -44,8 +41,8 @@ public class Kunde implements Serializable {
     /**
      * Konstruktør for Ny kunde.
      */
-    public Kunde(int kundeNr, LocalDate datoKundeOpprettet, String etternavn, String fornavn,
-                 String adresseFaktura) {
+    public Kunde(int kundeNr, LocalDate datoKundeOpprettet, String etternavn,
+                 String fornavn, String adresseFaktura) {
 
         // Ta imot parametere.
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
@@ -98,8 +95,10 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setEtternavn(String etternavn) {
-        if(etternavn == null || !etternavn.matches("[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")){
-            throw new UgyldigInputException("Etternavn må være mellom 2-30 bokstaver og " +
+        if(etternavn == null || !etternavn.matches(
+                "[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")){
+            throw new UgyldigInputException(
+                    "Etternavn må være mellom 2-30 bokstaver og " +
                     " kan kun inneholde bokstaver og spesialtegnet - ");
         }
         this.etternavn.set(etternavn);
@@ -114,8 +113,10 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setFornavn(String fornavn) {
-        if(fornavn == null || !fornavn.matches("[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")){
-            throw new UgyldigInputException("Fornavn må være mellom 2-30 bokstaver og " +
+        if(fornavn == null || !fornavn.matches(
+                "[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")){
+            throw new UgyldigInputException(
+                    "Fornavn må være mellom 2-30 bokstaver og " +
                     " kan kun inneholde bokstaver og spesialtegnet - ");
         }
         this.fornavn.set(fornavn);
@@ -130,8 +131,10 @@ public class Kunde implements Serializable {
     }
     //Set med exception
     public void setAdresseFaktura(String adresseFaktura) {
-        if (adresseFaktura == null || !adresseFaktura.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{2,50}+")) {
-            throw new UgyldigInputException("Adresse kan ikke overstige 50 tegn og eneste tillate\n spesialtegn" +
+        if (adresseFaktura == null || !adresseFaktura.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{2,50}+")) {
+            throw new UgyldigInputException(
+                    "Adresse kan ikke overstige 50 tegn og eneste tillate\n spesialtegn" +
                     "er bindestrek og punktum.");
         }
         this.adresseFaktura.set(adresseFaktura);
@@ -217,7 +220,8 @@ public class Kunde implements Serializable {
     public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
-        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+        if (kundeNrField.getText() == null ||
+                kundeNrField.getText().isEmpty()) {
             msg += "Kundenummer kan ikke være tomt.\n";
         } else {
             try {
@@ -245,7 +249,8 @@ public class Kunde implements Serializable {
     public String sjekkOgOpprettKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
-        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+        if (kundeNrField.getText() == null ||
+                kundeNrField.getText().isEmpty()) {
             msg += "Kundenummer kan ikke være tomt.\n";
         } else {
             try {
@@ -273,7 +278,8 @@ public class Kunde implements Serializable {
     public String sjekkOgOppdaterFornavn(TextField fornavnField) {
         String msg = "";
 
-        if (fornavnField.getText() == null || fornavnField.getText().isEmpty()) {
+        if (fornavnField.getText() == null ||
+                fornavnField.getText().isEmpty()) {
             msg += "Fornavn kan ikke være tom.\n";
         } else {
             try {
@@ -289,7 +295,8 @@ public class Kunde implements Serializable {
     public String sjekkOgOppdaterEtternavn(TextField etternavnField) {
         String msg = "";
 
-        if (etternavnField.getText() == null || etternavnField.getText().isEmpty()) {
+        if (etternavnField.getText() == null ||
+                etternavnField.getText().isEmpty()) {
             msg += "Etternavn kan ikke være tom.\n";
         } else {
             try {
@@ -305,7 +312,8 @@ public class Kunde implements Serializable {
     public String sjekkOgOppdaterAdresseFaktura(TextField adresseField) {
         String msg = "";
 
-        if (adresseField.getText() == null || adresseField.getText().isEmpty()) {
+        if (adresseField.getText() == null ||
+                adresseField.getText().isEmpty()) {
             msg += "Adresse kan ikke være tom.\n";
         } else {
             try {
@@ -321,7 +329,8 @@ public class Kunde implements Serializable {
     public String sjekkOgOppdaterDatoKundeOpprettet(TextField datoKundeOpprettetField) {
         String msg = "";
 
-        if ( datoKundeOpprettetField.getText() == null || datoKundeOpprettetField.getText().isEmpty()) {
+        if ( datoKundeOpprettetField.getText() == null ||
+                datoKundeOpprettetField.getText().isEmpty()) {
             msg += "Dato kan ikke være tom.\n";
         } else {
             try {
@@ -364,8 +373,10 @@ public class Kunde implements Serializable {
         this.etternavn = new SimpleStringProperty((String)is.readObject());
         this.fornavn = new SimpleStringProperty((String)is.readObject());
         this.adresseFaktura = new SimpleStringProperty((String)is.readObject());
-        this.forsikringer = new SimpleObjectProperty<>(FXCollections.observableArrayList((List<Forsikring>) is.readObject()));
-        this.skademeldinger = new SimpleObjectProperty<>(FXCollections.observableArrayList((List<Skademelding>) is.readObject()));
+        this.forsikringer = new SimpleObjectProperty<>(
+                FXCollections.observableArrayList((List<Forsikring>) is.readObject()));
+        this.skademeldinger = new SimpleObjectProperty<>(
+                FXCollections.observableArrayList((List<Skademelding>) is.readObject()));
         this.antallErstatningerUbetalte = new SimpleIntegerProperty((int)is.readObject());
 
     }

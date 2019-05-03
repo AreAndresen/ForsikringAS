@@ -3,7 +3,8 @@ package ae.util;
 import javafx.scene.control.Alert;
 
 public class AlertHandler {
-    public static void genererWarningAlert(String title, String header, String content) {
+    public static void genererWarningAlert(String title, String header,
+                                           String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setHeaderText(header);

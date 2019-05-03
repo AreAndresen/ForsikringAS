@@ -30,10 +30,10 @@ public class BoligForsikring extends Forsikring implements Serializable {
     }
 
     // default konstruktør
-    public BoligForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet, long forsikringsBelop,
-                           String betingelser, String type, String adresseBolig, int byggeår,
-                           String byggemateriale, String standard, int antallKvm, long forsikringsbelopBygning,
-                           long forsikringsbelopInnbo) {
+    public BoligForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet,
+                           long forsikringsBelop, String betingelser, String type, String adresseBolig,
+                           int byggeår, String byggemateriale, String standard, int antallKvm,
+                           long forsikringsbelopBygning, long forsikringsbelopInnbo) {
         super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
         this.adresseBolig = new SimpleStringProperty(adresseBolig);
         this.byggeår = new SimpleIntegerProperty(byggeår);
@@ -51,8 +51,10 @@ public class BoligForsikring extends Forsikring implements Serializable {
         return adresseBolig.get();
     }
     public void setAdresseBolig(String adresseBolig) {
-        if (adresseBolig == null || !adresseBolig.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{2,50}+")) {
-            throw new UgyldigInputException("Boligadresse kan ikke overstige 50 tegn og eneste tillate spesialtegn" +
+        if (adresseBolig == null || !adresseBolig.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{2,50}+")) {
+            throw new UgyldigInputException(
+                    "Boligadresse kan ikke overstige 50 tegn og eneste tillate spesialtegn" +
                     " er bindestrek og punktum.");
         }
         this.adresseBolig.set(adresseBolig);
@@ -80,8 +82,10 @@ public class BoligForsikring extends Forsikring implements Serializable {
         return byggemateriale.get();
     }
     public void setByggemateriale(String byggemateriale) {
-        if (byggemateriale == null || !byggemateriale.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
-            throw new UgyldigInputException("Byggemateriale kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+        if (byggemateriale == null || !byggemateriale.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException(
+                    "Byggemateriale kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
                     " er bindestrek og punktum.");
         }
         this.byggemateriale.set(byggemateriale);
@@ -95,7 +99,9 @@ public class BoligForsikring extends Forsikring implements Serializable {
         return standard.get();
     }
     public void setStandard(String standard) {
-        if (!"Høy".equals(standard) && !"Middels".equals(standard) && !"Lav".equals(standard)) {
+        if (!"Høy".equals(standard)
+                && !"Middels".equals(standard)
+                && !"Lav".equals(standard)) {
             throw new UgyldigInputException("Standard må være av en bestemt standard.");
         }
         this.standard.set(standard);
@@ -110,7 +116,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     }
     public void setAntallKvm(int antallKvm) {
         if (antallKvm <= 0 || antallKvm > 999) {
-            throw new UgyldigInputException("Antall kvadratmeter må være mellom 1 og 999");
+            throw new UgyldigInputException(
+                    "Antall kvadratmeter må være mellom 1 og 999");
         }
         this.antallKvm.set(antallKvm);
     }
@@ -124,7 +131,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     }
     public void setForsikringsbelopBygning(long forsikringsbelopBygning) {
         if (forsikringsbelopBygning <= 0) {
-            throw new UgyldigInputException("Forsikringsbeløp for bygning må være større enn 0.");
+            throw new UgyldigInputException(
+                    "Forsikringsbeløp for bygning må være større enn 0.");
         }
         this.forsikringsbelopBygning.set(forsikringsbelopBygning);
     }
@@ -138,7 +146,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     }
     public void setForsikringsbelopInnbo(long forsikringsbelopInnbo) {
         if (forsikringsbelopInnbo <= 0) {
-            throw new UgyldigInputException("Forsikringsbeløp for innbo må være større enn 0.");
+            throw new UgyldigInputException(
+                    "Forsikringsbeløp for innbo må være større enn 0.");
         }
         this.forsikringsbelopInnbo.set(forsikringsbelopInnbo);
     }
@@ -152,7 +161,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterAdresseBolig(TextField adresseBoligField) {
         String msg = "";
 
-        if (adresseBoligField.getText() == null || adresseBoligField.getText().isEmpty()) {
+        if (adresseBoligField.getText() == null ||
+                adresseBoligField.getText().isEmpty()) {
             msg += "Boligadresse kan ikke være tom.\n";
         } else {
             try {
@@ -168,7 +178,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterByggeår(TextField byggeårField) {
         String msg = "";
 
-        if (byggeårField.getText() == null || byggeårField.getText().isEmpty()) {
+        if (byggeårField.getText() == null ||
+                byggeårField.getText().isEmpty()) {
             msg += "Byggeår kan ikke være tomt.\n";
         } else {
             try {
@@ -186,7 +197,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterByggemateriale(TextField byggematerialeField) {
         String msg = "";
 
-        if (byggematerialeField.getText() == null || byggematerialeField.getText().isEmpty()) {
+        if (byggematerialeField.getText() == null ||
+                byggematerialeField.getText().isEmpty()) {
             msg += "Byggemateriale kan ikke være tom.\n";
         } else {
             try {
@@ -202,7 +214,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterStandard(ChoiceBox standardField) {
         String msg = "";
 
-        if (standardField.getValue() == null || standardField.getItems().isEmpty()) {
+        if (standardField.getValue() == null ||
+                standardField.getItems().isEmpty()) {
             msg += "Standard kan ikke være tom.\n";
         } else {
             try {
@@ -218,7 +231,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterAntallKvm(TextField antallKvmField) {
         String msg = "";
 
-        if (antallKvmField.getText() == null || antallKvmField.getText().isEmpty()) {
+        if (antallKvmField.getText() == null ||
+                antallKvmField.getText().isEmpty()) {
             msg += "Antall kvadratmeter kan ikke være tom.\n";
         } else {
             try {
@@ -236,7 +250,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterForsikringsbelopBygning(TextField forsikringsbelopBygningField) {
         String msg = "";
 
-        if (forsikringsbelopBygningField.getText() == null || forsikringsbelopBygningField.getText().isEmpty()) {
+        if (forsikringsbelopBygningField.getText() == null ||
+                forsikringsbelopBygningField.getText().isEmpty()) {
             msg += "Forsikringsbeløp for bygning kan ikke være tom.\n";
         } else {
             try {
@@ -254,7 +269,8 @@ public class BoligForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterForsikringsbelopInnbo(TextField forsikringsbelopInnboField) {
         String msg = "";
 
-        if (forsikringsbelopInnboField.getText() == null ||forsikringsbelopInnboField.getText().isEmpty()) {
+        if (forsikringsbelopInnboField.getText() == null ||
+                forsikringsbelopInnboField.getText().isEmpty()) {
             msg += "Forsikringsbeløp for innbo kan ikke være tom.\n";
         } else {
             try {

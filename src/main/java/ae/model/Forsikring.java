@@ -81,7 +81,8 @@ public abstract class Forsikring implements Serializable {
     }
     public void setÅrligPremie(long premie) {
         if (premie <= 0) {
-            throw new UgyldigBelopException("Årlig forsikringspremie må være større enn 0.");
+            throw new UgyldigBelopException(
+                    "Årlig forsikringspremie må være større enn 0.");
         }
         this.årligPremie.set(premie);
     }
@@ -122,8 +123,10 @@ public abstract class Forsikring implements Serializable {
         return betingelser.get();
     }
     public void setBetingelser(String betingelser) {
-        if (betingelser == null || !betingelser.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
-            throw new UgyldigInputException("Betingelser kan ikke overstige 30 tegn og eneste tillate\n spesialtegn" +
+        if (betingelser == null || !betingelser.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException(
+                    "Betingelser kan ikke overstige 30 tegn og eneste tillate\n spesialtegn" +
                     "er bindestrek og punktum.");
         }
         this.betingelser.set(betingelser);
@@ -153,7 +156,8 @@ public abstract class Forsikring implements Serializable {
     public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
-        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+        if (kundeNrField.getText() == null ||
+                kundeNrField.getText().isEmpty()) {
             msg += "Kundenummer kan ikke være tomt.\n";
         } else {
             try {
@@ -181,7 +185,8 @@ public abstract class Forsikring implements Serializable {
     public String sjekkOgOppdaterForsikringsNr(TextField forsikringsNrField) {
         String msg = "";
 
-        if (forsikringsNrField.getText() == null || forsikringsNrField.getText().isEmpty()) {
+        if (forsikringsNrField.getText() == null ||
+                forsikringsNrField.getText().isEmpty()) {
             msg += "Forsikringsnummer kan ikke være tomt.\n";
         } else {
             try {
@@ -199,7 +204,8 @@ public abstract class Forsikring implements Serializable {
     public String sjekkOgOppdaterÅrligPremie(TextField premieField) {
         String msg = "";
 
-        if (premieField.getText() == null || premieField.getText().isEmpty()) {
+        if (premieField.getText() == null ||
+                premieField.getText().isEmpty()) {
             msg += "Årlig forsikringspremie kan ikke være tom.\n";
         } else {
             try {
@@ -217,7 +223,8 @@ public abstract class Forsikring implements Serializable {
     public String sjekkOgOppdaterDatoOpprettet(TextField datoOpprettetField) {
         String msg = "";
 
-        if (datoOpprettetField.getText() == null || datoOpprettetField.getText().isEmpty()) {
+        if (datoOpprettetField.getText() == null ||
+                datoOpprettetField.getText().isEmpty()) {
             msg += "Dato kan ikke være tom.\n";
         } else {
             try {
@@ -235,7 +242,8 @@ public abstract class Forsikring implements Serializable {
     public String sjekkOgOppdaterForsikringsbelop(TextField forsikringsbelopField) {
         String msg = "";
 
-        if (forsikringsbelopField.getText() == null || forsikringsbelopField.getText().isEmpty()) {
+        if (forsikringsbelopField.getText() == null ||
+                forsikringsbelopField.getText().isEmpty()) {
             msg += "Forsikringsbeløp kan ikke være tomt.\n";
         } else {
             try {
@@ -253,7 +261,8 @@ public abstract class Forsikring implements Serializable {
     public String sjekkOgOppdaterBetingelser(TextField betingelserField) {
         String msg = "";
 
-        if (betingelserField.getText() == null || betingelserField.getText().isEmpty()) {
+        if (betingelserField.getText() == null ||
+                betingelserField.getText().isEmpty()) {
             msg += "Betingelser kan ikke være tom.\n";
         } else {
             try {
@@ -269,7 +278,8 @@ public abstract class Forsikring implements Serializable {
     public String sjekkOgOppdaterType(TextField typeField) {
         String msg = "";
 
-        if (typeField.getText() == null || typeField.getText().isEmpty()) {
+        if (typeField.getText() == null ||
+                typeField.getText().isEmpty()) {
             msg += "Type kan ikke være tom.\n";
         } else {
             try {

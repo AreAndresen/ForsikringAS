@@ -11,7 +11,8 @@ import java.io.ObjectInputStream;
 import java.util.List;
 
 public class HenteJobjStrategy implements HenteFilStrategy {
-    public ObservableList<Kunde> hentKunderFraFil(String path) throws IOException, ClassNotFoundException {
+    public ObservableList<Kunde> hentKunderFraFil(String path)
+            throws IOException, ClassNotFoundException {
         ObjectInputStream is = null;
         ObservableList<Kunde> kunder = FXCollections.observableArrayList();
         try {
@@ -21,7 +22,8 @@ public class HenteJobjStrategy implements HenteFilStrategy {
 
             kunder.setAll((List<Kunde>)is.readObject());
         } catch (InvalidClassException e) {
-            throw new InvalidClassException("Kunne ikke hente fil. Serialversjon stemmer ikke.");
+            throw new InvalidClassException(
+                    "Kunne ikke hente fil. Serialversjon stemmer ikke.");
         }
         finally {
             if (is != null) {

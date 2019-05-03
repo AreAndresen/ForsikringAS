@@ -22,9 +22,11 @@ public class ReiseForsikring extends Forsikring implements Serializable {
     }
 
     // default konstruktør
-    public ReiseForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet, long forsikringsBelop,
-                            String betingelser, String type, String forsikringsOmråde, long forsikringsSum) {
-        super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
+    public ReiseForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet,
+                           long forsikringsBelop, String betingelser, String type,
+                           String forsikringsOmråde, long forsikringsSum) {
+        super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop,
+                betingelser, type);
         this.forsikringsOmråde = new SimpleStringProperty(forsikringsOmråde);
         this.forsikringsSum = new SimpleLongProperty(forsikringsSum);
     }
@@ -36,8 +38,10 @@ public class ReiseForsikring extends Forsikring implements Serializable {
         return forsikringsOmråde.get();
     }
     public void setForsikringsOmråde(String område) {
-        if (område == null || !område.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
-            throw new UgyldigInputException("Forsikringsområde kan ikke overstige 30 tegn og eneste tillate" +
+        if (område == null || !område.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException(
+                    "Forsikringsområde kan ikke overstige 30 tegn og eneste tillate" +
                     " spesialtegn er bindestrek og punktum.");
         }
         this.forsikringsOmråde.set(område);
@@ -66,7 +70,8 @@ public class ReiseForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterForsikringsOmråde(TextField forsikringsOmrådeField) {
         String msg = "";
 
-        if (forsikringsOmrådeField.getText() == null || forsikringsOmrådeField.getText().isEmpty()) {
+        if (forsikringsOmrådeField.getText() == null ||
+                forsikringsOmrådeField.getText().isEmpty()) {
             msg += "Forsikringsområde kan ikke være tom.\n";
         } else {
             try {
@@ -82,7 +87,8 @@ public class ReiseForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterForsikringsSum(TextField forsikringsSumField) {
         String msg = "";
 
-        if (forsikringsSumField.getText() == null || forsikringsSumField.getText().isEmpty()) {
+        if (forsikringsSumField.getText() == null ||
+                forsikringsSumField.getText().isEmpty()) {
             msg += "Forsikringssum kan ikke være tom.\n";
         } else {
             try {

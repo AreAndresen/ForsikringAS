@@ -39,7 +39,8 @@ public class Viewbehandling {
         try {
             // Last inn fxml-fil.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HovedApplikasjon.class.getResource("/view/RotOppsett.fxml"));
+            loader.setLocation(HovedApplikasjon.class.getResource(
+                    "/view/RotOppsett.fxml"));
             hovedApplikasjon.setRotOppsett(loader.load());
 
             // Vis scenen som inneholder rotoppsettet.
@@ -63,21 +64,24 @@ public class Viewbehandling {
         try {
             // kundeoversikten
             FXMLLoader kundeLoader = new FXMLLoader();
-            kundeLoader.setLocation(HovedApplikasjon.class.getResource("/view/KundeView.fxml"));
+            kundeLoader.setLocation(HovedApplikasjon.class.getResource(
+                    "/view/KundeView.fxml"));
             kundeOversikt = kundeLoader.load();
             kundeController = kundeLoader.getController();
             kundeController.setHovedApplikasjon(hovedApplikasjon);
 
             // skademeldingoversikten
             FXMLLoader skadeLoader = new FXMLLoader();
-            skadeLoader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
+            skadeLoader.setLocation(HovedApplikasjon.class.getResource(
+                    "/view/SkademeldingView.fxml"));
             skademeldingOversikt = skadeLoader.load();
             skademeldingController = skadeLoader.getController();
             skademeldingController.setHovedApplikasjon(hovedApplikasjon);
 
             // forsikringoversikten
             FXMLLoader forsikringLoader = new FXMLLoader();
-            forsikringLoader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringView.fxml"));
+            forsikringLoader.setLocation(HovedApplikasjon.class.getResource(
+                    "/view/ForsikringView.fxml"));
             forsikringOversikt = forsikringLoader.load();
             forsikringController = forsikringLoader.getController();
             forsikringController.setHovedApplikasjon(hovedApplikasjon);
@@ -99,7 +103,8 @@ public class Viewbehandling {
     /**
      * Åpne Ny kunde popup-vinduet.
      */
-    public static boolean visNyKundePopup(HovedApplikasjon hovedApplikasjon, Kunde kunde) {
+    public static boolean visNyKundePopup(HovedApplikasjon hovedApplikasjon,
+                                          Kunde kunde) {
         try {
             FXMLLoader loader = hentKundeRedigerPopup();
             AnchorPane side = loader.load();
@@ -111,7 +116,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
+            KundeRedigerPopupController kundeRedigerPopupController =
+                    loader.getController();
             kundeRedigerPopupController.setPopupStage(popupStage);
             kundeRedigerPopupController.setKundeÅRedigere(kunde);
             kundeRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -129,7 +135,8 @@ public class Viewbehandling {
     /**
      * Rediger eksisterende kunde popup-vinduet.
      */
-    public static boolean visRedigerKundePopup(HovedApplikasjon hovedApplikasjon, Kunde kunde) {
+    public static boolean visRedigerKundePopup(HovedApplikasjon hovedApplikasjon,
+                                               Kunde kunde) {
         try {
             FXMLLoader loader = hentKundeRedigerPopup();
             AnchorPane side = loader.load();
@@ -141,7 +148,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            KundeRedigerPopupController kundeRedigerPopupController = loader.getController();
+            KundeRedigerPopupController kundeRedigerPopupController =
+                    loader.getController();
             kundeRedigerPopupController.setPopupStage(popupStage);
             kundeRedigerPopupController.setKundeÅRedigere(kunde);
             kundeRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -167,7 +175,8 @@ public class Viewbehandling {
     /**
      * Åpne Ny skademelding popup-vinduet.
      */
-    public static boolean visNySkademeldingPopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
+    public static boolean visNySkademeldingPopup(HovedApplikasjon hovedApplikasjon,
+                                                 Skademelding skademelding) {
         try {
             FXMLLoader loader = hentSkademeldingRedigerPopup();
             AnchorPane side = loader.load();
@@ -179,7 +188,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            SkademeldingRedigerPopupController skademeldingRedigerPopupController = loader.getController();
+            SkademeldingRedigerPopupController skademeldingRedigerPopupController =
+                    loader.getController();
             skademeldingRedigerPopupController.setPopupStage(popupStage);
             skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
             skademeldingRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -196,7 +206,8 @@ public class Viewbehandling {
     /**
      * Rediger eksisterende skademelding popup-vinduet.
      */
-    public static boolean visRedigerSkademeldingPopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
+    public static boolean visRedigerSkademeldingPopup(HovedApplikasjon hovedApplikasjon,
+                                                      Skademelding skademelding) {
         try {
             FXMLLoader loader = hentSkademeldingRedigerPopup();
             AnchorPane side = loader.load();
@@ -208,7 +219,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            SkademeldingRedigerPopupController skademeldingRedigerPopupController = loader.getController();
+            SkademeldingRedigerPopupController skademeldingRedigerPopupController =
+                    loader.getController();
             skademeldingRedigerPopupController.setPopupStage(popupStage);
             skademeldingRedigerPopupController.setSkademeldingÅRedigere(skademelding);
             skademeldingRedigerPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -226,7 +238,8 @@ public class Viewbehandling {
     /**
      * LEGG TIL VITNE I eksisterende skademelding .
      */
-    public static boolean visLeggTilVitnePopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
+    public static boolean visLeggTilVitnePopup(HovedApplikasjon hovedApplikasjon,
+                                               Skademelding skademelding) {
         try {
             FXMLLoader loader = hentVitnerPopup();
             AnchorPane side = loader.load();
@@ -261,7 +274,8 @@ public class Viewbehandling {
     }
 
     // Åpner BåtForsikring-popup når bruker trykker på Ny båtforsikring-knappen
-    public static boolean visNyBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, BåtForsikring båtforsikring) {
+    public static boolean visNyBåtforsikringPopup(HovedApplikasjon hovedApplikasjon,
+                                                  BåtForsikring båtforsikring) {
         try {
             FXMLLoader loader = hentBåtforsikringPopup();
             AnchorPane side = loader.load();
@@ -273,7 +287,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            ForsikringBåtPopupController forsikringBåtPopupController = loader.getController();
+            ForsikringBåtPopupController forsikringBåtPopupController =
+                    loader.getController();
             forsikringBåtPopupController.setPopupStage(popupStage);
             forsikringBåtPopupController.setBåtForsikringÅRedigere(båtforsikring);
             forsikringBåtPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -288,7 +303,8 @@ public class Viewbehandling {
     }
 
     // Åpner BåtForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type BåtForsikring
-    public static boolean visRedigerBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, BåtForsikring båtforsikring) {
+    public static boolean visRedigerBåtforsikringPopup(HovedApplikasjon hovedApplikasjon,
+                                                       BåtForsikring båtforsikring) {
         try {
             FXMLLoader loader = hentBåtforsikringPopup();
             AnchorPane side = loader.load();
@@ -300,7 +316,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            ForsikringBåtPopupController forsikringBåtPopupController = loader.getController();
+            ForsikringBåtPopupController forsikringBåtPopupController =
+                    loader.getController();
             forsikringBåtPopupController.setPopupStage(popupStage);
             forsikringBåtPopupController.setBåtForsikringÅRedigere(båtforsikring);
             forsikringBåtPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -315,7 +332,8 @@ public class Viewbehandling {
     }
 
     // Åpner BoligForsikring-popup når bruker trykker på Ny innboforsikring-knappen
-    public static boolean visNyBoligforsikringPopup(HovedApplikasjon hovedApplikasjon, BoligForsikring boligForsikring) {
+    public static boolean visNyBoligforsikringPopup(HovedApplikasjon hovedApplikasjon,
+                                                    BoligForsikring boligForsikring) {
         try {
             FXMLLoader loader = hentBoligforsikringPopup();
             AnchorPane side = loader.load();
@@ -332,7 +350,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            ForsikringBoligPopupController forsikringBoligPopupController = loader.getController();
+            ForsikringBoligPopupController forsikringBoligPopupController =
+                    loader.getController();
             forsikringBoligPopupController.setPopupStage(popupStage);
             forsikringBoligPopupController.setBoligForsikringÅRedigere(boligForsikring);
             forsikringBoligPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -346,7 +365,8 @@ public class Viewbehandling {
         }
     }
 
-    // Åpner BoligForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type Hus- og innbo
+    // Åpner BoligForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er
+    // av type Hus- og innbo
     public static boolean visRedigerBoligforsikringPopup(HovedApplikasjon hovedApplikasjon,
                                                          BoligForsikring boligForsikring) {
         try {
@@ -365,7 +385,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            ForsikringBoligPopupController forsikringBoligPopupController = loader.getController();
+            ForsikringBoligPopupController forsikringBoligPopupController =
+                    loader.getController();
             forsikringBoligPopupController.setPopupStage(popupStage);
             forsikringBoligPopupController.setBoligForsikringÅRedigere(boligForsikring);
             forsikringBoligPopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -380,7 +401,8 @@ public class Viewbehandling {
     }
 
     // Åpner ReiseForsikring-popup når bruker trykker på Ny reiseforsikring-knappen
-    public static boolean visNyReiseforsikringPopup(HovedApplikasjon hovedApplikasjon, ReiseForsikring reiseforsikring) {
+    public static boolean visNyReiseforsikringPopup(HovedApplikasjon hovedApplikasjon,
+                                                    ReiseForsikring reiseforsikring) {
         try {
             FXMLLoader loader = hentReiseforsikringPopup();
             AnchorPane side = loader.load();
@@ -392,7 +414,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            ForsikringReisePopupController forsikringReisePopupController = loader.getController();
+            ForsikringReisePopupController forsikringReisePopupController =
+                    loader.getController();
             forsikringReisePopupController.setPopupStage(popupStage);
             forsikringReisePopupController.setReiseForsikringÅRedigere(reiseforsikring);
             forsikringReisePopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -406,8 +429,10 @@ public class Viewbehandling {
         }
     }
 
-    // Åpner ReiseForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av type ReiseForsikring
-    public static boolean visRedigerReiseforsikringPopup(HovedApplikasjon hovedApplikasjon, ReiseForsikring reiseforsikring) {
+    // Åpner ReiseForsikring-popup når bruker trykker på Rediger-knappen og valgt Forsikring er av
+    // type ReiseForsikring
+    public static boolean visRedigerReiseforsikringPopup(HovedApplikasjon hovedApplikasjon,
+                                                         ReiseForsikring reiseforsikring) {
         try {
             FXMLLoader loader = hentReiseforsikringPopup();
             AnchorPane side = loader.load();
@@ -419,7 +444,8 @@ public class Viewbehandling {
             Scene scene = new Scene(side);
             popupStage.setScene(scene);
 
-            ForsikringReisePopupController forsikringReisePopupController = loader.getController();
+            ForsikringReisePopupController forsikringReisePopupController =
+                    loader.getController();
             forsikringReisePopupController.setPopupStage(popupStage);
             forsikringReisePopupController.setReiseForsikringÅRedigere(reiseforsikring);
             forsikringReisePopupController.setHovedApplikasjon(hovedApplikasjon);
@@ -437,37 +463,43 @@ public class Viewbehandling {
     // for KUNDE
     private static FXMLLoader hentKundeRedigerPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/KundeRedigerPopupView.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource(
+                "/view/KundeRedigerPopupView.fxml"));
         return loader;
     }
     // for SKADEMELDING
     private static FXMLLoader hentSkademeldingRedigerPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingRedigerPopupView.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource(
+                "/view/SkademeldingRedigerPopupView.fxml"));
         return loader;
     }
 
     // for VITNER
     private static FXMLLoader hentVitnerPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/VitnePopupView.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource(
+                "/view/VitnePopupView.fxml"));
         return loader;
     }
 
     // for FORSIKRING
     private static FXMLLoader hentBåtforsikringPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringBåtPopupView.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource(
+                "/view/ForsikringBåtPopupView.fxml"));
         return loader;
     }
     private static FXMLLoader hentBoligforsikringPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringBoligPopupView.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource(
+                "/view/ForsikringBoligPopupView.fxml"));
         return loader;
     }
     private static FXMLLoader hentReiseforsikringPopup() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringReisePopupView.fxml"));
+        loader.setLocation(HovedApplikasjon.class.getResource(
+                "/view/ForsikringReisePopupView.fxml"));
         return loader;
     }
 }

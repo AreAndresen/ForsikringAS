@@ -33,20 +33,20 @@ public class Skademelding implements Serializable {
     private transient LongProperty belopTaksering;
     private transient LongProperty erstatningsbelopUtbetalt;
     private transient ObjectProperty<ObservableMap<String, String>> kontaktinfoVitner;
-
-
     private transient StringProperty status;
 
 
     // < ------------------------------------ KONSTRUKTØRER ------------------------------------ >
 
     // tomt objekt-konstruktør
-    public Skademelding(int kundeNr, int skadeNr) { this(kundeNr, skadeNr, LocalDate.now(), null, null,
+    public Skademelding(int kundeNr, int skadeNr) {
+        this(kundeNr, skadeNr, LocalDate.now(), null, null,
             0, 0, null); }
 
     // default konstruktør
-     public Skademelding(int kundeNr, int skadeNr, LocalDate datoSkade, String skadeType, String skadeBeskrivelse,
-                         long belopTaksering, long erstatningsbelopUtbetalt, String status) {
+     public Skademelding(int kundeNr, int skadeNr, LocalDate datoSkade, String skadeType,
+                         String skadeBeskrivelse, long belopTaksering,
+                         long erstatningsbelopUtbetalt, String status) {
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
         this.datoSkade = new SimpleObjectProperty<>(datoSkade);
@@ -103,9 +103,13 @@ public class Skademelding implements Serializable {
     // skadeType
     public String getSkadeType() { return skadeType.get(); }
     public void setSkadeType(String skadeType) {
-        if (skadeType == null || !"Båtforsikring".equals(skadeType) && !"Hus- og innboforsikring".equals(skadeType)
-                && !"Fritidsboligforsikring".equals(skadeType) && !"Reiseforsikring".equals(skadeType)) {
-            throw new UgyldigInputException("Type må være en gyldig forsikringstype.");
+        if (skadeType == null ||
+                (!"Båtforsikring".equals(skadeType) &&
+                        !"Hus- og innboforsikring".equals(skadeType) &&
+                        !"Fritidsboligforsikring".equals(skadeType) &&
+                        !"Reiseforsikring".equals(skadeType))) {
+            throw new UgyldigInputException(
+                    "Type må være en gyldig forsikringstype.");
         }
         this.skadeType.set(skadeType);
     }
@@ -116,8 +120,10 @@ public class Skademelding implements Serializable {
     // skadeBeskrivelse
     public String getSkadeBeskrivelse() { return skadeBeskrivelse.get(); }
     public void setSkadeBeskrivelse(String skadeBeskrivelse) {
-        if (skadeBeskrivelse == null || !skadeBeskrivelse.matches("[a-zA-ZæøåÆØÅ0-9\\:\\-\\ \\.\\?\\,]{1,200}+")) {
-            throw new UgyldigInputException("Skadebeskrivelse kan ikke overstige 200 tegn og eneste tillate\nspesialtegn" +
+        if (skadeBeskrivelse == null || !skadeBeskrivelse.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\:\\-\\ \\.\\?\\,]{1,200}+")) {
+            throw new UgyldigInputException(
+                    "Skadebeskrivelse kan ikke overstige 200 tegn og eneste tillate\nspesialtegn" +
                     "er bindestrek, punktum, komma, ? og :");
         }
         this.skadeBeskrivelse.set(skadeBeskrivelse);
@@ -130,7 +136,8 @@ public class Skademelding implements Serializable {
     public long getBelopTaksering() { return belopTaksering.get(); }
     public void setBelopTaksering(long belopTaksering) {
         if (belopTaksering <= 0) {
-            throw new UgyldigBelopException("Takseringsbeløp kan ikke være mindre enn 0.");
+            throw new UgyldigBelopException(
+                    "Takseringsbeløp kan ikke være mindre enn 0.");
         }
         this.belopTaksering.set(belopTaksering);
     }
@@ -142,7 +149,8 @@ public class Skademelding implements Serializable {
     public long getErstatningsbelopUtbetalt() { return erstatningsbelopUtbetalt.get(); }
     public void setErstatningsbelopUtbetalt(long erstatningsbelopUtbetalt) {
         if (erstatningsbelopUtbetalt <= 0) {
-            throw new UgyldigBelopException("ErstatningsbelopUtbetalt kan ikke være mindre enn 0.");
+            throw new UgyldigBelopException(
+                    "ErstatningsbelopUtbetalt kan ikke være mindre enn 0.");
         }
         this.erstatningsbelopUtbetalt.set(erstatningsbelopUtbetalt);
     }
@@ -178,7 +186,8 @@ public class Skademelding implements Serializable {
     public String sjekkOgOppdaterSkadeNr(TextField skadeNrField) {
         String msg = "";
 
-        if (skadeNrField.getText() == null || skadeNrField.getText().isEmpty()) {
+        if (skadeNrField.getText() == null ||
+                skadeNrField.getText().isEmpty()) {
             msg += "Skadenummer kan ikke være tomt.\n";
         } else {
             try {
@@ -196,7 +205,8 @@ public class Skademelding implements Serializable {
     public String sjekkOgOppdaterKundeNr(TextField kundeNrField, HovedApplikasjon hovedApplikasjon) {
         String msg = "";
 
-        if (kundeNrField.getText() == null || kundeNrField.getText().isEmpty()) {
+        if (kundeNrField.getText() == null ||
+                kundeNrField.getText().isEmpty()) {
             msg += "Kundenummer kan ikke være tomt.\n";
         } else {
             try {
@@ -243,7 +253,8 @@ public class Skademelding implements Serializable {
     public String sjekkOgOppdaterSkadetype(ChoiceBox skadeTypeField) {
         String msg = "";
 
-        if (skadeTypeField.getValue() == null || skadeTypeField.getItems().isEmpty()) {
+        if (skadeTypeField.getValue() == null ||
+                skadeTypeField.getItems().isEmpty()) {
             msg += "Skadetype kan ikke være tom.\n";
         } else {
             try {
@@ -259,7 +270,8 @@ public class Skademelding implements Serializable {
     public String sjekkOgOppdaterSkadebeskrivelse(TextArea skadebeskrivelseField) {
         String msg = "";
 
-        if (skadebeskrivelseField.getText() == null || skadebeskrivelseField.getText().isEmpty()) {
+        if (skadebeskrivelseField.getText() == null ||
+                skadebeskrivelseField.getText().isEmpty()) {
             msg += "Skadebeskrivelse kan ikke være tom.\n";
         } else {
             try {
@@ -275,7 +287,8 @@ public class Skademelding implements Serializable {
     public String sjekkOgOppdaterTakseringsbeløp(TextField belopTakseringField) {
         String msg = "";
 
-        if (belopTakseringField.getText() == null || belopTakseringField.getText().isEmpty()) {
+        if (belopTakseringField.getText() == null ||
+                belopTakseringField.getText().isEmpty()) {
             msg += "Takseringssbeløp kan ikke være tomt.\n";
         } else {
             try {
@@ -293,11 +306,13 @@ public class Skademelding implements Serializable {
     public String sjekkOgOppdaterErstatningsbelopUtbetalt(TextField erstatningsbelopUtbetaltField) {
         String msg = "";
 
-        if (erstatningsbelopUtbetaltField.getText() == null || erstatningsbelopUtbetaltField.getText().isEmpty()) {
+        if (erstatningsbelopUtbetaltField.getText() == null ||
+                erstatningsbelopUtbetaltField.getText().isEmpty()) {
             msg += "Utbetalt erstatningssbeløp kan ikke være tomt.\n";
         } else {
             try {
-                setErstatningsbelopUtbetalt(Long.parseLong(erstatningsbelopUtbetaltField.getText()));
+                setErstatningsbelopUtbetalt(Long.parseLong(
+                        erstatningsbelopUtbetaltField.getText()));
             } catch (NumberFormatException e) {
                 msg += "Utbetalt erstatningssbeløp må være tall.\n";
             } catch (UgyldigBelopException e) {
@@ -311,7 +326,8 @@ public class Skademelding implements Serializable {
     public String sjekkOgOppdaterStatus(ChoiceBox statusField) {
         String msg = "";
 
-        if (statusField.getValue() == null || statusField.getItems().isEmpty()) {
+        if (statusField.getValue() == null ||
+                statusField.getItems().isEmpty()) {
             msg += "Status kan ikke være tom.\n";
         } else {
             try {
@@ -327,23 +343,30 @@ public class Skademelding implements Serializable {
     // kontaktinfo vitne
     public String sjekkOgOppdaterKontaktinfoVitne(TextField navnVitneField, TextField tlfVitneField) {
         String msg = "";
-        if (navnVitneField.getText() == null || navnVitneField.getText().isEmpty()) {
+        if (navnVitneField.getText() == null ||
+                navnVitneField.getText().isEmpty()) {
             msg += "Vitne sitt navn kan ikke være tomt.\n";
         }
-        if (tlfVitneField.getText() == null || tlfVitneField.getText().isEmpty()) {
+        if (tlfVitneField.getText() == null ||
+                tlfVitneField.getText().isEmpty()) {
             msg += "Vitne telefonnummer kan ikke være tomt.\n";
-        }
-        else {
+        } else {
             try {
-                if (!navnVitneField.getText().matches("[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")) {
-                    throw new UgyldigInputException("Vitne sitt navn må være mellom 2-30 bokstaver og " +
+                if (!navnVitneField.getText().matches(
+                        "[a-zA-ZæøåÆØÅ\\-\\ ]{2,30}+")) {
+                    throw new UgyldigInputException(
+                            "Vitne sitt navn må være mellom 2-30 bokstaver og " +
                             "kan kun\ninneholde bokstaver og spesialtegnet -. ");
                 }
-                if (!tlfVitneField.getText().matches("[0-9\\-\\ \\+]{4,11}+")) {
-                    throw new UgyldigInputException("Vitne sitt telefonnummer må være 4-11 tall, og kan kun inneholde\nspesialtegnene + og -");
+                if (!tlfVitneField.getText().matches(
+                        "[0-9\\-\\ \\+]{4,11}+")) {
+                    throw new UgyldigInputException(
+                            "Vitne sitt telefonnummer må være 4-11 tall, og" +
+                                    " kan kun inneholde\nspesialtegnene + og -");
                 }
                 //legger til eller oppdaterer vitne
-                getKontaktinfoVitner().put(tlfVitneField.getText(), navnVitneField.getText());
+                getKontaktinfoVitner().put(tlfVitneField.getText(),
+                        navnVitneField.getText());
 
             } catch (UgyldigInputException e) {
                 msg += e.getMessage() + "\n";
@@ -383,7 +406,8 @@ public class Skademelding implements Serializable {
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
         this.belopTaksering = new SimpleLongProperty((long)is.readObject());
         this.erstatningsbelopUtbetalt = new SimpleLongProperty((long)is.readObject());
-        this.kontaktinfoVitner = new SimpleObjectProperty<>(FXCollections.observableMap((Map<String, String>) is.readObject()));
+        this.kontaktinfoVitner = new SimpleObjectProperty<>(
+                FXCollections.observableMap((Map<String, String>) is.readObject()));
         this.status = new SimpleStringProperty((String)is.readObject());
     }
 
@@ -391,9 +415,9 @@ public class Skademelding implements Serializable {
 
     @Override
     public String toString() {
-        return getSkadeNr() +";" +getKundeNr() +";"+ getDatoSkade() +";"+ getSkadeType() +";"+ getSkadeBeskrivelse() +";"+
-                getBelopTaksering() +";"+ getErstatningsbelopUtbetalt()+";"+ getStatus() +";"+
-                getKontaktinfoVitner();
+        return getSkadeNr() +";" +getKundeNr() +";"+ getDatoSkade() +";"+ getSkadeType() +";"+
+                getSkadeBeskrivelse() +";"+ getBelopTaksering() +";"+ getErstatningsbelopUtbetalt()+
+                ";"+ getStatus() +";"+ getKontaktinfoVitner();
     }
 }
 

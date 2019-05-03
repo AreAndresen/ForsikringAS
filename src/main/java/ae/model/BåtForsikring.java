@@ -29,9 +29,9 @@ public class BåtForsikring extends Forsikring implements Serializable {
     }
 
     // default konstruktør
-    public BåtForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet, long forsikringsBelop,
-                         String betingelser, String type, String registreringsNr, String typeModell, int lengdeFot,
-                         int årsmodell, String motorEgenskaper) {
+    public BåtForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet,
+                         long forsikringsBelop, String betingelser, String type, String registreringsNr,
+                         String typeModell, int lengdeFot, int årsmodell, String motorEgenskaper) {
         super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
         this.registreringsNr = new SimpleStringProperty(registreringsNr);
         this.typeModell = new SimpleStringProperty(typeModell);
@@ -47,8 +47,10 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return registreringsNr.get();
     }
     public void setRegistreringsNr(String registreringsNr) {
-        if (registreringsNr == null || !registreringsNr.matches("[a-zA-ZæøåÆØÅ0-9]{4,10}+")) {
-            throw new UgyldigInputException("Registreringsnummer må være mellom 4 og 10 tegn.");
+        if (registreringsNr == null || !registreringsNr.matches(
+                "[a-zA-ZæøåÆØÅ0-9]{4,10}+")) {
+            throw new UgyldigInputException(
+                    "Registreringsnummer må være mellom 4 og 10 tegn.");
         }
         this.registreringsNr.set(registreringsNr);
     }
@@ -61,8 +63,10 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return typeModell.get();
     }
     public void setTypeModell(String typeModell) {
-        if (typeModell == null || !typeModell.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
-            throw new UgyldigInputException("Båttype kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+        if (typeModell == null || !typeModell.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException(
+                    "Båttype kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
                     " er bindestrek og punktum.");
         }
         this.typeModell.set(typeModell);
@@ -104,8 +108,10 @@ public class BåtForsikring extends Forsikring implements Serializable {
         return motorEgenskaper.get();
     }
     public void setMotorEgenskaper(String motorEgenskaper) {
-        if (motorEgenskaper == null || !motorEgenskaper.matches("[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
-            throw new UgyldigInputException("Motortype og styrke kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
+        if (motorEgenskaper == null || !motorEgenskaper.matches(
+                "[a-zA-ZæøåÆØÅ0-9\\-\\ \\.]{1,30}+")) {
+            throw new UgyldigInputException(
+                    "Motortype og styrke kan ikke overstige 30 tegn og eneste tillate spesialtegn" +
                     " er bindestrek og punktum.");
         }
         this.motorEgenskaper.set(motorEgenskaper);
@@ -120,7 +126,8 @@ public class BåtForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterRegistreringsNr(TextField registreringsnrField) {
         String msg = "";
 
-        if (registreringsnrField.getText() == null || registreringsnrField.getText().isEmpty()) {
+        if (registreringsnrField.getText() == null ||
+                registreringsnrField.getText().isEmpty()) {
             msg += "Registreringsnummer kan ikke være tom.\n";
         } else {
             try {
@@ -136,7 +143,8 @@ public class BåtForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterTypeModell(TextField typeModellField) {
         String msg = "";
 
-        if (typeModellField.getText() == null || typeModellField.getText().isEmpty()) {
+        if (typeModellField.getText() == null ||
+                typeModellField.getText().isEmpty()) {
             msg += "Båttype og modell kan ikke være tom.\n";
         } else {
             try {
@@ -152,7 +160,8 @@ public class BåtForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterLengdeFot(TextField lengdeFotField) {
         String msg = "";
 
-        if (lengdeFotField.getText() == null || lengdeFotField.getText().isEmpty()) {
+        if (lengdeFotField.getText() == null ||
+                lengdeFotField.getText().isEmpty()) {
             msg += "Lengde kan ikke være tom.\n";
         } else {
             try {
@@ -170,7 +179,8 @@ public class BåtForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterÅrsmodell(TextField årsmodellField) {
         String msg = "";
 
-        if (årsmodellField.getText() == null || årsmodellField.getText().isEmpty()) {
+        if (årsmodellField.getText() == null ||
+                årsmodellField.getText().isEmpty()) {
             msg += "Årsmodell kan ikke være tom.\n";
         } else {
             try {
@@ -188,7 +198,8 @@ public class BåtForsikring extends Forsikring implements Serializable {
     public String sjekkOgOppdaterMotorEgenskaper(TextField motorEgenskaperField) {
         String msg = "";
 
-        if (motorEgenskaperField.getText() == null || motorEgenskaperField.getText().isEmpty()) {
+        if (motorEgenskaperField.getText() == null ||
+                motorEgenskaperField.getText().isEmpty()) {
             msg += "Motortype og styrke kan ikke være tom.\n";
         } else {
             try {
