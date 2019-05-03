@@ -18,9 +18,9 @@ public class ForsikringBoligPopupController {
 
     // textfields + choicebox
     @FXML
-    private TextField kundeNrField, forsikringsNrField, premieField, datoOpprettetField, forsikringsbelopField, betingelserField,
-            typeField, adresseBoligField, byggeårField, byggematerialeField, antallKvmField, forsikringsbelopBygningField,
-            forsikringsbelopInnboField;
+    private TextField kundeNrField, forsikringsNrField, premieField, datoOpprettetField,
+            forsikringsbelopField, betingelserField, typeField, adresseBoligField, byggeårField,
+            byggematerialeField, antallKvmField, forsikringsbelopBygningField, forsikringsbelopInnboField;
     @FXML
     private ChoiceBox standardChoice;
 
@@ -30,7 +30,8 @@ public class ForsikringBoligPopupController {
     private HovedApplikasjon hovedApplikasjon;
 
     // choice box
-    private ObservableList<String> typeSortering = FXCollections.observableArrayList("Høy", "Middels", "Lav");
+    private ObservableList<String> typeSortering =
+            FXCollections.observableArrayList("Høy", "Middels", "Lav");
 
     @FXML
     private void initialize() {
@@ -73,7 +74,7 @@ public class ForsikringBoligPopupController {
     }
 
     @FXML
-    public void bekreftTrykkes() {
+    private void bekreftTrykkes() {
 
         if (sjekkOgOppdaterBoligforsikring()) {
             bekreft = true;
@@ -113,7 +114,7 @@ public class ForsikringBoligPopupController {
     }
 
     @FXML
-    public void avbrytTrykkes() {
+    private void avbrytTrykkes() {
         popupStage.close();
     }
 }

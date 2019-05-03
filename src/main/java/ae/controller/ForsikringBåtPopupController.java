@@ -15,8 +15,9 @@ public class ForsikringBåtPopupController {
 
     // textfields
     @FXML
-    private TextField kundeNrField, forsikringsNrField, premieField, datoOpprettetField, forsikringsbelopField, betingelserField,
-            typeField, regnrField, båttypeField, lengdeFotField, årsmodellField, motortypeField;
+    private TextField kundeNrField, forsikringsNrField, premieField, datoOpprettetField,
+            forsikringsbelopField, betingelserField,  typeField, regnrField, båttypeField,
+            lengdeFotField, årsmodellField, motortypeField;
 
     private Stage popupStage;
     private BåtForsikring båtForsikringÅRedigere;
@@ -60,7 +61,7 @@ public class ForsikringBåtPopupController {
     }
 
     @FXML
-    public void bekreftTrykkes() {
+    private void bekreftTrykkes() {
 
         if (sjekkOgOppdaterBåtforsikring()) {
             bekreft = true;
@@ -97,7 +98,7 @@ public class ForsikringBåtPopupController {
     }
 
     @FXML
-    public void avbrytTrykkes() {
+    private void avbrytTrykkes() {
         popupStage.close();
     }
 }

@@ -14,7 +14,6 @@ import ae.HovedApplikasjon;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
-
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,8 +31,6 @@ public class SkademeldingController {
     public TableColumn<Kunde, String> etternavnKolonne;
     @FXML
     private TextField søkField;
-
-
 
     // skademelding tabellen.
     @FXML
@@ -71,7 +68,8 @@ public class SkademeldingController {
     @FXML
     private ChoiceBox typeChoice;
 
-    private ObservableList<String> typeSortering = FXCollections.observableArrayList("Alle", "Båtforsikring",
+    private ObservableList<String> typeSortering =
+            FXCollections.observableArrayList("Alle", "Båtforsikring",
             "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
 
     // Referanse til Rot-kontrolleren.
@@ -81,18 +79,26 @@ public class SkademeldingController {
 
     @FXML
     private void initialize() {
-        // Initier skademelding-tabellen med kobling til alle kolonnene
-        kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
-        etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
+        // Initier skademelding-tabellen med kobling til alle kolonnene -- kundetabellen
+        kundeNrKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().kundeNrProperty());
+        etternavnKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().etternavnProperty());
 
-        skadeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeNrProperty());
-        skadeTypeKolonne.setCellValueFactory(celleData -> celleData.getValue().skadeTypeProperty());
-        belopTakseringKolonne.setCellValueFactory(celleData -> celleData.getValue().belopTakseringProperty());
-        erstatningUtbetaltKolonne.setCellValueFactory(celleData -> celleData.getValue().erstatningsbelopUtbetaltProperty());
-        datoSkadeKolonne.setCellValueFactory(celleData -> celleData.getValue().datoSkadeProperty());
-        statusKolonne.setCellValueFactory(celleData -> celleData.getValue().statusProperty());
+        // hovedtabellen
+        skadeNrKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().skadeNrProperty());
+        skadeTypeKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().skadeTypeProperty());
+        belopTakseringKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().belopTakseringProperty());
+        erstatningUtbetaltKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().erstatningsbelopUtbetaltProperty());
+        datoSkadeKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().datoSkadeProperty());
+        statusKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().statusProperty());
 
-        //typeChoice.setValue("Alle");
         typeChoice.setItems(typeSortering);
 
         // Sender inn null for å tømme feltene.
@@ -108,7 +114,8 @@ public class SkademeldingController {
 
         // Behandling av søk
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
-            FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
+            FilteredList<Kunde> kundeFiltered =
+                    new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
             kundeFiltered.setPredicate(kunde -> kunde.søkeordFunnet(kunde, nyVerdi));
 
@@ -124,17 +131,21 @@ public class SkademeldingController {
         if (kunde != null) {
 
             typeChoice.setDisable(false);
-            FilteredList<Skademelding> skademeldingerFiltered = new FilteredList<>(kunde.getSkademeldinger());
+            FilteredList<Skademelding> skademeldingerFiltered =
+                    new FilteredList<>(kunde.getSkademeldinger());
 
-            typeChoice.valueProperty().addListener((ChangeListener<String>) (observable, gammelVerdi, nyVerdi) ->
+            typeChoice.valueProperty().addListener((ChangeListener<String>)
+                    (observable, gammelVerdi, nyVerdi) ->
                     skademeldingerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Skademelding f) ->
                             nyVerdi.equals(f.getSkadeType())));
+
             skademeldingTabell.setItems(skademeldingerFiltered);
         }
     }
 
-    /** Fyller ut info-feltene om hver kunde.Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
-     * antall av de ulike typene. Knappene kan trykkes for å vise de.*/
+    /** Fyller ut info-feltene om hver kunde.Labelen til Forsikringer, Skademeldinger og
+     * Ubetalte erstatninger indikerer antall av de ulike typene. Knappene kan trykkes for å vise de.
+     * */
     private void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
@@ -156,7 +167,7 @@ public class SkademeldingController {
 
 
     @FXML
-    public void gåTilNySkademeldingPopup() {
+    private void gåTilNySkademeldingPopup() {
 
         Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
 
@@ -178,19 +189,19 @@ public class SkademeldingController {
     }
 
     @FXML
-    public void gåTilRedigerSkademeldingPopup() {
+    private void gåTilRedigerSkademeldingPopup() {
         Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
         if (valgtSkademelding != null && valgtKunde != null) {
-            boolean bekreftTrykket = Viewbehandling.visRedigerSkademeldingPopup(hovedApplikasjon, valgtSkademelding);
+            boolean bekreftTrykket =
+                    Viewbehandling.visRedigerSkademeldingPopup(hovedApplikasjon, valgtSkademelding);
 
             if (bekreftTrykket) {
                 visSkademeldingDetaljer(valgtSkademelding);
                 valgtKunde.setAntallErstatningerUbetalte();
             }
-        }
-        else{
+        } else {
             AlertHandler.genererWarningAlert("Rediger skademelding", "Ingen skademelding valgt",
                     "Du må velge en skademelding for å kunne redigere!");
         }
@@ -200,7 +211,7 @@ public class SkademeldingController {
      * Sletter valgt kunde fra listen, med bekreftelse
      */
     @FXML
-    public void slettValgtSkademelding() {
+    private void slettValgtSkademelding() {
         Kunde valgtkunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
@@ -212,7 +223,8 @@ public class SkademeldingController {
             alert.initOwner(hovedApplikasjon.getHovedStage());
             alert.setTitle("Slett Skademelding");
             alert.setHeaderText("Bekreft sletting av skademelding");
-            alert.setContentText("Er du sikker på at du ønsker å slette skademelding nummer: " + skademeldingInfo +"?");
+            alert.setContentText("Er du sikker på at du ønsker å slette skademelding nummer: "
+                    + skademeldingInfo +"?");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
@@ -222,8 +234,7 @@ public class SkademeldingController {
                 //setter antall ubetalte
                 valgtkunde.setAntallErstatningerUbetalte();
             }
-        }
-        else{
+        } else {
             AlertHandler.genererWarningAlert("Slett skademelding", "Ingen skademelding valgt",
                     "Du må velge en skademelding for å kunne slette!");
         }
@@ -232,24 +243,25 @@ public class SkademeldingController {
 
     //------------------------ VITNER-------------------------------
     @FXML
-    public void gåTilNyttVitnePopup() {
+    private void gåTilNyttVitnePopup() {
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
         if (valgtSkademelding != null) {
-            boolean bekreftTrykket = Viewbehandling.visLeggTilVitnePopup(hovedApplikasjon, valgtSkademelding);
+            boolean bekreftTrykket =
+                    Viewbehandling.visLeggTilVitnePopup(hovedApplikasjon, valgtSkademelding);
 
             if (bekreftTrykket) {
                 visSkademeldingDetaljer(valgtSkademelding);
             }
-        }
-        else{
-            AlertHandler.genererWarningAlert("Legg til vitne - Endre navn på eksisterende tlf", "Ingen skademelding valgt",
+        } else {
+            AlertHandler.genererWarningAlert("Legg til vitne - Endre navn på eksisterende tlf",
+                    "Ingen skademelding valgt",
                     "Du må velge en skademelding for å kunne legge til vitne!");
         }
     }
 
     @FXML
-    public void slettVitner() {
+    private void slettVitner() {
         Skademelding valgtSkademelding = skademeldingTabell.getSelectionModel().getSelectedItem();
 
         if(valgtSkademelding != null) {
@@ -259,7 +271,8 @@ public class SkademeldingController {
             alert.initOwner(hovedApplikasjon.getHovedStage());
             alert.setTitle("Slett alle vitner");
             alert.setHeaderText("Bekreft sletting av vitner");
-            alert.setContentText("Er du sikker på at du ønsker å slette alle vitner til\n skademeldingnummer: " + skademeldingInfo +"?");
+            alert.setContentText("Er du sikker på at du ønsker å slette alle vitner til\n skademeldingnummer: "
+                    + skademeldingInfo +"?");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 

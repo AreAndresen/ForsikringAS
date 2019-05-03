@@ -32,7 +32,8 @@ public class KundeController {
     // Labels.
     @FXML
     private Label kundeNrLabel, etternavnLabel, fornavnLabel, adresseFakturaLabel,
-            datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel, erstatningerUbetalteLabel;
+            datoKundeOpprettetLabel, forsikringerLabel, skademeldingerLabel,
+            erstatningerUbetalteLabel;
 
     // Buttons, for å disable/enable ved threading
     @FXML
@@ -60,11 +61,16 @@ public class KundeController {
     @FXML
     private void initialize() {
         // Initier kunde-tabellen med kobling til alle kolonnene
-        kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
-        etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
-        fornavnKolonne.setCellValueFactory(celleData -> celleData.getValue().fornavnProperty());
-        adresseFakturaKolonne.setCellValueFactory(celleData -> celleData.getValue().adresseFakturaProperty());
-        datoKundeOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoKundeOpprettetProperty());
+        kundeNrKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().kundeNrProperty());
+        etternavnKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().etternavnProperty());
+        fornavnKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().fornavnProperty());
+        adresseFakturaKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().adresseFakturaProperty());
+        datoKundeOpprettetKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().datoKundeOpprettetProperty());
 
         // Sender inn null for å tømme feltene.
         visKundensDetaljer(null);
@@ -75,7 +81,8 @@ public class KundeController {
 
         // Behandling av søk
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
-            FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
+            FilteredList<Kunde> kundeFiltered =
+                    new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
             kundeFiltered.setPredicate(kunde -> kunde.søkeordFunnet(kunde, nyVerdi));
 
@@ -89,7 +96,8 @@ public class KundeController {
     public void gåTilNyKundePopup() {
         int index = IdUtil.genererLøpenummerKunde(hovedApplikasjon.getKundeData());
         Kunde nyKunde = new Kunde(index);
-        boolean bekreftTrykket = Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
+        boolean bekreftTrykket =
+                Viewbehandling.visNyKundePopup(hovedApplikasjon, nyKunde);
 
         if (bekreftTrykket) {
             hovedApplikasjon.getKundeData().add(nyKunde);
@@ -101,7 +109,8 @@ public class KundeController {
         Kunde valgtKunde = kundeTabell.getSelectionModel().getSelectedItem();
 
         if (valgtKunde != null) {
-            boolean bekreftTrykket = Viewbehandling.visRedigerKundePopup(hovedApplikasjon, valgtKunde);
+            boolean bekreftTrykket =
+                    Viewbehandling.visRedigerKundePopup(hovedApplikasjon, valgtKunde);
 
             if (bekreftTrykket) {
                 visKundensDetaljer(valgtKunde);
@@ -127,7 +136,8 @@ public class KundeController {
             alert.initOwner(hovedApplikasjon.getHovedStage());
             alert.setTitle("Slett kunde");
             alert.setHeaderText("Bekreft sletting av kunde");
-            alert.setContentText("Er du sikker på at du ønsker å slette kunde nummer: " + kundeInfo +"?");
+            alert.setContentText("Er du sikker på at du ønsker å slette kunde nummer: "
+                    + kundeInfo +"?");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
@@ -136,27 +146,23 @@ public class KundeController {
 
                 hovedApplikasjon.getKundeData().remove(valgtKunde);
             }
-        }
-        else{
+        } else {
             AlertHandler.genererWarningAlert("Slett kunde", "Ingen kunde valgt",
                     "Du må velge en kunde for å kunne slette!");
         }
     }
 
-    //-------SKADEMELDING-------
     //Går til skademeldingversikt ved trykk på knapp for skademeldinger
     @FXML
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
     }
 
-    //-------Forsikringer-------
     //Går til forsikringsversikt ved trykk på knapp for forsikringer
     @FXML
     private void gåTilForsikringoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
     }
-
 
     /**
      * Fyller ut info-feltene om hver kunde.

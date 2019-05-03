@@ -11,7 +11,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -70,7 +69,8 @@ public class ForsikringController {
         return slettButton;
     }
 
-    private ObservableList<String> typeSortering = FXCollections.observableArrayList("Alle", "Båtforsikring",
+    private ObservableList<String> typeSortering =
+            FXCollections.observableArrayList("Alle", "Båtforsikring",
             "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
 
     // referanse til hovedapplikasjonen
@@ -81,18 +81,26 @@ public class ForsikringController {
 
     @FXML
     private void initialize() {
-        // koble kolonnene med datafeltene
-        kundeNrKolonne.setCellValueFactory(celleData -> celleData.getValue().kundeNrProperty());
-        etternavnKolonne.setCellValueFactory(celleData -> celleData.getValue().etternavnProperty());
+        // koble kolonnene med datafeltene -- kundetabellen
+        kundeNrKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().kundeNrProperty());
+        etternavnKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().etternavnProperty());
 
-        forsikringsnrKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsNrProperty());
-        premieKolonne.setCellValueFactory(celleData -> celleData.getValue().årligPremieProperty());
-        datoOpprettetKolonne.setCellValueFactory(celleData -> celleData.getValue().datoOpprettetProperty());
-        forsikringsbelopKolonne.setCellValueFactory(celleData -> celleData.getValue().forsikringsBelopProperty());
-        betingelserKolonne.setCellValueFactory(celleData -> celleData.getValue().betingelserProperty());
-        typeKolonne.setCellValueFactory(celleData -> celleData.getValue().typeProperty());
+        // hovedtabellen
+        forsikringsnrKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().forsikringsNrProperty());
+        premieKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().årligPremieProperty());
+        datoOpprettetKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().datoOpprettetProperty());
+        forsikringsbelopKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().forsikringsBelopProperty());
+        betingelserKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().betingelserProperty());
+        typeKolonne.setCellValueFactory(celleData ->
+                celleData.getValue().typeProperty());
 
-        //typeChoice.setValue("Alle");
         typeChoice.setItems(typeSortering);
 
         visForsikringDetaljer(null);
@@ -106,7 +114,8 @@ public class ForsikringController {
 
         // Behandling av søk
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
-            FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
+            FilteredList<Kunde> kundeFiltered =
+                    new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
             kundeFiltered.setPredicate(kunde -> kunde.søkeordFunnet(kunde, nyVerdi));
 
@@ -121,10 +130,12 @@ public class ForsikringController {
         typeChoice.setDisable(true);
         if (kunde != null) {
             typeChoice.setDisable(false);
-            FilteredList<Forsikring> forsikringerFiltered = new FilteredList<>(kunde.getForsikringer());
+            FilteredList<Forsikring> forsikringerFiltered =
+                    new FilteredList<>(kunde.getForsikringer());
 
-            typeChoice.valueProperty().addListener((ChangeListener<String>) (observable, gammelVerdi, nyVerdi) ->
-                    forsikringerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Forsikring f) ->
+            typeChoice.valueProperty().addListener((ChangeListener<String>)
+                    (observable, gammelVerdi, nyVerdi) ->
+                            forsikringerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Forsikring f) ->
                             nyVerdi.equals(f.getType())));
 
             forsikringTabell.setItems(forsikringerFiltered);
@@ -239,7 +250,7 @@ public class ForsikringController {
     }
 
     @FXML
-    public void gåTilNyBåtForsikringPopup() {
+    private void gåTilNyBåtForsikringPopup() {
         Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
 
         if (valgtKunde != null) {
@@ -247,7 +258,8 @@ public class ForsikringController {
 
             Forsikring nyBåtForsikring = new BåtForsikring(valgtKunde.getKundeNr(), forsikringsNr);
 
-            boolean bekreftTrykket = Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
+            boolean bekreftTrykket =
+                    Viewbehandling.visNyBåtforsikringPopup(hovedApplikasjon, (BåtForsikring) nyBåtForsikring);
 
             if (bekreftTrykket) {
                 valgtKunde.getForsikringer().add(nyBåtForsikring);
@@ -259,7 +271,7 @@ public class ForsikringController {
     }
 
     @FXML
-    public void gåTilNyHusOgInnboForsikringPopup() {
+    private void gåTilNyHusOgInnboForsikringPopup() {
         Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
 
         if (valgtKunde != null) {
@@ -281,16 +293,19 @@ public class ForsikringController {
     }
 
     @FXML
-    public void gåTilNyFritidsboligForsikringPopup() {
+    private void gåTilNyFritidsboligForsikringPopup() {
         Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
 
         if (valgtKunde != null) {
-            int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+            int forsikringsNr =
+                    IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
 
-            Forsikring nyFritidsboligForsikring = new BoligForsikring(valgtKunde.getKundeNr(), forsikringsNr,
+            Forsikring nyFritidsboligForsikring =
+                    new BoligForsikring(valgtKunde.getKundeNr(), forsikringsNr,
                     "Fritidsboligforsikring");
 
-            boolean bekreftTrykket = Viewbehandling.visNyBoligforsikringPopup(hovedApplikasjon,
+            boolean bekreftTrykket =
+                    Viewbehandling.visNyBoligforsikringPopup(hovedApplikasjon,
                     (BoligForsikring) nyFritidsboligForsikring);
 
             if (bekreftTrykket) {
@@ -303,16 +318,18 @@ public class ForsikringController {
     }
 
     @FXML
-    public void gåTilNyReiseForsikringPopup() {
-
+    private void gåTilNyReiseForsikringPopup() {
         Kunde valgtKunde = kundeNrTabell.getSelectionModel().getSelectedItem();
 
         if (valgtKunde != null) {
-            int forsikringsNr = IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
+            int forsikringsNr =
+                    IdUtil.genererLøpenummerForsikring(hovedApplikasjon.getKundeData());
 
-            Forsikring nyReiseForsikring = new ReiseForsikring(valgtKunde.getKundeNr(), forsikringsNr);
+            Forsikring nyReiseForsikring =
+                    new ReiseForsikring(valgtKunde.getKundeNr(), forsikringsNr);
 
-            boolean bekreftTrykket = Viewbehandling.visNyReiseforsikringPopup(hovedApplikasjon,
+            boolean bekreftTrykket =
+                    Viewbehandling.visNyReiseforsikringPopup(hovedApplikasjon,
                     (ReiseForsikring) nyReiseForsikring);
 
             if (bekreftTrykket) {
@@ -325,12 +342,13 @@ public class ForsikringController {
     }
 
     @FXML
-    public void gåTilRedigerForsikringPopup() {
+    private void gåTilRedigerForsikringPopup() {
         Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
 
         if (valgtForsikring != null) {
             if ("Båtforsikring".equals(valgtForsikring.getType())) {
-                boolean bekreftTrykket = Viewbehandling.visRedigerBåtforsikringPopup(
+                boolean bekreftTrykket =
+                        Viewbehandling.visRedigerBåtforsikringPopup(
                         hovedApplikasjon, (BåtForsikring) valgtForsikring);
 
                 if (bekreftTrykket) {
@@ -340,7 +358,8 @@ public class ForsikringController {
 
             if ("Hus- og innboforsikring".equals(valgtForsikring.getType()) ||
                     "Fritidsboligforsikring".equals(valgtForsikring.getType())) {
-                boolean bekreftTrykket = Viewbehandling.visRedigerBoligforsikringPopup(
+                boolean bekreftTrykket =
+                        Viewbehandling.visRedigerBoligforsikringPopup(
                         hovedApplikasjon, (BoligForsikring) valgtForsikring);
 
                 if (bekreftTrykket) {
@@ -349,7 +368,8 @@ public class ForsikringController {
             }
 
             if ("Reiseforsikring".equals(valgtForsikring.getType())) {
-                boolean bekreftTrykket = Viewbehandling.visRedigerReiseforsikringPopup(hovedApplikasjon,
+                boolean bekreftTrykket =
+                        Viewbehandling.visRedigerReiseforsikringPopup(hovedApplikasjon,
                         (ReiseForsikring) valgtForsikring);
 
                 if (bekreftTrykket) {
@@ -364,7 +384,7 @@ public class ForsikringController {
     }
 
     @FXML
-    public void slettValgtForsikring() {
+    private void slettValgtForsikring() {
         Kunde valgtkunde = kundeNrTabell.getSelectionModel().getSelectedItem();
         Forsikring valgtForsikring = forsikringTabell.getSelectionModel().getSelectedItem();
 
@@ -375,13 +395,13 @@ public class ForsikringController {
             alert.initOwner(hovedApplikasjon.getHovedStage());
             alert.setTitle("Slett forsikring");
             alert.setHeaderText("Bekreft sletting av forsikring");
-            alert.setContentText("Er du sikker på at du ønsker å slette forsikring nummer: " + forsikringInfo +"?");
+            alert.setContentText("Er du sikker på at du ønsker å slette forsikring nummer: "
+                    + forsikringInfo +"?");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Bekreft");
             ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Avbryt");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-
                 valgtkunde.getForsikringer().remove(valgtForsikring);
             }
         } else {

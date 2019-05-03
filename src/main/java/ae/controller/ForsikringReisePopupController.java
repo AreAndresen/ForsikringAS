@@ -53,7 +53,7 @@ public class ForsikringReisePopupController {
     }
 
     @FXML
-    public void bekreftTrykkes() {
+    private void bekreftTrykkes() {
         if (sjekkOgOppdaterReiseforsikring()) {
             bekreft = true;
             popupStage.close();
@@ -86,7 +86,7 @@ public class ForsikringReisePopupController {
     }
 
     @FXML
-    public void avbrytTrykkes() {
+    private void avbrytTrykkes() {
         popupStage.close();
     }
 }

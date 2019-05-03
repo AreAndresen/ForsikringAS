@@ -25,8 +25,10 @@ public class SkademeldingRedigerPopupController {
     @FXML
     private TextArea skadebeskrivelseField;
 
-    private ObservableList<String> statusListe = FXCollections.observableArrayList("Betalt", "Ubetalt");
-    private ObservableList<String> skadeTypeListe = FXCollections.observableArrayList("Båtforsikring",
+    private ObservableList<String> statusListe =
+            FXCollections.observableArrayList("Betalt", "Ubetalt");
+    private ObservableList<String> skadeTypeListe =
+            FXCollections.observableArrayList("Båtforsikring",
             "Hus- og innboforsikring", "Fritidsboligforsikring", "Reiseforsikring");
 
     private Stage popupStage;
@@ -86,9 +88,9 @@ public class SkademeldingRedigerPopupController {
      * Kalles når bruker trykker Bekreft.
      */
     @FXML
-    public void bekreftTrykkes() {
+    private void bekreftTrykkes() {
 
-        if(sjekkOgOppdaterSkademelding()){ //implementert en boolean for å lukke om input er riktig/feil
+        if (sjekkOgOppdaterSkademelding()) {
             bekreft = true;
             popupStage.close();
         }
@@ -107,11 +109,10 @@ public class SkademeldingRedigerPopupController {
         msg += skademeldingÅRedigere.sjekkOgOppdaterStatus(statusField);
 
         //kontrollerer etter aktiverte feilmeldinger
-        if(msg.length() != 0){
+        if (msg.length() != 0) {
             AlertHandler.genererUgyldigInputAlert(msg);
             return false;
-        }
-        else{
+        } else {
             return true; //riktig input
         }
     }
@@ -121,7 +122,7 @@ public class SkademeldingRedigerPopupController {
     }
 
     @FXML
-    public void avbrytTrykkes() {
+    private void avbrytTrykkes() {
         popupStage.close();
     }
 }

@@ -40,30 +40,25 @@ public class RotOppsettController {
         this.hovedApplikasjon = hovedApplikasjon;
     }
 
-    // <------- KUNDE ------->
     //Går til kundeoversikt ved trykk i meny
     @FXML
     private void gåTilKundeoversikt() {
         Viewbehandling.visKundeOversikt(hovedApplikasjon);
     }
 
-
-    // <------SKADEMELDING------>
     //Går til skademeldingversikt ved trykk i meny
     @FXML
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
     }
 
-    /**
-     * <--- FORSIKRING --->
-     */
+    // Går til forsikringsoversikt ved trykk i meny
     @FXML
     private void gåTilForsikringoversikt() {
         Viewbehandling.visForsikringOversikt(hovedApplikasjon);
     }
 
-    // <---- FILER ----->
+    // Filhåndtering.
     @FXML
     private void lagreFilTrykket() {
         try {
@@ -82,8 +77,8 @@ public class RotOppsettController {
 
         if (fil != null) {
             disableKnapper();
-            Task<ObservableList<Kunde>> innlesing = new InnlesingThread(fil, hovedApplikasjon,
-                    this::enableKnapper);
+            Task<ObservableList<Kunde>> innlesing =
+                    new InnlesingThread(fil, hovedApplikasjon, this::enableKnapper);
             service.execute(innlesing);
         }
     }

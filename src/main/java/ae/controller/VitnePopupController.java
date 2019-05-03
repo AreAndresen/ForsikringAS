@@ -58,9 +58,9 @@ public class VitnePopupController {
      * Kalles når bruker trykker Bekreft.
      */
     @FXML
-    public void bekreftTrykkes() {
+    private void bekreftTrykkes() {
 
-        if(sjekkOgOppdaterSkademelding()){ //implementert en boolean for å lukke om input er riktig/feil
+        if (sjekkOgOppdaterSkademelding()) { //implementert en boolean for å lukke om input er riktig/feil
             bekreft = true;
             popupStage.close();
         }
@@ -82,7 +82,7 @@ public class VitnePopupController {
     }
 
     @FXML
-    public void avbrytTrykkes() {
+    private void avbrytTrykkes() {
         popupStage.close();
     }
 }

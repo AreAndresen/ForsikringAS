@@ -64,8 +64,8 @@ public class KundeRedigerPopupController {
      * Kalles når bruker trykker Bekreft.
      */
     @FXML
-    public void bekreftTrykkes() {
-        if(sjekkOgOppdaterKunde()){ //implementert en boolean for å lukke om input er riktig/feil
+    private void bekreftTrykkes() {
+        if(sjekkOgOppdaterKunde()) { //implementert en boolean for å lukke om input er riktig/feil
             bekreft = true;
             popupStage.close();
         }
@@ -77,7 +77,7 @@ public class KundeRedigerPopupController {
         //oppdaterer kundeNr
         msg += kundeÅRedigere.sjekkOgOppdaterKundeNr(kundeNrField, hovedApplikasjon);
         //Oppretter om det ikke finnes
-        if(msg.equals("Det er ingen kunde registrert med det\nkundenummeret i systemet.\n")){
+        if (msg.equals("Det er ingen kunde registrert med det\nkundenummeret i systemet.\n")) {
             msg = "";
             msg += kundeÅRedigere.sjekkOgOpprettKundeNr(kundeNrField, hovedApplikasjon);
         }
@@ -89,11 +89,10 @@ public class KundeRedigerPopupController {
 
 
         //kontrollerer etter aktiverte feilmeldinger
-        if(msg.length() != 0){
+        if (msg.length() != 0) {
             AlertHandler.genererUgyldigInputAlert(msg);
             return false;
-        }
-        else{
+        } else {
             return true; //riktig input
         }
     }
@@ -104,7 +103,7 @@ public class KundeRedigerPopupController {
     }
 
     @FXML
-    public void avbrytTrykkes() {
+    private void avbrytTrykkes() {
         popupStage.close();
     }
 }
