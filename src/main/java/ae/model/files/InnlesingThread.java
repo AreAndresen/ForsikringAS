@@ -23,7 +23,7 @@ public class InnlesingThread extends Task<ObservableList<Kunde>> {
     @Override
     protected ObservableList<Kunde> call() throws Exception {
         Thread.sleep(3000); // emulerer en litt større jobb
-        ObservableList<Kunde> hentetData = Filbehandling.henteFil(filPath);
+        ObservableList<Kunde> hentetData = Filbehandling.hentFil(filPath);
         return hentetData;
     }
 

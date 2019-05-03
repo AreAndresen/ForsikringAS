@@ -7,5 +7,5 @@ import javafx.collections.ObservableList;
 import java.io.IOException;
 
 public interface HenteFilStrategy {
-    ObservableList<Kunde> lesKundeFraFil(String path) throws IOException, ClassNotFoundException, UgyldigKundeFormatException;
+    ObservableList<Kunde> hentKunderFraFil(String path) throws IOException, ClassNotFoundException, UgyldigKundeFormatException;
 }

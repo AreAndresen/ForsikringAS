@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 public class HenteCsvStrategy implements HenteFilStrategy {
     @Override
-    public ObservableList<Kunde> lesKundeFraFil(String path) throws IOException, UgyldigKundeFormatException {
+    public ObservableList<Kunde> hentKunderFraFil(String path) throws IOException, UgyldigKundeFormatException {
         ObservableList<Kunde> kunder = FXCollections.observableArrayList();
         BufferedReader reader = null;
 

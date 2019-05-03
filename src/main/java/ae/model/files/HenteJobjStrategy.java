@@ -11,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.util.List;
 
 public class HenteJobjStrategy implements HenteFilStrategy {
-    public ObservableList<Kunde> lesKundeFraFil(String path) throws IOException, ClassNotFoundException {
+    public ObservableList<Kunde> hentKunderFraFil(String path) throws IOException, ClassNotFoundException {
         ObjectInputStream is = null;
         ObservableList<Kunde> kunder = FXCollections.observableArrayList();
         try {

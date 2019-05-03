@@ -148,7 +148,6 @@ public class KundeController {
     @FXML
     private void gåTilSkademeldingoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
-        //lagreFilMenuItem.setDisable(false);
     }
 
     //-------Forsikringer-------
@@ -156,7 +155,6 @@ public class KundeController {
     @FXML
     private void gåTilForsikringoversikt() {
         Viewbehandling.visSkademeldingOversikt(hovedApplikasjon);
-        //lagreFilMenuItem.setDisable(false);
     }
 
 

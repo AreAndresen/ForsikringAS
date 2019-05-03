@@ -52,6 +52,7 @@ public class Viewbehandling {
             RotOppsettController rotOppsettController = loader.getController();
             rotOppsettController.setHovedApplikasjon(hovedApplikasjon);
 
+            // Set view og controllere til oversiktene
             setPaneOgControllere(hovedApplikasjon);
 
         } catch (IOException e) {

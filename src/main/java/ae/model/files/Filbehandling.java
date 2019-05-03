@@ -11,45 +11,45 @@ import java.io.IOException;
 
 public class Filbehandling {
 
-    private static void lagreKunde(LagreFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path)
-            throws IOException {
-        lagringsmetode.skrivKundeTilFil(kundeTabell, path);
-    }
-
-    private static ObservableList<Kunde> hentKunde(HenteFilStrategy hentemetode, String path) throws IOException,
-            ClassNotFoundException, UgyldigKundeFormatException {
-        return hentemetode.lesKundeFraFil(path);
-    }
-
     // lagrer fil
     public static void lagreFil(HovedApplikasjon hovedApplikasjon) throws IOException {
         File filPath = Filbehandling.lagreFilVelger(hovedApplikasjon.getHovedStage());
 
         if (filPath != null) {
             if (filPath.getPath().endsWith(".jobj")) {
-                Filbehandling.lagreKunde(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+                Filbehandling.lagreKunder(new LagreJobjStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
             }
 
             if (filPath.getPath().endsWith(".csv")) {
-                Filbehandling.lagreKunde(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
+                Filbehandling.lagreKunder(new LagreCsvStrategy(), hovedApplikasjon.getKundeData(), filPath.getPath());
             }
         }
     }
 
     // returnerer innholdet i fil
-    public static ObservableList<Kunde> henteFil(File filPath) throws IOException, ClassNotFoundException,
+    public static ObservableList<Kunde> hentFil(File filPath) throws IOException, ClassNotFoundException,
             UgyldigKundeFormatException {
 
         if (filPath != null) {
             if (filPath.getPath().endsWith(".jobj")) {
-                return Filbehandling.hentKunde(new HenteJobjStrategy(), filPath.getPath());
+                return Filbehandling.hentKunder(new HenteJobjStrategy(), filPath.getPath());
             }
 
             if (filPath.getPath().endsWith(".csv")) {
-                return Filbehandling.hentKunde(new HenteCsvStrategy(), filPath.getPath());
+                return Filbehandling.hentKunder(new HenteCsvStrategy(), filPath.getPath());
             }
         }
         return null;
+    }
+
+    private static void lagreKunder(LagreFilStrategy lagringsmetode, ObservableList<Kunde> kundeTabell, String path)
+            throws IOException {
+        lagringsmetode.skrivKundeTilFil(kundeTabell, path);
+    }
+
+    private static ObservableList<Kunde> hentKunder(HenteFilStrategy hentemetode, String path) throws IOException,
+            ClassNotFoundException, UgyldigKundeFormatException {
+        return hentemetode.hentKunderFraFil(path);
     }
 
     /**
