@@ -49,14 +49,14 @@ public class Kunde implements Serializable {
 
         // Ta imot parametere.
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
-        this.datoKundeOpprettet = new SimpleObjectProperty<LocalDate>(datoKundeOpprettet);
+        this.datoKundeOpprettet = new SimpleObjectProperty<>(datoKundeOpprettet);
         this.etternavn = new SimpleStringProperty(etternavn);
         this.fornavn = new SimpleStringProperty(fornavn);
         this.adresseFaktura = new SimpleStringProperty(adresseFaktura);
 
         // Instansiere listene så de er opprettet.
-        this.forsikringer = new SimpleObjectProperty<ObservableList<Forsikring>>(FXCollections.observableArrayList());
-        this.skademeldinger = new SimpleObjectProperty<ObservableList<Skademelding>>(FXCollections.observableArrayList());
+        this.forsikringer = new SimpleObjectProperty<>(FXCollections.observableArrayList());
+        this.skademeldinger = new SimpleObjectProperty<>(FXCollections.observableArrayList());
 
         this.antallErstatningerUbetalte = new SimpleIntegerProperty(0);
     }

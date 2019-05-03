@@ -1,6 +1,5 @@
 package ae.controller;
 
-import ae.HovedApplikasjon;
 import ae.model.Skademelding;
 import ae.util.AlertHandler;
 import javafx.fxml.FXML;
@@ -18,9 +17,6 @@ public class VitnePopupController {
     private Stage popupStage;
     private Skademelding skademeldingÅRedigere;
     private boolean bekreft = false;
-
-    // Referanse til Rot-kontrolleren.
-    private HovedApplikasjon hovedApplikasjon;
 
     @FXML
     private void initialize() {
@@ -42,7 +38,7 @@ public class VitnePopupController {
     /**
      * Metode for å legge inn kundens data i TextFields.
      */
-    public void instansierFelter() {
+    private void instansierFelter() {
         //Setter info fra siste vitne lagt til
         for (Map.Entry<String, String> info : skademeldingÅRedigere.getKontaktinfoVitner().entrySet()) {
             vitne1navnField.setText(info.getValue());
@@ -77,17 +73,12 @@ public class VitnePopupController {
         msg += skademeldingÅRedigere.sjekkOgOppdaterKontaktinfoVitne(vitne1navnField, vitne1tlfField);
 
         //kontrollerer etter aktiverte feilmeldinger
-        if(msg.length() != 0){
+        if (msg.length() != 0) {
             AlertHandler.genererUgyldigInputAlert(msg);
             return false;
-        }
-        else{
+        } else {
             return true; //riktig input
         }
-    }
-
-    public void setHovedApplikasjon(HovedApplikasjon hovedApplikasjon) {
-        this.hovedApplikasjon = hovedApplikasjon;
     }
 
     @FXML

@@ -163,7 +163,7 @@ public class KundeController {
      * Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
      * antall av de ulike typene. Knappene skal trykkes for å vise de.
      */
-    public void visKundensDetaljer(Kunde kunde) {
+    private void visKundensDetaljer(Kunde kunde) {
         if (kunde != null) {
 
             kundeNrLabel.setText(Integer.toString(kunde.getKundeNr()));

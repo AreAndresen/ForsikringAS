@@ -61,7 +61,7 @@ public class SkademeldingRedigerPopupController {
     /**
      * Metode for å legge inn kundens data i TextFields.
      */
-    public void instansierFelter() {
+    private void instansierFelter() {
         kundeNrField.setText(Integer.toString(skademeldingÅRedigere.getKundeNr()));
         skadeNrField.setText(Integer.toString(skademeldingÅRedigere.getSkadeNr()));
         skadebeskrivelseField.setText(skademeldingÅRedigere.getSkadeBeskrivelse());

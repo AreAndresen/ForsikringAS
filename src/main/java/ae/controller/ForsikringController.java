@@ -5,7 +5,6 @@ import ae.util.AlertHandler;
 import ae.model.*;
 import ae.util.IdUtil;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -124,13 +123,9 @@ public class ForsikringController {
             typeChoice.setDisable(false);
             FilteredList<Forsikring> forsikringerFiltered = new FilteredList<>(kunde.getForsikringer());
 
-            typeChoice.valueProperty().addListener(new ChangeListener<String>() {
-
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String gammelVerdi, String nyVerdi) {
-                    forsikringerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Forsikring f) -> nyVerdi.equals(f.getType()));
-                }
-            });
+            typeChoice.valueProperty().addListener((ChangeListener<String>) (observable, gammelVerdi, nyVerdi) ->
+                    forsikringerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Forsikring f) ->
+                            nyVerdi.equals(f.getType())));
 
             forsikringTabell.setItems(forsikringerFiltered);
         }

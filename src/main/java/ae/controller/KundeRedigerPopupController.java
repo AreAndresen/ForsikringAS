@@ -41,7 +41,7 @@ public class KundeRedigerPopupController {
     /**
      * Metode for å legge inn kundens data i TextFields.
      */
-    public void instansierFelter() {
+    private void instansierFelter() {
         kundeNrField.setText(Integer.toString(kundeÅRedigere.getKundeNr()));
         etternavnField.setText(kundeÅRedigere.getEtternavn());
         fornavnField.setText(kundeÅRedigere.getFornavn());
@@ -71,7 +71,7 @@ public class KundeRedigerPopupController {
         }
     }
 
-    public boolean sjekkOgOppdaterKunde() {
+    private boolean sjekkOgOppdaterKunde() {
         String msg = "";
 
         //oppdaterer kundeNr

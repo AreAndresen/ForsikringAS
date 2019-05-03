@@ -5,7 +5,6 @@ import ae.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -41,7 +40,7 @@ public class Viewbehandling {
             // Last inn fxml-fil.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HovedApplikasjon.class.getResource("/view/RotOppsett.fxml"));
-            hovedApplikasjon.setRotOppsett((BorderPane) loader.load());
+            hovedApplikasjon.setRotOppsett(loader.load());
 
             // Vis scenen som inneholder rotoppsettet.
             Scene scene = new Scene(hovedApplikasjon.getRotOppsett());
@@ -65,21 +64,21 @@ public class Viewbehandling {
             // kundeoversikten
             FXMLLoader kundeLoader = new FXMLLoader();
             kundeLoader.setLocation(HovedApplikasjon.class.getResource("/view/KundeView.fxml"));
-            kundeOversikt = (AnchorPane) kundeLoader.load();
+            kundeOversikt = kundeLoader.load();
             kundeController = kundeLoader.getController();
             kundeController.setHovedApplikasjon(hovedApplikasjon);
 
             // skademeldingoversikten
             FXMLLoader skadeLoader = new FXMLLoader();
             skadeLoader.setLocation(HovedApplikasjon.class.getResource("/view/SkademeldingView.fxml"));
-            skademeldingOversikt = (AnchorPane) skadeLoader.load();
+            skademeldingOversikt = skadeLoader.load();
             skademeldingController = skadeLoader.getController();
             skademeldingController.setHovedApplikasjon(hovedApplikasjon);
 
             // forsikringoversikten
             FXMLLoader forsikringLoader = new FXMLLoader();
             forsikringLoader.setLocation(HovedApplikasjon.class.getResource("/view/ForsikringView.fxml"));
-            forsikringOversikt = (AnchorPane) forsikringLoader.load();
+            forsikringOversikt = forsikringLoader.load();
             forsikringController = forsikringLoader.getController();
             forsikringController.setHovedApplikasjon(hovedApplikasjon);
 
@@ -103,7 +102,7 @@ public class Viewbehandling {
     public static boolean visNyKundePopup(HovedApplikasjon hovedApplikasjon, Kunde kunde) {
         try {
             FXMLLoader loader = hentKundeRedigerPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Registrer ny kunde");
@@ -133,7 +132,7 @@ public class Viewbehandling {
     public static boolean visRedigerKundePopup(HovedApplikasjon hovedApplikasjon, Kunde kunde) {
         try {
             FXMLLoader loader = hentKundeRedigerPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Rediger eksisterende kunde");
@@ -171,7 +170,7 @@ public class Viewbehandling {
     public static boolean visNySkademeldingPopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
         try {
             FXMLLoader loader = hentSkademeldingRedigerPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Registrer ny skademelding");
@@ -200,7 +199,7 @@ public class Viewbehandling {
     public static boolean visRedigerSkademeldingPopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
         try {
             FXMLLoader loader = hentSkademeldingRedigerPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Rediger eksisterende skademelding");
@@ -230,7 +229,7 @@ public class Viewbehandling {
     public static boolean visLeggTilVitnePopup(HovedApplikasjon hovedApplikasjon, Skademelding skademelding) {
         try {
             FXMLLoader loader = hentVitnerPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Legg til vitne - Endre navn på eksisterende tlf");
@@ -242,7 +241,6 @@ public class Viewbehandling {
             VitnePopupController vitnePopupController = loader.getController();
             vitnePopupController.setPopupStage(popupStage);
             vitnePopupController.setSkademeldingÅRedigere(skademelding);
-            vitnePopupController.setHovedApplikasjon(hovedApplikasjon);
 
             popupStage.showAndWait();
 
@@ -266,7 +264,7 @@ public class Viewbehandling {
     public static boolean visNyBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, BåtForsikring båtforsikring) {
         try {
             FXMLLoader loader = hentBåtforsikringPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Registrer ny båtforsikring");
@@ -293,7 +291,7 @@ public class Viewbehandling {
     public static boolean visRedigerBåtforsikringPopup(HovedApplikasjon hovedApplikasjon, BåtForsikring båtforsikring) {
         try {
             FXMLLoader loader = hentBåtforsikringPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Rediger eksisterende båtforsikring");
@@ -320,7 +318,7 @@ public class Viewbehandling {
     public static boolean visNyBoligforsikringPopup(HovedApplikasjon hovedApplikasjon, BoligForsikring boligForsikring) {
         try {
             FXMLLoader loader = hentBoligforsikringPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             if ("Hus- og innboforsikring".equals(boligForsikring.getType())) {
@@ -353,7 +351,7 @@ public class Viewbehandling {
                                                          BoligForsikring boligForsikring) {
         try {
             FXMLLoader loader = hentBoligforsikringPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             if ("Hus- og innboforsikring".equals(boligForsikring.getType())) {
@@ -385,7 +383,7 @@ public class Viewbehandling {
     public static boolean visNyReiseforsikringPopup(HovedApplikasjon hovedApplikasjon, ReiseForsikring reiseforsikring) {
         try {
             FXMLLoader loader = hentReiseforsikringPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Registrer ny reiseforsikring");
@@ -412,7 +410,7 @@ public class Viewbehandling {
     public static boolean visRedigerReiseforsikringPopup(HovedApplikasjon hovedApplikasjon, ReiseForsikring reiseforsikring) {
         try {
             FXMLLoader loader = hentReiseforsikringPopup();
-            AnchorPane side = (AnchorPane) loader.load();
+            AnchorPane side = loader.load();
 
             Stage popupStage = new Stage();
             popupStage.setTitle("Rediger eksisterende reiseforsikring");

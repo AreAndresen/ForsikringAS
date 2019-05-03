@@ -1,6 +1,5 @@
 package ae.util;
 
-import ae.HovedApplikasjon;
 import javafx.scene.control.Alert;
 
 public class AlertHandler {

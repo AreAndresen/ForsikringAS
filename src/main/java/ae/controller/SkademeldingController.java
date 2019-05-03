@@ -126,20 +126,16 @@ public class SkademeldingController {
             typeChoice.setDisable(false);
             FilteredList<Skademelding> skademeldingerFiltered = new FilteredList<>(kunde.getSkademeldinger());
 
-            typeChoice.valueProperty().addListener(new ChangeListener<String>() {
-
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String gammelVerdi, String nyVerdi) {
-                    skademeldingerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Skademelding f) -> nyVerdi.equals(f.getSkadeType()));
-                }
-            });
+            typeChoice.valueProperty().addListener((ChangeListener<String>) (observable, gammelVerdi, nyVerdi) ->
+                    skademeldingerFiltered.setPredicate("Alle".equals(nyVerdi) ? null : (Skademelding f) ->
+                            nyVerdi.equals(f.getSkadeType())));
             skademeldingTabell.setItems(skademeldingerFiltered);
         }
     }
 
     /** Fyller ut info-feltene om hver kunde.Labelen til Forsikringer, Skademeldinger og Ubetalte erstatninger indikerer
      * antall av de ulike typene. Knappene kan trykkes for å vise de.*/
-    public void visSkademeldingDetaljer(Skademelding skademelding) {
+    private void visSkademeldingDetaljer(Skademelding skademelding) {
         if (skademelding != null) {
             beskrivelseAvSkadeLabel.setText(skademelding.getSkadeBeskrivelse());
 

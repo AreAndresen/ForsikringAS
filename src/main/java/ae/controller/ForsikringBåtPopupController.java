@@ -3,7 +3,6 @@ package ae.controller;
 import ae.HovedApplikasjon;
 import ae.util.AlertHandler;
 import ae.model.BåtForsikring;
-import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;

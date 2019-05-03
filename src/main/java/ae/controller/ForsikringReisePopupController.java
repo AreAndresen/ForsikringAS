@@ -1,10 +1,8 @@
 package ae.controller;
 
 import ae.HovedApplikasjon;
-import ae.model.BåtForsikring;
 import ae.model.ReiseForsikring;
 import ae.util.AlertHandler;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;

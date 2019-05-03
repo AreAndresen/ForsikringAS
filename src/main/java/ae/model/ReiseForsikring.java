@@ -23,7 +23,7 @@ public class ReiseForsikring extends Forsikring implements Serializable {
 
     // default konstruktør
     public ReiseForsikring(int kundeNr, int forsikringsNr, long premie, LocalDate datoOpprettet, long forsikringsBelop,
-                           String betingelser, String type, String forsikringsOmråde, long forsikringsSum) {
+                            String betingelser, String type, String forsikringsOmråde, long forsikringsSum) {
         super(kundeNr, forsikringsNr, premie, datoOpprettet, forsikringsBelop, betingelser, type);
         this.forsikringsOmråde = new SimpleStringProperty(forsikringsOmråde);
         this.forsikringsSum = new SimpleLongProperty(forsikringsSum);

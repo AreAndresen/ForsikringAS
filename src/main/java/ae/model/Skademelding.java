@@ -49,12 +49,12 @@ public class Skademelding implements Serializable {
                          long belopTaksering, long erstatningsbelopUtbetalt, String status) {
         this.kundeNr = new SimpleIntegerProperty(kundeNr);
         this.skadeNr = new SimpleIntegerProperty(skadeNr);
-        this.datoSkade = new SimpleObjectProperty<LocalDate>(datoSkade);
+        this.datoSkade = new SimpleObjectProperty<>(datoSkade);
         this.skadeType = new SimpleStringProperty(skadeType);
         this.skadeBeskrivelse = new SimpleStringProperty(skadeBeskrivelse);
         this.belopTaksering = new SimpleLongProperty(belopTaksering);
         this.erstatningsbelopUtbetalt = new SimpleLongProperty(erstatningsbelopUtbetalt);
-         this.kontaktinfoVitner = new SimpleObjectProperty<ObservableMap<String, String>>(FXCollections.observableHashMap());
+         this.kontaktinfoVitner = new SimpleObjectProperty<>(FXCollections.observableHashMap());
         this.status = new SimpleStringProperty(status);
 
     }
@@ -378,7 +378,7 @@ public class Skademelding implements Serializable {
         is.defaultReadObject();
         this.skadeNr = new SimpleIntegerProperty((int)is.readObject());
         this.kundeNr = new SimpleIntegerProperty((int)is.readObject());
-        this.datoSkade = new SimpleObjectProperty<LocalDate>((LocalDate)is.readObject());
+        this.datoSkade = new SimpleObjectProperty<>((LocalDate) is.readObject());
         this.skadeType = new SimpleStringProperty((String)is.readObject());
         this.skadeBeskrivelse = new SimpleStringProperty((String)is.readObject());
         this.belopTaksering = new SimpleLongProperty((long)is.readObject());
