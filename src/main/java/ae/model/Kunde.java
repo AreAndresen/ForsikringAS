@@ -183,7 +183,7 @@ public class Kunde implements Serializable {
 
     //< ------------------------------------Søkfunksjon ------------------------------------ >
 
-    // Statisk metode som brukes for søk
+    // Metode som brukes for søk
     public boolean søkeordFunnet(Kunde kunde, String input) {
         // viser alt hvis det ikke er noe skrevet inn
         if (input == null || input.isEmpty()) {
