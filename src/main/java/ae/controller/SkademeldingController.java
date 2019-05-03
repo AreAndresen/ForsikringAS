@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ae.HovedApplikasjon;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -111,7 +110,7 @@ public class SkademeldingController {
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
             FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
-            kundeFiltered.setPredicate(kunde -> Kunde.behandleSøk(kunde, nyVerdi));
+            kundeFiltered.setPredicate(kunde -> Kunde.søkeordFunnet(kunde, nyVerdi));
 
             SortedList<Kunde> kundeSorted = new SortedList<>(kundeFiltered);
             kundeSorted.comparatorProperty().bind(kundeNrTabell.comparatorProperty());
