@@ -77,7 +77,7 @@ public class KundeController {
         søkField.textProperty().addListener((((observable, gammelVerdi, nyVerdi) -> {
             FilteredList<Kunde> kundeFiltered = new FilteredList<>(hovedApplikasjon.getKundeData(), k -> true);
 
-            kundeFiltered.setPredicate(kunde -> Kunde.søkeordFunnet(kunde, nyVerdi));
+            kundeFiltered.setPredicate(kunde -> kunde.søkeordFunnet(kunde, nyVerdi));
 
             SortedList<Kunde> kundeSorted = new SortedList<>(kundeFiltered);
             kundeSorted.comparatorProperty().bind(kundeTabell.comparatorProperty());
